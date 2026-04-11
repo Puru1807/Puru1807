@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saarthi — Puru Bhardwaj</title>
+  <meta name="description" content="Patient management platform for a hemophilia NGO — 90% user satisfaction, 62% faster emergency response.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>P</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,200;0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root { --text:#040202; --secondary:#AAAAAA; --bg:#FFFFFF; --accent:#F2511A; --row-hover:#F0EFED; --border:#e0deda; --footer-bg:#040202; --margin:40px; --font:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--font);color:var(--text);background:var(--bg);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+    .cursor{width:12px;height:12px;background:var(--text);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width 0.25s,height 0.25s,opacity 0.2s,background 0.2s;will-change:transform;}
+    .cursor.large{width:32px;height:32px;}.cursor.hidden{opacity:0;}.cursor.invert{background:#fff;}
+    nav.nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:center;gap:4px;padding:16px var(--margin);background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);}
+    .nav-link{font-size:14px;font-weight:400;color:var(--text);text-decoration:none;padding:6px 16px;border-radius:20px;transition:background 0.25s,color 0.25s;}
+    .nav-link:hover{background:var(--text);color:#fff;}
+    .cs-hero{padding:140px var(--margin) 80px;max-width:1200px;margin:0 auto;}
+    .cs-back{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--secondary);text-decoration:none;margin-bottom:48px;transition:color 0.2s;}
+    .cs-back:hover{color:var(--text);}.cs-back svg{width:16px;height:16px;}
+    .cs-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+    .cs-tag{font-size:12px;color:var(--secondary);border:1px solid var(--border);border-radius:100px;padding:4px 12px;}
+    .cs-title{font-size:clamp(40px,7vw,80px);font-weight:200;letter-spacing:-0.03em;line-height:1.05;margin-bottom:32px;}
+    .cs-subtitle{font-size:18px;font-weight:300;color:var(--secondary);max-width:640px;line-height:1.6;margin-bottom:48px;}
+    .cs-meta-row{display:flex;gap:48px;flex-wrap:wrap;padding-top:40px;border-top:1px solid var(--border);}
+    .cs-meta-item{display:flex;flex-direction:column;gap:4px;}
+    .cs-meta-label{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--secondary);}
+    .cs-meta-value{font-size:15px;font-weight:400;}
+    .cs-section{max-width:1200px;margin:0 auto;padding:80px var(--margin);border-bottom:1px solid var(--border);}
+    .cs-section-label{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:32px;}
+    .cs-h2{font-size:clamp(28px,4vw,48px);font-weight:200;letter-spacing:-0.02em;line-height:1.15;margin-bottom:24px;}
+    .cs-body{font-size:16px;font-weight:300;line-height:1.8;max-width:720px;}
+    .cs-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:56px;}
+    .cs-stat{display:flex;flex-direction:column;gap:8px;}
+    .cs-stat-number{font-size:clamp(40px,6vw,64px);font-weight:200;color:var(--accent);letter-spacing:-0.04em;line-height:1;}
+    .cs-stat-desc{font-size:14px;color:var(--secondary);line-height:1.5;max-width:200px;}
+    .cs-quote{border-left:3px solid var(--accent);padding:24px 32px;background:var(--row-hover);border-radius:0 8px 8px 0;margin:40px 0;max-width:720px;}
+    .cs-quote p{font-size:18px;font-weight:300;font-style:italic;line-height:1.65;}
+    .cs-quote cite{display:block;margin-top:12px;font-size:13px;color:var(--secondary);font-style:normal;}
+    .cs-two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;margin-top:40px;}
+    .cs-list{list-style:none;margin-top:24px;display:flex;flex-direction:column;gap:16px;}
+    .cs-list li{display:flex;gap:16px;font-size:15px;font-weight:300;line-height:1.6;}
+    .cs-list li::before{content:'—';color:var(--accent);flex-shrink:0;}
+    .cs-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:40px;}
+    .cs-step{padding:24px;border:1px solid var(--border);border-radius:8px;}
+    .cs-step-num{font-size:36px;font-weight:200;color:var(--accent);letter-spacing:-0.04em;margin-bottom:12px;}
+    .cs-step-title{font-size:15px;font-weight:500;margin-bottom:8px;}
+    .cs-step-text{font-size:13px;font-weight:300;color:var(--secondary);line-height:1.6;}
+    .cs-visual{width:100%;border-radius:12px;overflow:hidden;margin:40px 0;}
+    .cs-visual-inner{width:100%;height:400px;display:flex;align-items:center;justify-content:center;}
+    .cs-visual-label{font-size:13px;color:rgba(255,255,255,0.7);font-weight:300;letter-spacing:0.05em;}
+    .grad-saarthi{background:linear-gradient(135deg,#c1121f 0%,#e63946 40%,#fca311 100%);}
+    .cs-next{max-width:1200px;margin:0 auto;padding:80px var(--margin);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;}
+    .cs-next-label{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--secondary);margin-bottom:8px;}
+    .cs-next-link{font-size:clamp(24px,3vw,36px);font-weight:200;color:var(--text);text-decoration:none;letter-spacing:-0.02em;transition:color 0.2s;display:flex;align-items:center;gap:16px;}
+    .cs-next-link:hover{color:var(--accent);}
+    .cs-next-link svg{width:32px;height:32px;transition:transform 0.2s;}
+    .cs-next-link:hover svg{transform:translateX(8px);}
+    footer.footer{background:var(--footer-bg);color:#fff;padding:64px var(--margin) 40px;}
+    .footer-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:64px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.1);}
+    .footer-tagline{font-size:22px;font-weight:200;line-height:1.5;margin-bottom:16px;}
+    .footer-sub{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;}
+    .footer-heading{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:20px;}
+    .footer-links{display:flex;flex-direction:column;gap:12px;}
+    .footer-links a{font-size:15px;font-weight:300;color:rgba(255,255,255,0.8);text-decoration:none;transition:color 0.2s;position:relative;width:fit-content;}
+    .footer-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0%;height:1px;background:var(--accent);transition:width 0.25s ease;}
+    .footer-links a:hover{color:#fff;}.footer-links a:hover::after{width:100%;}
+    .footer-bottom{max-width:1200px;margin:32px auto 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+    .footer-copy{font-size:13px;color:rgba(255,255,255,0.3);}
+    [data-reveal]{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
+    [data-reveal].revealed{opacity:1;transform:none;}
+    @media(max-width:768px){.cs-stats{grid-template-columns:1fr 1fr;}.cs-two-col{grid-template-columns:1fr;gap:32px;}.cs-steps{grid-template-columns:1fr 1fr;}.footer-grid{grid-template-columns:1fr;gap:40px;}}
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="index.html#projects" class="nav-link">Work</a>
+  <a href="info.html" class="nav-link">Info</a>
+  <a href="https://purubhardwajdesign.com" class="nav-link" target="_blank" rel="noopener">Portfolio</a>
+</nav>
+
+<div class="cs-hero">
+  <a href="index.html#projects" class="cs-back">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+    All projects
+  </a>
+  <div class="cs-tags">
+    <span class="cs-tag">Healthcare</span>
+    <span class="cs-tag">NGO</span>
+    <span class="cs-tag">Patient Management</span>
+    <span class="cs-tag">Emergency Response</span>
+  </div>
+  <h1 class="cs-title">Saarthi</h1>
+  <p class="cs-subtitle">Designing a patient management platform for the Hemophilia Federation of India — where speed, clarity, and trust can be the difference between life and permanent injury.</p>
+  <div class="cs-meta-row">
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Role</span>
+      <span class="cs-meta-value">UX Designer</span>
+    </div>
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Organization</span>
+      <span class="cs-meta-value">Hemophilia Federation of India</span>
+    </div>
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Platform</span>
+      <span class="cs-meta-value">Web &amp; Mobile</span>
+    </div>
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Context</span>
+      <span class="cs-meta-value">NGO / Social Impact</span>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:1200px;margin:0 auto;padding:0 var(--margin);">
+  <div class="cs-visual">
+    <div class="cs-visual-inner grad-saarthi">
+      <span class="cs-visual-label">Saarthi — Patient Management Platform</span>
+    </div>
+  </div>
+</div>
+
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Overview</p>
+  <h2 class="cs-h2">Healthcare design where the stakes are highest</h2>
+  <p class="cs-body">Hemophilia patients require immediate access to treatment during bleeding episodes — delays can cause permanent joint damage or be fatal. Saarthi ("guide" in Hindi) is a patient management platform built for the Hemophilia Federation of India to coordinate care, track patient histories, and enable fast emergency response across their network of treatment centers.</p>
+  <p class="cs-body" style="margin-top:16px;">The project required deep empathy for three distinct user groups — patients, caregivers, and medical staff — and an unwavering commitment to clarity under pressure. Every design decision was stress-tested against the scenario of a caregiver in panic trying to find the right information fast.</p>
+
+  <div class="cs-stats">
+    <div class="cs-stat">
+      <span class="cs-stat-number">90%</span>
+      <span class="cs-stat-desc">user satisfaction score across all user groups</span>
+    </div>
+    <div class="cs-stat">
+      <span class="cs-stat-number">62%</span>
+      <span class="cs-stat-desc">faster emergency coordination response time</span>
+    </div>
+    <div class="cs-stat">
+      <span class="cs-stat-number">3×</span>
+      <span class="cs-stat-desc">user groups served: patients, caregivers, medical staff</span>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">The Problem</p>
+  <h2 class="cs-h2">Critical patient data trapped in paper — with lives on the line</h2>
+  <div class="cs-two-col">
+    <div>
+      <p class="cs-body">HFI's existing system was largely paper-based and phone-call-driven. When a patient had a bleeding episode, the treatment center had to manually search files for their bleeding history, medication tolerance, and nearest factor supply — often taking 20–30 minutes in the critical window.</p>
+      <p class="cs-body" style="margin-top:16px;">For a condition where treatment should start within 2 hours to prevent permanent damage, this friction was clinically dangerous. Coordinators were working off spreadsheets that were frequently out of date, and patients had no visibility into their own care records.</p>
+    </div>
+    <div>
+      <ul class="cs-list">
+        <li>No centralized patient record — data scattered across paper files and personal phone contacts</li>
+        <li>Zero emergency protocol — staff improvised during crises, leading to inconsistent response</li>
+        <li>Patients had no access to their own histories — had to verbally recount their entire medical background at every visit</li>
+        <li>No supply tracking — centers couldn't see factor availability across the network</li>
+        <li>Caregivers (often parents of children with hemophilia) had no support tools between appointments</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cs-quote">
+    <p>"When my son has a bleed at school, I have to call three different people to figure out what to do. By then, the window has passed."</p>
+    <cite>— Parent caregiver, user research interview</cite>
+  </div>
+</section>
+
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Process</p>
+  <h2 class="cs-h2">Research in the field — hospitals, homes, and emergency rooms</h2>
+  <p class="cs-body">I conducted contextual research across all three user groups, spending time at HFI treatment centers to observe real workflows, interviewing caregivers at home about their anxiety management strategies, and shadowing medical coordinators during a shift. Research was deliberately done in situ — not in a conference room.</p>
+
+  <div class="cs-steps">
+    <div class="cs-step">
+      <div class="cs-step-num">01</div>
+      <div class="cs-step-title">Field Research</div>
+      <div class="cs-step-text">Contextual observation at 3 treatment centers. 12 interviews with patients, caregivers, and medical staff. Journey mapping for each user group.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">02</div>
+      <div class="cs-step-title">Emergency Mapping</div>
+      <div class="cs-step-text">Mapped the critical path from bleed onset to treatment. Identified 7 failure points where information gaps caused dangerous delays.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">03</div>
+      <div class="cs-step-title">Design</div>
+      <div class="cs-step-text">Designed three interconnected views: Emergency Dashboard (staff), Patient Profile (shared), and Caregiver Home (family-facing). Stress-tested under simulated emergency scenarios.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">04</div>
+      <div class="cs-step-title">Validate</div>
+      <div class="cs-step-text">Usability testing with real medical staff and caregivers. Ran 3 rounds of moderated testing including a timed emergency scenario simulation.</div>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Solution</p>
+  <h2 class="cs-h2">Clarity by design — the right information, in the right hands, in seconds</h2>
+  <p class="cs-body">Saarthi's design prioritized emergency-first information architecture. The most critical data — bleeding history, current medications, emergency contacts, nearest factor supply — is available in two taps, at all times, for all user roles. Secondary information requires deliberate navigation, keeping critical views clean.</p>
+
+  <ul class="cs-list" style="max-width:640px;margin-top:32px;">
+    <li><strong>Emergency Dashboard:</strong> Red-bordered alert mode activates on a single trigger. Shows patient critical info, nearest factor stock, and step-by-step emergency protocol in one view.</li>
+    <li><strong>Unified patient record:</strong> Complete history — bleeds, treatments, imaging, factor consumption — accessible by both patients and authorized providers.</li>
+    <li><strong>Caregiver home screen:</strong> Built for anxious parents. Large, readable text. Panic button connects directly to the nearest HFI coordinator. Bleed log takes 15 seconds to complete.</li>
+    <li><strong>Supply visibility:</strong> Real-time factor availability across all connected centers — medical staff can redirect patients to the closest stocked location.</li>
+    <li><strong>Offline capability:</strong> Core emergency information cached locally. Functions without internet in rural areas with poor connectivity.</li>
+  </ul>
+
+  <div class="cs-visual" style="margin-top:48px;">
+    <div class="cs-visual-inner grad-saarthi" style="height:280px;">
+      <span class="cs-visual-label">Emergency Dashboard &amp; Patient Record View</span>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Results</p>
+  <h2 class="cs-h2">Real impact on patient outcomes — not just usability scores</h2>
+  <p class="cs-body">Post-launch validation showed strong results across all tracked metrics. The 62% reduction in emergency response coordination time is the most meaningful — for hemophilia patients, those minutes translate directly to health outcomes. The 90% satisfaction score was consistent across all three user groups, a rare achievement when serving such different needs.</p>
+
+  <div class="cs-stats" style="margin-top:48px;">
+    <div class="cs-stat">
+      <span class="cs-stat-number">90%</span>
+      <span class="cs-stat-desc">satisfaction across patients, caregivers, and staff</span>
+    </div>
+    <div class="cs-stat">
+      <span class="cs-stat-number">62%</span>
+      <span class="cs-stat-desc">faster emergency coordination from first contact to treatment</span>
+    </div>
+    <div class="cs-stat">
+      <span class="cs-stat-number">15s</span>
+      <span class="cs-stat-desc">time to log a bleed episode (down from 5+ minutes on paper)</span>
+    </div>
+  </div>
+
+  <div class="cs-quote" style="margin-top:48px;">
+    <p>"For the first time, I feel like I have control. I can see everything about my son's condition in one place, and I know exactly what to do if something happens."</p>
+    <cite>— Parent caregiver, post-launch interview</cite>
+  </div>
+</section>
+
+<div class="cs-next">
+  <div>
+    <p class="cs-next-label">Next project</p>
+    <a href="confidento.html" class="cs-next-link">
+      TheConfidento
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 16h20M18 8l8 8-8 8"/></svg>
+    </a>
+  </div>
+  <a href="index.html#projects" class="cs-back" style="margin-bottom:0;">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+    All projects
+  </a>
+</div>
+
+<footer class="footer" id="footer">
+  <div class="footer-grid">
+    <div>
+      <p class="footer-tagline">You made it through!</p>
+      <p class="footer-sub">This website was hand-coded with ♥ in HTML, CSS and JS by Puru Bhardwaj.</p>
+    </div>
+    <div>
+      <h3 class="footer-heading">Recent Work</h3>
+      <div class="footer-links">
+        <a href="dreamcollege.html">DreamCollege AI</a>
+        <a href="nature-counter.html">Nature Counter</a>
+        <a href="saarthi.html">Saarthi</a>
+      </div>
+    </div>
+    <div>
+      <h3 class="footer-heading">Say Hi!</h3>
+      <div class="footer-links">
+        <a href="https://linkedin.com/in/purubhardwaj9/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:purubhardwaj99@gmail.com">Email</a>
+        <a href="https://purubhardwajdesign.com" target="_blank" rel="noopener">Portfolio</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Puru Bhardwaj</span>
+    <span class="footer-copy">Visual Product Designer</span>
+  </div>
+</footer>
+
+<script>
+  (function(){const cursor=document.getElementById('cursor');let mx=window.innerWidth/2,my=window.innerHeight/2,cx=mx,cy=my;document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});function animate(){cx+=(mx-cx)*0.15;cy+=(my-cy)*0.15;cursor.style.transform='translate3d('+(cx-6)+'px,'+(cy-6)+'px,0)';requestAnimationFrame(animate);}animate();document.querySelectorAll('a,button').forEach(function(el){el.addEventListener('mouseenter',function(){cursor.classList.add('large');});el.addEventListener('mouseleave',function(){cursor.classList.remove('large');});});const footer=document.querySelector('footer');if(footer){footer.addEventListener('mouseenter',function(){cursor.classList.add('invert');});footer.addEventListener('mouseleave',function(){cursor.classList.remove('invert');});}})();
+  (function(){const els=document.querySelectorAll('[data-reveal]');const io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('revealed');io.unobserve(e.target);}});},{threshold:0.1});els.forEach(function(el){io.observe(el);});})();
+</script>
+</body>
+</html>

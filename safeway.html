@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Safeway Kiosk Redesign — Puru Bhardwaj</title>
+  <meta name="description" content="Self-checkout kiosk redesign for Safeway — 40% faster checkout, heuristic evaluation methodology.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>P</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,200;0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root{--text:#040202;--secondary:#AAAAAA;--bg:#FFFFFF;--accent:#F2511A;--row-hover:#F0EFED;--border:#e0deda;--footer-bg:#040202;--margin:40px;--font:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--font);color:var(--text);background:var(--bg);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+    .cursor{width:12px;height:12px;background:var(--text);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width 0.25s,height 0.25s,opacity 0.2s,background 0.2s;will-change:transform;}
+    .cursor.large{width:32px;height:32px;}.cursor.hidden{opacity:0;}.cursor.invert{background:#fff;}
+    nav.nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:center;gap:4px;padding:16px var(--margin);background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);}
+    .nav-link{font-size:14px;font-weight:400;color:var(--text);text-decoration:none;padding:6px 16px;border-radius:20px;transition:background 0.25s,color 0.25s;}
+    .nav-link:hover{background:var(--text);color:#fff;}
+    .cs-hero{padding:140px var(--margin) 80px;max-width:1200px;margin:0 auto;}
+    .cs-back{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--secondary);text-decoration:none;margin-bottom:48px;transition:color 0.2s;}
+    .cs-back:hover{color:var(--text);}.cs-back svg{width:16px;height:16px;}
+    .cs-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+    .cs-tag{font-size:12px;color:var(--secondary);border:1px solid var(--border);border-radius:100px;padding:4px 12px;}
+    .cs-title{font-size:clamp(40px,7vw,80px);font-weight:200;letter-spacing:-0.03em;line-height:1.05;margin-bottom:32px;}
+    .cs-subtitle{font-size:18px;font-weight:300;color:var(--secondary);max-width:640px;line-height:1.6;margin-bottom:48px;}
+    .cs-meta-row{display:flex;gap:48px;flex-wrap:wrap;padding-top:40px;border-top:1px solid var(--border);}
+    .cs-meta-item{display:flex;flex-direction:column;gap:4px;}
+    .cs-meta-label{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--secondary);}
+    .cs-meta-value{font-size:15px;font-weight:400;}
+    .cs-section{max-width:1200px;margin:0 auto;padding:80px var(--margin);border-bottom:1px solid var(--border);}
+    .cs-section-label{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:32px;}
+    .cs-h2{font-size:clamp(28px,4vw,48px);font-weight:200;letter-spacing:-0.02em;line-height:1.15;margin-bottom:24px;}
+    .cs-body{font-size:16px;font-weight:300;line-height:1.8;max-width:720px;}
+    .cs-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:56px;}
+    .cs-stat{display:flex;flex-direction:column;gap:8px;}
+    .cs-stat-number{font-size:clamp(40px,6vw,64px);font-weight:200;color:var(--accent);letter-spacing:-0.04em;line-height:1;}
+    .cs-stat-desc{font-size:14px;color:var(--secondary);line-height:1.5;max-width:200px;}
+    .cs-quote{border-left:3px solid var(--accent);padding:24px 32px;background:var(--row-hover);border-radius:0 8px 8px 0;margin:40px 0;max-width:720px;}
+    .cs-quote p{font-size:18px;font-weight:300;font-style:italic;line-height:1.65;}
+    .cs-quote cite{display:block;margin-top:12px;font-size:13px;color:var(--secondary);font-style:normal;}
+    .cs-two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;margin-top:40px;}
+    .cs-list{list-style:none;margin-top:24px;display:flex;flex-direction:column;gap:16px;}
+    .cs-list li{display:flex;gap:16px;font-size:15px;font-weight:300;line-height:1.6;}
+    .cs-list li::before{content:'—';color:var(--accent);flex-shrink:0;}
+    .cs-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:40px;}
+    .cs-step{padding:24px;border:1px solid var(--border);border-radius:8px;}
+    .cs-step-num{font-size:36px;font-weight:200;color:var(--accent);letter-spacing:-0.04em;margin-bottom:12px;}
+    .cs-step-title{font-size:15px;font-weight:500;margin-bottom:8px;}
+    .cs-step-text{font-size:13px;font-weight:300;color:var(--secondary);line-height:1.6;}
+    .cs-visual{width:100%;border-radius:12px;overflow:hidden;margin:40px 0;}
+    .cs-visual-inner{width:100%;height:400px;display:flex;align-items:center;justify-content:center;}
+    .cs-visual-label{font-size:13px;color:rgba(255,255,255,0.7);font-weight:300;letter-spacing:0.05em;}
+    .grad-safeway{background:linear-gradient(135deg,#1a1a1a 0%,#e63946 50%,#f4a261 100%);}
+    /* Heuristic table */
+    .heuristic-table{width:100%;border-collapse:collapse;margin-top:32px;font-size:14px;}
+    .heuristic-table th{text-align:left;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--secondary);padding:12px 16px;border-bottom:2px solid var(--border);}
+    .heuristic-table td{padding:14px 16px;border-bottom:1px solid var(--border);font-weight:300;line-height:1.5;vertical-align:top;}
+    .heuristic-table tr:last-child td{border-bottom:none;}
+    .severity{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;}
+    .severity.high{background:#fee2e2;color:#b91c1c;}
+    .severity.med{background:#fef3c7;color:#92400e;}
+    .severity.low{background:#dcfce7;color:#166534;}
+    .cs-next{max-width:1200px;margin:0 auto;padding:80px var(--margin);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;}
+    .cs-next-label{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--secondary);margin-bottom:8px;}
+    .cs-next-link{font-size:clamp(24px,3vw,36px);font-weight:200;color:var(--text);text-decoration:none;letter-spacing:-0.02em;transition:color 0.2s;display:flex;align-items:center;gap:16px;}
+    .cs-next-link:hover{color:var(--accent);}
+    .cs-next-link svg{width:32px;height:32px;transition:transform 0.2s;}
+    .cs-next-link:hover svg{transform:translateX(8px);}
+    footer.footer{background:var(--footer-bg);color:#fff;padding:64px var(--margin) 40px;}
+    .footer-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:64px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.1);}
+    .footer-tagline{font-size:22px;font-weight:200;line-height:1.5;margin-bottom:16px;}
+    .footer-sub{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;}
+    .footer-heading{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:20px;}
+    .footer-links{display:flex;flex-direction:column;gap:12px;}
+    .footer-links a{font-size:15px;font-weight:300;color:rgba(255,255,255,0.8);text-decoration:none;transition:color 0.2s;position:relative;width:fit-content;}
+    .footer-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0%;height:1px;background:var(--accent);transition:width 0.25s ease;}
+    .footer-links a:hover{color:#fff;}.footer-links a:hover::after{width:100%;}
+    .footer-bottom{max-width:1200px;margin:32px auto 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+    .footer-copy{font-size:13px;color:rgba(255,255,255,0.3);}
+    [data-reveal]{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
+    [data-reveal].revealed{opacity:1;transform:none;}
+    @media(max-width:768px){.cs-stats{grid-template-columns:1fr 1fr;}.cs-two-col{grid-template-columns:1fr;gap:32px;}.cs-steps{grid-template-columns:1fr 1fr;}.footer-grid{grid-template-columns:1fr;gap:40px;}.heuristic-table{font-size:13px;}}
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="index.html#projects" class="nav-link">Work</a>
+  <a href="info.html" class="nav-link">Info</a>
+  <a href="https://purubhardwajdesign.com" class="nav-link" target="_blank" rel="noopener">Portfolio</a>
+</nav>
+
+<div class="cs-hero">
+  <a href="index.html#projects" class="cs-back">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+    All projects
+  </a>
+  <div class="cs-tags">
+    <span class="cs-tag">Retail UX</span>
+    <span class="cs-tag">Kiosk Design</span>
+    <span class="cs-tag">Heuristic Evaluation</span>
+    <span class="cs-tag">Accessibility</span>
+  </div>
+  <h1 class="cs-title">Safeway Kiosk</h1>
+  <p class="cs-subtitle">A rigorous heuristic evaluation and redesign of Safeway's self-checkout experience — cutting checkout time by 40% and reducing error rates through principled UX methodology.</p>
+  <div class="cs-meta-row">
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Role</span>
+      <span class="cs-meta-value">UX Researcher &amp; Designer</span>
+    </div>
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Method</span>
+      <span class="cs-meta-value">Heuristic Evaluation + Redesign</span>
+    </div>
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Platform</span>
+      <span class="cs-meta-value">Touchscreen Kiosk</span>
+    </div>
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Context</span>
+      <span class="cs-meta-value">Retail / Physical-Digital</span>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:1200px;margin:0 auto;padding:0 var(--margin);">
+  <div class="cs-visual">
+    <div class="cs-visual-inner grad-safeway">
+      <span class="cs-visual-label">Safeway Self-Checkout Kiosk Redesign</span>
+    </div>
+  </div>
+</div>
+
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Overview</p>
+  <h2 class="cs-h2">When the machine is slower than the human — a fixable problem</h2>
+  <p class="cs-body">Self-checkout kiosks promise speed and independence but often deliver frustration. Safeway's existing kiosk experience had accumulated years of incremental additions without a holistic UX review — resulting in a system that violated multiple foundational usability principles and regularly required staff intervention.</p>
+  <p class="cs-body" style="margin-top:16px;">This project applied Nielsen's 10 Heuristics as the analytical framework, identifying severity-rated violations and redesigning each flow from the ground up. The result: a system that actually fulfills the promise of self-checkout — faster, less error-prone, and accessible without assistance.</p>
+
+  <div class="cs-stats">
+    <div class="cs-stat">
+      <span class="cs-stat-number">40%</span>
+      <span class="cs-stat-desc">reduction in average checkout time</span>
+    </div>
+    <div class="cs-stat">
+      <span class="cs-stat-number">10</span>
+      <span class="cs-stat-desc">Nielsen heuristics applied as evaluation framework</span>
+    </div>
+    <div class="cs-stat">
+      <span class="cs-stat-number">84%</span>
+      <span class="cs-stat-desc">user retention post-redesign — fewer abandoned transactions</span>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Heuristic Audit</p>
+  <h2 class="cs-h2">18 violations across 10 principles — catalogued and severity-rated</h2>
+  <p class="cs-body">Before designing a single new screen, I conducted a structured evaluation of the existing kiosk interface against Nielsen's 10 Usability Heuristics. Each violation was documented, rated for severity (1–4 scale), and prioritized for redesign.</p>
+
+  <table class="heuristic-table" style="margin-top:40px;">
+    <thead>
+      <tr>
+        <th>Heuristic</th>
+        <th>Violation Found</th>
+        <th>Severity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Visibility of system status</td>
+        <td>No feedback when item is successfully scanned — users re-scan, causing duplicates</td>
+        <td><span class="severity high">High</span></td>
+      </tr>
+      <tr>
+        <td>Match between system and real world</td>
+        <td>Technical error codes ("Error 4201") with no plain-language explanation</td>
+        <td><span class="severity high">High</span></td>
+      </tr>
+      <tr>
+        <td>User control and freedom</td>
+        <td>No clear way to remove a scanned item — users had to call staff</td>
+        <td><span class="severity high">High</span></td>
+      </tr>
+      <tr>
+        <td>Consistency and standards</td>
+        <td>Buttons for the same action labeled differently across screens ("Done", "Finish", "Complete")</td>
+        <td><span class="severity med">Medium</span></td>
+      </tr>
+      <tr>
+        <td>Error prevention</td>
+        <td>No confirmation before payment — accidental submissions with wrong amounts</td>
+        <td><span class="severity high">High</span></td>
+      </tr>
+      <tr>
+        <td>Recognition over recall</td>
+        <td>Item list hidden behind scroll — users unsure what's in their cart</td>
+        <td><span class="severity med">Medium</span></td>
+      </tr>
+      <tr>
+        <td>Flexibility and efficiency</td>
+        <td>No loyalty card fast-track — frequent shoppers go through same flow as first-timers</td>
+        <td><span class="severity low">Low</span></td>
+      </tr>
+      <tr>
+        <td>Aesthetic and minimalist design</td>
+        <td>14 elements on the main screen — visual noise causes decision paralysis</td>
+        <td><span class="severity med">Medium</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="cs-quote" style="margin-top:48px;">
+    <p>"I scanned the same thing twice because nothing happened when I scanned it the first time. Then I couldn't figure out how to remove it."</p>
+    <cite>— Observed user, contextual research at Safeway location</cite>
+  </div>
+</section>
+
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Process</p>
+  <h2 class="cs-h2">Evaluate, prioritize, redesign — one heuristic at a time</h2>
+  <p class="cs-body">The redesign process followed the evaluation findings strictly — no "while we're at it" scope creep. High-severity violations were redesigned first; medium violations were addressed in the same pass where they intersected with high-severity flows; low-severity issues were documented for a future iteration.</p>
+
+  <div class="cs-steps">
+    <div class="cs-step">
+      <div class="cs-step-num">01</div>
+      <div class="cs-step-title">Evaluate</div>
+      <div class="cs-step-text">Walked through all kiosk flows against all 10 heuristics. Documented 18 violations with screenshots. Rated severity 1–4 per Nielsen's scale.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">02</div>
+      <div class="cs-step-title">Prioritize</div>
+      <div class="cs-step-text">Ranked violations by severity × frequency × fix complexity. Identified 4 critical flows to redesign: scan, cart review, error recovery, and payment.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">03</div>
+      <div class="cs-step-title">Redesign</div>
+      <div class="cs-step-text">High-fidelity kiosk screens for each critical flow. Designed for touchscreen constraints: large tap targets (minimum 44×44dp), high contrast, glanceable information hierarchy.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">04</div>
+      <div class="cs-step-title">Validate</div>
+      <div class="cs-step-text">Moderated usability testing with 8 participants. Timed task completion. Compared error rates and time-on-task against the original system baseline.</div>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Solution</p>
+  <h2 class="cs-h2">A kiosk that works with human behavior, not against it</h2>
+  <p class="cs-body">The redesign addressed every high-severity violation directly. The guiding principle: at a checkout kiosk, every extra second and every confusion moment has a real-world cost — a longer queue, an abandoned transaction, a staff call. The interface should feel faster than a human cashier, not slower.</p>
+
+  <ul class="cs-list" style="max-width:640px;margin-top:32px;">
+    <li><strong>Instant scan feedback:</strong> Green checkmark + item name appears within 200ms of scan. Cart total updates live. No doubt about whether the scan registered.</li>
+    <li><strong>Always-visible cart:</strong> Persistent side panel shows all scanned items — no scrolling, no hiding. Inline "remove" button on each item — no staff needed.</li>
+    <li><strong>Plain-language errors:</strong> "This item needs a cashier to verify your age" instead of "Error 4201." Specific next step on every error screen.</li>
+    <li><strong>Pre-payment summary:</strong> Full cart review screen before any payment action — with one-tap edit for any item. Prevents accidental submissions.</li>
+    <li><strong>Reduced visual noise:</strong> Main scan screen reduced from 14 to 4 primary elements. Progressive disclosure for secondary options (coupons, loyalty, help).</li>
+    <li><strong>Accessibility:</strong> All text at minimum 18pt on kiosk screens. High contrast ratios. Large touch zones. Audio feedback toggle.</li>
+  </ul>
+
+  <div class="cs-visual" style="margin-top:48px;">
+    <div class="cs-visual-inner grad-safeway" style="height:280px;">
+      <span class="cs-visual-label">Redesigned Scan &amp; Cart Review Screens</span>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Results</p>
+  <h2 class="cs-h2">Faster, fewer errors, fewer abandoned checkouts</h2>
+  <p class="cs-body">Usability testing against the original system showed improvements across all measured tasks. Average checkout time dropped 40%. Staff-call incidents in test sessions fell to zero — every error was recoverable without assistance. The 84% transaction completion rate (up from 61% baseline) reflects the direct impact of addressing error prevention and user control heuristics.</p>
+
+  <div class="cs-stats" style="margin-top:48px;">
+    <div class="cs-stat">
+      <span class="cs-stat-number">40%</span>
+      <span class="cs-stat-desc">faster average checkout time in usability tests</span>
+    </div>
+    <div class="cs-stat">
+      <span class="cs-stat-number">0</span>
+      <span class="cs-stat-desc">staff-call incidents during test sessions (down from 6/8 participants)</span>
+    </div>
+    <div class="cs-stat">
+      <span class="cs-stat-number">84%</span>
+      <span class="cs-stat-desc">transaction completion rate, up from 61% baseline</span>
+    </div>
+  </div>
+</section>
+
+<div class="cs-next">
+  <div>
+    <p class="cs-next-label">Next project</p>
+    <a href="crisis-uav.html" class="cs-next-link">
+      Crisis-Courier-UAV
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 16h20M18 8l8 8-8 8"/></svg>
+    </a>
+  </div>
+  <a href="index.html#projects" class="cs-back" style="margin-bottom:0;">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+    All projects
+  </a>
+</div>
+
+<footer class="footer" id="footer">
+  <div class="footer-grid">
+    <div>
+      <p class="footer-tagline">You made it through!</p>
+      <p class="footer-sub">This website was hand-coded with ♥ in HTML, CSS and JS by Puru Bhardwaj.</p>
+    </div>
+    <div>
+      <h3 class="footer-heading">Recent Work</h3>
+      <div class="footer-links">
+        <a href="dreamcollege.html">DreamCollege AI</a>
+        <a href="nature-counter.html">Nature Counter</a>
+        <a href="saarthi.html">Saarthi</a>
+      </div>
+    </div>
+    <div>
+      <h3 class="footer-heading">Say Hi!</h3>
+      <div class="footer-links">
+        <a href="https://linkedin.com/in/purubhardwaj9/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:purubhardwaj99@gmail.com">Email</a>
+        <a href="https://purubhardwajdesign.com" target="_blank" rel="noopener">Portfolio</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Puru Bhardwaj</span>
+    <span class="footer-copy">Visual Product Designer</span>
+  </div>
+</footer>
+
+<script>
+  (function(){const cursor=document.getElementById('cursor');let mx=window.innerWidth/2,my=window.innerHeight/2,cx=mx,cy=my;document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});function animate(){cx+=(mx-cx)*0.15;cy+=(my-cy)*0.15;cursor.style.transform='translate3d('+(cx-6)+'px,'+(cy-6)+'px,0)';requestAnimationFrame(animate);}animate();document.querySelectorAll('a,button').forEach(function(el){el.addEventListener('mouseenter',function(){cursor.classList.add('large');});el.addEventListener('mouseleave',function(){cursor.classList.remove('large');});});const footer=document.querySelector('footer');if(footer){footer.addEventListener('mouseenter',function(){cursor.classList.add('invert');});footer.addEventListener('mouseleave',function(){cursor.classList.remove('invert');});}})();
+  (function(){const els=document.querySelectorAll('[data-reveal]');const io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('revealed');io.unobserve(e.target);}});},{threshold:0.1});els.forEach(function(el){io.observe(el);});})();
+</script>
+</body>
+</html>

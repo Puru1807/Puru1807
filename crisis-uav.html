@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crisis-Courier-UAV — Puru Bhardwaj</title>
+  <meta name="description" content="Disaster-zone UAV supply delivery system — 52% cognitive load reduction, human systems design for high-stakes environments.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>P</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,200;0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root{--text:#040202;--secondary:#AAAAAA;--bg:#FFFFFF;--accent:#F2511A;--row-hover:#F0EFED;--border:#e0deda;--footer-bg:#040202;--margin:40px;--font:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--font);color:var(--text);background:var(--bg);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+    .cursor{width:12px;height:12px;background:var(--text);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width 0.25s,height 0.25s,opacity 0.2s,background 0.2s;will-change:transform;}
+    .cursor.large{width:32px;height:32px;}.cursor.hidden{opacity:0;}.cursor.invert{background:#fff;}
+    nav.nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:center;gap:4px;padding:16px var(--margin);background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);}
+    .nav-link{font-size:14px;font-weight:400;color:var(--text);text-decoration:none;padding:6px 16px;border-radius:20px;transition:background 0.25s,color 0.25s;}
+    .nav-link:hover{background:var(--text);color:#fff;}
+    .cs-hero{padding:140px var(--margin) 80px;max-width:1200px;margin:0 auto;}
+    .cs-back{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--secondary);text-decoration:none;margin-bottom:48px;transition:color 0.2s;}
+    .cs-back:hover{color:var(--text);}.cs-back svg{width:16px;height:16px;}
+    .cs-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+    .cs-tag{font-size:12px;color:var(--secondary);border:1px solid var(--border);border-radius:100px;padding:4px 12px;}
+    .cs-title{font-size:clamp(40px,7vw,80px);font-weight:200;letter-spacing:-0.03em;line-height:1.05;margin-bottom:32px;}
+    .cs-subtitle{font-size:18px;font-weight:300;color:var(--secondary);max-width:640px;line-height:1.6;margin-bottom:48px;}
+    .cs-meta-row{display:flex;gap:48px;flex-wrap:wrap;padding-top:40px;border-top:1px solid var(--border);}
+    .cs-meta-item{display:flex;flex-direction:column;gap:4px;}
+    .cs-meta-label{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--secondary);}
+    .cs-meta-value{font-size:15px;font-weight:400;}
+    .cs-section{max-width:1200px;margin:0 auto;padding:80px var(--margin);border-bottom:1px solid var(--border);}
+    .cs-section-label{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:32px;}
+    .cs-h2{font-size:clamp(28px,4vw,48px);font-weight:200;letter-spacing:-0.02em;line-height:1.15;margin-bottom:24px;}
+    .cs-body{font-size:16px;font-weight:300;line-height:1.8;max-width:720px;}
+    .cs-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:56px;}
+    .cs-stat{display:flex;flex-direction:column;gap:8px;}
+    .cs-stat-number{font-size:clamp(40px,6vw,64px);font-weight:200;color:var(--accent);letter-spacing:-0.04em;line-height:1;}
+    .cs-stat-desc{font-size:14px;color:var(--secondary);line-height:1.5;max-width:200px;}
+    .cs-quote{border-left:3px solid var(--accent);padding:24px 32px;background:var(--row-hover);border-radius:0 8px 8px 0;margin:40px 0;max-width:720px;}
+    .cs-quote p{font-size:18px;font-weight:300;font-style:italic;line-height:1.65;}
+    .cs-quote cite{display:block;margin-top:12px;font-size:13px;color:var(--secondary);font-style:normal;}
+    .cs-two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;margin-top:40px;}
+    .cs-list{list-style:none;margin-top:24px;display:flex;flex-direction:column;gap:16px;}
+    .cs-list li{display:flex;gap:16px;font-size:15px;font-weight:300;line-height:1.6;}
+    .cs-list li::before{content:'—';color:var(--accent);flex-shrink:0;}
+    .cs-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-top:40px;}
+    .cs-step{padding:24px;border:1px solid var(--border);border-radius:8px;}
+    .cs-step-num{font-size:36px;font-weight:200;color:var(--accent);letter-spacing:-0.04em;margin-bottom:12px;}
+    .cs-step-title{font-size:15px;font-weight:500;margin-bottom:8px;}
+    .cs-step-text{font-size:13px;font-weight:300;color:var(--secondary);line-height:1.6;}
+    .cs-visual{width:100%;border-radius:12px;overflow:hidden;margin:40px 0;}
+    .cs-visual-inner{width:100%;height:400px;display:flex;align-items:center;justify-content:center;}
+    .cs-visual-label{font-size:13px;color:rgba(255,255,255,0.7);font-weight:300;letter-spacing:0.05em;}
+    .grad-crisis{background:linear-gradient(135deg,#0f2027 0%,#203a43 40%,#2c5364 100%);}
+    /* Constraint cards */
+    .constraint-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:32px;}
+    .constraint-card{padding:24px;border:1px solid var(--border);border-radius:8px;position:relative;overflow:hidden;}
+    .constraint-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--accent);}
+    .constraint-title{font-size:13px;font-weight:500;margin-bottom:8px;color:var(--text);}
+    .constraint-text{font-size:13px;font-weight:300;color:var(--secondary);line-height:1.6;}
+    .cs-next{max-width:1200px;margin:0 auto;padding:80px var(--margin);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;}
+    .cs-next-label{font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--secondary);margin-bottom:8px;}
+    .cs-next-link{font-size:clamp(24px,3vw,36px);font-weight:200;color:var(--text);text-decoration:none;letter-spacing:-0.02em;transition:color 0.2s;display:flex;align-items:center;gap:16px;}
+    .cs-next-link:hover{color:var(--accent);}
+    .cs-next-link svg{width:32px;height:32px;transition:transform 0.2s;}
+    .cs-next-link:hover svg{transform:translateX(8px);}
+    footer.footer{background:var(--footer-bg);color:#fff;padding:64px var(--margin) 40px;}
+    .footer-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:64px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,0.1);}
+    .footer-tagline{font-size:22px;font-weight:200;line-height:1.5;margin-bottom:16px;}
+    .footer-sub{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6;}
+    .footer-heading{font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:20px;}
+    .footer-links{display:flex;flex-direction:column;gap:12px;}
+    .footer-links a{font-size:15px;font-weight:300;color:rgba(255,255,255,0.8);text-decoration:none;transition:color 0.2s;position:relative;width:fit-content;}
+    .footer-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0%;height:1px;background:var(--accent);transition:width 0.25s ease;}
+    .footer-links a:hover{color:#fff;}.footer-links a:hover::after{width:100%;}
+    .footer-bottom{max-width:1200px;margin:32px auto 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+    .footer-copy{font-size:13px;color:rgba(255,255,255,0.3);}
+    [data-reveal]{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease;}
+    [data-reveal].revealed{opacity:1;transform:none;}
+    @media(max-width:768px){.cs-stats{grid-template-columns:1fr 1fr;}.cs-two-col{grid-template-columns:1fr;gap:32px;}.cs-steps{grid-template-columns:1fr 1fr;}.constraint-grid{grid-template-columns:1fr;}.footer-grid{grid-template-columns:1fr;gap:40px;}}
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav class="nav">
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="index.html#projects" class="nav-link">Work</a>
+  <a href="info.html" class="nav-link">Info</a>
+  <a href="https://purubhardwajdesign.com" class="nav-link" target="_blank" rel="noopener">Portfolio</a>
+</nav>
+
+<div class="cs-hero">
+  <a href="index.html#projects" class="cs-back">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+    All projects
+  </a>
+  <div class="cs-tags">
+    <span class="cs-tag">Human Systems</span>
+    <span class="cs-tag">Disaster Response</span>
+    <span class="cs-tag">UAV Interface</span>
+    <span class="cs-tag">Safety-Critical Design</span>
+  </div>
+  <h1 class="cs-title">Crisis-Courier-UAV</h1>
+  <p class="cs-subtitle">Designing the human interface for an autonomous UAV supply delivery system in disaster zones — where cognitive overload isn't an inconvenience, it's a mission failure.</p>
+  <div class="cs-meta-row">
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Role</span>
+      <span class="cs-meta-value">Human Systems Designer</span>
+    </div>
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Timeline</span>
+      <span class="cs-meta-value">Aug – Dec 2024</span>
+    </div>
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Domain</span>
+      <span class="cs-meta-value">Disaster Relief / UAV Systems</span>
+    </div>
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Context</span>
+      <span class="cs-meta-value">Academic Research</span>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:1200px;margin:0 auto;padding:0 var(--margin);">
+  <div class="cs-visual">
+    <div class="cs-visual-inner grad-crisis">
+      <span class="cs-visual-label">Crisis-Courier-UAV — Ground Control Interface</span>
+    </div>
+  </div>
+</div>
+
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Overview</p>
+  <h2 class="cs-h2">When the interface fails, the mission fails — designing for zero errors under pressure</h2>
+  <p class="cs-body">Crisis-Courier-UAV is an autonomous drone system designed to deliver medical supplies, food, and communications equipment into disaster zones inaccessible to ground vehicles. The human interface — the ground control station used by relief coordinators to manage fleet operations — is where human judgment meets autonomous systems.</p>
+  <p class="cs-body" style="margin-top:16px;">This project applied human factors and safety-critical design principles to the ground control interface. The core design challenge: operators are already under extreme cognitive load from the disaster context. The interface cannot add to that load — it must actively reduce it.</p>
+
+  <div class="cs-stats">
+    <div class="cs-stat">
+      <span class="cs-stat-number">52%</span>
+      <span class="cs-stat-desc">reduction in operator cognitive load (NASA-TLX)</span>
+    </div>
+    <div class="cs-stat">
+      <span class="cs-stat-number">3×</span>
+      <span class="cs-stat-desc">more UAVs manageable per operator vs. baseline system</span>
+    </div>
+    <div class="cs-stat">
+      <span class="cs-stat-number">0</span>
+      <span class="cs-stat-desc">critical errors in simulated disaster scenario testing</span>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">The Challenge</p>
+  <h2 class="cs-h2">Extreme constraints — designing for the worst possible conditions</h2>
+  <p class="cs-body">Disaster zone operation means the operators using this interface are working under conditions that no normal UX research accounts for: physical exhaustion, emotional stress, sleep deprivation, partial information, and time pressure measured in minutes, not hours.</p>
+  <p class="cs-body" style="margin-top:16px;">Standard usability principles — while necessary — aren't sufficient. The design had to draw on aviation human factors, military interface standards (MIL-STD-1472), and emergency dispatch system research to establish the right baseline.</p>
+
+  <div class="constraint-grid">
+    <div class="constraint-card">
+      <div class="constraint-title">Cognitive Overload</div>
+      <div class="constraint-text">Operators managing multiple simultaneous UAV missions while coordinating with field teams via radio and tracking supply inventory.</div>
+    </div>
+    <div class="constraint-card">
+      <div class="constraint-title">Environmental Noise</div>
+      <div class="constraint-text">Field stations may be improvised — poor lighting, generator noise, damaged equipment. Interface must function at 50% visual attention.</div>
+    </div>
+    <div class="constraint-card">
+      <div class="constraint-title">Intermittent Connectivity</div>
+      <div class="constraint-text">Satellite uplink may be degraded or interrupted. Interface must handle partial data and predict UAV state between updates.</div>
+    </div>
+    <div class="constraint-card">
+      <div class="constraint-title">Non-Expert Operators</div>
+      <div class="constraint-text">Relief coordinators are domain experts (logistics, medicine) but not drone pilots. Interface must be learnable in under 2 hours.</div>
+    </div>
+    <div class="constraint-card">
+      <div class="constraint-title">Zero Tolerance for Error</div>
+      <div class="constraint-text">A misrouted UAV carrying insulin to the wrong location isn't a UX problem — it's a life-safety incident. Error prevention is existential.</div>
+    </div>
+    <div class="constraint-card">
+      <div class="constraint-title">Autonomy Calibration</div>
+      <div class="constraint-text">Too much automation: operators lose situational awareness. Too little: they're overwhelmed. The interface must find the right human-automation balance.</div>
+    </div>
+  </div>
+
+  <div class="cs-quote" style="margin-top:48px;">
+    <p>"In a disaster, every decision costs something. The interface can't make me think harder — it has to think with me."</p>
+    <cite>— Emergency logistics coordinator, user research session</cite>
+  </div>
+</section>
+
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Process</p>
+  <h2 class="cs-h2">Human factors methodology — not standard UX practice</h2>
+  <p class="cs-body">This project required stepping beyond typical product design research. I applied a human factors framework: cognitive task analysis (CTA) to understand what operators actually need to think about, workload assessment using NASA-TLX, and simulation-based testing with disaster scenario scripts.</p>
+
+  <div class="cs-steps">
+    <div class="cs-step">
+      <div class="cs-step-num">01</div>
+      <div class="cs-step-title">Cognitive Task Analysis</div>
+      <div class="cs-step-text">Mapped every decision an operator needs to make during active UAV operations. Identified 14 concurrent information needs during peak operations.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">02</div>
+      <div class="cs-step-title">Literature Review</div>
+      <div class="cs-step-text">Aviation HCI, military interface standards (MIL-STD-1472), emergency dispatch research. Established design principles from validated safety-critical systems.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">03</div>
+      <div class="cs-step-title">Design</div>
+      <div class="cs-step-text">Ground control interface with 3 information zones: tactical map (where), fleet status (what), and action queue (what next). Designed for glanceable comprehension.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">04</div>
+      <div class="cs-step-title">Simulation Testing</div>
+      <div class="cs-step-text">4 simulated disaster scenarios with NASA-TLX workload assessment. Compared against baseline interface. Iterated until cognitive load metrics improved by target threshold.</div>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Solution</p>
+  <h2 class="cs-h2">Situational awareness by design — the right information, always visible</h2>
+  <p class="cs-body">The ground control interface is organized around the concept of situational awareness zones: a tactical map at center (geographic reality), fleet status panels at left (UAV states at a glance), and an action queue at right (what decisions need to be made, in priority order). Nothing is hidden behind tabs during active operations.</p>
+
+  <ul class="cs-list" style="max-width:640px;margin-top:32px;">
+    <li><strong>Glanceable fleet status:</strong> Each UAV is a single card showing battery, payload, status, and ETA. Designed to be understood in under 3 seconds without reading.</li>
+    <li><strong>Priority-based action queue:</strong> The interface surfaces decisions that need human input, ranked by urgency. Operators respond to the queue — they don't have to monitor everything constantly.</li>
+    <li><strong>Alert hierarchy:</strong> Three levels of alert — informational (blue), attention (amber), critical (red). Critical alerts include a mandatory acknowledgment step. No alert fatigue from overuse of red.</li>
+    <li><strong>Autonomy dial:</strong> Per-UAV automation level (1–5) lets operators increase human control for sensitive missions (medical delivery to specific recipient) and reduce it for bulk supply runs.</li>
+    <li><strong>Predictive state display:</strong> During connectivity loss, the interface shows last-known state + predicted current position based on flight plan. Prevents false emergency responses.</li>
+    <li><strong>2-hour onboarding:</strong> Role-based interface defaults surface only the features relevant to the operator's task. Advanced controls are present but de-emphasized until needed.</li>
+  </ul>
+
+  <div class="cs-visual" style="margin-top:48px;">
+    <div class="cs-visual-inner grad-crisis" style="height:280px;">
+      <span class="cs-visual-label">Ground Control Station — Tactical Map &amp; Fleet Status View</span>
+    </div>
+  </div>
+</section>
+
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Results</p>
+  <h2 class="cs-h2">Lower load, higher capacity, zero critical errors</h2>
+  <p class="cs-body">Simulation testing against a baseline interface showed substantial improvements across all measured dimensions. The 52% reduction in NASA-TLX cognitive load score was the primary target metric. The increase in manageable UAVs per operator — from 2 to 6 — has direct operational impact on how many people can be reached in a disaster scenario.</p>
+
+  <div class="cs-stats" style="margin-top:48px;">
+    <div class="cs-stat">
+      <span class="cs-stat-number">52%</span>
+      <span class="cs-stat-desc">reduction in NASA-TLX cognitive load score</span>
+    </div>
+    <div class="cs-stat">
+      <span class="cs-stat-number">3×</span>
+      <span class="cs-stat-desc">more UAVs managed per operator (2 → 6)</span>
+    </div>
+    <div class="cs-stat">
+      <span class="cs-stat-number">0</span>
+      <span class="cs-stat-desc">critical mission errors across all simulation runs</span>
+    </div>
+  </div>
+
+  <div class="cs-quote" style="margin-top:48px;">
+    <p>"For the first time I felt like I was flying with the system, not fighting against it. I could actually see what I needed to see."</p>
+    <cite>— Logistics coordinator, post-simulation debrief</cite>
+  </div>
+</section>
+
+<div class="cs-next">
+  <div>
+    <p class="cs-next-label">Back to start</p>
+    <a href="dreamcollege.html" class="cs-next-link">
+      DreamCollege AI
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 16h20M18 8l8 8-8 8"/></svg>
+    </a>
+  </div>
+  <a href="index.html#projects" class="cs-back" style="margin-bottom:0;">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+    All projects
+  </a>
+</div>
+
+<footer class="footer" id="footer">
+  <div class="footer-grid">
+    <div>
+      <p class="footer-tagline">You made it through!</p>
+      <p class="footer-sub">This website was hand-coded with ♥ in HTML, CSS and JS by Puru Bhardwaj.</p>
+    </div>
+    <div>
+      <h3 class="footer-heading">Recent Work</h3>
+      <div class="footer-links">
+        <a href="dreamcollege.html">DreamCollege AI</a>
+        <a href="nature-counter.html">Nature Counter</a>
+        <a href="saarthi.html">Saarthi</a>
+      </div>
+    </div>
+    <div>
+      <h3 class="footer-heading">Say Hi!</h3>
+      <div class="footer-links">
+        <a href="https://linkedin.com/in/purubhardwaj9/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:purubhardwaj99@gmail.com">Email</a>
+        <a href="https://purubhardwajdesign.com" target="_blank" rel="noopener">Portfolio</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Puru Bhardwaj</span>
+    <span class="footer-copy">Visual Product Designer</span>
+  </div>
+</footer>
+
+<script>
+  (function(){const cursor=document.getElementById('cursor');let mx=window.innerWidth/2,my=window.innerHeight/2,cx=mx,cy=my;document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});function animate(){cx+=(mx-cx)*0.15;cy+=(my-cy)*0.15;cursor.style.transform='translate3d('+(cx-6)+'px,'+(cy-6)+'px,0)';requestAnimationFrame(animate);}animate();document.querySelectorAll('a,button').forEach(function(el){el.addEventListener('mouseenter',function(){cursor.classList.add('large');});el.addEventListener('mouseleave',function(){cursor.classList.remove('large');});});const footer=document.querySelector('footer');if(footer){footer.addEventListener('mouseenter',function(){cursor.classList.add('invert');});footer.addEventListener('mouseleave',function(){cursor.classList.remove('invert');});}})();
+  (function(){const els=document.querySelectorAll('[data-reveal]');const io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('revealed');io.unobserve(e.target);}});},{threshold:0.1});els.forEach(function(el){io.observe(el);});})();
+</script>
+</body>
+</html>
