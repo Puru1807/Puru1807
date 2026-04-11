@@ -11,15 +11,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --text: #1C1815;
-      --secondary: #8A8580;
-      --bg: #FAF8F5;
-      --bg-alt: #F2EFE9;
+      --text: #040202;
+      --secondary: #AAAAAA;
+      --bg: #ffffff;
+      --bg-alt: #F0EFED;
       --accent: #F2511A;
       --accent-dim: rgba(242,81,26,0.07);
-      --border: #E4DED6;
-      --row-hover: #EDE9E3;
-      --footer-bg: #1C1815;
+      --border: #e0deda;
+      --row-hover: #F0EFED;
+      --footer-bg: #040202;
       --margin: 40px;
       --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
       --display: 'Space Mono', monospace;
@@ -28,8 +28,7 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; font-size: 16px; }
     body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9998; opacity: 0.4; }
-    ::selection { background: var(--accent); color: #fff; }
+::selection { background: var(--accent); color: #fff; }
     @media (hover: hover) and (pointer: fine) { html, body { cursor: none; } a, button { cursor: none; } }
 
     /* Cursor */
@@ -40,13 +39,60 @@
     @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
 
     /* Nav */
-    nav.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; gap: 4px; padding: 14px var(--margin); background: rgba(250,248,245,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
-    .nav-link { font-family: var(--display); font-size: 12px; font-weight: 400; letter-spacing: 0.04em; color: var(--text); text-decoration: none; padding: 7px 18px; border-radius: 2px; position: relative; z-index: 1; transition: color 0.25s ease; }
-    .nav-link::before { content: ''; position: absolute; inset: 0; background: var(--text); border-radius: 2px; transform: scale(0); transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); z-index: -1; }
+    nav.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; gap: 4px; padding: 14px var(--margin); background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-link { font-family: var(--display); font-size: 12px; font-weight: 400; letter-spacing: 0.04em; color: var(--text); text-decoration: none; padding: 7px 18px; border-radius: 20px; position: relative; z-index: 1; transition: color 0.25s ease; }
+    .nav-link::before { content: ''; position: absolute; inset: 0; background: var(--text); border-radius: 20px; transform: scale(0); transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); z-index: -1; }
     .nav-link:hover { color: var(--bg); }
     .nav-link:hover::before { transform: scale(1); }
     .nav-link.active { color: var(--bg); }
     .nav-link.active::before { transform: scale(1); }
+
+    /* ——— Theme Toggle ——— */
+    .theme-toggle {
+      font-family: var(--display);
+      font-size: 11px;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--secondary);
+      padding: 6px 10px;
+      border-radius: 20px;
+      cursor: none;
+      transition: color 0.25s ease, border-color 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-left: 8px;
+      line-height: 1;
+      letter-spacing: 0.04em;
+    }
+    .theme-toggle:hover {
+      color: var(--text);
+      border-color: var(--text);
+    }
+    .theme-toggle svg {
+      width: 12px;
+      height: 12px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ——— Dark Mode ——— */
+    [data-theme="dark"] {
+      --text: #F0EDE8;
+      --secondary: #777370;
+      --bg: #111010;
+      --bg-alt: #1A1918;
+      --border: #2A2826;
+      --row-hover: #1E1C1B;
+      --footer-bg: #0A0909;
+      --accent-dim: rgba(242, 81, 26, 0.1);
+    }
+    [data-theme="dark"] .nav {
+      background: rgba(17, 16, 16, 0.88);
+    }
 
     /* CS Hero */
     .cs-hero { padding: 140px var(--margin) 72px; max-width: 1200px; margin: 0 auto; }
@@ -167,6 +213,10 @@
   <a href="index.html#projects" class="nav-link">Work</a>
   <a href="info.html" class="nav-link">Info</a>
   <a href="https://purubhardwajdesign.com" class="nav-link" target="_blank" rel="noopener">Portfolio</a>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+    <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+  </button>
 </nav>
 
 <!-- Hero -->
@@ -398,7 +448,7 @@
       requestAnimationFrame(animate);
     }
     animate();
-    document.querySelectorAll('a, button').forEach(function(el) {
+    document.querySelectorAll('a, button, .nav-link, .theme-toggle').forEach(function(el) {
       el.addEventListener('mouseenter', function() { cursor.classList.add('large'); });
       el.addEventListener('mouseleave', function() { cursor.classList.remove('large'); });
     });
@@ -419,6 +469,38 @@
     }, { threshold: 0.1 });
     els.forEach(function(el) { io.observe(el); });
   })();
+
+    // Theme toggle
+    (function() {
+      var toggle = document.getElementById('themeToggle');
+      var moon = toggle.querySelector('.icon-moon');
+      var sun = toggle.querySelector('.icon-sun');
+
+      function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        if (theme === 'dark') {
+          moon.style.display = 'none';
+          sun.style.display = '';
+        } else {
+          moon.style.display = '';
+          sun.style.display = 'none';
+        }
+      }
+
+      var saved = localStorage.getItem('theme');
+      if (saved) {
+        applyTheme(saved);
+      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        applyTheme('dark');
+      }
+
+      toggle.addEventListener('click', function() {
+        var current = document.documentElement.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('theme', next);
+        applyTheme(next);
+      });
+    })();
 </script>
 
 </body>
