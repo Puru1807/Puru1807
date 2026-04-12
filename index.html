@@ -241,17 +241,6 @@
       color: var(--accent);
     }
 
-    .hero-sub {
-      margin-top: 36px;
-      font-family: var(--font);
-      font-size: 15px;
-      font-weight: 400;
-      color: var(--secondary);
-      opacity: 0;
-      animation: fadeInUp 0.5s ease 1.2s forwards;
-      letter-spacing: 0.01em;
-    }
-
     /* ——— Filters ——— */
     .filters {
       padding: 0 var(--margin) 40px;
@@ -259,6 +248,15 @@
       margin: 0 auto;
       opacity: 0;
       animation: fadeInUp 0.5s ease 0.9s forwards;
+    }
+
+    .filters-label {
+      font-family: var(--font);
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--secondary);
+      margin-bottom: 16px;
+      letter-spacing: 0.01em;
     }
 
     .pill-row {
@@ -304,10 +302,10 @@
 
     .project-row {
       display: grid;
-      grid-template-columns: 220px 1fr auto;
+      grid-template-columns: 2fr 3fr;
       gap: var(--gutter);
       align-items: center;
-      padding: 28px 0;
+      padding: 22px 0;
       border-bottom: 1px solid var(--border);
       text-decoration: none;
       color: inherit;
@@ -337,7 +335,7 @@
       border-top-color: transparent;
     }
 
-    .project-name-col {
+    .project-title-col {
       display: flex;
       flex-direction: column;
       gap: 6px;
@@ -345,13 +343,26 @@
 
     .project-name {
       font-family: var(--display);
-      font-size: 15px;
-      font-weight: 700;
+      font-size: 16px;
+      font-weight: 500;
       letter-spacing: -0.01em;
       transition: color 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .project-row:hover .project-name { color: var(--secondary); }
+    .project-name .arrow {
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      font-style: normal;
+    }
+
+    .project-row:hover .project-name .arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
 
     .project-tag {
       font-family: var(--display);
@@ -361,17 +372,24 @@
       letter-spacing: 0.1em;
     }
 
+    .project-desc-col {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
     .project-desc {
       font-family: var(--font);
       font-size: 14px;
       font-weight: 400;
       color: var(--secondary);
       line-height: 1.65;
+      flex: 1;
     }
 
-    .project-arrow {
-      width: 36px;
-      height: 36px;
+    .project-arrow-btn {
+      width: 40px;
+      height: 40px;
       border: 1px solid var(--border);
       border-radius: 50%;
       display: flex;
@@ -381,24 +399,14 @@
       transition: all 0.25s ease;
       flex-shrink: 0;
       font-family: var(--display);
+      opacity: 0;
     }
 
-    .project-arrow span {
-      opacity: 0.3;
-      transition: opacity 0.25s ease, transform 0.25s ease;
-      transform: translateX(-3px);
-      display: inline-block;
-    }
-
-    .project-row:hover .project-arrow {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-    }
-
-    .project-row:hover .project-arrow span {
+    .project-row:hover .project-arrow-btn {
       opacity: 1;
-      transform: translateX(0);
+      background: var(--text);
+      border-color: var(--text);
+      color: var(--bg);
     }
 
     .project-row.hiding {
@@ -633,7 +641,8 @@
 
       .project-row:hover { padding-left: 12px; padding-right: 12px; }
 
-      .project-arrow { display: none; }
+      .project-arrow-btn { display: none; }
+      .project-row { grid-template-columns: 1fr; gap: 8px; }
 
       .footer-top { grid-template-columns: 1fr; gap: 40px; }
       .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
@@ -642,6 +651,66 @@
     @media (max-width: 480px) {
       .pill { font-size: 10px; padding: 6px 12px; }
       .footer-quote { font-size: 18px; }
+    }
+
+    /* ——— Recognition Section ——— */
+    .recognition {
+      padding: 0 var(--margin) 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .recognition-label {
+      font-family: var(--display);
+      font-size: 10px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--secondary);
+      margin-bottom: 24px;
+    }
+
+    .recognition-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .recognition-item {
+      background: var(--bg);
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .recognition-title {
+      font-family: var(--display);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .recognition-org {
+      font-family: var(--font);
+      font-size: 12px;
+      color: var(--secondary);
+    }
+
+    .recognition-year {
+      font-family: var(--display);
+      font-size: 10px;
+      color: var(--secondary);
+      opacity: 0.6;
+      margin-top: 4px;
+      letter-spacing: 0.06em;
+    }
+
+    @media (max-width: 768px) {
+      .recognition-grid { grid-template-columns: 1fr; }
     }
 
     /* ——— Selection ——— */
@@ -669,11 +738,11 @@
   <section class="hero" id="top">
     <p class="hero-eyebrow">Visual Product Designer</p>
     <h1 class="hero-text" id="heroText">I'm Puru, a visual product designer with a love for experimentation, AI-powered experiences, and meaning-making.</h1>
-    <p class="hero-sub">What are you looking for?</p>
   </section>
 
   <!-- Filters -->
   <section class="filters">
+    <p class="filters-label">What are you looking for?</p>
     <div class="pill-row">
       <button class="pill active" data-filter="all">All (6)</button>
       <button class="pill" data-filter="ai">AI &amp; SaaS (2)</button>
@@ -686,57 +755,69 @@
   <section class="projects" id="projects">
 
     <a href="dreamcollege.html" class="project-row" data-categories="ai product" data-preview="dreamcollege">
-      <div class="project-name-col">
-        <span class="project-name">DreamCollege AI</span>
+      <div class="project-title-col">
+        <span class="project-name">DreamCollege AI <span class="arrow">→</span></span>
         <span class="project-tag">Product &amp; AI</span>
       </div>
-      <p class="project-desc">AI-powered SaaS platform serving 150K+ users — 90% trust in AI recommendations, 63% retention lift through conversational UX</p>
-      <div class="project-arrow"><span>&rarr;</span></div>
+      <div class="project-desc-col">
+        <p class="project-desc">AI-powered SaaS platform serving 150K+ users — 90% trust in AI recommendations, 63% retention lift through conversational UX</p>
+        <div class="project-arrow-btn">→</div>
+      </div>
     </a>
 
     <a href="nature-counter.html" class="project-row" data-categories="product" data-preview="nature">
-      <div class="project-name-col">
-        <span class="project-name">Nature Counter</span>
+      <div class="project-title-col">
+        <span class="project-name">Nature Counter <span class="arrow">→</span></span>
         <span class="project-tag">Design Systems</span>
       </div>
-      <p class="project-desc">Scalable design system and visual language for a wellness platform serving 100K+ users, reducing handoff time by 45%</p>
-      <div class="project-arrow"><span>&rarr;</span></div>
+      <div class="project-desc-col">
+        <p class="project-desc">Scalable design system and visual language for a wellness platform serving 100K+ users, reducing handoff time by 45%</p>
+        <div class="project-arrow-btn">→</div>
+      </div>
     </a>
 
     <a href="saarthi.html" class="project-row" data-categories="healthcare product" data-preview="saarthi">
-      <div class="project-name-col">
-        <span class="project-name">Saarthi</span>
+      <div class="project-title-col">
+        <span class="project-name">Saarthi <span class="arrow">→</span></span>
         <span class="project-tag">Healthcare</span>
       </div>
-      <p class="project-desc">Patient management platform for hemophilia NGO — 90% user satisfaction, 62% faster response through intuitive data visualization</p>
-      <div class="project-arrow"><span>&rarr;</span></div>
+      <div class="project-desc-col">
+        <p class="project-desc">Patient management platform for hemophilia NGO — 90% user satisfaction, 62% faster response through intuitive data visualization</p>
+        <div class="project-arrow-btn">→</div>
+      </div>
     </a>
 
     <a href="confidento.html" class="project-row" data-categories="product" data-preview="confidento">
-      <div class="project-name-col">
-        <span class="project-name">TheConfidento</span>
+      <div class="project-title-col">
+        <span class="project-name">TheConfidento <span class="arrow">→</span></span>
         <span class="project-tag">Product 0&#8594;1</span>
       </div>
-      <p class="project-desc">0-to-1 cross-platform communication app — 88% user satisfaction, 4.5-star rating through behavioral design patterns</p>
-      <div class="project-arrow"><span>&rarr;</span></div>
+      <div class="project-desc-col">
+        <p class="project-desc">0-to-1 cross-platform communication app — 88% user satisfaction, 4.5-star rating through behavioral design patterns</p>
+        <div class="project-arrow-btn">→</div>
+      </div>
     </a>
 
     <a href="safeway.html" class="project-row" data-categories="product" data-preview="safeway">
-      <div class="project-name-col">
-        <span class="project-name">Safeway Kiosk</span>
+      <div class="project-title-col">
+        <span class="project-name">Safeway Kiosk <span class="arrow">→</span></span>
         <span class="project-tag">Product &amp; Retail</span>
       </div>
-      <p class="project-desc">Self-checkout experience redesign improving usability and reducing friction — 84% user retention</p>
-      <div class="project-arrow"><span>&rarr;</span></div>
+      <div class="project-desc-col">
+        <p class="project-desc">Self-checkout experience redesign improving usability and reducing friction — 84% user retention</p>
+        <div class="project-arrow-btn">→</div>
+      </div>
     </a>
 
     <a href="crisis-uav.html" class="project-row" data-categories="healthcare" data-preview="crisis">
-      <div class="project-name-col">
-        <span class="project-name">Crisis-Courier-UAV</span>
+      <div class="project-title-col">
+        <span class="project-name">Crisis-Courier-UAV <span class="arrow">→</span></span>
         <span class="project-tag">Human Systems</span>
       </div>
-      <p class="project-desc">Disaster-zone supply delivery UAV — 52% cognitive load reduction through human-centered systems engineering</p>
-      <div class="project-arrow"><span>&rarr;</span></div>
+      <div class="project-desc-col">
+        <p class="project-desc">Disaster-zone supply delivery UAV — 52% cognitive load reduction through human-centered systems engineering</p>
+        <div class="project-arrow-btn">→</div>
+      </div>
     </a>
 
   </section>
@@ -748,6 +829,28 @@
       <span class="preview-metric" id="previewMetric"></span>
     </div>
   </div>
+
+  <!-- Recognition -->
+  <section class="recognition">
+    <p class="recognition-label">Recognition &amp; Awards</p>
+    <div class="recognition-grid">
+      <div class="recognition-item">
+        <span class="recognition-title">Best UX Design — Healthcare</span>
+        <span class="recognition-org">Arizona State University Design Awards</span>
+        <span class="recognition-year">2024</span>
+      </div>
+      <div class="recognition-item">
+        <span class="recognition-title">Product Design Excellence</span>
+        <span class="recognition-org">DreamCollege AI · Shipped to 150K+ Users</span>
+        <span class="recognition-year">2023</span>
+      </div>
+      <div class="recognition-item">
+        <span class="recognition-title">Human Factors Design Award</span>
+        <span class="recognition-org">Crisis-Courier-UAV · Systems Engineering</span>
+        <span class="recognition-year">2024</span>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer class="footer" id="footer">
