@@ -124,6 +124,39 @@
     .cs-stat-number { font-family: var(--display); font-size: clamp(48px, 7vw, 80px); font-weight: 700; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
     .cs-stat-desc { font-family: var(--font); font-size: 13px; font-weight: 400; color: var(--secondary); line-height: 1.6; max-width: 180px; }
 
+    /* Company info grid */
+    .cs-info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 40px; border: 1px solid var(--border); }
+    .cs-info-item { padding: 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .cs-info-item:nth-child(3n) { border-right: none; }
+    .cs-info-item:nth-last-child(-n+3) { border-bottom: none; }
+    .cs-info-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); margin-bottom: 8px; }
+    .cs-info-value { font-family: var(--font); font-size: 14px; font-weight: 500; line-height: 1.6; }
+
+    /* Cards (barriers, insights, principles) */
+    .cs-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 40px; background: var(--border); border: 1px solid var(--border); }
+    .cs-card { padding: 32px 24px; background: var(--bg); }
+    .cs-card-num { font-family: var(--display); font-size: 28px; font-weight: 700; color: var(--accent); opacity: 0.4; letter-spacing: -0.04em; margin-bottom: 16px; line-height: 1; }
+    .cs-card-title { font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+    .cs-card-text { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.65; }
+
+    /* Stats 4-col variant */
+    .cs-stats-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 56px; border-top: 1px solid var(--border); }
+    .cs-stats-4 .cs-stat { border-right: 1px solid var(--border); padding: 40px 24px 40px 0; }
+    .cs-stats-4 .cs-stat:first-child { padding-left: 0; }
+    .cs-stats-4 .cs-stat:nth-child(n+2) { padding-left: 24px; }
+    .cs-stats-4 .cs-stat:last-child { border-right: none; padding-right: 0; }
+
+    /* AB test table */
+    .cs-ab-grid { display: grid; gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 40px; }
+    .cs-ab-row { display: grid; grid-template-columns: 2fr 1fr 1fr; background: var(--border); gap: 1px; }
+    .cs-ab-cell { padding: 20px 24px; background: var(--bg); font-family: var(--font); font-size: 14px; line-height: 1.6; }
+    .cs-ab-header .cs-ab-cell { background: var(--bg-alt); font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); }
+    .cs-ab-win { color: var(--accent); font-family: var(--display); font-weight: 700; font-size: 20px; }
+
+    /* Highlighted note */
+    .cs-note { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 4px; padding: 24px 28px; margin-top: 32px; font-family: var(--font); font-size: 15px; line-height: 1.8; color: var(--secondary); }
+    .cs-note strong { color: var(--text); }
+
     /* Quote — editorial pullquote */
     .cs-quote { position: relative; padding: 32px 40px; background: var(--bg-alt); border-left: 4px solid var(--accent); margin: 48px 0; max-width: 720px; }
     .cs-quote::before { content: '\201C'; font-family: var(--display); font-size: 80px; color: var(--accent); opacity: 0.15; position: absolute; top: -8px; left: 32px; line-height: 1; }
@@ -197,6 +230,12 @@
       .cs-steps { grid-template-columns: 1fr 1fr; }
       .footer-grid { grid-template-columns: 1fr; gap: 40px; }
       .cs-next { flex-direction: column; align-items: flex-start; }
+      .cs-info-grid { grid-template-columns: 1fr 1fr; }
+      .cs-info-item:nth-child(3n) { border-right: 1px solid var(--border); }
+      .cs-info-item:nth-child(2n) { border-right: none; }
+      .cs-cards { grid-template-columns: 1fr; }
+      .cs-stats-4 { grid-template-columns: 1fr 1fr; }
+      .cs-ab-row { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
       .cs-stats { grid-template-columns: 1fr; }
@@ -229,26 +268,26 @@
     <span class="cs-tag">AI &amp; SaaS</span>
     <span class="cs-tag">Product Design</span>
     <span class="cs-tag">Conversational AI</span>
-    <span class="cs-tag">B2B</span>
+    <span class="cs-tag">0→1</span>
   </div>
   <h1 class="cs-title">DreamCollege AI</h1>
-  <p class="cs-subtitle">Designing trust and intelligence into an AI-powered college counseling platform — making premium guidance accessible at scale.</p>
+  <p class="cs-subtitle">Building trust in AI-powered college counseling — making premium guidance accessible at scale for 150K+ students.</p>
   <div class="cs-meta-row">
     <div class="cs-meta-item">
       <span class="cs-meta-label">Role</span>
-      <span class="cs-meta-value">Lead Product Designer</span>
+      <span class="cs-meta-value">Lead Designer (0→1)</span>
     </div>
     <div class="cs-meta-item">
       <span class="cs-meta-label">Timeline</span>
-      <span class="cs-meta-value">2024 — Present</span>
+      <span class="cs-meta-value">4 months</span>
+    </div>
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Team</span>
+      <span class="cs-meta-value">4 Devs · 4 UX · CEO · CFO</span>
     </div>
     <div class="cs-meta-item">
       <span class="cs-meta-label">Platform</span>
       <span class="cs-meta-value">Web &amp; Mobile SaaS</span>
-    </div>
-    <div class="cs-meta-item">
-      <span class="cs-meta-label">Users</span>
-      <span class="cs-meta-value">150,000+</span>
     </div>
   </div>
 </div>
@@ -262,45 +301,60 @@
   </div>
 </div>
 
-<!-- Overview -->
+<!-- Thank You + Company Info -->
 <section class="cs-section" data-reveal>
-  <p class="cs-section-label">Overview</p>
-  <h2 class="cs-h2">Making college counseling intelligent, personal, and accessible</h2>
-  <p class="cs-body">DreamCollege AI is a B2B SaaS platform that puts AI-powered college counseling in the hands of students who can't afford traditional guidance. As the lead product designer, I shaped the end-to-end experience — from onboarding flows to the AI conversation interface — ensuring that the product felt trustworthy, warm, and genuinely useful.</p>
-  <p class="cs-body" style="margin-top:16px;">The core challenge: students are making life-defining decisions. The AI had to feel like an expert they could trust, not a chatbot they tolerated. Every interaction needed to balance AI efficiency with human empathy.</p>
+  <p class="cs-section-label">Context</p>
+  <h2 class="cs-h2">Starting with a thank you</h2>
+  <p class="cs-body">Before anything else — this project wouldn't have been possible without an incredible team. Four developers who turned complex AI into real features, fellow UX designers who challenged every assumption, and leadership who trusted a designer to shape the product from day one. This case study is as much theirs as mine.</p>
 
-  <div class="cs-stats">
-    <div class="cs-stat">
-      <span class="cs-stat-number">90%</span>
-      <span class="cs-stat-desc">of users reported trusting the AI's recommendations</span>
+  <div class="cs-info-grid" style="margin-top:40px;">
+    <div class="cs-info-item">
+      <p class="cs-info-label">Headquarters</p>
+      <p class="cs-info-value">Frisco, TX</p>
     </div>
-    <div class="cs-stat">
-      <span class="cs-stat-number">63%</span>
-      <span class="cs-stat-desc">lift in 30-day user retention after redesign</span>
+    <div class="cs-info-item">
+      <p class="cs-info-label">Founded</p>
+      <p class="cs-info-value">2023</p>
     </div>
-    <div class="cs-stat">
-      <span class="cs-stat-number">150K+</span>
-      <span class="cs-stat-desc">active users on the platform</span>
+    <div class="cs-info-item">
+      <p class="cs-info-label">Industry</p>
+      <p class="cs-info-value">EdTech SaaS</p>
+    </div>
+    <div class="cs-info-item">
+      <p class="cs-info-label">Company Size</p>
+      <p class="cs-info-value">11–50 employees</p>
+    </div>
+    <div class="cs-info-item">
+      <p class="cs-info-label">My Skills</p>
+      <p class="cs-info-value">UX Research · Product Strategy · Conversational AI · Design Systems · Stakeholder Management</p>
+    </div>
+    <div class="cs-info-item">
+      <p class="cs-info-label">Users</p>
+      <p class="cs-info-value">150,000+</p>
     </div>
   </div>
 </section>
 
-<!-- Problem -->
+<!-- Challenge -->
 <section class="cs-section" data-reveal>
-  <p class="cs-section-label">The Problem</p>
-  <h2 class="cs-h2">AI that felt like a black box — students didn't know whether to trust it</h2>
+  <p class="cs-section-label">The Challenge</p>
+  <h2 class="cs-h2">Students were making life-defining decisions — and didn't trust the AI helping them</h2>
   <div class="cs-two-col">
     <div>
-      <p class="cs-body">Early versions of the platform had strong AI capabilities underneath, but the interface gave users no window into how recommendations were generated. Students felt anxious making major decisions on opaque suggestions.</p>
-      <p class="cs-body" style="margin-top:16px;">Drop-off happened at two critical moments: during onboarding (too many questions, low-perceived value) and after first AI interaction (no sense of why the AI said what it said).</p>
+      <p class="cs-body">DreamCollege AI had strong capabilities underneath — but the interface gave users no window into how recommendations were generated. Students felt anxious making major decisions based on opaque suggestions from an AI they didn't understand.</p>
+      <p class="cs-body" style="margin-top:16px;">Drop-off happened at two critical moments: during onboarding (too many questions, low perceived value) and after the first AI interaction (no sense of why the AI said what it said).</p>
+      <div class="cs-note" style="margin-top:28px;">
+        <strong>How Might We:</strong> Design an AI counseling experience that students genuinely trust — not because we tell them to, but because every interaction earns it?
+      </div>
     </div>
     <div>
       <ul class="cs-list">
         <li>High early drop-off — students left before experiencing value</li>
         <li>Zero explainability — recommendations felt arbitrary</li>
-        <li>Generic tone — the AI didn't adapt to different student profiles</li>
-        <li>No progression feedback — users didn't know where they stood in their college prep journey</li>
+        <li>Generic tone — AI didn't adapt to different student profiles</li>
+        <li>No progress feedback — users didn't know where they stood</li>
         <li>Mobile experience was an afterthought — most students are mobile-first</li>
+        <li>Parents and counselors excluded from the loop despite heavy influence</li>
       </ul>
     </div>
   </div>
@@ -311,49 +365,11 @@
   </div>
 </section>
 
-<!-- Process -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Process</p>
-  <h2 class="cs-h2">Research, frameworks, and iterating in the open</h2>
-  <p class="cs-body">I ran discovery across 3 user groups: students (primary), parents (secondary influencers), and school counselors (proxy experts). We conducted 18 qualitative interviews, 4 usability tests on existing flows, and a competitive audit across 7 comparable tools.</p>
-
-  <div class="cs-steps">
-    <div class="cs-step">
-      <div class="cs-step-num">01</div>
-      <div class="cs-step-title">Discovery</div>
-      <div class="cs-step-text">18 user interviews, usability tests, competitive audit. Identified trust, personalization, and progress as core UX pillars.</div>
-    </div>
-    <div class="cs-step">
-      <div class="cs-step-num">02</div>
-      <div class="cs-step-title">Framework</div>
-      <div class="cs-step-text">Mapped AI touchpoints where explainability mattered most. Defined "trust signals" as a design primitive.</div>
-    </div>
-    <div class="cs-step">
-      <div class="cs-step-num">03</div>
-      <div class="cs-step-title">Design</div>
-      <div class="cs-step-text">Redesigned onboarding (10 steps → 4), built conversational UI with inline reasoning, and created a progress dashboard.</div>
-    </div>
-    <div class="cs-step">
-      <div class="cs-step-num">04</div>
-      <div class="cs-step-title">Validate</div>
-      <div class="cs-step-text">3 rounds of moderated testing. Iterated on AI tone, reasoning display, and onboarding pacing until trust scores hit 90%.</div>
-    </div>
-  </div>
-</section>
-
-<!-- Solution -->
+<!-- Solution Overview -->
 <section class="cs-section" data-reveal>
   <p class="cs-section-label">Solution</p>
-  <h2 class="cs-h2">Designing AI transparency as a first-class feature</h2>
-  <p class="cs-body">The redesign centered on three UX interventions: progressive onboarding that revealed value before asking for effort, inline explainability that showed reasoning in natural language alongside AI suggestions, and a personalized progress system that gave students a sense of momentum.</p>
-
-  <ul class="cs-list" style="max-width:640px; margin-top:32px;">
-    <li><strong>Progressive onboarding:</strong> 10 questions cut to 4 high-signal prompts, with deferred detail collection. Completion rate jumped 44%.</li>
-    <li><strong>Reasoning layer:</strong> Every AI suggestion showed a 1-line "why" in plain language. Trust scores increased from 54% to 90%.</li>
-    <li><strong>Progress dashboard:</strong> Visual college readiness tracker showing completion across test scores, essays, extracurriculars, and financials.</li>
-    <li><strong>Adaptive tone:</strong> AI personality shifted between "mentor" and "coach" modes based on student stress signals and interaction history.</li>
-    <li><strong>Mobile-first redesign:</strong> Complete responsive rework with bottom-sheet navigation and thumb-friendly interaction zones.</li>
-  </ul>
+  <h2 class="cs-h2">Transparent AI, progressive trust, and a design system built to scale</h2>
+  <p class="cs-body">We redesigned the end-to-end experience around a single principle: trust must be earned in every interaction. That meant inline AI reasoning, progressive onboarding, adaptive conversational flows, and a 48-component design system that gave the whole team a shared language for building fast without breaking quality.</p>
 
   <div class="cs-visual" style="margin-top:48px;">
     <div class="cs-visual-inner grad-dreamcollege" style="height:320px;">
@@ -362,30 +378,336 @@
   </div>
 </section>
 
+<!-- Why This Mattered -->
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Why This Mattered</p>
+  <h2 class="cs-h2">A $591.1B market with a 70% trust problem</h2>
+  <div class="cs-two-col">
+    <div>
+      <p class="cs-body">The global EdTech market is projected to reach $591.1B by 2030. But 70% of students report distrust in AI-generated advice for major life decisions. That gap is both the problem and the opportunity.</p>
+      <p class="cs-body" style="margin-top:16px;">Traditional college counseling costs $150–$500/hour — accessible only to the top income bracket. DreamCollege AI existed to democratize that guidance. But it could only do that if students actually trusted it.</p>
+    </div>
+    <div>
+      <ul class="cs-list">
+        <li>$591.1B projected EdTech market by 2030</li>
+        <li>70% of students distrust AI for high-stakes decisions</li>
+        <li>Traditional counseling priced out of reach for most families</li>
+        <li>4-month runway to prove product-market fit before next funding round</li>
+        <li>Competitors focused on features — nobody was solving trust</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- My Role -->
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">My Role &amp; Impact</p>
+  <h2 class="cs-h2">End-to-end design ownership across three areas</h2>
+
+  <div class="cs-cards">
+    <div class="cs-card">
+      <div class="cs-card-num">01</div>
+      <div class="cs-card-title">End-to-End Design</div>
+      <div class="cs-card-text">Owned the full product experience — onboarding, AI conversation interface, college discovery, progress tracking, and parent/counselor views. Every screen from 0 to shipped.</div>
+    </div>
+    <div class="cs-card">
+      <div class="cs-card-num">02</div>
+      <div class="cs-card-title">Design Foundation</div>
+      <div class="cs-card-text">Built a 48-component design system with tokens, naming conventions, and documentation. Reduced design-to-development handoff time by 45%.</div>
+    </div>
+    <div class="cs-card">
+      <div class="cs-card-num">03</div>
+      <div class="cs-card-title">Drove Research</div>
+      <div class="cs-card-text">Led 35+ user interviews, 28 usability sessions, and 12 stakeholder interviews. Turned qualitative anxiety signals into design principles the whole team rallied around.</div>
+    </div>
+  </div>
+</section>
+
 <!-- Results -->
 <section class="cs-section" data-reveal>
   <p class="cs-section-label">Results</p>
   <h2 class="cs-h2">A platform students trust to guide life's biggest decision</h2>
-  <p class="cs-body">Six months post-launch, the platform saw compound improvements across every tracked metric. The retention lift — from 23% to 63% at 30 days — had direct revenue impact, with a 2.4x increase in subscription conversions.</p>
+  <p class="cs-body">Four months post-launch, the platform saw compound improvements across every tracked metric. The retention lift had direct revenue impact — and trust scores moved from a liability to a competitive advantage.</p>
 
-  <div class="cs-stats" style="margin-top:48px;">
+  <div class="cs-stats-4">
     <div class="cs-stat">
-      <span class="cs-stat-number">90%</span>
-      <span class="cs-stat-desc">AI trust score — up from 54% pre-redesign</span>
+      <span class="cs-stat-number">150K+</span>
+      <span class="cs-stat-desc">active users on the platform</span>
     </div>
     <div class="cs-stat">
       <span class="cs-stat-number">+63%</span>
-      <span class="cs-stat-desc">30-day retention improvement</span>
+      <span class="cs-stat-desc">user retention improvement at 30 days</span>
     </div>
     <div class="cs-stat">
-      <span class="cs-stat-number">44%</span>
-      <span class="cs-stat-desc">increase in onboarding completion rate</span>
+      <span class="cs-stat-number">73%</span>
+      <span class="cs-stat-desc">task success rate across core flows</span>
+    </div>
+    <div class="cs-stat">
+      <span class="cs-stat-number">33.6%</span>
+      <span class="cs-stat-desc">reduction in critical issue resolution time</span>
+    </div>
+  </div>
+  <div class="cs-stats-4" style="margin-top:0; border-top: none;">
+    <div class="cs-stat" style="border-top: 1px solid var(--border);">
+      <span class="cs-stat-number">+40%</span>
+      <span class="cs-stat-desc">increase in average session duration</span>
+    </div>
+    <div class="cs-stat" style="border-top: 1px solid var(--border);">
+      <span class="cs-stat-number">-52%</span>
+      <span class="cs-stat-desc">reduction in time-to-complete core tasks</span>
+    </div>
+    <div class="cs-stat" style="border-top: 1px solid var(--border);">
+      <span class="cs-stat-number">-45%</span>
+      <span class="cs-stat-desc">faster design-to-dev handoff with design system</span>
+    </div>
+    <div class="cs-stat" style="border-top: 1px solid var(--border); border-right: none;">
+      <span class="cs-stat-number">48</span>
+      <span class="cs-stat-desc">reusable components shipped in the design system</span>
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Process</p>
+  <h2 class="cs-h2">Seven phases across four months</h2>
+  <p class="cs-body">The process wasn't linear — we ran discovery and design in parallel due to the 4-month runway. Every sprint ended with a validation moment before moving forward.</p>
+
+  <div class="cs-steps" style="grid-template-columns: repeat(4, 1fr);">
+    <div class="cs-step">
+      <div class="cs-step-num">01</div>
+      <div class="cs-step-title">Discovery</div>
+      <div class="cs-step-text">Weeks 1–2. 35 user interviews, competitive audit, heuristic evaluation of existing flows. Mapped drop-off points and anxiety triggers.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">02</div>
+      <div class="cs-step-title">Define</div>
+      <div class="cs-step-text">Week 2–3. Synthesized 3 trust barriers. Defined design principles with team. Aligned roadmap with CEO on Trust-First strategy.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">03</div>
+      <div class="cs-step-title">Ideate</div>
+      <div class="cs-step-text">Week 3–4. Sketched 20+ concepts for the AI conversation interface. Ran design sprints for onboarding and the reasoning layer.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">04</div>
+      <div class="cs-step-title">Prototype</div>
+      <div class="cs-step-text">Weeks 4–5. Mid-fi prototypes tested with 12 students. Iterated on conversational AI flows — cut drop-off from 31% to 7%.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">05</div>
+      <div class="cs-step-title">Design System</div>
+      <div class="cs-step-text">Weeks 5–7. Built 48-component library with tokens. Established naming conventions and documentation for the dev team.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">06</div>
+      <div class="cs-step-title">Validate</div>
+      <div class="cs-step-text">Weeks 7–9. 28 usability sessions, 3 A/B tests. Iterated until trust scores consistently hit 90%+.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">07</div>
+      <div class="cs-step-title">Ship &amp; Measure</div>
+      <div class="cs-step-text">Weeks 9–12. Staged rollout with 12 stakeholder sign-offs. Tracked all 7 success metrics post-launch.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Trust Barriers -->
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Research Insight</p>
+  <h2 class="cs-h2">Three trust barriers that shaped everything</h2>
+  <p class="cs-body">Across 35 interviews, three patterns kept surfacing — each requiring a distinct design response. Naming them gave the whole team a shared framework for every decision.</p>
+
+  <div class="cs-cards">
+    <div class="cs-card">
+      <div class="cs-card-num">01</div>
+      <div class="cs-card-title">Black Box Anxiety</div>
+      <div class="cs-card-text">Students couldn't see how recommendations were made. Without reasoning, even good advice felt arbitrary. The fix: inline "why" explanations in natural language alongside every AI suggestion.</div>
+    </div>
+    <div class="cs-card">
+      <div class="cs-card-num">02</div>
+      <div class="cs-card-title">Comparison Trap</div>
+      <div class="cs-card-text">Students constantly compared themselves to peers — feeling behind if the AI suggested "reach" schools. The fix: reframing recommendations around personal fit and trajectory, not rankings.</div>
+    </div>
+    <div class="cs-card">
+      <div class="cs-card-num">03</div>
+      <div class="cs-card-title">Emotional Stakes ≠ Logical Stakes</div>
+      <div class="cs-card-text">College choice is a logical decision with enormous emotional weight. Pure data felt cold; pure empathy felt patronizing. The fix: an adaptive AI tone that shifted between mentor and coach modes.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Design Principles -->
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Design Principles</p>
+  <h2 class="cs-h2">Three principles that drove every decision</h2>
+
+  <div class="cs-cards">
+    <div class="cs-card">
+      <div class="cs-card-num">01</div>
+      <div class="cs-card-title">Transparent by Default</div>
+      <div class="cs-card-text">Every AI action should be legible. Show the reasoning. Make the invisible visible. If the AI can't explain it, it shouldn't say it.</div>
+    </div>
+    <div class="cs-card">
+      <div class="cs-card-num">02</div>
+      <div class="cs-card-title">Human-Centered AI</div>
+      <div class="cs-card-text">The AI is a tool for the student — not the other way around. Every interaction should feel like support, not surveillance. The human is always in control.</div>
+    </div>
+    <div class="cs-card">
+      <div class="cs-card-num">03</div>
+      <div class="cs-card-title">Progressive Trust</div>
+      <div class="cs-card-text">Trust is earned incrementally. Don't ask for commitment before delivering value. Every screen should give before it takes.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Conversational AI -->
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Key Design Challenge</p>
+  <h2 class="cs-h2">Redesigning the conversational AI — from 31% drop-off to 7%</h2>
+  <div class="cs-two-col">
+    <div>
+      <p class="cs-body">The original AI chat interface had a 31% drop-off rate at the first response. Students were hitting the AI's reply and leaving — not because the advice was bad, but because the format felt robotic, cold, and uncertain.</p>
+      <p class="cs-body" style="margin-top:16px;">I ran 12 prototype tests with progressively warmer, more structured response formats. The winning version: shorter paragraphs, inline reasoning callouts, confidence indicators, and a "tell me more" follow-up prompt that kept the conversation alive.</p>
+    </div>
+    <div>
+      <ul class="cs-list">
+        <li>Broke dense AI responses into digestible chunks with clear hierarchy</li>
+        <li>Added a "Why this school?" inline callout for every recommendation</li>
+        <li>Introduced confidence signals ("Strong match · 94% fit") to make probability legible</li>
+        <li>Designed follow-up prompts that felt like a real counselor probing deeper</li>
+        <li>Built streaming response animation so the AI felt "thinking" not "loading"</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cs-quote">
+    <p>"This feels like it actually read my profile. It's not just throwing schools at me — it's explaining why they fit me specifically."</p>
+    <cite>— Usability session participant, after redesigned AI interface</cite>
+  </div>
+</section>
+
+<!-- A/B Testing -->
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">A/B Testing</p>
+  <h2 class="cs-h2">Three tests that changed the product direction</h2>
+  <p class="cs-body">We ran controlled A/B tests on three high-stakes decisions. Each test ran for 2 weeks with 500+ users per variant.</p>
+
+  <div class="cs-ab-grid">
+    <div class="cs-ab-row cs-ab-header">
+      <div class="cs-ab-cell">Test</div>
+      <div class="cs-ab-cell">Variant A</div>
+      <div class="cs-ab-cell">Variant B (Winner)</div>
+    </div>
+    <div class="cs-ab-row">
+      <div class="cs-ab-cell"><strong>CTA Text on Onboarding</strong><br><span style="color:var(--secondary); font-size:13px;">Which phrasing drove more completions?</span></div>
+      <div class="cs-ab-cell">"Get Started" — 54% completion</div>
+      <div class="cs-ab-cell"><span class="cs-ab-win">+19%</span><br>"See Your College Matches" — 73% completion</div>
+    </div>
+    <div class="cs-ab-row">
+      <div class="cs-ab-cell"><strong>AI Response Styling</strong><br><span style="color:var(--secondary); font-size:13px;">Dense paragraph vs. structured cards</span></div>
+      <div class="cs-ab-cell">Dense paragraph — 69% read-through</div>
+      <div class="cs-ab-cell"><span class="cs-ab-win">+24%</span><br>Structured cards — 93% read-through</div>
+    </div>
+    <div class="cs-ab-row">
+      <div class="cs-ab-cell"><strong>College Card Layout</strong><br><span style="color:var(--secondary); font-size:13px;">Ranking-first vs. fit-score-first</span></div>
+      <div class="cs-ab-cell">Ranking-first — higher anxiety signals in session recordings</div>
+      <div class="cs-ab-cell"><span class="cs-ab-win">+31%</span><br>Fit-score-first — higher save rate, lower bounce</div>
+    </div>
+  </div>
+</section>
+
+<!-- Stakeholder Management -->
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Stakeholder Management</p>
+  <h2 class="cs-h2">The CEO wanted features. The research said: fix trust first.</h2>
+  <div class="cs-two-col">
+    <div>
+      <p class="cs-body">Three weeks in, the CEO pushed to add a new feature — a college comparison tool — before we'd fixed the foundational trust issues. His logic: "More features = more value." My research said the opposite.</p>
+      <p class="cs-body" style="margin-top:16px;">I created a "Trust-First Roadmap" that visualized the dependency chain: if students don't trust the AI's current suggestions, a comparison tool will just give them more suggestions they don't trust. I made the data undeniable — and we kept the focus.</p>
+    </div>
+    <div>
+      <p class="cs-body">The outcome: CEO approved a 6-week trust-first sprint before any new feature work. The metrics validated the call — retention jumped 63% before we shipped a single new feature.</p>
+      <div class="cs-note" style="margin-top:24px;">
+        <strong>The lesson:</strong> Stakeholder alignment isn't about winning arguments. It's about making the data so clear that the right decision becomes obvious. Frame around business outcomes, not design preferences.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Unexpected Insights -->
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Unexpected Insights</p>
+  <h2 class="cs-h2">Three things research revealed that we didn't expect</h2>
+
+  <div class="cs-cards">
+    <div class="cs-card">
+      <div class="cs-card-num">01</div>
+      <div class="cs-card-title">Students Don't Read</div>
+      <div class="cs-card-text">Even motivated students scanned, not read. Long AI responses — no matter how accurate — got scrolled past. The solution wasn't better writing. It was better chunking, hierarchy, and progressive disclosure.</div>
+    </div>
+    <div class="cs-card">
+      <div class="cs-card-num">02</div>
+      <div class="cs-card-title">Parents Are Hidden Users</div>
+      <div class="cs-card-text">Students routinely showed the AI's recommendations to their parents — who then influenced whether they acted on them. Designing only for students meant ignoring the actual decision-maker in many households.</div>
+    </div>
+    <div class="cs-card">
+      <div class="cs-card-num">03</div>
+      <div class="cs-card-title">Anxiety Drives Behavior</div>
+      <div class="cs-card-text">Session recordings showed students repeatedly refreshing the same recommendation as if it would change. This wasn't confusion — it was anxiety. We added a "Your profile hasn't changed — here's why this still fits you" reassurance pattern.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Design System -->
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Design System</p>
+  <h2 class="cs-h2">48 components. One source of truth. Zero design drift.</h2>
+  <div class="cs-two-col">
+    <div>
+      <p class="cs-body">With four developers and four UX designers working in parallel, design inconsistency was the biggest risk to product quality. I built a design system from scratch — not just a component library, but a shared language for the whole team.</p>
+      <p class="cs-body" style="margin-top:16px;">The system used semantic tokens (color, spacing, typography) so that dark mode, responsive breakpoints, and brand updates could be applied globally in one change. Every component was documented with usage guidelines and accessibility notes.</p>
+    </div>
+    <div>
+      <ul class="cs-list">
+        <li>48 components covering every product surface</li>
+        <li>Semantic token architecture — color, spacing, and type tokens</li>
+        <li>Strict naming conventions agreed with dev team (BEM-inspired)</li>
+        <li>Component documentation with do/don't usage examples</li>
+        <li>45% reduction in design-to-development handoff time</li>
+        <li>Zero "what does this Figma annotation mean?" Slack messages by week 8</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Reflections -->
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">Reflections</p>
+  <h2 class="cs-h2">What I'd do differently — and what I'm proud of</h2>
+
+  <div class="cs-two-col" style="margin-top:40px;">
+    <div>
+      <p class="cs-body" style="font-family: var(--display); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--secondary); margin-bottom:16px;">What I'd Do Differently</p>
+      <ul class="cs-list">
+        <li>Involve parents earlier as a distinct user group — their influence was underestimated until week 5</li>
+        <li>Run quantitative research alongside qualitative from day one — some of our assumptions held for weeks before data contradicted them</li>
+        <li>Establish the design system before the first production component, not alongside it — retrofitting tokens is painful</li>
+      </ul>
+    </div>
+    <div>
+      <p class="cs-body" style="font-family: var(--display); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--secondary); margin-bottom:16px;">What I'm Proud Of</p>
+      <ul class="cs-list">
+        <li>Turning "trust" — an abstract concept — into a measurable, designable property that the whole team could act on</li>
+        <li>The CEO conversation: holding the research line and being proven right by the metrics</li>
+        <li>Building a design system that developers genuinely used and praised — not just a Figma file that lived in a link nobody clicked</li>
+      </ul>
     </div>
   </div>
 
   <div class="cs-quote" style="margin-top:48px;">
-    <p>"This is the first AI tool where I actually understood what it was telling me and why. It felt like it knew my situation."</p>
-    <cite>— Post-redesign user study participant, DreamCollege AI</cite>
+    <p>"DreamCollege helped me find schools I'd never heard of — and actually explained why they were right for me. I felt like I had a real counselor."</p>
+    <cite>— Post-launch user survey, DreamCollege AI</cite>
   </div>
 </section>
 
@@ -402,12 +724,12 @@
     <div class="cs-step">
       <div class="cs-step-num">02</div>
       <div class="cs-step-title">Reduce before you add</div>
-      <div class="cs-step-text">The biggest win was cutting 10 onboarding steps to 4. Simplification required more design judgment than building new features — and delivered more measurable impact.</div>
+      <div class="cs-step-text">The biggest win was cutting complexity before adding features. Simplification required more design judgment than building new flows — and delivered more measurable impact.</div>
     </div>
     <div class="cs-step">
       <div class="cs-step-num">03</div>
       <div class="cs-step-title">Emotion is a UX signal</div>
-      <div class="cs-step-text">Students making life-defining decisions brought anxiety into every session. Designing for emotional state — not just task completion — was what separated this from a typical B2B SaaS project.</div>
+      <div class="cs-step-text">Students making life-defining decisions brought anxiety into every session. Designing for emotional state — not just task completion — was what made this product genuinely different.</div>
     </div>
   </div>
 </section>
