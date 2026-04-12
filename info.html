@@ -32,7 +32,7 @@
     .cursor.invert.large { background: var(--accent); }
     @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
 
-    .nav { position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: center; align-items: center; gap: 4px; padding: 14px var(--margin); z-index: 1000; background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); opacity: 0; animation: fadeIn 0.6s ease 0.2s forwards; }
+    .nav { position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: flex-start; align-items: center; gap: 4px; padding: 14px var(--margin); z-index: 1000; background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); opacity: 0; animation: fadeIn 0.6s ease 0.2s forwards; }
     .nav-link { font-family: var(--display); font-size: 12px; font-weight: 400; letter-spacing: 0.04em; color: var(--text); text-decoration: none; padding: 7px 18px; border-radius: 20px; position: relative; z-index: 1; transition: color 0.25s ease; }
     .nav-link::before { content: ''; position: absolute; inset: 0; background: var(--text); border-radius: 20px; transform: scale(0); transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); z-index: -1; }
     .nav-link:hover { color: var(--bg); }
@@ -54,7 +54,7 @@
       display: flex;
       align-items: center;
       gap: 5px;
-      margin-left: 8px;
+      margin-left: auto;
       line-height: 1;
       letter-spacing: 0.04em;
     }
@@ -89,7 +89,7 @@
 
     /* ——— Info Hero ——— */
     .info-hero { padding: 140px var(--margin) 80px; max-width: 1200px; margin: 0 auto; border-bottom: 1px solid var(--border); }
-    .info-eyebrow { font-family: var(--display); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 32px; }
+    .info-eyebrow { font-family: var(--display); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--secondary); margin-bottom: 32px; }
     .info-title { font-family: var(--display); font-size: clamp(28px, 4.5vw, 60px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 40px; max-width: 860px; opacity: 0; animation: fadeInUp 0.7s ease 0.5s forwards; }
     .info-bio { font-family: var(--font); font-size: clamp(15px, 1.6vw, 17px); font-weight: 400; line-height: 1.8; max-width: 660px; color: var(--text); opacity: 0; animation: fadeInUp 0.7s ease 0.7s forwards; }
     .info-bio + .info-bio { margin-top: 20px; }

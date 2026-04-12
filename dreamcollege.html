@@ -39,7 +39,7 @@
     @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
 
     /* Nav */
-    nav.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; gap: 4px; padding: 14px var(--margin); background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    nav.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: flex-start; gap: 4px; padding: 14px var(--margin); background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
     .nav-link { font-family: var(--display); font-size: 12px; font-weight: 400; letter-spacing: 0.04em; color: var(--text); text-decoration: none; padding: 7px 18px; border-radius: 20px; position: relative; z-index: 1; transition: color 0.25s ease; }
     .nav-link::before { content: ''; position: absolute; inset: 0; background: var(--text); border-radius: 20px; transform: scale(0); transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); z-index: -1; }
     .nav-link:hover { color: var(--bg); }
@@ -61,7 +61,7 @@
       display: flex;
       align-items: center;
       gap: 5px;
-      margin-left: 8px;
+      margin-left: auto;
       line-height: 1;
       letter-spacing: 0.04em;
     }
@@ -307,7 +307,7 @@
 
   <div class="cs-quote">
     <p>"I don't understand why it recommended these schools. How does it know what's right for me?"</p>
-    <cite>— User interview, sophomore student, user testing session</cite>
+    <cite>— Sophomore student, user interview</cite>
   </div>
 </section>
 
@@ -385,7 +385,30 @@
 
   <div class="cs-quote" style="margin-top:48px;">
     <p>"This is the first AI tool where I actually understood what it was telling me and why. It felt like it knew my situation."</p>
-    <cite>— Post-redesign user study participant</cite>
+    <cite>— Post-redesign user study participant, DreamCollege AI</cite>
+  </div>
+</section>
+
+<!-- What I Learned -->
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">What I Learned</p>
+  <h2 class="cs-h2">Three things this project taught me</h2>
+  <div class="cs-steps">
+    <div class="cs-step">
+      <div class="cs-step-num">01</div>
+      <div class="cs-step-title">Trust is designed, not assumed</div>
+      <div class="cs-step-text">Users don't trust AI because it's capable — they trust it when the interface makes reasoning legible. Explainability is a design feature, not an engineering afterthought.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">02</div>
+      <div class="cs-step-title">Reduce before you add</div>
+      <div class="cs-step-text">The biggest win was cutting 10 onboarding steps to 4. Simplification required more design judgment than building new features — and delivered more measurable impact.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">03</div>
+      <div class="cs-step-title">Emotion is a UX signal</div>
+      <div class="cs-step-text">Students making life-defining decisions brought anxiety into every session. Designing for emotional state — not just task completion — was what separated this from a typical B2B SaaS project.</div>
+    </div>
   </div>
 </section>
 

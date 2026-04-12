@@ -25,7 +25,7 @@
     .cursor { width: 12px; height: 12px; background: var(--text); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999; transform: translate(-50%, -50%); transition: transform 0.15s ease, background 0.2s, opacity 0.2s, width 0.25s ease, height 0.25s ease; will-change: transform; }
     .cursor.large { width: 32px; height: 32px; } .cursor.hidden { opacity: 0; } .cursor.invert { background: var(--bg); }
     @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
-    nav.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; gap: 4px; padding: 14px var(--margin); background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    nav.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: flex-start; gap: 4px; padding: 14px var(--margin); background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
     .nav-link { font-family: var(--display); font-size: 12px; font-weight: 400; letter-spacing: 0.04em; color: var(--text); text-decoration: none; padding: 7px 18px; border-radius: 20px; position: relative; z-index: 1; transition: color 0.25s ease; }
     .nav-link::before { content: ''; position: absolute; inset: 0; background: var(--text); border-radius: 20px; transform: scale(0); transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); z-index: -1; }
     .nav-link:hover { color: var(--bg); } .nav-link:hover::before { transform: scale(1); } .nav-link.active { color: var(--bg); } .nav-link.active::before { transform: scale(1); }
@@ -319,6 +319,29 @@
   <div class="cs-quote" style="margin-top:48px;">
     <p>"This is the first app where I actually read what it was asking for — because it explained it in plain English and gave me real choices."</p>
     <cite>— App Store review, launch week</cite>
+  </div>
+</section>
+
+<!-- What I Learned -->
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">What I Learned</p>
+  <h2 class="cs-h2">Building from zero teaches you what matters</h2>
+  <div class="cs-steps">
+    <div class="cs-step">
+      <div class="cs-step-num">01</div>
+      <div class="cs-step-title">0-to-1 demands opinionated design</div>
+      <div class="cs-step-text">Without an existing product to react to, every decision required first principles thinking. The temptation to add features was constant — the discipline was in knowing what to leave out.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">02</div>
+      <div class="cs-step-title">Behavioral design is different from interface design</div>
+      <div class="cs-step-text">An app meant to change behavior requires designing habit loops and emotional momentum, not just usable screens. The streak system and micro-celebrations were as important as the core feature set.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">03</div>
+      <div class="cs-step-title">Cross-platform means two separate design problems</div>
+      <div class="cs-step-text">iOS and Android users have deeply different mental models. Building for both required learning platform conventions rather than forcing a single design language onto two different contexts.</div>
+    </div>
   </div>
 </section>
 

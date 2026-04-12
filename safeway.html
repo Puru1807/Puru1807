@@ -25,7 +25,7 @@
     .cursor { width: 12px; height: 12px; background: var(--text); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999; transform: translate(-50%, -50%); transition: transform 0.15s ease, background 0.2s, opacity 0.2s, width 0.25s ease, height 0.25s ease; will-change: transform; }
     .cursor.large { width: 32px; height: 32px; } .cursor.hidden { opacity: 0; } .cursor.invert { background: var(--bg); }
     @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
-    nav.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; gap: 4px; padding: 14px var(--margin); background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    nav.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: flex-start; gap: 4px; padding: 14px var(--margin); background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
     .nav-link { font-family: var(--display); font-size: 12px; font-weight: 400; letter-spacing: 0.04em; color: var(--text); text-decoration: none; padding: 7px 18px; border-radius: 20px; position: relative; z-index: 1; transition: color 0.25s ease; }
     .nav-link::before { content: ''; position: absolute; inset: 0; background: var(--text); border-radius: 20px; transform: scale(0); transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); z-index: -1; }
     .nav-link:hover { color: var(--bg); } .nav-link:hover::before { transform: scale(1); } .nav-link.active { color: var(--bg); } .nav-link.active::before { transform: scale(1); }
@@ -334,6 +334,29 @@
     <div class="cs-stat">
       <span class="cs-stat-number">84%</span>
       <span class="cs-stat-desc">transaction completion rate, up from 61% baseline</span>
+    </div>
+  </div>
+</section>
+
+<!-- What I Learned -->
+<section class="cs-section" data-reveal>
+  <p class="cs-section-label">What I Learned</p>
+  <h2 class="cs-h2">Retail UX is high-stakes, time-pressured design</h2>
+  <div class="cs-steps">
+    <div class="cs-step">
+      <div class="cs-step-num">01</div>
+      <div class="cs-step-title">Error prevention beats error recovery</div>
+      <div class="cs-step-text">The biggest kiosk frustrations weren't complex — they were preventable. Clear affordances, better weight sensor feedback, and pre-emptive guidance reduced errors before they happened.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">02</div>
+      <div class="cs-step-title">Heuristics are a starting point, not a conclusion</div>
+      <div class="cs-step-text">The heuristic evaluation surfaced problems efficiently, but contextual observation revealed the real pain: time pressure, embarrassment of errors, and anxiety about holding up the line. Frameworks miss emotion.</div>
+    </div>
+    <div class="cs-step">
+      <div class="cs-step-num">03</div>
+      <div class="cs-step-title">Designing for varied literacy levels</div>
+      <div class="cs-step-text">Self-checkout serves everyone — from tech-native shoppers to elderly users who've never used a touchscreen. Every design decision had to work across the widest possible range without a help button.</div>
     </div>
   </div>
 </section>
