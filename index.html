@@ -149,34 +149,54 @@
 
     /* ——— Theme Toggle ——— */
     .theme-toggle {
-      font-family: var(--display);
-      font-size: 11px;
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--secondary);
-      padding: 6px 10px;
-      border-radius: 20px;
+      background: var(--bg-alt);
+      border: 1.5px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 100px;
       cursor: none;
-      transition: color 0.25s ease, border-color 0.25s ease;
+      transition: background 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
       display: flex;
       align-items: center;
-      gap: 5px;
+      justify-content: center;
       margin-left: auto;
       line-height: 1;
-      letter-spacing: 0.04em;
+      flex-shrink: 0;
     }
     .theme-toggle:hover {
-      color: var(--text);
       border-color: var(--text);
+      transform: scale(1.05);
     }
-    .theme-toggle svg {
-      width: 12px;
-      height: 12px;
-      stroke: currentColor;
-      fill: none;
+    .theme-toggle:active { transform: scale(0.96); }
+
+    /* Sun icon — shown in dark mode to switch to light */
+    .icon-sun {
+      width: 20px;
+      height: 20px;
+      stroke: #F59E0B;
+      fill: #F59E0B;
       stroke-width: 1.5;
       stroke-linecap: round;
       stroke-linejoin: round;
+      filter: drop-shadow(0 0 6px rgba(245,158,11,0.55));
+      display: none;
+    }
+
+    /* Moon icon — shown in light mode to switch to dark */
+    .icon-moon {
+      width: 19px;
+      height: 19px;
+      stroke: #6B7EAA;
+      fill: #6B7EAA;
+      stroke-width: 0;
+      filter: drop-shadow(0 0 5px rgba(107,126,170,0.4));
+    }
+
+    [data-theme="dark"] .theme-toggle {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.1);
+    }
+    [data-theme="dark"] .theme-toggle:hover {
+      border-color: rgba(255,255,255,0.25);
     }
 
     /* ——— Dark Mode ——— */
@@ -206,6 +226,15 @@
       padding: 90px var(--margin) 60px;
       max-width: 1200px;
       margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
     }
 
     .hero-eyebrow {
@@ -225,9 +254,47 @@
       font-weight: 300;
       line-height: 1.1;
       letter-spacing: -0.02em;
-      max-width: 80%;
       color: var(--text);
     }
+
+    /* ——— Hero Spline ——— */
+    .hero-spline {
+      opacity: 0;
+      animation: fadeInUp 0.9s ease 0.6s forwards;
+    }
+
+    .spline-wrap {
+      position: relative;
+      width: 100%;
+      height: 460px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    .spline-wrap canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+      pointer-events: auto;
+    }
+
+    .spline-loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--display);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .spline-loading.hidden { opacity: 0; }
 
     .hero-text .word {
       display: inline-block;
@@ -624,6 +691,14 @@
     }
 
     /* ——— Responsive ——— */
+    @media (max-width: 960px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .spline-wrap { height: 360px; }
+    }
+
     @media (max-width: 768px) {
       :root { --margin: 20px; --gutter: 20px; }
 
@@ -631,7 +706,7 @@
       .nav-link { font-size: 11px; padding: 6px 12px; }
 
       .hero { padding: 110px var(--margin) 36px; }
-      .hero-text { max-width: 100%; }
+      .spline-wrap { height: 280px; pointer-events: none; }
 
       .project-row {
         grid-template-columns: 1fr;
@@ -729,15 +804,37 @@
     <a href="info.html" class="nav-link">Info</a>
     <a href="https://purubhardwajdesign.com" class="nav-link" target="_blank" rel="noopener">Portfolio</a>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      <svg class="icon-sun" viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <!-- Moon — shown in light mode -->
+      <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      <!-- Sun — shown in dark mode -->
+      <svg class="icon-sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="12" y1="21" x2="12" y2="23" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="1" y1="12" x2="3" y2="12" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="21" y1="12" x2="23" y2="12" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
     </button>
   </nav>
 
   <!-- Hero -->
   <section class="hero" id="top">
-    <p class="hero-eyebrow">Visual Product Designer · Arizona State University</p>
-    <h1 class="hero-text" id="heroText">An artist turned product designer, blending creativity and strategy to deliver impactful solutions.</h1>
+    <div class="hero-left">
+      <p class="hero-eyebrow">Visual Product Designer · Arizona State University</p>
+      <h1 class="hero-text" id="heroText">An artist turned product designer, blending creativity and strategy to deliver impactful solutions.</h1>
+    </div>
+    <div class="hero-spline">
+      <div class="spline-wrap">
+        <div class="spline-loading" id="splineLoading">Loading scene…</div>
+        <canvas id="canvas3d"></canvas>
+      </div>
+    </div>
   </section>
 
   <!-- Filters -->
@@ -1066,17 +1163,17 @@
       });
     })();
 
-    // ——— Subtle Parallax on Hero ———
+    // ——— Subtle Parallax on Hero Left ———
     (function() {
-      const hero = document.querySelector('.hero-text');
+      const heroLeft = document.querySelector('.hero-left');
+      if (!heroLeft) return;
       let ticking = false;
-
       window.addEventListener('scroll', function() {
         if (!ticking) {
           requestAnimationFrame(function() {
             const scrollY = window.scrollY;
             if (scrollY < 600) {
-              hero.style.transform = 'translateY(' + (scrollY * 0.08) + 'px)';
+              heroLeft.style.transform = 'translateY(' + (scrollY * 0.06) + 'px)';
             }
             ticking = false;
           });
@@ -1084,6 +1181,9 @@
         }
       });
     })();
+
+    // ——— Parallax targets .hero-left only ———
+    // (override previous parallax that targeted .hero-text directly)
 
     // Theme toggle
     (function() {
@@ -1116,7 +1216,24 @@
         applyTheme(next);
       });
     })();
+
+
   </script>
+
+  <script type="module">
+    import { Application } from 'https://esm.sh/@splinetool/runtime';
+    const canvas = document.getElementById('canvas3d');
+    const loading = document.getElementById('splineLoading');
+    if (canvas) {
+      const app = new Application(canvas);
+      app.load('https://prod.spline.design/jKXNiuvMm36UHlJa/scene.splinecode')
+        .then(() => { if (loading) loading.classList.add('hidden'); })
+        .catch(() => { if (loading) loading.textContent = 'Scene unavailable'; });
+    }
+  </script>
+
+  <!-- Chatbase Widget -->
+  <script>(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="2vjF7npvsR2sIMI6aaciU";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();</script>
 
 </body>
 </html>
