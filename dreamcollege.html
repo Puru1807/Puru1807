@@ -10,11 +10,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
   <style>
+    /* ── Tokens ── */
     :root {
       --text: #040202; --secondary: #AAAAAA; --bg: #ffffff;
       --bg-alt: #F0EFED; --accent: #F2511A; --accent-dim: rgba(242,81,26,0.07);
-      --border: #e0deda; --row-hover: #F0EFED; --footer-bg: #040202;
-      --margin: 40px; --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --border: #e0deda; --footer-bg: #040202;
+      --margin: 40px;
+      --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
       --display: 'Space Mono', monospace;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -23,168 +25,239 @@
     ::selection { background: var(--accent); color: #fff; }
     @media (hover: hover) and (pointer: fine) { html, body { cursor: none; } a, button { cursor: none; } }
 
-    /* Cursor */
-    .cursor { width: 12px; height: 12px; background: var(--text); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999; transform: translate(-50%, -50%); transition: transform 0.15s ease, background 0.2s, opacity 0.2s, width 0.25s ease, height 0.25s ease; will-change: transform; }
-    .cursor.large { width: 32px; height: 32px; } .cursor.hidden { opacity: 0; } .cursor.invert { background: var(--bg); }
+    /* ── Cursor ── */
+    .cursor { width: 12px; height: 12px; background: var(--text); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: transform 0.15s ease, background 0.2s, opacity 0.2s, width 0.25s, height 0.25s; will-change: transform; }
+    .cursor.large { width: 32px; height: 32px; }
+    .cursor.hidden { opacity: 0; }
+    .cursor.invert { background: var(--bg); }
     @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
 
-    /* Nav */
+    /* ── Top Nav ── */
     nav.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: flex-start; gap: 4px; padding: 14px var(--margin); background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
-    .nav-link { font-family: var(--display); font-size: 12px; font-weight: 400; letter-spacing: 0.04em; color: var(--text); text-decoration: none; padding: 7px 18px; border-radius: 20px; position: relative; z-index: 1; transition: color 0.25s ease; }
+    .nav-link { font-family: var(--display); font-size: 12px; letter-spacing: 0.04em; color: var(--text); text-decoration: none; padding: 7px 18px; border-radius: 20px; position: relative; z-index: 1; transition: color 0.25s; }
     .nav-link::before { content: ''; position: absolute; inset: 0; background: var(--text); border-radius: 20px; transform: scale(0); transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); z-index: -1; }
-    .nav-link:hover { color: var(--bg); } .nav-link:hover::before { transform: scale(1); }
-    .nav-link.active { color: var(--bg); } .nav-link.active::before { transform: scale(1); }
-    .theme-toggle { font-family: var(--display); font-size: 11px; background: none; border: 1px solid var(--border); color: var(--secondary); padding: 6px 10px; border-radius: 20px; cursor: none; transition: color 0.25s ease, border-color 0.25s ease; display: flex; align-items: center; gap: 5px; margin-left: auto; line-height: 1; letter-spacing: 0.04em; }
-    .theme-toggle:hover { color: var(--text); border-color: var(--text); }
-    .theme-toggle svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .nav-link:hover, .nav-link.active { color: var(--bg); }
+    .nav-link:hover::before, .nav-link.active::before { transform: scale(1); }
 
-    /* Dark Mode */
-    [data-theme="dark"] { --text: #F0EDE8; --secondary: #777370; --bg: #111010; --bg-alt: #1A1918; --border: #2A2826; --row-hover: #1E1C1B; --footer-bg: #0A0909; --accent-dim: rgba(242,81,26,0.1); }
-    [data-theme="dark"] .nav { background: rgba(17,16,16,0.88); }
+    /* ── Theme Toggle ── */
+    .theme-toggle { background: var(--bg-alt); border: 1.5px solid var(--border); padding: 8px 14px; border-radius: 100px; cursor: none; transition: background 0.25s, border-color 0.25s, transform 0.15s; display: flex; align-items: center; justify-content: center; margin-left: auto; flex-shrink: 0; }
+    .theme-toggle:hover { border-color: var(--text); transform: scale(1.05); }
+    .theme-toggle:active { transform: scale(0.96); }
+    .icon-sun { width: 20px; height: 20px; stroke: #F59E0B; fill: #F59E0B; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 6px rgba(245,158,11,0.55)); display: none; }
+    .icon-moon { width: 19px; height: 19px; stroke: #6B7EAA; fill: #6B7EAA; stroke-width: 0; filter: drop-shadow(0 0 5px rgba(107,126,170,0.4)); }
+    [data-theme="dark"] .theme-toggle { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+    [data-theme="dark"] .theme-toggle:hover { border-color: rgba(255,255,255,0.25); }
 
-    /* Hero */
+    /* ── Dark Mode ── */
+    [data-theme="dark"] { --text: #F0EDE8; --secondary: #777370; --bg: #111010; --bg-alt: #1A1918; --border: #2A2826; --footer-bg: #0A0909; --accent-dim: rgba(242,81,26,0.1); }
+    [data-theme="dark"] nav.nav { background: rgba(17,16,16,0.88); }
+
+    /* ════════════════════════════════════════
+       FLOATING SECTION NAV
+    ════════════════════════════════════════ */
+    .cs-sidenav {
+      position: fixed;
+      left: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 800;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .cs-sidenav.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .cs-sidenav ul { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .csn-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--display);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+      padding: 5px 0;
+      white-space: nowrap;
+    }
+    .csn-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      border: 1.5px solid currentColor;
+      flex-shrink: 0;
+      transition: background 0.2s, border-color 0.2s, transform 0.25s;
+    }
+    .csn-link:hover { color: var(--text); }
+    .csn-link:hover .csn-dot { background: var(--text); border-color: var(--text); }
+    .csn-link.active { color: var(--accent); }
+    .csn-link.active .csn-dot { background: var(--accent); border-color: var(--accent); transform: scale(1.5); }
+    @media (max-width: 1340px) { .cs-sidenav { display: none; } }
+
+    /* ════════════════════════════════════════
+       HERO
+    ════════════════════════════════════════ */
     .cs-hero { padding: 130px var(--margin) 72px; max-width: 1200px; margin: 0 auto; }
     .cs-hero-split { display: grid; grid-template-columns: 1fr 420px; gap: 56px; align-items: center; }
     .cs-hero-device { display: flex; justify-content: center; align-items: center; }
     .cs-hero-device img { width: 100%; height: auto; border-radius: 16px; display: block; box-shadow: 0 24px 64px rgba(0,0,0,0.12); border: 1px solid var(--border); }
     .cs-back { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--secondary); text-decoration: none; margin-bottom: 48px; transition: color 0.2s; }
-    .cs-back:hover { color: var(--accent); } .cs-back svg { width: 14px; height: 14px; }
+    .cs-back:hover { color: var(--accent); }
+    .cs-back svg { width: 14px; height: 14px; }
     .cs-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
     .cs-tag { font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); border: 1px solid var(--border); border-radius: 2px; padding: 5px 12px; }
-    .cs-title { font-family: var(--display); font-size: clamp(36px, 6vw, 72px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 28px; }
-    .cs-subtitle { font-family: var(--font); font-size: 17px; font-weight: 400; color: var(--secondary); max-width: 620px; line-height: 1.7; margin-bottom: 48px; }
+    .cs-title { font-family: var(--display); font-size: clamp(36px,6vw,72px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 28px; }
+    .cs-subtitle { font-family: var(--font); font-size: 17px; color: var(--secondary); max-width: 620px; line-height: 1.7; margin-bottom: 48px; }
     .cs-meta-row { display: flex; gap: 48px; flex-wrap: wrap; padding-top: 40px; border-top: 1px solid var(--border); }
     .cs-meta-item { display: flex; flex-direction: column; gap: 6px; }
     .cs-meta-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
     .cs-meta-value { font-family: var(--font); font-size: 14px; font-weight: 500; }
 
-    /* Sections */
-    .cs-section { max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); border-bottom: 1px solid var(--border); }
-    .cs-section:last-of-type { border-bottom: none; }
-    .cs-section-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 32px; }
-    .cs-h2 { font-family: var(--display); font-size: clamp(24px, 3.5vw, 42px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 28px; }
-    .cs-body { font-family: var(--font); font-size: 16px; font-weight: 400; line-height: 1.85; color: var(--text); max-width: 700px; }
+    /* ════════════════════════════════════════
+       RESULTS STRIP (full-width)
+    ════════════════════════════════════════ */
+    .cs-results { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-alt); }
+    .cs-results-inner { max-width: 1200px; margin: 0 auto; padding: 64px var(--margin); }
+    .cs-results-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .cs-results-title { font-family: var(--display); font-size: clamp(17px,2vw,26px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 48px; }
+    .cs-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; border-top: 1px solid var(--border); }
+    .cs-stats.row2 { border-top: 1px solid var(--border); }
+    .cs-stat { display: flex; flex-direction: column; gap: 10px; padding: 40px 32px 40px 0; border-right: 1px solid var(--border); }
+    .cs-stat:last-child { border-right: none; }
+    .cs-stat:not(:first-child) { padding-left: 32px; }
+    .cs-stat-number { font-family: var(--display); font-size: clamp(36px,5.5vw,68px); font-weight: 700; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
+    .cs-stat-desc { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.6; max-width: 160px; }
+
+    /* ════════════════════════════════════════
+       ROW LAYOUT — label | content
+    ════════════════════════════════════════ */
+    .cs-row {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 64px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px var(--margin);
+      border-bottom: 1px solid var(--border);
+    }
+    .cs-row-label { padding-top: 4px; position: sticky; top: 80px; align-self: start; }
+    .cs-row-num { font-family: var(--display); font-size: 10px; color: var(--secondary); opacity: 0.35; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .cs-row-tag { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); line-height: 2; }
+    .cs-row-divider { width: 20px; height: 1px; background: var(--border); margin-top: 14px; }
+
+    /* ── Content typography ── */
+    .cs-h2 { font-family: var(--display); font-size: clamp(22px,3vw,38px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 24px; }
+    .cs-h3 { font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; margin-top: 48px; }
+    .cs-h3:first-child { margin-top: 0; }
+    .cs-body { font-family: var(--font); font-size: 16px; line-height: 1.85; color: var(--text); max-width: 680px; }
     .cs-body + .cs-body { margin-top: 16px; }
 
-    /* Stats */
-    .cs-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 56px; border-top: 1px solid var(--border); }
-    .cs-stat { display: flex; flex-direction: column; gap: 10px; padding: 40px 32px 40px 0; border-right: 1px solid var(--border); }
-    .cs-stat:last-child { border-right: none; padding-right: 0; padding-left: 32px; }
-    .cs-stat:nth-child(2) { padding-left: 32px; }
-    .cs-stat-number { font-family: var(--display); font-size: clamp(48px, 7vw, 80px); font-weight: 700; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
-    .cs-stat-desc { font-family: var(--font); font-size: 13px; font-weight: 400; color: var(--secondary); line-height: 1.6; max-width: 180px; }
-
-    /* 4-col stats */
-    .cs-stats-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 56px; border-top: 1px solid var(--border); }
-    .cs-stats-4 .cs-stat { border-right: 1px solid var(--border); padding: 40px 24px 40px 0; }
-    .cs-stats-4 .cs-stat:first-child { padding-left: 0; }
-    .cs-stats-4 .cs-stat:nth-child(n+2) { padding-left: 24px; }
-    .cs-stats-4 .cs-stat:last-child { border-right: none; padding-right: 0; }
-
-    /* Company info grid */
-    .cs-info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 40px; border: 1px solid var(--border); }
+    /* ── Info grid ── */
+    .cs-info-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; margin-top: 40px; border: 1px solid var(--border); }
     .cs-info-item { padding: 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
     .cs-info-item:nth-child(3n) { border-right: none; }
     .cs-info-item:nth-last-child(-n+3) { border-bottom: none; }
     .cs-info-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); margin-bottom: 8px; }
     .cs-info-value { font-family: var(--font); font-size: 14px; font-weight: 500; line-height: 1.6; }
 
-    /* Cards */
-    .cs-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 40px; background: var(--border); border: 1px solid var(--border); }
+    /* ── Cards ── */
+    .cs-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 40px; background: var(--border); border: 1px solid var(--border); }
     .cs-card { padding: 32px 24px; background: var(--bg); }
     .cs-card-num { font-family: var(--display); font-size: 28px; font-weight: 700; color: var(--accent); opacity: 0.4; letter-spacing: -0.04em; margin-bottom: 16px; line-height: 1; }
     .cs-card-title { font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
     .cs-card-text { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.65; }
 
-    /* Quote */
-    .cs-quote { position: relative; padding: 32px 40px; background: var(--bg-alt); border-left: 4px solid var(--accent); margin: 48px 0; max-width: 720px; }
-    .cs-quote::before { content: '\201C'; font-family: var(--display); font-size: 80px; color: var(--accent); opacity: 0.15; position: absolute; top: -8px; left: 32px; line-height: 1; }
-    .cs-quote p { font-family: var(--display); font-size: 16px; font-weight: 400; font-style: italic; line-height: 1.7; position: relative; z-index: 1; }
-    .cs-quote cite { display: block; margin-top: 16px; font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); font-style: normal; }
-
-    /* Two col */
-    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; margin-top: 40px; }
-
-    /* List */
-    .cs-list { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
-    .cs-list li { display: flex; gap: 16px; font-family: var(--font); font-size: 14px; font-weight: 400; line-height: 1.7; }
-    .cs-list li::before { content: '→'; font-family: var(--display); color: var(--accent); flex-shrink: 0; font-size: 12px; margin-top: 2px; }
-
-    /* Steps */
-    .cs-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: 40px; background: var(--border); border: 1px solid var(--border); }
+    /* ── Steps ── */
+    .cs-steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 40px; background: var(--border); border: 1px solid var(--border); }
     .cs-step { padding: 28px 24px; background: var(--bg); }
     .cs-step-num { font-family: var(--display); font-size: 32px; font-weight: 700; color: var(--accent); letter-spacing: -0.04em; margin-bottom: 16px; line-height: 1; opacity: 0.4; }
     .cs-step-title { font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: 0.04em; margin-bottom: 10px; text-transform: uppercase; }
-    .cs-step-text { font-family: var(--font); font-size: 13px; font-weight: 400; color: var(--secondary); line-height: 1.65; }
+    .cs-step-text { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.65; }
 
-    /* Note callout */
+    /* ── Quote ── */
+    .cs-quote { position: relative; padding: 32px 40px; background: var(--bg-alt); border-left: 4px solid var(--accent); margin: 48px 0; max-width: 680px; }
+    .cs-quote::before { content: '\201C'; font-family: var(--display); font-size: 80px; color: var(--accent); opacity: 0.15; position: absolute; top: -8px; left: 32px; line-height: 1; }
+    .cs-quote p { font-family: var(--display); font-size: 15px; font-style: italic; line-height: 1.7; position: relative; z-index: 1; }
+    .cs-quote cite { display: block; margin-top: 16px; font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); font-style: normal; }
+
+    /* ── Two col ── */
+    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; margin-top: 40px; }
+
+    /* ── List ── */
+    .cs-list { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
+    .cs-list li { display: flex; gap: 16px; font-family: var(--font); font-size: 14px; line-height: 1.7; }
+    .cs-list li::before { content: '→'; font-family: var(--display); color: var(--accent); flex-shrink: 0; font-size: 12px; margin-top: 2px; }
+
+    /* ── Note ── */
     .cs-note { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 4px; padding: 24px 28px; margin-top: 32px; font-family: var(--font); font-size: 15px; line-height: 1.8; color: var(--secondary); }
     .cs-note strong { color: var(--text); }
 
-    /* Gradient visual */
-    .cs-visual { width: 100%; border-radius: 4px; overflow: hidden; margin: 48px 0; }
-    .cs-visual-inner { width: 100%; height: 400px; display: flex; align-items: center; justify-content: center; position: relative; }
-    .cs-visual-label { font-family: var(--display); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); position: relative; z-index: 1; }
-    .grad-dreamcollege { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #6c63ff 100%); }
-
-    /* Image containers */
+    /* ── Images ── */
     .cs-img { width: 100%; margin: 40px 0; }
+    .cs-img:first-child { margin-top: 0; }
     .cs-img img { width: 100%; height: auto; display: block; border-radius: 8px; }
     .cs-img-border img { border: 1px solid var(--border); }
     .cs-img-caption { font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); text-align: center; margin-top: 12px; }
-
-    /* 2-col image grid */
     .cs-img-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
     .cs-img-2col .cs-img { margin: 0; }
 
-    /* A/B test table */
+    /* ── A/B table ── */
     .cs-ab-grid { display: grid; gap: 1px; background: var(--border); border: 1px solid var(--border); margin-top: 40px; }
     .cs-ab-row { display: grid; grid-template-columns: 2fr 1fr 1fr; background: var(--border); gap: 1px; }
     .cs-ab-cell { padding: 20px 24px; background: var(--bg); font-family: var(--font); font-size: 14px; line-height: 1.6; }
     .cs-ab-header .cs-ab-cell { background: var(--bg-alt); font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); }
     .cs-ab-win { color: var(--accent); font-family: var(--display); font-weight: 700; font-size: 18px; }
 
-    /* Conclusion ending */
-    .cs-conclusion { max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); text-align: center; border-bottom: 1px solid var(--border); }
+    /* ── Conclusion ── */
+    .cs-conclusion { max-width: 1200px; margin: 0 auto; padding: 100px var(--margin); text-align: center; border-bottom: 1px solid var(--border); }
     .cs-conclusion-eyebrow { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 24px; }
-    .cs-conclusion-text { font-family: var(--display); font-size: clamp(20px, 3vw, 36px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; max-width: 700px; margin: 0 auto; }
+    .cs-conclusion-text { font-family: var(--display); font-size: clamp(20px,3vw,36px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; max-width: 700px; margin: 0 auto; }
 
-    /* Next project nav */
-    .cs-next { max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; border-top: 1px solid var(--border); }
+    /* ── Next project ── */
+    .cs-next { max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
     .cs-next-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 10px; }
-    .cs-next-link { font-family: var(--display); font-size: clamp(20px, 2.8vw, 32px); font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; transition: color 0.2s; display: flex; align-items: center; gap: 16px; }
+    .cs-next-link { font-family: var(--display); font-size: clamp(20px,2.8vw,32px); font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; transition: color 0.2s; display: flex; align-items: center; gap: 16px; }
     .cs-next-link:hover { color: var(--accent); }
     .cs-next-link svg { width: 28px; height: 28px; transition: transform 0.2s; }
     .cs-next-link:hover svg { transform: translateX(8px); }
 
-    /* Footer */
+    /* ── Footer ── */
     footer.footer { background: var(--footer-bg); color: #fff; padding: 64px var(--margin) 40px; }
     .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 64px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .footer-tagline { font-family: var(--display); font-size: clamp(16px, 2vw, 22px); font-weight: 700; line-height: 1.45; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .footer-tagline { font-family: var(--display); font-size: clamp(16px,2vw,22px); font-weight: 700; line-height: 1.45; margin-bottom: 12px; letter-spacing: -0.02em; }
     .footer-sub { font-family: var(--font); font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.6; }
     .footer-heading { font-family: var(--display); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 20px; }
     .footer-links { display: flex; flex-direction: column; gap: 12px; }
     .footer-links a { font-family: var(--font); font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; position: relative; width: fit-content; }
-    .footer-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0%; height: 1px; background: var(--accent); transition: width 0.25s ease; }
-    .footer-links a:hover { color: #fff; } .footer-links a:hover::after { width: 100%; }
+    .footer-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0%; height: 1px; background: var(--accent); transition: width 0.25s; }
+    .footer-links a:hover { color: #fff; }
+    .footer-links a:hover::after { width: 100%; }
     .footer-bottom { max-width: 1200px; margin: 32px auto 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
     .footer-copy { font-family: var(--display); font-size: 11px; letter-spacing: 0.05em; color: rgba(255,255,255,0.2); }
 
-    /* Scroll reveal */
-    [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    /* ── Scroll reveal ── */
+    [data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity 0.65s ease, transform 0.65s ease; }
     [data-reveal].revealed { opacity: 1; transform: none; }
 
-    /* Responsive */
+    /* ── Responsive ── */
     @media (max-width: 900px) {
       .cs-hero-split { grid-template-columns: 1fr; }
       .cs-hero-device { display: none; }
+      .cs-row { grid-template-columns: 1fr; gap: 20px; padding: 56px var(--margin); }
+      .cs-row-label { position: static; }
+      .cs-row-num { display: none; }
     }
     @media (max-width: 768px) {
       :root { --margin: 20px; }
-      .nav { padding: 10px var(--margin); gap: 0; } .nav-link { font-size: 11px; padding: 6px 12px; }
+      nav.nav { padding: 10px var(--margin); gap: 0; }
+      .nav-link { font-size: 11px; padding: 6px 12px; }
       .cs-stats { grid-template-columns: 1fr 1fr; }
-      .cs-stat { padding: 28px 16px 28px 0; } .cs-stat:last-child { padding-left: 16px; } .cs-stat:nth-child(2) { padding-left: 16px; }
-      .cs-stats-4 { grid-template-columns: 1fr 1fr; }
+      .cs-stat { padding: 28px 16px 28px 0; }
+      .cs-stat:not(:first-child) { padding-left: 16px; }
       .cs-two-col { grid-template-columns: 1fr; gap: 32px; }
       .cs-steps { grid-template-columns: 1fr 1fr; }
       .cs-cards { grid-template-columns: 1fr; }
@@ -206,19 +279,50 @@
 
 <div class="cursor" id="cursor"></div>
 
+<!-- ════════════════════════════════════════
+     FLOATING SECTION NAV (left-aligned)
+════════════════════════════════════════ -->
+<nav class="cs-sidenav" id="csSidenav" aria-label="Case study sections">
+  <ul>
+    <li><a href="#s-overview"   class="csn-link" data-s="s-overview"><span class="csn-dot"></span>Overview</a></li>
+    <li><a href="#s-problem"    class="csn-link" data-s="s-problem"><span class="csn-dot"></span>Problem</a></li>
+    <li><a href="#s-research"   class="csn-link" data-s="s-research"><span class="csn-dot"></span>Research</a></li>
+    <li><a href="#s-process"    class="csn-link" data-s="s-process"><span class="csn-dot"></span>Process</a></li>
+    <li><a href="#s-design"     class="csn-link" data-s="s-design"><span class="csn-dot"></span>Design</a></li>
+    <li><a href="#s-testing"    class="csn-link" data-s="s-testing"><span class="csn-dot"></span>Testing</a></li>
+    <li><a href="#s-insights"   class="csn-link" data-s="s-insights"><span class="csn-dot"></span>Insights</a></li>
+    <li><a href="#s-reflection" class="csn-link" data-s="s-reflection"><span class="csn-dot"></span>Reflection</a></li>
+  </ul>
+</nav>
+
+<!-- ── Top Nav ── -->
 <nav class="nav" id="nav">
   <a href="index.html" class="nav-link">Home</a>
   <a href="index.html#projects" class="nav-link">Work</a>
   <a href="info.html" class="nav-link">Info</a>
   <a href="https://purubhardwajdesign.com" class="nav-link" target="_blank" rel="noopener">Portfolio</a>
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-    <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    <svg class="icon-sun" viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="5"/>
+      <line x1="12" y1="1" x2="12" y2="3" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="12" y1="21" x2="12" y2="23" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1" y1="12" x2="3" y2="12" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="21" y1="12" x2="23" y2="12" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
   </button>
 </nav>
 
-<!-- Hero -->
-<div class="cs-hero">
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<div class="cs-hero" id="cs-top">
   <a href="index.html#projects" class="cs-back">
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
     All projects
@@ -258,587 +362,573 @@
   </div>
 </div>
 
-<!-- Full visual -->
+<!-- Full platform visual -->
 <div style="max-width:1200px;margin:0 auto;padding:0 var(--margin);">
   <div class="cs-img cs-img-border" style="margin-top:0;">
-    <img src="assets/images/DreamCollege/Image-1.png" alt="DreamCollege AI platform on MacBook and tablet">
+    <img src="assets/images/DreamCollege/Image-1.png" alt="DreamCollege AI platform across devices">
     <p class="cs-img-caption">DreamCollege AI — platform across devices</p>
   </div>
 </div>
 
-<!-- Thank You + Company Info -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Context</p>
-  <h2 class="cs-h2">Starting with a thank you</h2>
-  <p class="cs-body">I appreciate you taking the time to review this case study. I chose this example because it demonstrates three things: shipping fast on a 0→1, high-visibility product; identifying and optimizing a key friction issue using real data; and influencing cross-functional roadmap decisions through user research.</p>
-
-  <div class="cs-info-grid">
-    <div class="cs-info-item">
-      <p class="cs-info-label">Headquarters</p>
-      <p class="cs-info-value">Frisco, Texas</p>
+<!-- ════════════════════════════════════════
+     RESULTS — full-width strip
+════════════════════════════════════════ -->
+<section class="cs-results" id="cs-results">
+  <div class="cs-results-inner">
+    <p class="cs-results-label">Outcomes</p>
+    <h2 class="cs-results-title">150K users &middot; 4.2/5 AI trust &middot; 63% retention lift &mdash; in 4 months</h2>
+    <div class="cs-img cs-img-border" style="margin-top:0;margin-bottom:48px;">
+      <img src="assets/images/DreamCollege/Image-2.png" alt="Key metrics — 150K+ users, +63% retention, 4.2/5 trust score">
+      <p class="cs-img-caption">Key outcome metrics — 4 months post-launch</p>
     </div>
-    <div class="cs-info-item">
-      <p class="cs-info-label">Founded</p>
-      <p class="cs-info-value">2023</p>
+    <div class="cs-stats">
+      <div class="cs-stat">
+        <span class="cs-stat-number">150K+</span>
+        <span class="cs-stat-desc">lifetime users scaled in 4 months</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">+63%</span>
+        <span class="cs-stat-desc">retention through conversational AI improvements</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">73%</span>
+        <span class="cs-stat-desc">task success rate improvement via simplified workflows</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">4.2/5</span>
+        <span class="cs-stat-desc">AI trust score (up from 2.8/5 pre-redesign)</span>
+      </div>
     </div>
-    <div class="cs-info-item">
-      <p class="cs-info-label">Industry</p>
-      <p class="cs-info-value">SaaS · EdTech</p>
-    </div>
-    <div class="cs-info-item">
-      <p class="cs-info-label">Company Size</p>
-      <p class="cs-info-value">11–50</p>
-    </div>
-    <div class="cs-info-item">
-      <p class="cs-info-label">Skills</p>
-      <p class="cs-info-value">UX Research · Systems Thinking · Prototyping · Information Architecture · Usability Testing · Localisation</p>
-    </div>
-    <div class="cs-info-item">
-      <p class="cs-info-label">Platform</p>
-      <p class="cs-info-value">Web · Mobile · Conversational AI</p>
+    <div class="cs-stats row2">
+      <div class="cs-stat">
+        <span class="cs-stat-number">+40%</span>
+        <span class="cs-stat-desc">boost in average session duration</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">-52%</span>
+        <span class="cs-stat-desc">task completion time (41% → 19% time-on-task)</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">-45%</span>
+        <span class="cs-stat-desc">design-to-dev handoff time via design tokens</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">-33%</span>
+        <span class="cs-stat-desc">issue resolution time in month one</span>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Challenge -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">The Challenge</p>
-  <h2 class="cs-h2">A critical trust deficit in a $591B market</h2>
-  <div class="cs-two-col">
-    <div>
-      <p class="cs-body">When I joined DreamCollege AI at the ideation phase, the college admissions landscape was facing a critical trust deficit. Students and families were making life-changing decisions worth hundreds of thousands of dollars — yet they were hesitant to trust AI with guidance that could shape their futures.</p>
-      <div class="cs-note" style="margin-top:28px;">
-        <strong>Core Challenge:</strong> How might we design an AI-powered college counseling platform that feels as trustworthy, personal, and reliable as working with a human counselor — while serving users at scale?
+<!-- ════════════════════════════════════════
+     01 · OVERVIEW
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-overview" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">01</div>
+    <div class="cs-row-tag">Overview</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Starting with a thank you</h2>
+    <p class="cs-body">I appreciate you taking the time to review this case study. I chose this example because it demonstrates three things: shipping fast on a 0→1, high-visibility product; identifying and optimizing a key friction issue using real data; and influencing cross-functional roadmap decisions through user research.</p>
+    <div class="cs-info-grid">
+      <div class="cs-info-item">
+        <p class="cs-info-label">Headquarters</p>
+        <p class="cs-info-value">Frisco, Texas</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">Founded</p>
+        <p class="cs-info-value">2023</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">Industry</p>
+        <p class="cs-info-value">SaaS · EdTech</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">Company Size</p>
+        <p class="cs-info-value">11–50</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">Skills</p>
+        <p class="cs-info-value">UX Research · Systems Thinking · Prototyping · IA · Usability Testing · Localisation</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">Platform</p>
+        <p class="cs-info-value">Web · Mobile · Conversational AI</p>
       </div>
     </div>
-    <div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     02 · PROBLEM
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-problem" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">02</div>
+    <div class="cs-row-tag">Problem</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">A critical trust deficit in a $591B market</h2>
+    <div class="cs-two-col">
+      <div>
+        <p class="cs-body">When I joined DreamCollege AI at the ideation phase, the college admissions landscape was facing a critical trust deficit. Students and families were making life-changing decisions worth hundreds of thousands of dollars — yet they were hesitant to trust AI with guidance that could shape their futures.</p>
+        <div class="cs-note" style="margin-top:28px;">
+          <strong>Core Challenge:</strong> How might we design an AI-powered college counseling platform that feels as trustworthy, personal, and reliable as working with a human counselor — while serving users at scale?
+        </div>
+        <ul class="cs-list">
+          <li><strong>High stakes:</strong> College decisions represent $591.1B in the US education market in 2025</li>
+          <li><strong>Trust barrier:</strong> 70% of prospective users expressed skepticism about AI for major life decisions</li>
+          <li><strong>Market gap:</strong> Traditional counselors serve 1–2 dozen students; we needed to serve thousands</li>
+          <li><strong>Timing pressure:</strong> 4-month runway with constrained budget and talent pool</li>
+        </ul>
+      </div>
+      <div>
+        <div class="cs-img cs-img-border" style="margin:0;">
+          <img src="assets/images/DreamCollege/Image-4.png" alt="Key user problems identified in discovery">
+          <p class="cs-img-caption">Key problem areas identified in discovery</p>
+        </div>
+        <div class="cs-img cs-img-border">
+          <img src="assets/images/DreamCollege/Image-5.png" alt="Impact tree — conversational AI driving all four outcome areas">
+          <p class="cs-img-caption">Conversational AI as the driver of all four outcome areas</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     03 · RESEARCH
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-research" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">03</div>
+    <div class="cs-row-tag">Research</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">End-to-end design ownership — Research → IA → UX → UI → Testing</h2>
+    <p class="cs-body">I led end-to-end design from 0→1, translating ambiguous AI-heavy business and user requirements into clear, user-centered experiences across: conversational AI interfaces, multi-step onboarding, payment flows, and core product features.</p>
+
+    <div class="cs-cards">
+      <div class="cs-card">
+        <div class="cs-card-num">01</div>
+        <div class="cs-card-title">End-to-End Design</div>
+        <div class="cs-card-text">Led 0→1 design across conversational AI chatbots, hub-and-spoke onboarding, payment flows, subscription management, and all core product surfaces.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <div class="cs-card-title">Design Foundation</div>
+        <div class="cs-card-text">Built a 48-component design system with tokens, naming conventions mirroring front-end frameworks, and Loom walkthroughs — cutting handoff time by 45%.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">03</div>
+        <div class="cs-card-title">Drove Research</div>
+        <div class="cs-card-text">35+ student interviews, 28 usability sessions (Hotjar + Tobii eye-tracking), 12 stakeholder interviews. Iterative A/B testing on all critical conversion points.</div>
+      </div>
+    </div>
+
+    <div class="cs-img-2col" style="margin-top:48px;">
       <div class="cs-img cs-img-border" style="margin:0;">
-        <img src="assets/images/DreamCollege/Image-4.png" alt="Key user problems: Daunting Application Process, Too Many Options, Slow Access to Advice, Unclear Career Paths">
-        <p class="cs-img-caption">Key problem areas identified in discovery</p>
+        <img src="assets/images/DreamCollege/Image-3.png" alt="Research scope across 4 methods">
+        <p class="cs-img-caption">Research scope — 75 total sessions across 4 methods</p>
+      </div>
+      <div class="cs-img" style="margin:0;padding:28px 24px 18px;border:1px solid var(--border);border-radius:8px;">
+        <svg viewBox="0 0 560 305" xmlns="http://www.w3.org/2000/svg"
+             role="img" aria-label="Research touchpoints: 75 sessions — 47% student interviews, 37% usability sessions, 16% stakeholder interviews"
+             style="width:100%;height:auto;display:block;overflow:visible;">
+          <style>
+            .rct-title{font-family:'Space Mono',monospace;font-size:13.5px;font-weight:700;letter-spacing:-0.01em}
+            .rct-pct{font-family:'Space Mono',monospace;font-size:14px;font-weight:700;fill:#fff}
+            .rct-pct-s{font-family:'Space Mono',monospace;font-size:11.5px;font-weight:700;fill:#fff}
+            .rct-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:500}
+            .rct-sub{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.07em;opacity:.5}
+          </style>
+          <text x="0" y="22" class="rct-title" fill="currentColor">Research touchpoints (n=75 sessions)</text>
+          <path d="M 161.6,292.8 A 125,125 0 0 1 185,45 L 185,170 Z" fill="#3B82C4" style="stroke:var(--bg);stroke-width:2.5;stroke-linejoin:round"/>
+          <path d="M 290.4,102.8 A 125,125 0 0 1 161.6,292.8 L 185,170 Z" fill="#F07820" style="stroke:var(--bg);stroke-width:2.5;stroke-linejoin:round"/>
+          <path d="M 185,45 A 125,125 0 0 1 290.4,102.8 L 185,170 Z" fill="#5CB85C" style="stroke:var(--bg);stroke-width:2.5;stroke-linejoin:round"/>
+          <text x="110" y="167" class="rct-pct" text-anchor="middle">47%</text>
+          <text x="247" y="216" class="rct-pct" text-anchor="middle">37%</text>
+          <text x="221" y="108" class="rct-pct-s" text-anchor="middle">16%</text>
+          <rect x="350" y="100" width="13" height="13" rx="2" fill="#3B82C4"/>
+          <text x="372" y="111" class="rct-name" fill="currentColor">Student interviews</text>
+          <text x="372" y="128" class="rct-sub" fill="currentColor">35 SESSIONS · 47%</text>
+          <rect x="350" y="155" width="13" height="13" rx="2" fill="#F07820"/>
+          <text x="372" y="166" class="rct-name" fill="currentColor">Usability sessions</text>
+          <text x="372" y="183" class="rct-sub" fill="currentColor">28 SESSIONS · 37%</text>
+          <rect x="350" y="210" width="13" height="13" rx="2" fill="#5CB85C"/>
+          <text x="372" y="221" class="rct-name" fill="currentColor">Stakeholder interviews</text>
+          <text x="372" y="238" class="rct-sub" fill="currentColor">12 SESSIONS · 16%</text>
+        </svg>
+        <p class="cs-img-caption">Research touchpoints breakdown (n=75)</p>
+      </div>
+    </div>
+
+    <h3 class="cs-h3">Three trust barriers that shaped everything</h3>
+    <p class="cs-body" style="margin-bottom:24px;">Through 35+ student interviews and 12 parent/counselor sessions, three patterns kept surfacing. Naming them gave the whole team a shared framework for every design decision that followed.</p>
+    <div class="cs-cards">
+      <div class="cs-card">
+        <div class="cs-card-num">01</div>
+        <div class="cs-card-title">"Black Box" Anxiety</div>
+        <div class="cs-card-text">Users felt uncomfortable when they couldn't see what the AI was thinking. "It's like asking for directions from someone wearing a blindfold." The fix: make AI reasoning visible at every step.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <div class="cs-card-title">The Comparison Trap</div>
+        <div class="cs-card-text">Students weren't comparing us to other AI tools — they were comparing us to a "good counselor." The fix: personalization signals at every touchpoint.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">03</div>
+        <div class="cs-card-title">Emotional ≠ Logical Stakes</div>
+        <div class="cs-card-text">Even when users logically understood AI capabilities, their emotional response was skepticism. The fix: progressive trust built through small wins, not big asks.</div>
+      </div>
+    </div>
+
+    <div class="cs-quote">
+      <p>"It's like asking for directions from someone wearing a blindfold — even if they're right, I can't trust it."</p>
+      <cite>— High school student, discovery interview</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     04 · PROCESS
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-process" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">04</div>
+    <div class="cs-row-tag">Process</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Six phases across twelve weeks</h2>
+    <p class="cs-body">Discovery and design ran in parallel due to the 4-month runway. Competitive analysis of 8 platforms, journey mapping across 6 personas, and heuristic evaluation of AI chatbots in education informed every decision.</p>
+
+    <div class="cs-img cs-img-border" style="margin-top:40px;">
+      <img src="assets/images/DreamCollege/Image-6.png" alt="Project timeline Gantt chart — 12 weeks, 6 phases">
+      <p class="cs-img-caption">Project timeline — 12 weeks, 6 phases</p>
+    </div>
+
+    <div class="cs-steps">
+      <div class="cs-step">
+        <div class="cs-step-num">01</div>
+        <div class="cs-step-title">Discovery &amp; Research</div>
+        <div class="cs-step-text">Weeks 1–2. 35+ student interviews, 12 parent/counselor interviews. Competitive audit of 8 platforms. Identified 3 trust barriers.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">02</div>
+        <div class="cs-step-title">Problem Framing</div>
+        <div class="cs-step-text">Weeks 2–3. Established 3 design principles. Journey mapping across 6 personas. Aligned roadmap with CEO on Trust-First strategy.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">03</div>
+        <div class="cs-step-title">IA &amp; Journey Redesign</div>
+        <div class="cs-step-text">Weeks 3–4. Hub-and-spoke onboarding architecture. Information hierarchy redesign. Navigation structure validated with 8 users.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">04</div>
+        <div class="cs-step-title">Visual System &amp; DS</div>
+        <div class="cs-step-text">Weeks 4–6. 48-component design system. Design tokens for color, type, spacing. Weekly design-dev syncs to align implementation.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">05</div>
+        <div class="cs-step-title">Conversational AI UX</div>
+        <div class="cs-step-text">Weeks 5–8. LLM response design, streaming states, trust layers. Drop-off reduced from 31% to 7%.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">06</div>
+        <div class="cs-step-title">Testing &amp; Iteration</div>
+        <div class="cs-step-text">Weeks 7–12. Hotjar heatmaps, Tobii eye-tracking, 12 A/B tests. Continuous iteration until all key metrics hit targets.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Why This Mattered -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Why This Mattered</p>
-  <h2 class="cs-h2">High stakes. Short runway. No existing playbook.</h2>
-  <div class="cs-two-col">
-    <div>
-      <ul class="cs-list" style="margin-top:0;">
-        <li><strong>High stakes:</strong> College decisions represent $591.1 billion in the US education market in 2025</li>
-        <li><strong>Trust barrier:</strong> 70% of prospective users expressed skepticism about AI making recommendations for major life decisions</li>
-        <li><strong>Market gap:</strong> Traditional counselors serve 1–2 dozen students; we needed to serve thousands while maintaining quality</li>
-        <li><strong>Timing pressure:</strong> 4-month runway to launch with constrained budget and talent pool</li>
-      </ul>
+<!-- ════════════════════════════════════════
+     05 · DESIGN
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-design" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">05</div>
+    <div class="cs-row-tag">Design</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Three north-star principles · 48 components · Zero design drift</h2>
+
+    <div class="cs-cards">
+      <div class="cs-card">
+        <div class="cs-card-num">01</div>
+        <div class="cs-card-title">Transparent by Default</div>
+        <div class="cs-card-text">Show users what's happening behind the scenes at every step. Visual cues for AI reasoning. If the AI can't explain it, it shouldn't say it.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <div class="cs-card-title">Human-Centered AI</div>
+        <div class="cs-card-text">Make AI feel like an intelligent assistant, not a replacement for human judgment. Every interaction should feel like support, never surveillance.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">03</div>
+        <div class="cs-card-title">Progressive Trust</div>
+        <div class="cs-card-text">Earn trust incrementally through small wins before asking for big commitments. Always give before you take. Users should feel confident before they commit.</div>
+      </div>
     </div>
-    <div>
-      <p class="cs-body">The solution was to rebuild the experience around transparency — using conversational UI patterns, progressive disclosure, and visible AI reasoning to help users develop trust through understanding rather than assumption.</p>
-      <div class="cs-img cs-img-border" style="margin-top:24px;">
-        <img src="assets/images/DreamCollege/Image-5.png" alt="Impact tree: Conversational AI driving user growth, operational efficiency, engagement metrics, team efficiency">
-        <p class="cs-img-caption">Conversational AI as the driver of all four outcome areas</p>
+
+    <h3 class="cs-h3">Visual Design &amp; Design System</h3>
+    <div class="cs-two-col">
+      <div>
+        <p class="cs-body">Working closely with the CEO and branding stakeholders, I developed a visual language balancing approachability with credibility. A gradient-heavy palette (blues → purples) conveyed innovation while differentiating us from corporate competitors.</p>
+        <ul class="cs-list">
+          <li>48 reusable components (buttons, forms, cards, modals, nav)</li>
+          <li>Design tokens for colors, typography, spacing, and shadows</li>
+          <li>Naming conventions mirroring front-end frameworks (e.g., btn-primary-lg)</li>
+          <li>Documentation for states, variations, and usage guidelines</li>
+          <li>Weekly design-dev syncs with shared Figma libraries</li>
+        </ul>
+        <div class="cs-note">
+          <strong>Result:</strong> Design-to-development handoff time dropped 45%, and developers could implement 80% of designs without clarification questions.
+        </div>
+      </div>
+      <div>
+        <div class="cs-img cs-img-border" style="margin:0;">
+          <img src="assets/images/DreamCollege/Image-8.png" alt="DreamCollege AI color design system">
+          <p class="cs-img-caption">Color system — primary, accent, neutral, semantic</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-img cs-img-border">
+      <img src="assets/images/DreamCollege/Image-14.png" alt="Full DreamCollege AI design system overview">
+      <p class="cs-img-caption">Design system overview — typography, components, screens</p>
+    </div>
+
+    <h3 class="cs-h3">Conversational AI — from 31% drop-off to 7%</h3>
+    <div class="cs-two-col">
+      <div>
+        <p class="cs-body">One of the biggest UX challenges: keeping users engaged while the LLM generated responses (3–8 second delays). Initial testing showed 31% of users clicked away during loading, reporting they felt "ignored" or unsure if the system was working.</p>
+        <p class="cs-body" style="margin-top:16px;">I designed a three-layer trust system: immediate acknowledgment (streaming animation), progressive disclosure (structured response format), and explainability (inline "why" callouts for every recommendation).</p>
+      </div>
+      <div>
+        <div class="cs-img cs-img-border" style="margin:0;">
+          <img src="assets/images/DreamCollege/Image-9.png" alt="AI transparency: 3 layers">
+          <p class="cs-img-caption">Three-layer AI transparency model</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-img cs-img-border">
+      <img src="assets/images/DreamCollege/Image-10.png" alt="Drop-off -77%, follow-up AI engagement +63%">
+      <p class="cs-img-caption">Drop-off −77% &middot; Follow-up AI engagement +63%</p>
+    </div>
+    <div class="cs-img cs-img-border">
+      <img src="assets/images/DreamCollege/Image-12.png" alt="Progressive profile building and transparent AI in production">
+      <p class="cs-img-caption">Progressive profile building + transparent AI in production</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     06 · TESTING
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-testing" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">06</div>
+    <div class="cs-row-tag">Testing</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Three decisions that changed the product — backed by data</h2>
+
+    <div class="cs-img cs-img-border" style="margin-top:0;">
+      <img src="assets/images/DreamCollege/Image-11.png" alt="Three critical design decisions with heatmaps">
+      <p class="cs-img-caption">Decision 1: Profile-First Onboarding &middot; Decision 2: Copy Profile from Sample &middot; Decision 3: Collapsible Navigation</p>
+    </div>
+
+    <h3 class="cs-h3">Continuous validation — heatmaps, eye-tracking, A/B tests</h3>
+    <div class="cs-two-col">
+      <div>
+        <p class="cs-body"><strong>Hotjar Heatmaps</strong> revealed that users were clicking on non-interactive elements (icons, headings) expecting them to be buttons. I redesigned these as genuine interactive elements or removed them to reduce confusion.</p>
+        <p class="cs-body" style="margin-top:16px;"><strong>Tobii Eye-Tracking (12 sessions)</strong> discovered users were skipping important context text styled too similarly to body copy. I introduced icon badges, colored callouts, and larger font sizes for key decision points.</p>
+      </div>
+      <div>
+        <ul class="cs-list" style="margin-top:0;">
+          <li>12 iterative A/B testing rounds across critical conversion points</li>
+          <li>28 usability sessions using Hotjar + Tobii</li>
+          <li>12 stakeholder interviews to align on roadmap priorities</li>
+          <li>35+ user interviews across grades 9–12</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cs-ab-grid">
+      <div class="cs-ab-row cs-ab-header">
+        <div class="cs-ab-cell">Test</div>
+        <div class="cs-ab-cell">Original</div>
+        <div class="cs-ab-cell">Variant (Winner)</div>
+      </div>
+      <div class="cs-ab-row">
+        <div class="cs-ab-cell"><strong>CTA Button Text</strong><br><span style="color:var(--secondary);font-size:13px;">Onboarding save action</span></div>
+        <div class="cs-ab-cell">"Save and Continue" — 54% click-through</div>
+        <div class="cs-ab-cell"><span class="cs-ab-win">+8%</span><br>"Save My Progress" — 62% click-through</div>
+      </div>
+      <div class="cs-ab-row">
+        <div class="cs-ab-cell"><strong>AI Response Styling</strong><br><span style="color:var(--secondary);font-size:13px;">Chat bubble format</span></div>
+        <div class="cs-ab-cell">Plain text in bubbles — 3.2/5 trust rating</div>
+        <div class="cs-ab-cell"><span class="cs-ab-win">+0.6</span><br>Bullets + bold headers — 3.8/5 trust rating</div>
+      </div>
+      <div class="cs-ab-row">
+        <div class="cs-ab-cell"><strong>College Card Layout</strong><br><span style="color:var(--secondary);font-size:13px;">Browse/discovery view</span></div>
+        <div class="cs-ab-cell">Horizontal cards, small images — 23% click-through</div>
+        <div class="cs-ab-cell"><span class="cs-ab-win">+8%</span><br>Vertical cards, large images — 31% click-through</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- My Role & Research -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">My Role &amp; Impact</p>
-  <h2 class="cs-h2">End-to-end design ownership — Research → IA → UX → UI → Prototyping → Testing</h2>
-  <p class="cs-body">I led end-to-end design from 0→1, translating ambiguous AI-heavy business and user requirements into clear, user-centered experiences across: conversational AI interfaces, multi-step onboarding, payment flows, and core product features (college matching, essay writing, activity exploration).</p>
-
-  <div class="cs-cards">
-    <div class="cs-card">
-      <div class="cs-card-num">01</div>
-      <div class="cs-card-title">End-to-End Design</div>
-      <div class="cs-card-text">Led 0→1 design across conversational AI chatbots, hub-and-spoke onboarding, payment flows, subscription management, and all core product surfaces.</div>
-    </div>
-    <div class="cs-card">
-      <div class="cs-card-num">02</div>
-      <div class="cs-card-title">Design Foundation</div>
-      <div class="cs-card-text">Built a 48-component design system with tokens, naming conventions (mirroring front-end frameworks), and Loom walkthroughs — cutting handoff time by 45%.</div>
-    </div>
-    <div class="cs-card">
-      <div class="cs-card-num">03</div>
-      <div class="cs-card-title">Drove Research</div>
-      <div class="cs-card-text">35+ student interviews, 28 usability sessions (Hotjar + Tobii eye-tracking), 12 stakeholder interviews. Iterative A/B testing on all critical conversion points.</div>
-    </div>
+<!-- ════════════════════════════════════════
+     07 · INSIGHTS
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-insights" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">07</div>
+    <div class="cs-row-tag">Insights</div>
+    <div class="cs-row-divider"></div>
   </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">What the data surfaced that nobody expected</h2>
 
-  <div class="cs-img-2col" style="margin-top:48px;">
-    <div class="cs-img cs-img-border" style="margin:0;">
-      <img src="assets/images/DreamCollege/Image-3.png" alt="Research scope: 12 A/B tests, 12 stakeholder interviews, 28 usability sessions, 35+ user interviews">
-      <p class="cs-img-caption">Research scope — 75 total sessions across 4 methods</p>
-    </div>
-    <div class="cs-img" style="margin:0; padding:28px 24px 18px; border:1px solid var(--border); border-radius:8px;">
-      <svg viewBox="0 0 560 305" xmlns="http://www.w3.org/2000/svg"
-           role="img" aria-label="Research touchpoints: 75 total sessions — 47% student interviews (35), 37% usability sessions (28), 16% stakeholder interviews (12)"
-           style="width:100%;height:auto;display:block;overflow:visible;">
-        <style>
-          .rct-title { font-family: 'Space Mono', monospace; font-size: 13.5px; font-weight: 700; letter-spacing: -0.01em; }
-          .rct-pct   { font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700; fill: #fff; }
-          .rct-pct-s { font-family: 'Space Mono', monospace; font-size: 11.5px; font-weight: 700; fill: #fff; }
-          .rct-name  { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 500; }
-          .rct-sub   { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.07em; opacity: 0.5; }
-        </style>
-
-        <!-- Title -->
-        <text x="0" y="22" class="rct-title" fill="currentColor">Research touchpoints (n=75 sessions)</text>
-
-        <!-- ── Pie chart  cx=185 cy=170 r=125 ── -->
-        <!-- Angles: Green 0°→57.6°, Orange 57.6°→190.8°, Blue 190.8°→360° -->
-        <!-- Key points:
-             P0 (0°/360°) = 185, 45
-             P1 (57.6°)   = 290.4, 102.8
-             P2 (190.8°)  = 161.6, 292.8   -->
-
-        <!-- Blue — Student interviews 35/75 = 47% -->
-        <path d="M 161.6,292.8 A 125,125 0 0 1 185,45 L 185,170 Z"
-              fill="#3B82C4" style="stroke:var(--bg);stroke-width:2.5;stroke-linejoin:round;"/>
-
-        <!-- Orange — Usability sessions 28/75 = 37% -->
-        <path d="M 290.4,102.8 A 125,125 0 0 1 161.6,292.8 L 185,170 Z"
-              fill="#F07820" style="stroke:var(--bg);stroke-width:2.5;stroke-linejoin:round;"/>
-
-        <!-- Green — Stakeholder interviews 12/75 = 16% -->
-        <path d="M 185,45 A 125,125 0 0 1 290.4,102.8 L 185,170 Z"
-              fill="#5CB85C" style="stroke:var(--bg);stroke-width:2.5;stroke-linejoin:round;"/>
-
-        <!-- % labels — placed at 60% radius at each segment midpoint -->
-        <!-- Blue midpoint 275.4°  → (110, 163) -->
-        <text x="110" y="167" class="rct-pct"   text-anchor="middle">47%</text>
-        <!-- Orange midpoint 124.2° → (247, 212) -->
-        <text x="247" y="216" class="rct-pct"   text-anchor="middle">37%</text>
-        <!-- Green midpoint 28.8°  → (221, 104) -->
-        <text x="221" y="108" class="rct-pct-s" text-anchor="middle">16%</text>
-
-        <!-- ── Legend ── -->
-        <!-- Student interviews (Blue) -->
-        <rect x="350" y="100" width="13" height="13" rx="2" fill="#3B82C4"/>
-        <text x="372" y="111" class="rct-name" fill="currentColor">Student interviews</text>
-        <text x="372" y="128" class="rct-sub"  fill="currentColor">35 SESSIONS · 47%</text>
-
-        <!-- Usability sessions (Orange) -->
-        <rect x="350" y="155" width="13" height="13" rx="2" fill="#F07820"/>
-        <text x="372" y="166" class="rct-name" fill="currentColor">Usability sessions</text>
-        <text x="372" y="183" class="rct-sub"  fill="currentColor">28 SESSIONS · 37%</text>
-
-        <!-- Stakeholder interviews (Green) -->
-        <rect x="350" y="210" width="13" height="13" rx="2" fill="#5CB85C"/>
-        <text x="372" y="221" class="rct-name" fill="currentColor">Stakeholder interviews</text>
-        <text x="372" y="238" class="rct-sub"  fill="currentColor">12 SESSIONS · 16%</text>
-      </svg>
-      <p class="cs-img-caption">Research touchpoints breakdown (n=75)</p>
-    </div>
-  </div>
-</section>
-
-<!-- Results -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">The Results</p>
-  <h2 class="cs-h2">150K users. 4.2/5 trust. 63% retention lift. In 4 months.</h2>
-
-  <div class="cs-img cs-img-border" style="margin-top:40px;">
-    <img src="assets/images/DreamCollege/Image-2.png" alt="Key metrics: 150K+ users, +63% retention, 4.2/5 trust score, 91% profile completion">
-    <p class="cs-img-caption">Key outcome metrics — 4 months post-launch</p>
-  </div>
-
-  <div class="cs-stats-4" style="margin-top:40px;">
-    <div class="cs-stat">
-      <span class="cs-stat-number">150K+</span>
-      <span class="cs-stat-desc">lifetime users scaled in 4 months</span>
-    </div>
-    <div class="cs-stat">
-      <span class="cs-stat-number">+63%</span>
-      <span class="cs-stat-desc">retention through conversational AI improvements</span>
-    </div>
-    <div class="cs-stat">
-      <span class="cs-stat-number">73%</span>
-      <span class="cs-stat-desc">task success rate improvement via simplified workflows</span>
-    </div>
-    <div class="cs-stat">
-      <span class="cs-stat-number">-33.6%</span>
-      <span class="cs-stat-desc">issue resolution time in month one</span>
-    </div>
-  </div>
-  <div class="cs-stats-4" style="margin-top:0; border-top:none;">
-    <div class="cs-stat" style="border-top:1px solid var(--border);">
-      <span class="cs-stat-number">+40%</span>
-      <span class="cs-stat-desc">boost in average session duration</span>
-    </div>
-    <div class="cs-stat" style="border-top:1px solid var(--border);">
-      <span class="cs-stat-number">-52%</span>
-      <span class="cs-stat-desc">task completion time (41% → 19% time-on-task)</span>
-    </div>
-    <div class="cs-stat" style="border-top:1px solid var(--border);">
-      <span class="cs-stat-number">-45%</span>
-      <span class="cs-stat-desc">design-to-dev handoff time via design tokens</span>
-    </div>
-    <div class="cs-stat" style="border-top:1px solid var(--border); border-right:none;">
-      <span class="cs-stat-number">4.2/5</span>
-      <span class="cs-stat-desc">AI trust score (up from 2.8/5 pre-redesign)</span>
-    </div>
-  </div>
-</section>
-
-<!-- The Process -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">The Process</p>
-  <h2 class="cs-h2">Six phases across twelve weeks</h2>
-  <p class="cs-body">Discovery and design ran in parallel due to the 4-month runway. Competitive analysis of 8 platforms, journey mapping across 6 personas, and heuristic evaluation of AI chatbots in education informed every decision.</p>
-
-  <div class="cs-img cs-img-border" style="margin-top:40px;">
-    <img src="assets/images/DreamCollege/Image-6.png" alt="Project timeline Gantt chart — 12 weeks: Discovery, Problem Framing, IA, Visual System, Conversational AI UX, Testing">
-    <p class="cs-img-caption">Project timeline — 12 weeks, 6 phases</p>
-  </div>
-
-  <div class="cs-steps" style="grid-template-columns: repeat(3, 1fr); margin-top:48px;">
-    <div class="cs-step">
-      <div class="cs-step-num">01</div>
-      <div class="cs-step-title">Discovery &amp; Research</div>
-      <div class="cs-step-text">Weeks 1–2. 35+ student interviews, 12 parent/counselor interviews. Competitive audit of 8 platforms. Identified 3 trust barriers.</div>
-    </div>
-    <div class="cs-step">
-      <div class="cs-step-num">02</div>
-      <div class="cs-step-title">Problem Framing</div>
-      <div class="cs-step-text">Weeks 2–3. Established 3 design principles. Journey mapping across 6 personas. Aligned roadmap with CEO on Trust-First strategy.</div>
-    </div>
-    <div class="cs-step">
-      <div class="cs-step-num">03</div>
-      <div class="cs-step-title">IA &amp; Journey Redesign</div>
-      <div class="cs-step-text">Weeks 3–4. Hub-and-spoke onboarding architecture. Information hierarchy redesign. Navigation structure validated with 8 users.</div>
-    </div>
-    <div class="cs-step">
-      <div class="cs-step-num">04</div>
-      <div class="cs-step-title">Visual System &amp; DS</div>
-      <div class="cs-step-text">Weeks 4–6. 48-component design system. Design tokens for color, type, spacing. Weekly design-dev syncs to align implementation.</div>
-    </div>
-    <div class="cs-step">
-      <div class="cs-step-num">05</div>
-      <div class="cs-step-title">Conversational AI UX</div>
-      <div class="cs-step-text">Weeks 5–8. LLM response design, streaming states, trust layers. Drop-off reduced from 31% to 7%.</div>
-    </div>
-    <div class="cs-step">
-      <div class="cs-step-num">06</div>
-      <div class="cs-step-title">Testing &amp; Iteration</div>
-      <div class="cs-step-text">Weeks 7–12. Hotjar heatmaps, Tobii eye-tracking, 12 A/B tests. Continuous iteration until all key metrics hit targets.</div>
-    </div>
-  </div>
-</section>
-
-<!-- Discovery: Trust Barriers -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Discovery &amp; Research</p>
-  <h2 class="cs-h2">Three trust barriers that shaped everything</h2>
-  <p class="cs-body">Through 35+ student interviews and 12 parent/counselor sessions, three patterns kept surfacing. Naming them gave the whole team a shared framework for every design decision that followed.</p>
-
-  <div class="cs-cards">
-    <div class="cs-card">
-      <div class="cs-card-num">01</div>
-      <div class="cs-card-title">"Black Box" Anxiety</div>
-      <div class="cs-card-text">Users felt uncomfortable when they couldn't see what the AI was thinking. "It's like asking for directions from someone wearing a blindfold — even if they're right, I can't trust it." The fix: make AI reasoning visible at every step.</div>
-    </div>
-    <div class="cs-card">
-      <div class="cs-card-num">02</div>
-      <div class="cs-card-title">The Comparison Trap</div>
-      <div class="cs-card-text">Students weren't comparing us to other AI tools — they were comparing us to a "good counselor": someone who knows them deeply, explains their reasoning, and adapts to their situation. The fix: personalization signals at every touchpoint.</div>
-    </div>
-    <div class="cs-card">
-      <div class="cs-card-num">03</div>
-      <div class="cs-card-title">Emotional Stakes ≠ Logical Stakes</div>
-      <div class="cs-card-text">Even when users logically understood AI capabilities, their emotional response was skepticism. This wasn't about features — it was about feeling safe. The fix: progressive trust built through small wins, not big asks.</div>
-    </div>
-  </div>
-</section>
-
-<!-- Design Principles -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Problem Framing &amp; Strategy</p>
-  <h2 class="cs-h2">Three north-star principles that drove every decision</h2>
-
-  <div class="cs-cards">
-    <div class="cs-card">
-      <div class="cs-card-num">01</div>
-      <div class="cs-card-title">Transparent by Default</div>
-      <div class="cs-card-text">Show users what's happening behind the scenes at every step. Visual cues for AI reasoning. If the AI can't explain it, it shouldn't say it.</div>
-    </div>
-    <div class="cs-card">
-      <div class="cs-card-num">02</div>
-      <div class="cs-card-title">Human-Centered AI</div>
-      <div class="cs-card-text">Make AI feel like an intelligent assistant, not a replacement for human judgment. Every interaction should feel like support, never surveillance. The human is always in control.</div>
-    </div>
-    <div class="cs-card">
-      <div class="cs-card-num">03</div>
-      <div class="cs-card-title">Progressive Trust</div>
-      <div class="cs-card-text">Earn trust incrementally through small wins before asking for big commitments. Always give before you take. Users should feel confident before they're asked to commit.</div>
-    </div>
-  </div>
-
-  <div class="cs-quote" style="margin-top:48px;">
-    <p>"It's like asking for directions from someone wearing a blindfold — even if they're right, I can't trust it."</p>
-    <cite>— High school student, discovery interview</cite>
-  </div>
-</section>
-
-<!-- Design System -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Visual Design &amp; Design System</p>
-  <h2 class="cs-h2">48 components. One source of truth. Zero design drift.</h2>
-  <div class="cs-two-col">
-    <div>
-      <p class="cs-body">Working closely with the CEO and branding stakeholders, I developed a visual language balancing approachability (friendly, educational) with credibility (professional, data-driven). A gradient-heavy palette (blues → purples) conveyed innovation while differentiating us from corporate competitors.</p>
-      <ul class="cs-list" style="margin-top:24px;">
-        <li>48 reusable components (buttons, forms, cards, modals, nav)</li>
-        <li>Design tokens for colors, typography, spacing, and shadows</li>
-        <li>Naming conventions mirroring front-end frameworks (e.g., btn-primary-lg)</li>
-        <li>Documentation for states, variations, and usage guidelines</li>
-        <li>Weekly design-dev syncs with shared Figma libraries</li>
-      </ul>
-    </div>
-    <div>
-      <div class="cs-img cs-img-border" style="margin:0;">
-        <img src="assets/images/DreamCollege/Image-8.png" alt="DreamCollege AI color design system">
-        <p class="cs-img-caption">Color system — primary, accent, neutral, semantic</p>
+    <h3 class="cs-h3" style="margin-top:0;">Stakeholder Management</h3>
+    <div class="cs-two-col">
+      <div>
+        <p class="cs-body">The CEO wanted to prioritize monetization features (payment, upgrades) while research clearly showed we needed to nail core trust and usability first. I created a "Trust-First Roadmap" presentation showing user research quotes, conversion funnel data with a 47% drop-off before payment, and a proposed sequence: fix core experience → build trust → introduce premium features.</p>
+      </div>
+      <div>
+        <p class="cs-body"><strong>Outcome:</strong> CEO agreed to delay payment v2 by 2 weeks to focus on profile UX improvements. This resulted in 22% higher conversion when payment was eventually released.</p>
+        <div class="cs-note">
+          <strong>The lesson:</strong> Stakeholder alignment isn't about winning arguments. It's about making the data so clear that the right decision becomes obvious. Frame around business outcomes, not design preferences.
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="cs-img cs-img-border" style="margin-top:40px;">
-    <img src="assets/images/DreamCollege/Image-14.png" alt="Full DreamCollege AI design system overview — typography, components, screens">
-    <p class="cs-img-caption">Design system overview — typography, components, screens</p>
-  </div>
-
-  <div class="cs-note" style="margin-top:32px;">
-    <strong>Result:</strong> Design-to-development handoff time dropped 45%, and developers could implement 80% of designs without clarification questions.
-  </div>
-</section>
-
-<!-- Conversational AI -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Conversational AI Design</p>
-  <h2 class="cs-h2">From 31% drop-off to 7% — redesigning the AI response experience</h2>
-  <div class="cs-two-col">
-    <div>
-      <p class="cs-body">One of the biggest UX challenges: keeping users engaged while the LLM generated responses (3–8 second delays). Initial testing showed 31% of users clicked away during loading, and users reported feeling "ignored" or unsure if the system was working.</p>
-      <p class="cs-body" style="margin-top:16px;">I designed a three-layer trust system: immediate acknowledgment (streaming animation showing the AI was thinking), progressive disclosure (structured response format with clear hierarchy), and explainability (inline "why" callouts for every recommendation).</p>
+    <h3 class="cs-h3">Designing for AI is designing for the unknown</h3>
+    <p class="cs-body" style="margin-bottom:32px;">AI products introduce design challenges that traditional UX patterns don't solve: responses change as the model learns, user control must be preserved, and a user base spanning 30+ countries created unexpected localization complexity.</p>
+    <div class="cs-img cs-img-border">
+      <img src="assets/images/DreamCollege/Image-13.png" alt="AI design challenges iceberg">
+      <p class="cs-img-caption">AI design challenges — surface vs. depth</p>
     </div>
-    <div>
-      <div class="cs-img cs-img-border" style="margin:0;">
-        <img src="assets/images/DreamCollege/Image-9.png" alt="AI transparency: Layer 1 Immediate Acknowledgment, Layer 2 Progressive Disclosure, Layer 3 Explainability">
-        <p class="cs-img-caption">Three-layer AI transparency model</p>
+
+    <h3 class="cs-h3">Three things research found that nobody expected</h3>
+    <div class="cs-cards">
+      <div class="cs-card">
+        <div class="cs-card-num">01</div>
+        <div class="cs-card-title">Students Don't Read Instructions</div>
+        <div class="cs-card-text">Hotjar showed 94% of users skipped instructional text. We replaced text-heavy instructions with visual examples and progressive disclosure. Result: 41% improvement in form completion rates.</div>
       </div>
-    </div>
-  </div>
-
-  <div class="cs-img cs-img-border" style="margin-top:40px;">
-    <img src="assets/images/DreamCollege/Image-10.png" alt="AI response drop-off decreased from 31% to 7% (-77%), users engaging with follow-up AI features increased +63%">
-    <p class="cs-img-caption">Drop-off -77% · Follow-up AI engagement +63%</p>
-  </div>
-
-  <div class="cs-img cs-img-border" style="margin-top:32px;">
-    <img src="assets/images/DreamCollege/Image-12.png" alt="Progressive Profile Building and Transparent AI screens">
-    <p class="cs-img-caption">Progressive profile building + transparent AI in production</p>
-  </div>
-</section>
-
-<!-- Critical Design Decisions -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Critical Design Decisions</p>
-  <h2 class="cs-h2">Three decisions that changed the product — backed by data</h2>
-
-  <div class="cs-img cs-img-border" style="margin-top:32px;">
-    <img src="assets/images/DreamCollege/Image-11.png" alt="Three critical design decisions: Profile-First Onboarding, Copy Profile from Sample Feature, Collapsible Navigation Sections">
-    <p class="cs-img-caption">Decision 1: Profile-First Onboarding · Decision 2: Copy Profile from Sample · Decision 3: Collapsible Navigation</p>
-  </div>
-</section>
-
-<!-- Testing & A/B -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Testing &amp; Iteration</p>
-  <h2 class="cs-h2">Continuous validation — heatmaps, eye-tracking, and A/B tests</h2>
-  <div class="cs-two-col">
-    <div>
-      <p class="cs-body"><strong>Hotjar Heatmaps</strong> revealed that users were clicking on non-interactive elements (icons, headings) expecting them to be buttons. I redesigned these as genuine interactive elements or removed them to reduce confusion.</p>
-      <p class="cs-body" style="margin-top:16px;"><strong>Tobii Eye-Tracking (12 sessions)</strong> discovered users were skipping important context text styled too similarly to body copy. I introduced icon badges for "important info," colored background callouts, and larger font sizes for key decision points.</p>
-    </div>
-    <div>
-      <ul class="cs-list" style="margin-top:0;">
-        <li>12 iterative A/B testing rounds across critical conversion points</li>
-        <li>28 usability sessions using Hotjar + Tobii</li>
-        <li>12 stakeholder interviews to align on roadmap priorities</li>
-        <li>35+ user interviews across grades 9–12</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="cs-ab-grid" style="margin-top:48px;">
-    <div class="cs-ab-row cs-ab-header">
-      <div class="cs-ab-cell">Test</div>
-      <div class="cs-ab-cell">Original</div>
-      <div class="cs-ab-cell">Variant (Winner)</div>
-    </div>
-    <div class="cs-ab-row">
-      <div class="cs-ab-cell"><strong>CTA Button Text</strong><br><span style="color:var(--secondary); font-size:13px;">Onboarding save action</span></div>
-      <div class="cs-ab-cell">"Save and Continue" — 54% click-through</div>
-      <div class="cs-ab-cell"><span class="cs-ab-win">+8%</span><br>"Save My Progress" — 62% click-through</div>
-    </div>
-    <div class="cs-ab-row">
-      <div class="cs-ab-cell"><strong>AI Response Styling</strong><br><span style="color:var(--secondary); font-size:13px;">Chat bubble format</span></div>
-      <div class="cs-ab-cell">Plain text in bubbles — 3.2/5 trust rating</div>
-      <div class="cs-ab-cell"><span class="cs-ab-win">+0.6</span><br>Bullets + bold headers — 3.8/5 trust rating</div>
-    </div>
-    <div class="cs-ab-row">
-      <div class="cs-ab-cell"><strong>College Card Layout</strong><br><span style="color:var(--secondary); font-size:13px;">Browse/discovery view</span></div>
-      <div class="cs-ab-cell">Horizontal cards, small images — 23% click-through</div>
-      <div class="cs-ab-cell"><span class="cs-ab-win">+8%</span><br>Vertical cards, large images — 31% click-through</div>
-    </div>
-  </div>
-</section>
-
-<!-- Stakeholder Management -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Stakeholder Management</p>
-  <h2 class="cs-h2">The CEO wanted monetization. Research said: fix trust first.</h2>
-  <div class="cs-two-col">
-    <div>
-      <p class="cs-body">The CEO wanted to prioritize monetization features (payment, upgrades) while research clearly showed we needed to nail core trust and usability first. I created a "Trust-First Roadmap" presentation showing user research quotes, conversion funnel data with a 47% drop-off before payment, and a proposed sequence: fix core experience → build trust → introduce premium features.</p>
-    </div>
-    <div>
-      <p class="cs-body"><strong>Outcome:</strong> CEO agreed to delay payment v2 by 2 weeks to focus on profile UX improvements. This decision resulted in 22% higher conversion when payment was eventually released.</p>
-      <div class="cs-note" style="margin-top:24px;">
-        <strong>The lesson:</strong> Stakeholder alignment isn't about winning arguments. It's about making the data so clear that the right decision becomes obvious. Frame around business outcomes, not design preferences.
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <div class="cs-card-title">Parents Are Hidden Users</div>
+        <div class="cs-card-text">Eye-tracking revealed parents were frequently present — sometimes completing profiles themselves. We added a "Share with Parents" feature and rewrote copy for both audiences. Result: 19% increase in completed applications.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">03</div>
+        <div class="cs-card-title">Anxiety-Driven Behavior</div>
+        <div class="cs-card-text">Students checked the platform 3–4× more than necessary. We built a "Your Journey" dashboard with "No changes since you last checked" status. Result: 28% reduction in unnecessary sessions.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- AI Design Challenges -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Challenges</p>
-  <h2 class="cs-h2">Designing for AI is designing for the unknown</h2>
-  <p class="cs-body">AI products introduce design challenges that traditional UX patterns don't solve: responses change as the model learns, user control must be preserved, technical limitations constrain features, and our user base spanning 30+ countries created unexpected localization complexity.</p>
-
-  <div class="cs-img cs-img-border" style="margin-top:40px;">
-    <img src="assets/images/DreamCollege/Image-13.png" alt="AI design challenges iceberg: visible (AI output changes) and hidden (user control, technical limitations, cultural differences)">
-    <p class="cs-img-caption">AI design challenges — surface vs. depth</p>
+<!-- ════════════════════════════════════════
+     08 · REFLECTION
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-reflection" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">08</div>
+    <div class="cs-row-tag">Reflection</div>
+    <div class="cs-row-divider"></div>
   </div>
-</section>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">What I'd do differently — and what I'm proud of</h2>
 
-<!-- Unexpected Insights -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Unexpected Insights</p>
-  <h2 class="cs-h2">Three things research found that nobody expected</h2>
+    <div class="cs-two-col" style="margin-top:0;">
+      <div>
+        <p class="cs-h3" style="margin-top:0;">What I'd Do Differently</p>
+        <ul class="cs-list" style="margin-top:0;">
+          <li>Conduct usability tests in Week 2 rather than Week 5 — we could have caught navigation issues sooner and saved 2 weeks of iteration</li>
+          <li>Involve parents earlier as a distinct user group — their influence was underestimated until mid-project</li>
+          <li>Establish design tokens before the first production component — retrofitting is painful</li>
+        </ul>
+      </div>
+      <div>
+        <p class="cs-h3" style="margin-top:0;">What I'm Proud Of</p>
+        <ul class="cs-list" style="margin-top:0;">
+          <li>Solving the trust problem — users feel confident making life-changing decisions because the AI earns trust through transparency, not authority</li>
+          <li>A design system architected to handle 10× growth without major refactoring — serving 150K today and built for more</li>
+          <li>Cross-functional leadership — bridging design, engineering, and business to translate user needs into measurable outcomes</li>
+        </ul>
+      </div>
+    </div>
 
-  <div class="cs-cards">
-    <div class="cs-card">
-      <div class="cs-card-num">01</div>
-      <div class="cs-card-title">Students Don't Read Instructions</div>
-      <div class="cs-card-text">Hotjar showed 94% of users skipped instructional text, including critical guidance. We replaced text-heavy instructions with visual examples, inline placeholder text, and progressive disclosure. Result: 41% improvement in form completion rates.</div>
+    <h3 class="cs-h3">Four lessons from building at the intersection of AI and trust</h3>
+    <div class="cs-steps">
+      <div class="cs-step">
+        <div class="cs-step-num">01</div>
+        <div class="cs-step-title">Trust is designed, not assumed</div>
+        <div class="cs-step-text">Users don't trust AI because it's capable — they trust it when the interface makes reasoning legible. Explainability is a design feature, not an engineering afterthought.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">02</div>
+        <div class="cs-step-title">Reduce before you add</div>
+        <div class="cs-step-text">The biggest wins came from removing complexity. Simplification required more design judgment than building new features — and delivered more measurable impact.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">03</div>
+        <div class="cs-step-title">Emotion is a UX signal</div>
+        <div class="cs-step-text">Students making life-defining decisions brought anxiety into every session. Designing for emotional state — not just task completion — was what set this apart.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">04</div>
+        <div class="cs-step-title">Systems thinking multiplies impact</div>
+        <div class="cs-step-text">A well-built design system doesn't just save time — it creates organizational clarity. When everyone speaks the same design language, decisions get made faster and better.</div>
+      </div>
     </div>
-    <div class="cs-card">
-      <div class="cs-card-num">02</div>
-      <div class="cs-card-title">Parents Are Hidden Users</div>
-      <div class="cs-card-text">Eye-tracking revealed parents were frequently present — sometimes completing profiles themselves — despite the platform targeting students. We added a "Share with Parents" feature and rewrote copy for both audiences. Result: 19% increase in completed applications.</div>
-    </div>
-    <div class="cs-card">
-      <div class="cs-card-num">03</div>
-      <div class="cs-card-title">Anxiety-Driven Behavior</div>
-      <div class="cs-card-text">Students checked the platform 3–4× more than necessary, constantly verifying whether recommendations had changed. We built a "Your Journey" dashboard with timestamps, "No changes since you last checked" status, and progress milestones. Result: 28% reduction in unnecessary sessions, increase in meaningful engagement.</div>
-    </div>
-  </div>
-</section>
 
-<!-- Design System & Collaboration -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Design System &amp; Collaboration</p>
-  <h2 class="cs-h2">45% faster handoffs. 80% fewer clarification questions. 0 major UI bugs.</h2>
-
-  <div class="cs-two-col">
-    <div>
-      <p style="font-family:var(--display); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:16px;">Weekly Design-Dev Sync</p>
-      <ul class="cs-list" style="margin-top:0;">
-        <li>Demo new designs with interactive Figma prototypes</li>
-        <li>Review implementation against specs side-by-side</li>
-        <li>Discuss technical feasibility of upcoming features</li>
-        <li>Align on responsive behaviors and edge cases</li>
-      </ul>
-    </div>
-    <div>
-      <p style="font-family:var(--display); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:16px;">Design Handoff Process</p>
-      <ul class="cs-list" style="margin-top:0;">
-        <li>Figma files with organized layers, auto-layout, and interaction annotations</li>
-        <li>Assets exported at 1×, 2×, 3× with consistent naming</li>
-        <li>Spec document: user flows, copy, error states, success metrics</li>
-        <li>Loom video walkthrough (5–8 min per feature)</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- Reflections -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Reflections</p>
-  <h2 class="cs-h2">What I'd do differently — and what I'm proud of</h2>
-
-  <div class="cs-two-col" style="margin-top:40px;">
-    <div>
-      <p style="font-family:var(--display); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--secondary); margin-bottom:16px;">What I'd Do Differently</p>
-      <ul class="cs-list" style="margin-top:0;">
-        <li>Conduct usability tests in Week 2 rather than Week 5 — we could have caught navigation issues sooner and saved 2 weeks of iteration</li>
-        <li>Involve parents earlier as a distinct user group — their influence was underestimated until mid-project</li>
-        <li>Establish design tokens before the first production component — retrofitting is painful</li>
-      </ul>
-    </div>
-    <div>
-      <p style="font-family:var(--display); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--secondary); margin-bottom:16px;">What I'm Proud Of</p>
-      <ul class="cs-list" style="margin-top:0;">
-        <li>Solving the trust problem — users feel confident making life-changing decisions because the AI earns trust through transparency, not authority</li>
-        <li>A design system architected to handle 10× growth without major refactoring — serving 150K today and built for more</li>
-        <li>Cross-functional leadership — bridging design, engineering, and business to translate user needs into measurable outcomes</li>
-      </ul>
+    <h3 class="cs-h3">Design System &amp; Collaboration</h3>
+    <div class="cs-two-col">
+      <div>
+        <p class="cs-h3" style="margin-top:0;color:var(--secondary);">Weekly Design-Dev Sync</p>
+        <ul class="cs-list" style="margin-top:0;">
+          <li>Demo new designs with interactive Figma prototypes</li>
+          <li>Review implementation against specs side-by-side</li>
+          <li>Discuss technical feasibility of upcoming features</li>
+          <li>Align on responsive behaviors and edge cases</li>
+        </ul>
+      </div>
+      <div>
+        <p class="cs-h3" style="margin-top:0;color:var(--secondary);">Design Handoff Process</p>
+        <ul class="cs-list" style="margin-top:0;">
+          <li>Figma files with organized layers, auto-layout, and interaction annotations</li>
+          <li>Assets exported at 1×, 2×, 3× with consistent naming</li>
+          <li>Spec document: user flows, copy, error states, success metrics</li>
+          <li>Loom video walkthrough (5–8 min per feature)</li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- What I Learned -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">What I Learned</p>
-  <h2 class="cs-h2">Four lessons from building at the intersection of AI and trust</h2>
-  <div class="cs-steps">
-    <div class="cs-step">
-      <div class="cs-step-num">01</div>
-      <div class="cs-step-title">Trust is designed, not assumed</div>
-      <div class="cs-step-text">Users don't trust AI because it's capable — they trust it when the interface makes reasoning legible. Explainability is a design feature, not an engineering afterthought.</div>
-    </div>
-    <div class="cs-step">
-      <div class="cs-step-num">02</div>
-      <div class="cs-step-title">Reduce before you add</div>
-      <div class="cs-step-text">The biggest wins came from removing complexity. Simplification required more design judgment than building new features — and delivered more measurable impact.</div>
-    </div>
-    <div class="cs-step">
-      <div class="cs-step-num">03</div>
-      <div class="cs-step-title">Emotion is a UX signal</div>
-      <div class="cs-step-text">Students making life-defining decisions brought anxiety into every session. Designing for emotional state — not just task completion — was what set this apart from a typical SaaS product.</div>
-    </div>
-    <div class="cs-step">
-      <div class="cs-step-num">04</div>
-      <div class="cs-step-title">Systems thinking multiplies impact</div>
-      <div class="cs-step-text">A well-built design system doesn't just save time — it creates organizational clarity. When everyone speaks the same design language, decisions get made faster and better.</div>
-    </div>
-  </div>
-</section>
-
-<!-- Conclusion -->
+<!-- ── Conclusion ── -->
 <div class="cs-conclusion" data-reveal>
   <p class="cs-conclusion-eyebrow">Conclusion</p>
   <p class="cs-conclusion-text">DreamCollege AI taught me that great design isn't about making things pretty — it's about building trust when stakes are high, simplifying complexity without losing depth, and creating systems that scale.</p>
-  <p style="font-family:var(--font); font-size:16px; color:var(--secondary); margin-top:24px; line-height:1.8;">In 4 months, we went from a blank Figma file to a platform serving 150,000 students making one of the biggest decisions of their lives. The real achievement was earning their trust.</p>
-  <p style="font-family:var(--display); font-size:13px; color:var(--secondary); margin-top:48px; letter-spacing:0.04em;">Glad we could cross paths.<br>Out of anywhere you could be, you're here.</p>
+  <p style="font-family:var(--font);font-size:16px;color:var(--secondary);margin-top:24px;line-height:1.8;">In 4 months, we went from a blank Figma file to a platform serving 150,000 students making one of the biggest decisions of their lives. The real achievement was earning their trust.</p>
+  <p style="font-family:var(--display);font-size:13px;color:var(--secondary);margin-top:48px;letter-spacing:0.04em;">Glad we could cross paths.<br>Out of anywhere you could be, you're here.</p>
 </div>
 
-<!-- Next project -->
+<!-- ── Next project ── -->
 <div class="cs-next">
   <div>
     <p class="cs-next-label">Next project</p>
@@ -853,7 +943,7 @@
   </a>
 </div>
 
-<!-- Footer -->
+<!-- ── Footer ── -->
 <footer class="footer" id="footer">
   <div class="footer-grid">
     <div>
@@ -878,66 +968,104 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <span class="footer-copy">© 2026 Puru Bhardwaj</span>
+    <span class="footer-copy">&copy; 2026 Puru Bhardwaj</span>
     <span class="footer-copy">Visual Product Designer</span>
   </div>
 </footer>
 
 <script>
-  // Cursor
+  /* ── Cursor ── */
   (function(){
     const cursor = document.getElementById('cursor');
+    if (!cursor) return;
     let mx = window.innerWidth/2, my = window.innerHeight/2, cx = mx, cy = my;
     document.addEventListener('mousemove', function(e){ mx = e.clientX; my = e.clientY; });
-    function animate(){
-      cx += (mx-cx)*0.15; cy += (my-cy)*0.15;
-      cursor.style.transform = 'translate3d('+(cx-6)+'px,'+(cy-6)+'px,0)';
-      requestAnimationFrame(animate);
-    }
+    function animate(){ cx += (mx-cx)*0.15; cy += (my-cy)*0.15; cursor.style.transform = 'translate3d('+(cx-6)+'px,'+(cy-6)+'px,0)'; requestAnimationFrame(animate); }
     animate();
     document.querySelectorAll('a, button').forEach(function(el){
       el.addEventListener('mouseenter', function(){ cursor.classList.add('large'); });
       el.addEventListener('mouseleave', function(){ cursor.classList.remove('large'); });
     });
     const footer = document.querySelector('footer');
-    if(footer){
-      footer.addEventListener('mouseenter', function(){ cursor.classList.add('invert'); });
-      footer.addEventListener('mouseleave', function(){ cursor.classList.remove('invert'); });
-    }
+    if (footer){ footer.addEventListener('mouseenter', function(){ cursor.classList.add('invert'); }); footer.addEventListener('mouseleave', function(){ cursor.classList.remove('invert'); }); }
   })();
 
-  // Scroll reveal
+  /* ── Scroll reveal ── */
   (function(){
     const els = document.querySelectorAll('[data-reveal]');
     const io = new IntersectionObserver(function(entries){
       entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('revealed'); io.unobserve(e.target); } });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.08 });
     els.forEach(function(el){ io.observe(el); });
   })();
 
-  // Theme toggle
+  /* ── Theme toggle ── */
   (function(){
     var toggle = document.getElementById('themeToggle');
+    if (!toggle) return;
     var moon = toggle.querySelector('.icon-moon');
-    var sun = toggle.querySelector('.icon-sun');
-    function applyTheme(theme){
-      document.documentElement.setAttribute('data-theme', theme);
-      if(theme === 'dark'){ moon.style.display = 'none'; sun.style.display = ''; }
+    var sun  = toggle.querySelector('.icon-sun');
+    function applyTheme(t){
+      document.documentElement.setAttribute('data-theme', t);
+      if (t === 'dark'){ moon.style.display = 'none'; sun.style.display = ''; }
       else { moon.style.display = ''; sun.style.display = 'none'; }
     }
     var saved = localStorage.getItem('theme');
-    if(saved){ applyTheme(saved); }
-    else if(window.matchMedia('(prefers-color-scheme: dark)').matches){ applyTheme('dark'); }
+    if (saved){ applyTheme(saved); }
+    else if (window.matchMedia('(prefers-color-scheme: dark)').matches){ applyTheme('dark'); }
     toggle.addEventListener('click', function(){
-      var current = document.documentElement.getAttribute('data-theme');
-      var next = current === 'dark' ? 'light' : 'dark';
+      var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       localStorage.setItem('theme', next);
       applyTheme(next);
     });
+  })();
+
+  /* ── Floating Side Nav ── */
+  (function(){
+    var sidenav  = document.getElementById('csSidenav');
+    var links    = Array.from(document.querySelectorAll('.csn-link'));
+    var sections = links.map(function(l){ return document.getElementById(l.getAttribute('data-s')); }).filter(Boolean);
+    var hero     = document.getElementById('cs-top');
+
+    if (!sidenav || !sections.length) return;
+
+    /* Show nav after scrolling past hero */
+    var heroBottom = 0;
+    function updateHeroBottom(){ heroBottom = hero ? hero.getBoundingClientRect().bottom + window.scrollY : 400; }
+    updateHeroBottom();
+    window.addEventListener('resize', updateHeroBottom);
+
+    /* Active section tracking */
+    var current = '';
+    function onScroll(){
+      /* Show / hide */
+      if (window.scrollY > heroBottom - 100){
+        sidenav.classList.add('is-visible');
+      } else {
+        sidenav.classList.remove('is-visible');
+      }
+      /* Active link */
+      var scrollMid = window.scrollY + window.innerHeight * 0.4;
+      var active = sections[0];
+      sections.forEach(function(s){
+        if (s.offsetTop <= scrollMid) active = s;
+      });
+      var id = active ? active.id : '';
+      if (id !== current){
+        current = id;
+        links.forEach(function(l){
+          l.classList.toggle('active', l.getAttribute('data-s') === id);
+        });
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   })();
 </script>
 
   <!-- Chatbase Widget -->
   <script>(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="2vjF7npvsR2sIMI6aaciU";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();</script>
+
 </body>
 </html>

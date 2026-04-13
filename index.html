@@ -104,7 +104,7 @@
       left: 0;
       right: 0;
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: center;
       gap: 4px;
       padding: 14px var(--margin);
@@ -115,6 +115,26 @@
       border-bottom: 1px solid var(--border);
       opacity: 0;
       animation: fadeIn 0.6s ease 0.3s forwards;
+    }
+
+    .nav-brand {
+      font-family: var(--display);
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      text-decoration: none;
+      flex-shrink: 0;
+      transition: opacity 0.2s ease;
+    }
+    .nav-brand:hover { opacity: 0.6; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: auto;
+      margin-right: 12px;
     }
 
     .nav-link {
@@ -369,7 +389,7 @@
 
     .project-row {
       display: grid;
-      grid-template-columns: 2fr 3fr;
+      grid-template-columns: 36px 2fr 3fr;
       gap: var(--gutter);
       align-items: center;
       padding: 22px 0;
@@ -380,6 +400,16 @@
       opacity: 0;
       animation: rowReveal 0.6s ease forwards;
       transition: background 0.2s ease, padding 0.2s ease;
+    }
+
+    .project-num {
+      font-family: var(--display);
+      font-size: 10px;
+      color: var(--secondary);
+      opacity: 0.4;
+      letter-spacing: 0.06em;
+      align-self: flex-start;
+      padding-top: 3px;
     }
 
     .project-row:nth-child(1) { animation-delay: 1.0s; }
@@ -717,7 +747,7 @@
       .project-row:hover { padding-left: 12px; padding-right: 12px; }
 
       .project-arrow-btn { display: none; }
-      .project-row { grid-template-columns: 1fr; gap: 8px; }
+      .project-num { display: none; }
 
       .footer-top { grid-template-columns: 1fr; gap: 40px; }
       .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
@@ -799,10 +829,12 @@
 
   <!-- Navigation -->
   <nav class="nav" id="nav">
-    <a href="#top" class="nav-link active" data-section="hero">Home</a>
-    <a href="#projects" class="nav-link" data-section="projects">Work</a>
-    <a href="info.html" class="nav-link">Info</a>
-    <a href="https://purubhardwajdesign.com" class="nav-link" target="_blank" rel="noopener">Portfolio</a>
+    <a href="#top" class="nav-brand">Puru Bhardwaj</a>
+    <div class="nav-links">
+      <a href="#projects" class="nav-link" data-section="projects">Work</a>
+      <a href="info.html" class="nav-link">Info</a>
+      <a href="https://purubhardwajdesign.com" class="nav-link" target="_blank" rel="noopener">Portfolio ↗</a>
+    </div>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
       <!-- Moon — shown in light mode -->
       <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -852,6 +884,7 @@
   <section class="projects" id="projects">
 
     <a href="dreamcollege.html" class="project-row" data-categories="ai product" data-preview="dreamcollege">
+      <span class="project-num">01</span>
       <div class="project-title-col">
         <span class="project-name">DreamCollege AI <span class="arrow">→</span></span>
         <span class="project-tag">Product &amp; AI</span>
@@ -863,6 +896,7 @@
     </a>
 
     <a href="nature-counter.html" class="project-row" data-categories="product" data-preview="nature">
+      <span class="project-num">02</span>
       <div class="project-title-col">
         <span class="project-name">Nature Counter <span class="arrow">→</span></span>
         <span class="project-tag">Design Systems</span>
@@ -874,6 +908,7 @@
     </a>
 
     <a href="saarthi.html" class="project-row" data-categories="healthcare product" data-preview="saarthi">
+      <span class="project-num">03</span>
       <div class="project-title-col">
         <span class="project-name">Saarthi <span class="arrow">→</span></span>
         <span class="project-tag">Healthcare</span>
@@ -885,6 +920,7 @@
     </a>
 
     <a href="confidento.html" class="project-row" data-categories="product" data-preview="confidento">
+      <span class="project-num">04</span>
       <div class="project-title-col">
         <span class="project-name">TheConfidento <span class="arrow">→</span></span>
         <span class="project-tag">Product 0&#8594;1</span>
@@ -896,6 +932,7 @@
     </a>
 
     <a href="safeway.html" class="project-row" data-categories="product" data-preview="safeway">
+      <span class="project-num">05</span>
       <div class="project-title-col">
         <span class="project-name">Safeway Kiosk <span class="arrow">→</span></span>
         <span class="project-tag">Product &amp; Retail</span>
@@ -907,6 +944,7 @@
     </a>
 
     <a href="crisis-uav.html" class="project-row" data-categories="healthcare" data-preview="crisis">
+      <span class="project-num">06</span>
       <div class="project-title-col">
         <span class="project-name">Crisis-Courier-UAV <span class="arrow">→</span></span>
         <span class="project-tag">Human Systems</span>
