@@ -38,6 +38,16 @@ html {
   fill: currentColor !important;
 }
 
+/* Keep button chrome identical between light and dark themes */
+[data-theme="dark"] .theme-toggle {
+  background: var(--bg-alt) !important;
+  border-color: var(--border) !important;
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+  border-color: var(--text) !important;
+}
+
 /* Shared floating section nav */
 .cs-sidenav {
   position: fixed;
@@ -140,7 +150,7 @@ html {
 
 /* Home spline zoom-out tweak */
 .spline-wrap canvas.spline-zoom-adjust {
-  transform: scale(0.9);
+  transform: scale(0.82);
   transform-origin: center center;
 }
 
@@ -151,7 +161,7 @@ html {
 
 @media (max-width: 960px) {
   .spline-wrap canvas.spline-zoom-adjust {
-    transform: scale(0.94);
+    transform: scale(0.88);
   }
 
   .project-row {
