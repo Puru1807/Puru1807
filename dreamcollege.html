@@ -13,7 +13,7 @@
     /* ── Tokens ── */
     :root {
       --text: #040202; --secondary: #AAAAAA; --bg: #ffffff;
-      --bg-alt: #F0EFED; --accent: #F2511A; --accent-dim: rgba(242,81,26,0.07);
+      --bg-alt: #F0EFED; --accent: #6F767E; --accent-dim: rgba(111,118,126,0.14);
       --border: #e0deda; --footer-bg: #040202;
       --margin: 40px;
       --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
@@ -52,7 +52,7 @@
     [data-theme="dark"] .theme-toggle:hover { border-color: rgba(255,255,255,0.25); }
 
     /* ── Dark Mode ── */
-    [data-theme="dark"] { --text: #F0EDE8; --secondary: #777370; --bg: #111010; --bg-alt: #1A1918; --border: #2A2826; --footer-bg: #0A0909; --accent-dim: rgba(242,81,26,0.1); }
+    [data-theme="dark"] { --text: #F0EDE8; --secondary: #777370; --bg: #111010; --bg-alt: #1A1918; --border: #2A2826; --footer-bg: #0A0909; --accent-dim: rgba(111,118,126,0.24); }
     [data-theme="dark"] nav.nav { background: rgba(17,16,16,0.88); }
 
     /* ════════════════════════════════════════
@@ -277,6 +277,7 @@
       .cs-steps { grid-template-columns: 1fr; }
     }
   </style>
+  <link rel="stylesheet" href="assets/shared/site-common.css">
 </head>
 <body>
 
@@ -299,30 +300,7 @@
 </nav>
 
 <!-- ── Top Nav ── -->
-<nav class="nav" id="nav">
-  <a href="index.html" class="nav-brand">Puru Bhardwaj</a>
-  <div class="nav-links">
-    <a href="index.html#projects" class="nav-link">Work</a>
-    <a href="info.html" class="nav-link">Info</a>
-    <a href="https://purubhardwajdesign.com" class="nav-link" target="_blank" rel="noopener">Portfolio ↗</a>
-  </div>
-  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-    <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-    </svg>
-    <svg class="icon-sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="12" cy="12" r="5"/>
-      <line x1="12" y1="1" x2="12" y2="3" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="12" y1="21" x2="12" y2="23" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="1" y1="12" x2="3" y2="12" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="21" y1="12" x2="23" y2="12" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-    </svg>
-  </button>
-</nav>
+<div id="siteShellMount"></div>
 
 <!-- ════════════════════════════════════════
      HERO
@@ -979,6 +957,14 @@
 </footer>
 
 <script>
+  window.PORTFOLIO_CONFIG = {
+    navActive: 'work',
+    brandHref: 'index.html#top',
+    heroAnchorId: 'cs-top'
+  };
+</script>
+<script src="assets/shared/site-common.js"></script>
+<script>
   /* ── Cursor ── */
   (function(){
     const cursor = document.getElementById('cursor');
@@ -1006,6 +992,7 @@
 
   /* ── Theme toggle ── */
   (function(){
+    if (window.__USE_SHARED_THEME__) return;
     var toggle = document.getElementById('themeToggle');
     if (!toggle) return;
     var moon = toggle.querySelector('.icon-moon');
@@ -1027,6 +1014,7 @@
 
   /* ── Floating Side Nav ── */
   (function(){
+    if (window.__USE_SHARED_FLOATING_NAV__) return;
     var sidenav  = document.getElementById('csSidenav');
     var links    = Array.from(document.querySelectorAll('.csn-link'));
     var sections = links.map(function(l){ return document.getElementById(l.getAttribute('data-s')); }).filter(Boolean);
