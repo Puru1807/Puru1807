@@ -157,7 +157,7 @@ html {
 
 /* Home spline zoom-out tweak */
 .spline-wrap canvas.spline-zoom-adjust {
-  transform: scale(0.72);
+  transform: scale(0.67);
   transform-origin: center center;
 }
 
