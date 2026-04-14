@@ -13,7 +13,7 @@
   <style>
     :root {
       --text: #040202; --secondary: #AAAAAA; --bg: #ffffff;
-      --bg-alt: #F0EFED; --accent: #F2511A; --accent-dim: rgba(242,81,26,0.07);
+      --bg-alt: #F0EFED; --accent: #6F767E; --accent-dim: rgba(111,118,126,0.14);
       --border: #e0deda; --row-hover: #F0EFED; --footer-bg: #040202;
       --gutter: 40px; --margin: 40px;
       --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
@@ -58,7 +58,7 @@
       --border: #2A2826;
       --row-hover: #1E1C1B;
       --footer-bg: #0A0909;
-      --accent-dim: rgba(242, 81, 26, 0.1);
+      --accent-dim: rgba(111, 118, 126, 0.24);
     }
     [data-theme="dark"] .nav {
       background: rgba(17, 16, 16, 0.88);
@@ -66,7 +66,7 @@
 
     /* ——— Info Hero ——— */
     .info-hero { padding: 120px var(--margin) 80px; max-width: 1200px; margin: 0 auto; border-bottom: 1px solid var(--border); }
-    .info-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .info-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
     .info-eyebrow { font-family: var(--display); font-size: 11px; text-transform: uppercase; letter-spacing: 0.15em; color: var(--secondary); margin-bottom: 32px; }
     .info-title { font-family: var(--display); font-size: clamp(22px, 3.2vw, 46px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 32px; opacity: 0; animation: fadeInUp 0.7s ease 0.5s forwards; }
     .info-bio { font-family: var(--font); font-size: clamp(14px, 1.4vw, 16px); font-weight: 400; line-height: 1.8; color: var(--text); opacity: 0; animation: fadeInUp 0.7s ease 0.7s forwards; }
@@ -154,36 +154,16 @@
     }
     @media (max-width: 480px) { .skills-grid { grid-template-columns: 1fr; } }
   </style>
+  <link rel="stylesheet" href="assets/shared/site-common.css">
 </head>
 <body>
 
   <div class="cursor" id="cursor"></div>
 
-  <nav class="nav" id="nav">
-    <a href="index.html" class="nav-brand">Puru Bhardwaj</a>
-    <div class="nav-links">
-      <a href="index.html#projects" class="nav-link">Work</a>
-      <a href="info.html" class="nav-link active">Info</a>
-      <a href="https://purubhardwajdesign.com" class="nav-link" target="_blank" rel="noopener">Portfolio ↗</a>
-    </div>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-      <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      <svg class="icon-sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="12" cy="12" r="5"/>
-        <line x1="12" y1="1" x2="12" y2="3" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="12" y1="21" x2="12" y2="23" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="1" y1="12" x2="3" y2="12" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="21" y1="12" x2="23" y2="12" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-      </svg>
-    </button>
-  </nav>
+  <div id="siteShellMount"></div>
 
   <!-- Hero -->
-  <section class="info-hero">
+  <section class="info-hero" id="cs-top">
     <div class="info-hero-grid">
       <!-- Left: Bio -->
       <div>
@@ -208,7 +188,7 @@
   </section>
 
   <!-- Experience -->
-  <section class="info-section" data-reveal>
+  <section class="info-section" id="s-experience" data-reveal>
     <p class="info-section-label">Experience</p>
     <div>
       <div class="exp-entry">
@@ -274,7 +254,7 @@
   </section>
 
   <!-- Education -->
-  <section class="info-section" data-reveal>
+  <section class="info-section" id="s-education" data-reveal>
     <p class="info-section-label">Education</p>
     <div>
       <div class="edu-entry">
@@ -303,7 +283,7 @@
   </section>
 
   <!-- Skills -->
-  <section class="info-section" data-reveal>
+  <section class="info-section" id="s-skills" data-reveal>
     <p class="info-section-label">Skills &amp; Tools</p>
     <div class="skills-grid">
       <div>
@@ -353,7 +333,7 @@
   </section>
 
   <!-- Certifications -->
-  <section class="info-section" data-reveal>
+  <section class="info-section" id="s-certifications" data-reveal>
     <p class="info-section-label">Certifications</p>
     <div class="cert-row">
       <span class="cert-chip">Google UX Design</span>
@@ -424,6 +404,7 @@
 
     // Theme toggle
     (function() {
+      if (window.__USE_SHARED_THEME__) return;
       var toggle = document.getElementById('themeToggle');
       var moon = toggle.querySelector('.icon-moon');
       var sun = toggle.querySelector('.icon-sun');
@@ -454,6 +435,21 @@
       });
     })();
   </script>
+  <script>
+    window.PORTFOLIO_CONFIG = {
+      navActive: 'info',
+      brandHref: 'index.html#top',
+      heroAnchorId: 'cs-top',
+      floatingSections: [
+        { id: 's-experience', label: 'Experience' },
+        { id: 's-education', label: 'Education' },
+        { id: 's-skills', label: 'Skills' },
+        { id: 's-certifications', label: 'Certs' },
+        { id: 'footer', label: 'Connect' }
+      ]
+    };
+  </script>
+  <script src="assets/shared/site-common.js"></script>
 
   <!-- Spline 3D Runtime -->
   <script type="module">
