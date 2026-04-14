@@ -213,13 +213,44 @@
     .cs-visual-inner { width: 100%; height: 400px; display: flex; align-items: center; justify-content: center; position: relative; }
     .cs-visual-label { font-family: var(--display); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); position: relative; z-index: 1; }
     .grad-nature { background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 40%, #95d5b2 100%); }
-    .cs-visual img { width: 100%; height: 100%; display: block; border-radius: inherit; object-fit: contain; object-position: center; }
+    .cs-visual img { width: 100%; height: 100%; display: block; border-radius: inherit; object-fit: contain; object-position: center; image-rendering: auto; }
     .cs-visual--hero { aspect-ratio: 4 / 3; border-radius: 16px; margin: 0; }
     .cs-visual--overview { aspect-ratio: 16 / 9; margin-top: 0; }
     .cs-visual--library { aspect-ratio: auto; }
     .cs-visual--overview img { object-fit: cover; }
     .cs-visual--library { background: transparent; border-color: transparent; overflow: visible; }
     .cs-visual--library img { height: auto; object-fit: contain; border: none; border-radius: 8px; }
+
+    /* ── Asset gallery ── */
+    .asset-gallery {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .asset-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--bg-alt);
+    }
+    .asset-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      image-rendering: auto;
+      background: var(--bg);
+    }
+    .asset-card-caption {
+      font-family: var(--display);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      padding: 10px 12px;
+      border-top: 1px solid var(--border);
+    }
 
     /* ── Token grid ── */
     .token-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-top: 32px; }
@@ -285,6 +316,7 @@
       .footer-grid { grid-template-columns: 1fr; gap: 40px; }
       .cs-next { flex-direction: column; align-items: flex-start; }
       .token-grid { grid-template-columns: repeat(2,1fr); }
+      .asset-gallery { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
       .cs-stats { grid-template-columns: 1fr; }
@@ -307,6 +339,7 @@
     <li><a href="#s-process"     class="csn-link" data-s="s-process"><span class="csn-dot"></span>Process</a></li>
     <li><a href="#s-solution"    class="csn-link" data-s="s-solution"><span class="csn-dot"></span>Solution</a></li>
     <li><a href="#s-results"     class="csn-link" data-s="s-results"><span class="csn-dot"></span>Results</a></li>
+    <li><a href="#s-assets"      class="csn-link" data-s="s-assets"><span class="csn-dot"></span>Assets</a></li>
     <li><a href="#s-reflection"  class="csn-link" data-s="s-reflection"><span class="csn-dot"></span>Reflection</a></li>
   </ul>
 </nav>
@@ -357,7 +390,7 @@
 <!-- Full visual -->
 <div style="max-width:1200px;margin:0 auto;padding:0 var(--margin);">
   <div class="cs-visual cs-visual--overview">
-    <img src="assets/images/Nature Counter/Image@2x.png" alt="Nature Counter design system overview" loading="lazy">
+    <img src="assets/images/Nature Counter/Image@4x.png" alt="Nature Counter design system overview" loading="lazy">
   </div>
 </div>
 
@@ -525,7 +558,7 @@
     </ul>
 
     <div class="cs-visual cs-visual--library" style="margin-top:48px;">
-      <img src="assets/images/Nature Counter/Image@Small DSx.png" alt="Nature Counter component library and token architecture" loading="lazy">
+      <img src="assets/images/Nature Counter/Image@99x.png" alt="Nature Counter component library and token architecture" loading="lazy">
     </div>
   </div>
 </section>
@@ -569,11 +602,56 @@
 </section>
 
 <!-- ════════════════════════════════════════
-     06 · REFLECTION
+     06 · ASSETS
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-assets" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">06</div>
+    <div class="cs-row-tag">Assets</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Nature Counter visual asset showcase</h2>
+    <p class="cs-body">All available files from the Nature Counter image folder are surfaced below for quick review and reference in one place.</p>
+    <div class="asset-gallery">
+      <div class="asset-card">
+        <img src="assets/images/Nature Counter/Image@2x.png" alt="Nature Counter asset Image@2x" loading="lazy">
+        <p class="asset-card-caption">Image@2x</p>
+      </div>
+      <div class="asset-card">
+        <img src="assets/images/Nature Counter/Image@3x.png" alt="Nature Counter asset Image@3x" loading="lazy">
+        <p class="asset-card-caption">Image@3x</p>
+      </div>
+      <div class="asset-card">
+        <img src="assets/images/Nature Counter/Image@4x.png" alt="Nature Counter asset Image@4x" loading="lazy">
+        <p class="asset-card-caption">Image@4x</p>
+      </div>
+      <div class="asset-card">
+        <img src="assets/images/Nature Counter/Image@77x.png" alt="Nature Counter asset Image@77x" loading="lazy">
+        <p class="asset-card-caption">Image@77x</p>
+      </div>
+      <div class="asset-card">
+        <img src="assets/images/Nature Counter/Image@99x.png" alt="Nature Counter asset Image@99x" loading="lazy">
+        <p class="asset-card-caption">Image@99x</p>
+      </div>
+      <div class="asset-card">
+        <img src="assets/images/Nature Counter/Image@DSx.png" alt="Nature Counter asset Image@DSx" loading="lazy">
+        <p class="asset-card-caption">Image@DSx</p>
+      </div>
+      <div class="asset-card">
+        <img src="assets/images/Nature Counter/Image@Small DSx.png" alt="Nature Counter asset Image@Small DSx" loading="lazy">
+        <p class="asset-card-caption">Image@Small DSx</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     07 · REFLECTION
 ════════════════════════════════════════ -->
 <section class="cs-row" id="s-reflection" data-reveal>
   <div class="cs-row-label">
-    <div class="cs-row-num">06</div>
+    <div class="cs-row-num">07</div>
     <div class="cs-row-tag">Reflection</div>
     <div class="cs-row-divider"></div>
   </div>
