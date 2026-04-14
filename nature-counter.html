@@ -209,11 +209,14 @@
     .cs-img-2col .cs-img { margin: 0; }
 
     /* ── Visual placeholder ── */
-    .cs-visual { width: 100%; border-radius: 4px; overflow: hidden; margin: 48px 0; }
+    .cs-visual { width: 100%; border-radius: 4px; overflow: hidden; margin: 48px 0; background: var(--bg-alt); border: 1px solid var(--border); }
     .cs-visual-inner { width: 100%; height: 400px; display: flex; align-items: center; justify-content: center; position: relative; }
     .cs-visual-label { font-family: var(--display); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); position: relative; z-index: 1; }
     .grad-nature { background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 40%, #95d5b2 100%); }
-    .cs-visual img { width: 100%; height: auto; display: block; border-radius: inherit; border: 1px solid var(--border); }
+    .cs-visual img { width: 100%; height: 100%; display: block; border-radius: inherit; object-fit: contain; object-position: center; }
+    .cs-visual--hero { aspect-ratio: 4 / 3; border-radius: 16px; margin: 0; }
+    .cs-visual--overview { aspect-ratio: 16 / 9; margin-top: 0; }
+    .cs-visual--library { aspect-ratio: 16 / 10; }
 
     /* ── Token grid ── */
     .token-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-top: 32px; }
@@ -346,7 +349,7 @@
       </div>
     </div>
     <div class="cs-hero-device">
-      <div class="cs-visual" style="margin:0;border-radius:16px;">
+      <div class="cs-visual cs-visual--hero">
         <img src="assets/images/Nature Counter/Image@2x.png" alt="Nature Counter design system visual" loading="lazy">
       </div>
     </div>
@@ -355,7 +358,7 @@
 
 <!-- Full visual -->
 <div style="max-width:1200px;margin:0 auto;padding:0 var(--margin);">
-  <div class="cs-visual" style="margin-top:0;">
+  <div class="cs-visual cs-visual--overview">
     <img src="assets/images/Nature Counter/Image@DSx.png" alt="Nature Counter design system overview" loading="lazy">
   </div>
 </div>
@@ -523,7 +526,7 @@
       <li><strong>Living docs:</strong> Notion-based documentation with embedded Figma previews. Updated with every component change — not a PDF that goes stale.</li>
     </ul>
 
-    <div class="cs-visual" style="margin-top:48px;">
+    <div class="cs-visual cs-visual--library" style="margin-top:48px;">
       <img src="assets/images/Nature Counter/Image@Small DSx.png" alt="Nature Counter component library and token architecture" loading="lazy">
     </div>
   </div>
