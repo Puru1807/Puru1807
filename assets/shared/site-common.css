@@ -21,6 +21,23 @@ html {
   outline-offset: 2px;
 }
 
+/* Keep light/dark toggle icon style visually consistent */
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon {
+  width: 19px;
+  height: 19px;
+  color: var(--secondary);
+  fill: currentColor !important;
+  stroke: currentColor !important;
+  filter: none !important;
+}
+
+.theme-toggle .icon-sun line,
+.theme-toggle .icon-sun circle {
+  stroke: currentColor !important;
+  fill: currentColor !important;
+}
+
 /* Shared floating section nav */
 .cs-sidenav {
   position: fixed;
@@ -125,6 +142,11 @@ html {
 .spline-wrap canvas.spline-zoom-adjust {
   transform: scale(0.9);
   transform-origin: center center;
+}
+
+.spline-wrap.home-spline-padding {
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 @media (max-width: 960px) {
