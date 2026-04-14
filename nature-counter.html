@@ -216,10 +216,10 @@
     .cs-visual img { width: 100%; height: 100%; display: block; border-radius: inherit; object-fit: contain; object-position: center; }
     .cs-visual--hero { aspect-ratio: 4 / 3; border-radius: 16px; margin: 0; }
     .cs-visual--overview { aspect-ratio: 16 / 9; margin-top: 0; }
-    .cs-visual--library { aspect-ratio: 16 / 10; }
+    .cs-visual--library { aspect-ratio: auto; }
     .cs-visual--overview img { object-fit: cover; }
-    .cs-visual--library { background: transparent; border-color: transparent; }
-    .cs-visual--library img { object-fit: contain; }
+    .cs-visual--library { background: transparent; border-color: transparent; overflow: visible; }
+    .cs-visual--library img { height: auto; object-fit: contain; border: none; border-radius: 8px; }
 
     /* ── Token grid ── */
     .token-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-top: 32px; }
