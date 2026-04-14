@@ -13,9 +13,9 @@
     if (!moon || !sun) return;
     if (theme === "dark") {
       moon.style.display = "none";
-      sun.style.display = "";
+      sun.style.display = "block";
     } else {
-      moon.style.display = "";
+      moon.style.display = "block";
       sun.style.display = "none";
     }
   }
