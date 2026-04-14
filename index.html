@@ -1253,10 +1253,16 @@
     import { Application } from 'https://esm.sh/@splinetool/runtime';
     const canvas = document.getElementById('canvas3d');
     const loading = document.getElementById('splineLoading');
+    const HOME_SCENE_ZOOM = 0.82;
     if (canvas) {
       const app = new Application(canvas);
       app.load('https://prod.spline.design/jKXNiuvMm36UHlJa/scene.splinecode')
-        .then(() => { if (loading) loading.classList.add('hidden'); })
+        .then(() => {
+          if (typeof app.setZoom === 'function') {
+            app.setZoom(HOME_SCENE_ZOOM);
+          }
+          if (loading) loading.classList.add('hidden');
+        })
         .catch(() => { if (loading) loading.textContent = 'Scene unavailable'; });
     }
   </script>

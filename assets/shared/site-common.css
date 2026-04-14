@@ -157,8 +157,7 @@ html {
 
 /* Home spline zoom-out tweak */
 .spline-wrap canvas.spline-zoom-adjust {
-  transform: scale(0.67);
-  transform-origin: center center;
+  transform: none;
 }
 
 .spline-wrap.home-spline-padding {
@@ -168,7 +167,7 @@ html {
 
 @media (max-width: 960px) {
   .spline-wrap canvas.spline-zoom-adjust {
-    transform: scale(0.8);
+    transform: none;
   }
 
   .project-row {
