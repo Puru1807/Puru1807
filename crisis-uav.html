@@ -10,135 +10,302 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
   <style>
+    /* ── Tokens ── */
     :root {
       --text: #040202; --secondary: #AAAAAA; --bg: #ffffff;
       --bg-alt: #F0EFED; --accent: #F2511A; --accent-dim: rgba(242,81,26,0.07);
-      --border: #e0deda; --row-hover: #F0EFED; --footer-bg: #040202;
-      --margin: 40px; --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --border: #e0deda; --footer-bg: #040202;
+      --margin: 40px;
+      --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
       --display: 'Space Mono', monospace;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; font-size: 16px; }
     body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-::selection { background: var(--accent); color: #fff; }
+    ::selection { background: var(--accent); color: #fff; }
     @media (hover: hover) and (pointer: fine) { html, body { cursor: none; } a, button { cursor: none; } }
-    .cursor { width: 12px; height: 12px; background: var(--text); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999; transform: translate(-50%, -50%); transition: transform 0.15s ease, background 0.2s, opacity 0.2s, width 0.25s ease, height 0.25s ease; will-change: transform; }
-    .cursor.large { width: 32px; height: 32px; } .cursor.hidden { opacity: 0; } .cursor.invert { background: var(--bg); }
+
+    /* ── Cursor ── */
+    .cursor { width: 12px; height: 12px; background: var(--text); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: transform 0.15s ease, background 0.2s, opacity 0.2s, width 0.25s, height 0.25s; will-change: transform; }
+    .cursor.large { width: 32px; height: 32px; }
+    .cursor.hidden { opacity: 0; }
+    .cursor.invert { background: var(--bg); }
     @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
-    nav.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: flex-start; gap: 4px; padding: 14px var(--margin); background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
-    .nav-link { font-family: var(--display); font-size: 12px; font-weight: 400; letter-spacing: 0.04em; color: var(--text); text-decoration: none; padding: 7px 18px; border-radius: 20px; position: relative; z-index: 1; transition: color 0.25s ease; }
+
+    /* ── Top Nav ── */
+    nav.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; gap: 4px; padding: 14px var(--margin); background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-brand { font-family: var(--display); font-size: 13px; font-weight: 400; letter-spacing: -0.01em; color: var(--text); text-decoration: none; flex-shrink: 0; transition: opacity 0.2s ease; }
+    .nav-brand:hover { opacity: 0.6; }
+    .nav-links { display: flex; align-items: center; gap: 4px; margin-left: auto; margin-right: 12px; }
+    .nav-link { font-family: var(--display); font-size: 12px; letter-spacing: 0.04em; color: var(--text); text-decoration: none; padding: 7px 18px; border-radius: 20px; position: relative; z-index: 1; transition: color 0.25s; }
     .nav-link::before { content: ''; position: absolute; inset: 0; background: var(--text); border-radius: 20px; transform: scale(0); transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); z-index: -1; }
-    .nav-link:hover { color: var(--bg); } .nav-link:hover::before { transform: scale(1); } .nav-link.active { color: var(--bg); } .nav-link.active::before { transform: scale(1); }
-    .cs-hero { padding: 140px var(--margin) 72px; max-width: 1200px; margin: 0 auto; }
+    .nav-link:hover, .nav-link.active { color: var(--bg); }
+    .nav-link:hover::before, .nav-link.active::before { transform: scale(1); }
+
+    /* ── Theme Toggle ── */
+    .theme-toggle { background: var(--bg-alt); border: 1.5px solid var(--border); padding: 8px 14px; border-radius: 100px; cursor: none; transition: background 0.25s, border-color 0.25s, transform 0.15s; display: flex; align-items: center; justify-content: center; margin-left: auto; flex-shrink: 0; }
+    .theme-toggle:hover { border-color: var(--text); transform: scale(1.05); }
+    .theme-toggle:active { transform: scale(0.96); }
+    .icon-sun { width: 20px; height: 20px; stroke: #F59E0B; fill: #F59E0B; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 6px rgba(245,158,11,0.55)); display: none; }
+    .icon-moon { width: 19px; height: 19px; stroke: #6B7EAA; fill: #6B7EAA; stroke-width: 0; filter: drop-shadow(0 0 5px rgba(107,126,170,0.4)); }
+    [data-theme="dark"] .theme-toggle { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+    [data-theme="dark"] .theme-toggle:hover { border-color: rgba(255,255,255,0.25); }
+
+    /* ── Dark Mode ── */
+    [data-theme="dark"] { --text: #F0EDE8; --secondary: #777370; --bg: #111010; --bg-alt: #1A1918; --border: #2A2826; --footer-bg: #0A0909; --accent-dim: rgba(242,81,26,0.1); }
+    [data-theme="dark"] nav.nav { background: rgba(17,16,16,0.88); }
+
+    /* ════════════════════════════════════════
+       FLOATING SECTION NAV
+    ════════════════════════════════════════ */
+    .cs-sidenav {
+      position: fixed;
+      left: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 800;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .cs-sidenav.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .cs-sidenav ul { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .csn-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--display);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+      padding: 5px 0;
+      white-space: nowrap;
+    }
+    .csn-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      border: 1.5px solid currentColor;
+      flex-shrink: 0;
+      transition: background 0.2s, border-color 0.2s, transform 0.25s;
+    }
+    .csn-link:hover { color: var(--text); }
+    .csn-link:hover .csn-dot { background: var(--text); border-color: var(--text); }
+    .csn-link.active { color: var(--accent); }
+    .csn-link.active .csn-dot { background: var(--accent); border-color: var(--accent); transform: scale(1.5); }
+    @media (max-width: 1340px) { .cs-sidenav { display: none; } }
+
+    /* ════════════════════════════════════════
+       HERO
+    ════════════════════════════════════════ */
+    .cs-hero { padding: 130px var(--margin) 72px; max-width: 1200px; margin: 0 auto; }
     .cs-back { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--secondary); text-decoration: none; margin-bottom: 48px; transition: color 0.2s; }
-    .cs-back:hover { color: var(--accent); } .cs-back svg { width: 14px; height: 14px; }
+    .cs-back:hover { color: var(--accent); }
+    .cs-back svg { width: 14px; height: 14px; }
     .cs-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
     .cs-tag { font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); border: 1px solid var(--border); border-radius: 2px; padding: 5px 12px; }
-    .cs-title { font-family: var(--display); font-size: clamp(36px, 6vw, 72px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 28px; }
-    .cs-subtitle { font-family: var(--font); font-size: 17px; font-weight: 400; color: var(--secondary); max-width: 620px; line-height: 1.7; margin-bottom: 48px; }
+    .cs-title { font-family: var(--display); font-size: clamp(36px,6vw,72px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 28px; }
+    .cs-subtitle { font-family: var(--font); font-size: 17px; color: var(--secondary); max-width: 620px; line-height: 1.7; margin-bottom: 48px; }
     .cs-meta-row { display: flex; gap: 48px; flex-wrap: wrap; padding-top: 40px; border-top: 1px solid var(--border); }
     .cs-meta-item { display: flex; flex-direction: column; gap: 6px; }
     .cs-meta-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
     .cs-meta-value { font-family: var(--font); font-size: 14px; font-weight: 500; }
-    .cs-section { max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); border-bottom: 1px solid var(--border); }
-    .cs-section:last-of-type { border-bottom: none; }
-    .cs-section-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 32px; }
-    .cs-h2 { font-family: var(--display); font-size: clamp(24px, 3.5vw, 42px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 28px; }
-    .cs-body { font-family: var(--font); font-size: 16px; font-weight: 400; line-height: 1.85; color: var(--text); max-width: 700px; }
-    .cs-body + .cs-body { margin-top: 16px; }
-    .cs-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 56px; border-top: 1px solid var(--border); }
+
+    /* ════════════════════════════════════════
+       RESULTS STRIP (full-width)
+    ════════════════════════════════════════ */
+    .cs-results { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-alt); }
+    .cs-results-inner { max-width: 1200px; margin: 0 auto; padding: 64px var(--margin); }
+    .cs-results-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .cs-results-title { font-family: var(--display); font-size: clamp(17px,2vw,26px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 48px; }
+    .cs-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; border-top: 1px solid var(--border); }
+    .cs-stats.row2 { border-top: 1px solid var(--border); }
     .cs-stat { display: flex; flex-direction: column; gap: 10px; padding: 40px 32px 40px 0; border-right: 1px solid var(--border); }
-    .cs-stat:last-child { border-right: none; padding-right: 0; padding-left: 32px; }
-    .cs-stat:nth-child(2) { padding-left: 32px; }
-    .cs-stat-number { font-family: var(--display); font-size: clamp(48px, 7vw, 80px); font-weight: 700; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
-    .cs-stat-desc { font-family: var(--font); font-size: 13px; font-weight: 400; color: var(--secondary); line-height: 1.6; max-width: 180px; }
-    .cs-quote { position: relative; padding: 32px 40px; background: var(--bg-alt); border-left: 4px solid var(--accent); margin: 48px 0; max-width: 720px; }
-    .cs-quote::before { content: '\201C'; font-family: var(--display); font-size: 80px; color: var(--accent); opacity: 0.15; position: absolute; top: -8px; left: 32px; line-height: 1; }
-    .cs-quote p { font-family: var(--display); font-size: 16px; font-weight: 400; font-style: italic; line-height: 1.7; position: relative; z-index: 1; }
-    .cs-quote cite { display: block; margin-top: 16px; font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); font-style: normal; }
-    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; margin-top: 40px; }
-    .cs-list { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
-    .cs-list li { display: flex; gap: 16px; font-family: var(--font); font-size: 14px; font-weight: 400; line-height: 1.7; }
-    .cs-list li::before { content: '→'; font-family: var(--display); color: var(--accent); flex-shrink: 0; font-size: 12px; margin-top: 2px; }
-    .cs-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: 40px; background: var(--border); border: 1px solid var(--border); }
+    .cs-stat:last-child { border-right: none; }
+    .cs-stat:not(:first-child) { padding-left: 32px; }
+    .cs-stat-number { font-family: var(--display); font-size: clamp(36px,5.5vw,68px); font-weight: 700; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
+    .cs-stat-desc { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.6; max-width: 160px; }
+
+    /* ════════════════════════════════════════
+       ROW LAYOUT — label | content
+    ════════════════════════════════════════ */
+    .cs-row {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 64px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px var(--margin);
+      border-bottom: 1px solid var(--border);
+    }
+    .cs-row-label { padding-top: 4px; position: sticky; top: 80px; align-self: start; }
+    .cs-row-num { font-family: var(--display); font-size: 10px; color: var(--secondary); opacity: 0.35; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .cs-row-tag { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); line-height: 2; }
+    .cs-row-divider { width: 20px; height: 1px; background: var(--border); margin-top: 14px; }
+
+    /* ── Content typography ── */
+    .cs-h2 { font-family: var(--display); font-size: clamp(22px,3vw,38px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 24px; }
+    .cs-h3 { font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; margin-top: 48px; }
+    .cs-h3:first-child { margin-top: 0; }
+    .cs-body { font-family: var(--font); font-size: 16px; line-height: 1.85; color: var(--text); max-width: 680px; }
+    .cs-body + .cs-body { margin-top: 16px; }
+
+    /* ── Steps ── */
+    .cs-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; margin-top: 40px; background: var(--border); border: 1px solid var(--border); }
     .cs-step { padding: 28px 24px; background: var(--bg); }
     .cs-step-num { font-family: var(--display); font-size: 32px; font-weight: 700; color: var(--accent); letter-spacing: -0.04em; margin-bottom: 16px; line-height: 1; opacity: 0.4; }
     .cs-step-title { font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: 0.04em; margin-bottom: 10px; text-transform: uppercase; }
-    .cs-step-text { font-family: var(--font); font-size: 13px; font-weight: 400; color: var(--secondary); line-height: 1.65; }
+    .cs-step-text { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.65; }
+
+    /* ── Quote ── */
+    .cs-quote { position: relative; padding: 32px 40px; background: var(--bg-alt); border-left: 4px solid var(--accent); margin: 48px 0; max-width: 680px; }
+    .cs-quote::before { content: '\201C'; font-family: var(--display); font-size: 80px; color: var(--accent); opacity: 0.15; position: absolute; top: -8px; left: 32px; line-height: 1; }
+    .cs-quote p { font-family: var(--display); font-size: 15px; font-style: italic; line-height: 1.7; position: relative; z-index: 1; }
+    .cs-quote cite { display: block; margin-top: 16px; font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); font-style: normal; }
+
+    /* ── Two col ── */
+    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; margin-top: 40px; }
+
+    /* ── List ── */
+    .cs-list { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
+    .cs-list li { display: flex; gap: 16px; font-family: var(--font); font-size: 14px; line-height: 1.7; }
+    .cs-list li::before { content: '→'; font-family: var(--display); color: var(--accent); flex-shrink: 0; font-size: 12px; margin-top: 2px; }
+
+    /* ── Note ── */
+    .cs-note { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 4px; padding: 24px 28px; margin-top: 32px; font-family: var(--font); font-size: 15px; line-height: 1.8; color: var(--secondary); }
+    .cs-note strong { color: var(--text); }
+
+    /* ── Images ── */
+    .cs-img { width: 100%; margin: 40px 0; }
+    .cs-img:first-child { margin-top: 0; }
+    .cs-img img { width: 100%; height: auto; display: block; border-radius: 8px; }
+    .cs-img-border img { border: 1px solid var(--border); }
+    .cs-img-caption { font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); text-align: center; margin-top: 12px; }
+    .cs-img-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
+    .cs-img-2col .cs-img { margin: 0; }
+
+    /* ── Gradient visual ── */
     .cs-visual { width: 100%; border-radius: 4px; overflow: hidden; margin: 48px 0; }
     .cs-visual-inner { width: 100%; height: 400px; display: flex; align-items: center; justify-content: center; position: relative; }
     .cs-visual-label { font-family: var(--display); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); position: relative; z-index: 1; }
     .grad-crisis { background: linear-gradient(135deg, #0f2027 0%, #203a43 40%, #2c5364 100%); }
+
+    /* ── Constraint cards ── */
     .constraint-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 32px; background: var(--border); border: 1px solid var(--border); }
     .constraint-card { padding: 24px; background: var(--bg); position: relative; }
     .constraint-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--accent); }
     .constraint-title { font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
-    .constraint-text { font-family: var(--font); font-size: 13px; font-weight: 400; color: var(--secondary); line-height: 1.65; }
-    .cs-next { max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; border-top: 1px solid var(--border); }
+    .constraint-text { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.65; }
+
+    /* ── Conclusion ── */
+    .cs-conclusion { max-width: 1200px; margin: 0 auto; padding: 100px var(--margin); text-align: center; border-bottom: 1px solid var(--border); }
+    .cs-conclusion-eyebrow { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 24px; }
+    .cs-conclusion-text { font-family: var(--display); font-size: clamp(20px,3vw,36px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; max-width: 700px; margin: 0 auto; }
+
+    /* ── Next project ── */
+    .cs-next { max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
     .cs-next-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 10px; }
-    .cs-next-link { font-family: var(--display); font-size: clamp(20px, 2.8vw, 32px); font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; transition: color 0.2s; display: flex; align-items: center; gap: 16px; }
+    .cs-next-link { font-family: var(--display); font-size: clamp(20px,2.8vw,32px); font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; transition: color 0.2s; display: flex; align-items: center; gap: 16px; }
     .cs-next-link:hover { color: var(--accent); }
     .cs-next-link svg { width: 28px; height: 28px; transition: transform 0.2s; }
     .cs-next-link:hover svg { transform: translateX(8px); }
+
+    /* ── Footer ── */
     footer.footer { background: var(--footer-bg); color: #fff; padding: 64px var(--margin) 40px; }
     .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 64px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .footer-tagline { font-family: var(--display); font-size: clamp(16px, 2vw, 22px); font-weight: 700; line-height: 1.45; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .footer-tagline { font-family: var(--display); font-size: clamp(16px,2vw,22px); font-weight: 700; line-height: 1.45; margin-bottom: 12px; letter-spacing: -0.02em; }
     .footer-sub { font-family: var(--font); font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.6; }
     .footer-heading { font-family: var(--display); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 20px; }
     .footer-links { display: flex; flex-direction: column; gap: 12px; }
     .footer-links a { font-family: var(--font); font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; position: relative; width: fit-content; }
-    .footer-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0%; height: 1px; background: var(--accent); transition: width 0.25s ease; }
-    .footer-links a:hover { color: #fff; } .footer-links a:hover::after { width: 100%; }
+    .footer-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0%; height: 1px; background: var(--accent); transition: width 0.25s; }
+    .footer-links a:hover { color: #fff; }
+    .footer-links a:hover::after { width: 100%; }
     .footer-bottom { max-width: 1200px; margin: 32px auto 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
     .footer-copy { font-family: var(--display); font-size: 11px; letter-spacing: 0.05em; color: rgba(255,255,255,0.2); }
-    [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+
+    /* ── Scroll reveal ── */
+    [data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity 0.65s ease, transform 0.65s ease; }
     [data-reveal].revealed { opacity: 1; transform: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .cs-row { grid-template-columns: 1fr; gap: 20px; padding: 56px var(--margin); }
+      .cs-row-label { position: static; }
+      .cs-row-num { display: none; }
+    }
     @media (max-width: 768px) {
       :root { --margin: 20px; }
-      .nav { padding: 10px var(--margin); gap: 0; } .nav-link { font-size: 11px; padding: 6px 12px; }
+      nav.nav { padding: 10px var(--margin); gap: 0; }
+      .nav-link { font-size: 11px; padding: 6px 12px; }
       .cs-stats { grid-template-columns: 1fr 1fr; }
-      .cs-stat { padding: 28px 16px 28px 0; } .cs-stat:last-child { padding-left: 16px; } .cs-stat:nth-child(2) { padding-left: 16px; }
+      .cs-stat { padding: 28px 16px 28px 0; }
+      .cs-stat:not(:first-child) { padding-left: 16px; }
       .cs-two-col { grid-template-columns: 1fr; gap: 32px; }
       .cs-steps { grid-template-columns: 1fr 1fr; }
       .constraint-grid { grid-template-columns: 1fr; }
+      .cs-img-2col { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; gap: 40px; }
       .cs-next { flex-direction: column; align-items: flex-start; }
     }
-    @media (max-width: 480px) { .cs-stats { grid-template-columns: 1fr; } .cs-steps { grid-template-columns: 1fr; } }
-    [data-theme="dark"] {
-      --text: #F0EDE8;
-      --secondary: #777370;
-      --bg: #111010;
-      --bg-alt: #1A1918;
-      --border: #2A2826;
-      --row-hover: #1E1C1B;
-      --footer-bg: #0A0909;
-      --accent-dim: rgba(242, 81, 26, 0.1);
+    @media (max-width: 480px) {
+      .cs-stats { grid-template-columns: 1fr; }
+      .cs-steps { grid-template-columns: 1fr; }
     }
-    [data-theme="dark"] .nav {
-      background: rgba(17, 16, 16, 0.88);
-    }
-    .theme-toggle { font-family: var(--display); font-size: 11px; background: none; border: 1px solid var(--border); color: var(--secondary); padding: 6px 10px; border-radius: 20px; cursor: none; transition: color 0.25s ease, border-color 0.25s ease; display: flex; align-items: center; gap: 5px; margin-left: 8px; line-height: 1; letter-spacing: 0.04em; }
-    .theme-toggle:hover { color: var(--text); border-color: var(--text); }
-    .theme-toggle svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
   </style>
 </head>
 <body>
 
 <div class="cursor" id="cursor"></div>
 
-<nav class="nav">
-  <a href="index.html" class="nav-link">Home</a>
-  <a href="index.html#projects" class="nav-link">Work</a>
-  <a href="info.html" class="nav-link">Info</a>
-  <a href="https://purubhardwajdesign.com" class="nav-link" target="_blank" rel="noopener">Portfolio</a>
+<!-- ════════════════════════════════════════
+     FLOATING SECTION NAV (left-aligned)
+════════════════════════════════════════ -->
+<nav class="cs-sidenav" id="csSidenav" aria-label="Case study sections">
+  <ul>
+    <li><a href="#s-overview"    class="csn-link" data-s="s-overview"><span class="csn-dot"></span>Overview</a></li>
+    <li><a href="#s-challenge"   class="csn-link" data-s="s-challenge"><span class="csn-dot"></span>Challenge</a></li>
+    <li><a href="#s-process"     class="csn-link" data-s="s-process"><span class="csn-dot"></span>Process</a></li>
+    <li><a href="#s-solution"    class="csn-link" data-s="s-solution"><span class="csn-dot"></span>Solution</a></li>
+    <li><a href="#s-results"     class="csn-link" data-s="s-results"><span class="csn-dot"></span>Results</a></li>
+    <li><a href="#s-reflection"  class="csn-link" data-s="s-reflection"><span class="csn-dot"></span>Reflection</a></li>
+  </ul>
+</nav>
+
+<!-- ── Top Nav ── -->
+<nav class="nav" id="nav">
+  <a href="index.html" class="nav-brand">Puru Bhardwaj</a>
+  <div class="nav-links">
+    <a href="index.html#projects" class="nav-link">Work</a>
+    <a href="info.html" class="nav-link">Info</a>
+    <a href="https://purubhardwajdesign.com" class="nav-link" target="_blank" rel="noopener">Portfolio ↗</a>
+  </div>
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-    <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    <svg class="icon-sun" viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="5"/>
+      <line x1="12" y1="1" x2="12" y2="3" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="12" y1="21" x2="12" y2="23" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1" y1="12" x2="3" y2="12" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="21" y1="12" x2="23" y2="12" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
   </button>
 </nav>
 
-<div class="cs-hero">
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<div class="cs-hero" id="cs-top">
   <a href="index.html#projects" class="cs-back">
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
     All projects
@@ -171,6 +338,7 @@
   </div>
 </div>
 
+<!-- Full-width visual -->
 <div style="max-width:1200px;margin:0 auto;padding:0 var(--margin);">
   <div class="cs-visual">
     <div class="cs-visual-inner grad-crisis">
@@ -179,166 +347,250 @@
   </div>
 </div>
 
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Overview</p>
-  <h2 class="cs-h2">When the interface fails, the mission fails — designing for zero errors under pressure</h2>
-  <p class="cs-body">Crisis-Courier-UAV is an autonomous drone system designed to deliver medical supplies, food, and communications equipment into disaster zones inaccessible to ground vehicles. The human interface — the ground control station used by relief coordinators to manage fleet operations — is where human judgment meets autonomous systems.</p>
-  <p class="cs-body" style="margin-top:16px;">This project applied human factors and safety-critical design principles to the ground control interface. The core design challenge: operators are already under extreme cognitive load from the disaster context. The interface cannot add to that load — it must actively reduce it.</p>
-
-  <div class="cs-stats">
-    <div class="cs-stat">
-      <span class="cs-stat-number">52%</span>
-      <span class="cs-stat-desc">reduction in operator cognitive load (NASA-TLX)</span>
-    </div>
-    <div class="cs-stat">
-      <span class="cs-stat-number">3×</span>
-      <span class="cs-stat-desc">more UAVs manageable per operator vs. baseline system</span>
-    </div>
-    <div class="cs-stat">
-      <span class="cs-stat-number">0</span>
-      <span class="cs-stat-desc">critical errors in simulated disaster scenario testing</span>
-    </div>
-  </div>
-</section>
-
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">The Challenge</p>
-  <h2 class="cs-h2">Extreme constraints — designing for the worst possible conditions</h2>
-  <p class="cs-body">Disaster zone operation means the operators using this interface are working under conditions that no normal UX research accounts for: physical exhaustion, emotional stress, sleep deprivation, partial information, and time pressure measured in minutes, not hours.</p>
-  <p class="cs-body" style="margin-top:16px;">Standard usability principles — while necessary — aren't sufficient. The design had to draw on aviation human factors, military interface standards (MIL-STD-1472), and emergency dispatch system research to establish the right baseline.</p>
-
-  <div class="constraint-grid">
-    <div class="constraint-card">
-      <div class="constraint-title">Cognitive Overload</div>
-      <div class="constraint-text">Operators managing multiple simultaneous UAV missions while coordinating with field teams via radio and tracking supply inventory.</div>
-    </div>
-    <div class="constraint-card">
-      <div class="constraint-title">Environmental Noise</div>
-      <div class="constraint-text">Field stations may be improvised — poor lighting, generator noise, damaged equipment. Interface must function at 50% visual attention.</div>
-    </div>
-    <div class="constraint-card">
-      <div class="constraint-title">Intermittent Connectivity</div>
-      <div class="constraint-text">Satellite uplink may be degraded or interrupted. Interface must handle partial data and predict UAV state between updates.</div>
-    </div>
-    <div class="constraint-card">
-      <div class="constraint-title">Non-Expert Operators</div>
-      <div class="constraint-text">Relief coordinators are domain experts (logistics, medicine) but not drone pilots. Interface must be learnable in under 2 hours.</div>
-    </div>
-    <div class="constraint-card">
-      <div class="constraint-title">Zero Tolerance for Error</div>
-      <div class="constraint-text">A misrouted UAV carrying insulin to the wrong location isn't a UX problem — it's a life-safety incident. Error prevention is existential.</div>
-    </div>
-    <div class="constraint-card">
-      <div class="constraint-title">Autonomy Calibration</div>
-      <div class="constraint-text">Too much automation: operators lose situational awareness. Too little: they're overwhelmed. The interface must find the right human-automation balance.</div>
-    </div>
-  </div>
-
-  <div class="cs-quote" style="margin-top:48px;">
-    <p>"In a disaster, every decision costs something. The interface can't make me think harder — it has to think with me."</p>
-    <cite>— Emergency logistics coordinator, user research session</cite>
-  </div>
-</section>
-
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Process</p>
-  <h2 class="cs-h2">Human factors methodology — not standard UX practice</h2>
-  <p class="cs-body">This project required stepping beyond typical product design research. I applied a human factors framework: cognitive task analysis (CTA) to understand what operators actually need to think about, workload assessment using NASA-TLX, and simulation-based testing with disaster scenario scripts.</p>
-
-  <div class="cs-steps">
-    <div class="cs-step">
-      <div class="cs-step-num">01</div>
-      <div class="cs-step-title">Cognitive Task Analysis</div>
-      <div class="cs-step-text">Mapped every decision an operator needs to make during active UAV operations. Identified 14 concurrent information needs during peak operations.</div>
-    </div>
-    <div class="cs-step">
-      <div class="cs-step-num">02</div>
-      <div class="cs-step-title">Literature Review</div>
-      <div class="cs-step-text">Aviation HCI, military interface standards (MIL-STD-1472), emergency dispatch research. Established design principles from validated safety-critical systems.</div>
-    </div>
-    <div class="cs-step">
-      <div class="cs-step-num">03</div>
-      <div class="cs-step-title">Design</div>
-      <div class="cs-step-text">Ground control interface with 3 information zones: tactical map (where), fleet status (what), and action queue (what next). Designed for glanceable comprehension.</div>
-    </div>
-    <div class="cs-step">
-      <div class="cs-step-num">04</div>
-      <div class="cs-step-title">Simulation Testing</div>
-      <div class="cs-step-text">4 simulated disaster scenarios with NASA-TLX workload assessment. Compared against baseline interface. Iterated until cognitive load metrics improved by target threshold.</div>
+<!-- ════════════════════════════════════════
+     RESULTS — full-width strip
+════════════════════════════════════════ -->
+<section class="cs-results" id="cs-results">
+  <div class="cs-results-inner">
+    <p class="cs-results-label">Outcomes</p>
+    <h2 class="cs-results-title">52% cognitive load reduction &middot; 3&times; UAV capacity per operator &middot; 0 critical errors &mdash; across all simulations</h2>
+    <div class="cs-stats">
+      <div class="cs-stat">
+        <span class="cs-stat-number">52%</span>
+        <span class="cs-stat-desc">reduction in operator cognitive load (NASA-TLX)</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">3&times;</span>
+        <span class="cs-stat-desc">more UAVs manageable per operator vs. baseline system</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">0</span>
+        <span class="cs-stat-desc">critical errors in simulated disaster scenario testing</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">2h</span>
+        <span class="cs-stat-desc">target onboarding time for non-expert operators</span>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Solution</p>
-  <h2 class="cs-h2">Situational awareness by design — the right information, always visible</h2>
-  <p class="cs-body">The ground control interface is organized around the concept of situational awareness zones: a tactical map at center (geographic reality), fleet status panels at left (UAV states at a glance), and an action queue at right (what decisions need to be made, in priority order). Nothing is hidden behind tabs during active operations.</p>
+<!-- ════════════════════════════════════════
+     01 · OVERVIEW
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-overview" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">01</div>
+    <div class="cs-row-tag">Overview</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">When the interface fails, the mission fails — designing for zero errors under pressure</h2>
+    <p class="cs-body">Crisis-Courier-UAV is an autonomous drone system designed to deliver medical supplies, food, and communications equipment into disaster zones inaccessible to ground vehicles. The human interface — the ground control station used by relief coordinators to manage fleet operations — is where human judgment meets autonomous systems.</p>
+    <p class="cs-body">This project applied human factors and safety-critical design principles to the ground control interface. The core design challenge: operators are already under extreme cognitive load from the disaster context. The interface cannot add to that load — it must actively reduce it.</p>
+  </div>
+</section>
 
-  <ul class="cs-list" style="max-width:640px;margin-top:32px;">
-    <li><strong>Glanceable fleet status:</strong> Each UAV is a single card showing battery, payload, status, and ETA. Designed to be understood in under 3 seconds without reading.</li>
-    <li><strong>Priority-based action queue:</strong> The interface surfaces decisions that need human input, ranked by urgency. Operators respond to the queue — they don't have to monitor everything constantly.</li>
-    <li><strong>Alert hierarchy:</strong> Three levels of alert — informational (blue), attention (amber), critical (red). Critical alerts include a mandatory acknowledgment step. No alert fatigue from overuse of red.</li>
-    <li><strong>Autonomy dial:</strong> Per-UAV automation level (1–5) lets operators increase human control for sensitive missions (medical delivery to specific recipient) and reduce it for bulk supply runs.</li>
-    <li><strong>Predictive state display:</strong> During connectivity loss, the interface shows last-known state + predicted current position based on flight plan. Prevents false emergency responses.</li>
-    <li><strong>2-hour onboarding:</strong> Role-based interface defaults surface only the features relevant to the operator's task. Advanced controls are present but de-emphasized until needed.</li>
-  </ul>
+<!-- ════════════════════════════════════════
+     02 · THE CHALLENGE
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-challenge" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">02</div>
+    <div class="cs-row-tag">Challenge</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Extreme constraints — designing for the worst possible conditions</h2>
+    <p class="cs-body">Disaster zone operation means the operators using this interface are working under conditions that no normal UX research accounts for: physical exhaustion, emotional stress, sleep deprivation, partial information, and time pressure measured in minutes, not hours.</p>
+    <p class="cs-body">Standard usability principles — while necessary — aren't sufficient. The design had to draw on aviation human factors, military interface standards (MIL-STD-1472), and emergency dispatch system research to establish the right baseline.</p>
 
-  <div class="cs-visual" style="margin-top:48px;">
-    <div class="cs-visual-inner grad-crisis" style="height:280px;">
-      <span class="cs-visual-label">Ground Control Station — Tactical Map &amp; Fleet Status View</span>
+    <div class="constraint-grid" style="margin-top:40px;">
+      <div class="constraint-card">
+        <div class="constraint-title">Cognitive Overload</div>
+        <div class="constraint-text">Operators managing multiple simultaneous UAV missions while coordinating with field teams via radio and tracking supply inventory.</div>
+      </div>
+      <div class="constraint-card">
+        <div class="constraint-title">Environmental Noise</div>
+        <div class="constraint-text">Field stations may be improvised — poor lighting, generator noise, damaged equipment. Interface must function at 50% visual attention.</div>
+      </div>
+      <div class="constraint-card">
+        <div class="constraint-title">Intermittent Connectivity</div>
+        <div class="constraint-text">Satellite uplink may be degraded or interrupted. Interface must handle partial data and predict UAV state between updates.</div>
+      </div>
+      <div class="constraint-card">
+        <div class="constraint-title">Non-Expert Operators</div>
+        <div class="constraint-text">Relief coordinators are domain experts (logistics, medicine) but not drone pilots. Interface must be learnable in under 2 hours.</div>
+      </div>
+      <div class="constraint-card">
+        <div class="constraint-title">Zero Tolerance for Error</div>
+        <div class="constraint-text">A misrouted UAV carrying insulin to the wrong location isn't a UX problem — it's a life-safety incident. Error prevention is existential.</div>
+      </div>
+      <div class="constraint-card">
+        <div class="constraint-title">Autonomy Calibration</div>
+        <div class="constraint-text">Too much automation: operators lose situational awareness. Too little: they're overwhelmed. The interface must find the right human-automation balance.</div>
+      </div>
+    </div>
+
+    <div class="cs-quote" style="margin-top:48px;">
+      <p>"In a disaster, every decision costs something. The interface can't make me think harder — it has to think with me."</p>
+      <cite>— Emergency logistics coordinator, user research session</cite>
     </div>
   </div>
 </section>
 
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Results</p>
-  <h2 class="cs-h2">Lower load, higher capacity, zero critical errors</h2>
-  <p class="cs-body">Simulation testing against a baseline interface showed substantial improvements across all measured dimensions. The 52% reduction in NASA-TLX cognitive load score was the primary target metric. The increase in manageable UAVs per operator — from 2 to 6 — has direct operational impact on how many people can be reached in a disaster scenario.</p>
-
-  <div class="cs-stats" style="margin-top:48px;">
-    <div class="cs-stat">
-      <span class="cs-stat-number">52%</span>
-      <span class="cs-stat-desc">reduction in NASA-TLX cognitive load score</span>
-    </div>
-    <div class="cs-stat">
-      <span class="cs-stat-number">3×</span>
-      <span class="cs-stat-desc">more UAVs managed per operator (2 → 6)</span>
-    </div>
-    <div class="cs-stat">
-      <span class="cs-stat-number">0</span>
-      <span class="cs-stat-desc">critical mission errors across all simulation runs</span>
-    </div>
+<!-- ════════════════════════════════════════
+     03 · PROCESS
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-process" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">03</div>
+    <div class="cs-row-tag">Process</div>
+    <div class="cs-row-divider"></div>
   </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Human factors methodology — not standard UX practice</h2>
+    <p class="cs-body">This project required stepping beyond typical product design research. I applied a human factors framework: cognitive task analysis (CTA) to understand what operators actually need to think about, workload assessment using NASA-TLX, and simulation-based testing with disaster scenario scripts.</p>
 
-  <div class="cs-quote" style="margin-top:48px;">
-    <p>"For the first time I felt like I was flying with the system, not fighting against it. I could actually see what I needed to see."</p>
-    <cite>— Logistics coordinator, post-simulation debrief</cite>
-  </div>
-</section>
-
-<!-- What I Learned -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">What I Learned</p>
-  <h2 class="cs-h2">Safety-critical design leaves no room for ambiguity</h2>
-  <div class="cs-steps">
-    <div class="cs-step">
-      <div class="cs-step-num">01</div>
-      <div class="cs-step-title">Cognitive load is a life-safety issue</div>
-      <div class="cs-step-text">Every extra click, every unclear label, every ambiguous status indicator becomes a liability when operators are managing a UAV in a disaster zone. The 52% load reduction wasn't a metric — it was the entire design goal.</div>
-    </div>
-    <div class="cs-step">
-      <div class="cs-step-num">02</div>
-      <div class="cs-step-title">Information hierarchy over information density</div>
-      <div class="cs-step-text">The instinct was to show everything — telemetry, battery, location, cargo, weather. The insight was to show the right thing at the right time. Progressive disclosure and alert prioritization were the core design patterns.</div>
-    </div>
-    <div class="cs-step">
-      <div class="cs-step-num">03</div>
-      <div class="cs-step-title">Human factors engineering is UX for extreme contexts</div>
-      <div class="cs-step-text">This project introduced me to MIL-STD-1472 standards and aerospace UI conventions. Designing within those constraints taught me more about fundamental usability than any consumer app project.</div>
+    <div class="cs-steps" style="margin-top:40px;">
+      <div class="cs-step">
+        <div class="cs-step-num">01</div>
+        <div class="cs-step-title">Cognitive Task Analysis</div>
+        <div class="cs-step-text">Mapped every decision an operator needs to make during active UAV operations. Identified 14 concurrent information needs during peak operations.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">02</div>
+        <div class="cs-step-title">Literature Review</div>
+        <div class="cs-step-text">Aviation HCI, military interface standards (MIL-STD-1472), emergency dispatch research. Established design principles from validated safety-critical systems.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">03</div>
+        <div class="cs-step-title">Design</div>
+        <div class="cs-step-text">Ground control interface with 3 information zones: tactical map (where), fleet status (what), and action queue (what next). Designed for glanceable comprehension.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">04</div>
+        <div class="cs-step-title">Simulation Testing</div>
+        <div class="cs-step-text">4 simulated disaster scenarios with NASA-TLX workload assessment. Compared against baseline interface. Iterated until cognitive load metrics improved by target threshold.</div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- ════════════════════════════════════════
+     04 · SOLUTION
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-solution" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">04</div>
+    <div class="cs-row-tag">Solution</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Situational awareness by design — the right information, always visible</h2>
+    <p class="cs-body">The ground control interface is organized around the concept of situational awareness zones: a tactical map at center (geographic reality), fleet status panels at left (UAV states at a glance), and an action queue at right (what decisions need to be made, in priority order). Nothing is hidden behind tabs during active operations.</p>
+
+    <ul class="cs-list" style="max-width:640px;margin-top:32px;">
+      <li><strong>Glanceable fleet status:</strong> Each UAV is a single card showing battery, payload, status, and ETA. Designed to be understood in under 3 seconds without reading.</li>
+      <li><strong>Priority-based action queue:</strong> The interface surfaces decisions that need human input, ranked by urgency. Operators respond to the queue — they don't have to monitor everything constantly.</li>
+      <li><strong>Alert hierarchy:</strong> Three levels of alert — informational (blue), attention (amber), critical (red). Critical alerts include a mandatory acknowledgment step. No alert fatigue from overuse of red.</li>
+      <li><strong>Autonomy dial:</strong> Per-UAV automation level (1–5) lets operators increase human control for sensitive missions (medical delivery to specific recipient) and reduce it for bulk supply runs.</li>
+      <li><strong>Predictive state display:</strong> During connectivity loss, the interface shows last-known state + predicted current position based on flight plan. Prevents false emergency responses.</li>
+      <li><strong>2-hour onboarding:</strong> Role-based interface defaults surface only the features relevant to the operator's task. Advanced controls are present but de-emphasized until needed.</li>
+    </ul>
+
+    <div class="cs-visual" style="margin-top:48px;">
+      <div class="cs-visual-inner grad-crisis" style="height:280px;">
+        <span class="cs-visual-label">Ground Control Station — Tactical Map &amp; Fleet Status View</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     05 · RESULTS
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-results" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">05</div>
+    <div class="cs-row-tag">Results</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Lower load, higher capacity, zero critical errors</h2>
+    <p class="cs-body">Simulation testing against a baseline interface showed substantial improvements across all measured dimensions. The 52% reduction in NASA-TLX cognitive load score was the primary target metric. The increase in manageable UAVs per operator — from 2 to 6 — has direct operational impact on how many people can be reached in a disaster scenario.</p>
+
+    <div class="cs-stats" style="margin-top:48px;">
+      <div class="cs-stat">
+        <span class="cs-stat-number">52%</span>
+        <span class="cs-stat-desc">reduction in NASA-TLX cognitive load score</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">3&times;</span>
+        <span class="cs-stat-desc">more UAVs managed per operator (2 → 6)</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">0</span>
+        <span class="cs-stat-desc">critical mission errors across all simulation runs</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">4</span>
+        <span class="cs-stat-desc">disaster scenarios tested across full simulation suite</span>
+      </div>
+    </div>
+
+    <div class="cs-quote" style="margin-top:48px;">
+      <p>"For the first time I felt like I was flying with the system, not fighting against it. I could actually see what I needed to see."</p>
+      <cite>— Logistics coordinator, post-simulation debrief</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     06 · REFLECTION
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-reflection" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">06</div>
+    <div class="cs-row-tag">Reflection</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Safety-critical design leaves no room for ambiguity</h2>
+    <div class="cs-steps" style="margin-top:0;">
+      <div class="cs-step">
+        <div class="cs-step-num">01</div>
+        <div class="cs-step-title">Cognitive load is a life-safety issue</div>
+        <div class="cs-step-text">Every extra click, every unclear label, every ambiguous status indicator becomes a liability when operators are managing a UAV in a disaster zone. The 52% load reduction wasn't a metric — it was the entire design goal.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">02</div>
+        <div class="cs-step-title">Information hierarchy over information density</div>
+        <div class="cs-step-text">The instinct was to show everything — telemetry, battery, location, cargo, weather. The insight was to show the right thing at the right time. Progressive disclosure and alert prioritization were the core design patterns.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">03</div>
+        <div class="cs-step-title">Human factors engineering is UX for extreme contexts</div>
+        <div class="cs-step-text">This project introduced me to MIL-STD-1472 standards and aerospace UI conventions. Designing within those constraints taught me more about fundamental usability than any consumer app project.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">04</div>
+        <div class="cs-step-title">Automation requires trust calibration</div>
+        <div class="cs-step-text">Designing the autonomy dial was as much a philosophical challenge as a UX one. Users needed to feel in control without being overwhelmed — a balance that required both research and iteration.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Conclusion ── -->
+<div class="cs-conclusion" data-reveal>
+  <p class="cs-conclusion-eyebrow">Conclusion</p>
+  <p class="cs-conclusion-text">Crisis-Courier-UAV taught me that design in high-stakes environments is about subtraction, not addition — removing every bit of friction so that human judgment can operate at its best.</p>
+  <p style="font-family:var(--font);font-size:16px;color:var(--secondary);margin-top:24px;line-height:1.8;">A 52% reduction in cognitive load isn't just a metric. In a disaster zone, it means more missions completed, fewer errors, and more lives reached. That's the real measure of this design.</p>
+  <p style="font-family:var(--display);font-size:13px;color:var(--secondary);margin-top:48px;letter-spacing:0.04em;">Glad we could cross paths.<br>Out of anywhere you could be, you're here.</p>
+</div>
+
+<!-- ── Next project ── -->
 <div class="cs-next">
   <div>
     <p class="cs-next-label">Back to start</p>
@@ -353,6 +605,7 @@
   </a>
 </div>
 
+<!-- ── Footer ── -->
 <footer class="footer" id="footer">
   <div class="footer-grid">
     <div>
@@ -377,18 +630,100 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <span class="footer-copy">© 2026 Puru Bhardwaj</span>
+    <span class="footer-copy">&copy; 2026 Puru Bhardwaj</span>
     <span class="footer-copy">Visual Product Designer</span>
   </div>
 </footer>
 
 <script>
-  (function(){const cursor=document.getElementById('cursor');let mx=window.innerWidth/2,my=window.innerHeight/2,cx=mx,cy=my;document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});function animate(){cx+=(mx-cx)*0.15;cy+=(my-cy)*0.15;cursor.style.transform='translate3d('+(cx-6)+'px,'+(cy-6)+'px,0)';requestAnimationFrame(animate);}animate();document.querySelectorAll('a,button').forEach(function(el){el.addEventListener('mouseenter',function(){cursor.classList.add('large');});el.addEventListener('mouseleave',function(){cursor.classList.remove('large');});});const footer=document.querySelector('footer');if(footer){footer.addEventListener('mouseenter',function(){cursor.classList.add('invert');});footer.addEventListener('mouseleave',function(){cursor.classList.remove('invert');});}})();
-  (function(){const els=document.querySelectorAll('[data-reveal]');const io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('revealed');io.unobserve(e.target);}});},{threshold:0.1});els.forEach(function(el){io.observe(el);});})();
-  (function(){var toggle=document.getElementById('themeToggle');if(!toggle)return;var moon=toggle.querySelector('.icon-moon');var sun=toggle.querySelector('.icon-sun');function applyTheme(t){document.documentElement.setAttribute('data-theme',t);if(t==='dark'){moon.style.display='none';sun.style.display='';}else{moon.style.display='';sun.style.display='none';}}var saved=localStorage.getItem('theme');if(saved){applyTheme(saved);}else if(window.matchMedia('(prefers-color-scheme: dark)').matches){applyTheme('dark');}toggle.addEventListener('click',function(){var c=document.documentElement.getAttribute('data-theme');var n=c==='dark'?'light':'dark';localStorage.setItem('theme',n);applyTheme(n);});})();
+  /* ── Cursor ── */
+  (function(){
+    const cursor = document.getElementById('cursor');
+    if (!cursor) return;
+    let mx = window.innerWidth/2, my = window.innerHeight/2, cx = mx, cy = my;
+    document.addEventListener('mousemove', function(e){ mx = e.clientX; my = e.clientY; });
+    function animate(){ cx += (mx-cx)*0.15; cy += (my-cy)*0.15; cursor.style.transform = 'translate3d('+(cx-6)+'px,'+(cy-6)+'px,0)'; requestAnimationFrame(animate); }
+    animate();
+    document.querySelectorAll('a, button').forEach(function(el){
+      el.addEventListener('mouseenter', function(){ cursor.classList.add('large'); });
+      el.addEventListener('mouseleave', function(){ cursor.classList.remove('large'); });
+    });
+    const footer = document.querySelector('footer');
+    if (footer){ footer.addEventListener('mouseenter', function(){ cursor.classList.add('invert'); }); footer.addEventListener('mouseleave', function(){ cursor.classList.remove('invert'); }); }
+  })();
+
+  /* ── Scroll reveal ── */
+  (function(){
+    const els = document.querySelectorAll('[data-reveal]');
+    const io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('revealed'); io.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    els.forEach(function(el){ io.observe(el); });
+  })();
+
+  /* ── Theme toggle ── */
+  (function(){
+    var toggle = document.getElementById('themeToggle');
+    if (!toggle) return;
+    var moon = toggle.querySelector('.icon-moon');
+    var sun  = toggle.querySelector('.icon-sun');
+    function applyTheme(t){
+      document.documentElement.setAttribute('data-theme', t);
+      if (t === 'dark'){ moon.style.display = 'none'; sun.style.display = ''; }
+      else { moon.style.display = ''; sun.style.display = 'none'; }
+    }
+    var saved = localStorage.getItem('theme');
+    if (saved){ applyTheme(saved); }
+    else if (window.matchMedia('(prefers-color-scheme: dark)').matches){ applyTheme('dark'); }
+    toggle.addEventListener('click', function(){
+      var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', next);
+      applyTheme(next);
+    });
+  })();
+
+  /* ── Floating Side Nav ── */
+  (function(){
+    var sidenav  = document.getElementById('csSidenav');
+    var links    = Array.from(document.querySelectorAll('.csn-link'));
+    var sections = links.map(function(l){ return document.getElementById(l.getAttribute('data-s')); }).filter(Boolean);
+    var hero     = document.getElementById('cs-top');
+
+    if (!sidenav || !sections.length) return;
+
+    var heroBottom = 0;
+    function updateHeroBottom(){ heroBottom = hero ? hero.getBoundingClientRect().bottom + window.scrollY : 400; }
+    updateHeroBottom();
+    window.addEventListener('resize', updateHeroBottom);
+
+    var current = '';
+    function onScroll(){
+      if (window.scrollY > heroBottom - 100){
+        sidenav.classList.add('is-visible');
+      } else {
+        sidenav.classList.remove('is-visible');
+      }
+      var scrollMid = window.scrollY + window.innerHeight * 0.4;
+      var active = sections[0];
+      sections.forEach(function(s){
+        if (s.offsetTop <= scrollMid) active = s;
+      });
+      var id = active ? active.id : '';
+      if (id !== current){
+        current = id;
+        links.forEach(function(l){
+          l.classList.toggle('active', l.getAttribute('data-s') === id);
+        });
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
 </script>
 
   <!-- Chatbase Widget -->
   <script>(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="2vjF7npvsR2sIMI6aaciU";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();</script>
+
 </body>
 </html>

@@ -33,7 +33,10 @@
     @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
 
     /* ── Top Nav ── */
-    nav.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: flex-start; gap: 4px; padding: 14px var(--margin); background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    nav.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; gap: 4px; padding: 14px var(--margin); background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-brand { font-family: var(--display); font-size: 13px; font-weight: 400; letter-spacing: -0.01em; color: var(--text); text-decoration: none; flex-shrink: 0; transition: opacity 0.2s ease; }
+    .nav-brand:hover { opacity: 0.6; }
+    .nav-links { display: flex; align-items: center; gap: 4px; margin-left: auto; margin-right: 12px; }
     .nav-link { font-family: var(--display); font-size: 12px; letter-spacing: 0.04em; color: var(--text); text-decoration: none; padding: 7px 18px; border-radius: 20px; position: relative; z-index: 1; transition: color 0.25s; }
     .nav-link::before { content: ''; position: absolute; inset: 0; background: var(--text); border-radius: 20px; transform: scale(0); transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); z-index: -1; }
     .nav-link:hover, .nav-link.active { color: var(--bg); }
@@ -297,10 +300,12 @@
 
 <!-- ── Top Nav ── -->
 <nav class="nav" id="nav">
-  <a href="index.html" class="nav-link">Home</a>
-  <a href="index.html#projects" class="nav-link">Work</a>
-  <a href="info.html" class="nav-link">Info</a>
-  <a href="https://purubhardwajdesign.com" class="nav-link" target="_blank" rel="noopener">Portfolio</a>
+  <a href="index.html" class="nav-brand">Puru Bhardwaj</a>
+  <div class="nav-links">
+    <a href="index.html#projects" class="nav-link">Work</a>
+    <a href="info.html" class="nav-link">Info</a>
+    <a href="https://purubhardwajdesign.com" class="nav-link" target="_blank" rel="noopener">Portfolio ↗</a>
+  </div>
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
     <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>

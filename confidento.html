@@ -10,11 +10,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
   <style>
+    /* ── Tokens ── */
     :root {
       --text: #040202; --secondary: #AAAAAA; --bg: #ffffff;
       --bg-alt: #F0EFED; --accent: #F2511A; --accent-dim: rgba(242,81,26,0.07);
-      --border: #e0deda; --row-hover: #F0EFED; --footer-bg: #040202;
-      --margin: 40px; --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --border: #e0deda; --footer-bg: #040202;
+      --margin: 40px;
+      --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
       --display: 'Space Mono', monospace;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -22,151 +24,266 @@
     body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
     ::selection { background: var(--accent); color: #fff; }
     @media (hover: hover) and (pointer: fine) { html, body { cursor: none; } a, button { cursor: none; } }
-    .cursor { width: 12px; height: 12px; background: var(--text); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999; transform: translate(-50%, -50%); transition: transform 0.15s ease, background 0.2s, opacity 0.2s, width 0.25s ease, height 0.25s ease; will-change: transform; }
-    .cursor.large { width: 32px; height: 32px; } .cursor.hidden { opacity: 0; } .cursor.invert { background: var(--bg); }
+
+    /* ── Cursor ── */
+    .cursor { width: 12px; height: 12px; background: var(--text); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: transform 0.15s ease, background 0.2s, opacity 0.2s, width 0.25s, height 0.25s; will-change: transform; }
+    .cursor.large { width: 32px; height: 32px; }
+    .cursor.hidden { opacity: 0; }
+    .cursor.invert { background: var(--bg); }
     @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
 
-    /* Nav */
-    nav.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: flex-start; gap: 4px; padding: 14px var(--margin); background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
-    .nav-link { font-family: var(--display); font-size: 12px; font-weight: 400; letter-spacing: 0.04em; color: var(--text); text-decoration: none; padding: 7px 18px; border-radius: 20px; position: relative; z-index: 1; transition: color 0.25s ease; }
+    /* ── Top Nav ── */
+    nav.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; gap: 4px; padding: 14px var(--margin); background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-brand { font-family: var(--display); font-size: 13px; font-weight: 400; letter-spacing: -0.01em; color: var(--text); text-decoration: none; flex-shrink: 0; transition: opacity 0.2s ease; }
+    .nav-brand:hover { opacity: 0.6; }
+    .nav-links { display: flex; align-items: center; gap: 4px; margin-left: auto; margin-right: 12px; }
+    .nav-link { font-family: var(--display); font-size: 12px; letter-spacing: 0.04em; color: var(--text); text-decoration: none; padding: 7px 18px; border-radius: 20px; position: relative; z-index: 1; transition: color 0.25s; }
     .nav-link::before { content: ''; position: absolute; inset: 0; background: var(--text); border-radius: 20px; transform: scale(0); transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); z-index: -1; }
-    .nav-link:hover { color: var(--bg); } .nav-link:hover::before { transform: scale(1); }
-    .nav-link.active { color: var(--bg); } .nav-link.active::before { transform: scale(1); }
+    .nav-link:hover, .nav-link.active { color: var(--bg); }
+    .nav-link:hover::before, .nav-link.active::before { transform: scale(1); }
 
-    /* Theme Toggle */
-    .theme-toggle { font-family: var(--display); font-size: 11px; background: none; border: 1px solid var(--border); color: var(--secondary); padding: 6px 10px; border-radius: 20px; cursor: none; transition: color 0.25s ease, border-color 0.25s ease; display: flex; align-items: center; gap: 5px; margin-left: auto; line-height: 1; letter-spacing: 0.04em; }
-    .theme-toggle:hover { color: var(--text); border-color: var(--text); }
-    .theme-toggle svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    /* ── Theme Toggle ── */
+    .theme-toggle { background: var(--bg-alt); border: 1.5px solid var(--border); padding: 8px 14px; border-radius: 100px; cursor: none; transition: background 0.25s, border-color 0.25s, transform 0.15s; display: flex; align-items: center; justify-content: center; margin-left: auto; flex-shrink: 0; }
+    .theme-toggle:hover { border-color: var(--text); transform: scale(1.05); }
+    .theme-toggle:active { transform: scale(0.96); }
+    .icon-sun { width: 20px; height: 20px; stroke: #F59E0B; fill: #F59E0B; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 6px rgba(245,158,11,0.55)); display: none; }
+    .icon-moon { width: 19px; height: 19px; stroke: #6B7EAA; fill: #6B7EAA; stroke-width: 0; filter: drop-shadow(0 0 5px rgba(107,126,170,0.4)); }
+    [data-theme="dark"] .theme-toggle { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+    [data-theme="dark"] .theme-toggle:hover { border-color: rgba(255,255,255,0.25); }
 
-    /* Dark Mode */
-    [data-theme="dark"] { --text: #F0EDE8; --secondary: #777370; --bg: #111010; --bg-alt: #1A1918; --border: #2A2826; --row-hover: #1E1C1B; --footer-bg: #0A0909; --accent-dim: rgba(242,81,26,0.1); }
-    [data-theme="dark"] .nav { background: rgba(17,16,16,0.88); }
+    /* ── Dark Mode ── */
+    [data-theme="dark"] { --text: #F0EDE8; --secondary: #777370; --bg: #111010; --bg-alt: #1A1918; --border: #2A2826; --footer-bg: #0A0909; --accent-dim: rgba(242,81,26,0.1); }
+    [data-theme="dark"] nav.nav { background: rgba(17,16,16,0.88); }
 
-    /* Hero */
+    /* ════════════════════════════════════════
+       FLOATING SECTION NAV
+    ════════════════════════════════════════ */
+    .cs-sidenav {
+      position: fixed;
+      left: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 800;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .cs-sidenav.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .cs-sidenav ul { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .csn-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--display);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+      padding: 5px 0;
+      white-space: nowrap;
+    }
+    .csn-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      border: 1.5px solid currentColor;
+      flex-shrink: 0;
+      transition: background 0.2s, border-color 0.2s, transform 0.25s;
+    }
+    .csn-link:hover { color: var(--text); }
+    .csn-link:hover .csn-dot { background: var(--text); border-color: var(--text); }
+    .csn-link.active { color: var(--accent); }
+    .csn-link.active .csn-dot { background: var(--accent); border-color: var(--accent); transform: scale(1.5); }
+    @media (max-width: 1340px) { .cs-sidenav { display: none; } }
+
+    /* ════════════════════════════════════════
+       HERO
+    ════════════════════════════════════════ */
     .cs-hero { padding: 130px var(--margin) 72px; max-width: 1200px; margin: 0 auto; }
     .cs-hero-split { display: grid; grid-template-columns: 1fr 300px; gap: 64px; align-items: center; }
     .cs-hero-phone { display: flex; justify-content: center; align-items: flex-end; }
     .cs-hero-phone img { width: 100%; max-width: 260px; height: auto; border-radius: 28px; box-shadow: 0 32px 80px rgba(0,0,0,0.15); display: block; }
     .cs-back { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--secondary); text-decoration: none; margin-bottom: 48px; transition: color 0.2s; }
-    .cs-back:hover { color: var(--accent); } .cs-back svg { width: 14px; height: 14px; }
+    .cs-back:hover { color: var(--accent); }
+    .cs-back svg { width: 14px; height: 14px; }
     .cs-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
     .cs-tag { font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); border: 1px solid var(--border); border-radius: 2px; padding: 5px 12px; }
-    .cs-title { font-family: var(--display); font-size: clamp(36px, 6vw, 72px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 28px; }
-    .cs-subtitle { font-family: var(--font); font-size: 17px; font-weight: 400; color: var(--secondary); max-width: 620px; line-height: 1.7; margin-bottom: 48px; }
+    .cs-title { font-family: var(--display); font-size: clamp(36px,6vw,72px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 28px; }
+    .cs-subtitle { font-family: var(--font); font-size: 17px; color: var(--secondary); max-width: 620px; line-height: 1.7; margin-bottom: 48px; }
     .cs-meta-row { display: flex; gap: 48px; flex-wrap: wrap; padding-top: 40px; border-top: 1px solid var(--border); }
     .cs-meta-item { display: flex; flex-direction: column; gap: 6px; }
     .cs-meta-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
     .cs-meta-value { font-family: var(--font); font-size: 14px; font-weight: 500; }
 
-    /* Sections */
-    .cs-section { max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); border-bottom: 1px solid var(--border); }
-    .cs-section:last-of-type { border-bottom: none; }
-    .cs-section-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 32px; }
-    .cs-h2 { font-family: var(--display); font-size: clamp(24px, 3.5vw, 42px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 28px; }
-    .cs-body { font-family: var(--font); font-size: 16px; font-weight: 400; line-height: 1.85; color: var(--text); max-width: 700px; }
+    /* ════════════════════════════════════════
+       RESULTS STRIP (full-width)
+    ════════════════════════════════════════ */
+    .cs-results { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-alt); }
+    .cs-results-inner { max-width: 1200px; margin: 0 auto; padding: 64px var(--margin); }
+    .cs-results-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .cs-results-title { font-family: var(--display); font-size: clamp(17px,2vw,26px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 48px; }
+    .cs-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; border-top: 1px solid var(--border); }
+    .cs-stats.row2 { border-top: 1px solid var(--border); }
+    .cs-stat { display: flex; flex-direction: column; gap: 10px; padding: 40px 32px 40px 0; border-right: 1px solid var(--border); }
+    .cs-stat:last-child { border-right: none; }
+    .cs-stat:not(:first-child) { padding-left: 32px; }
+    .cs-stat-number { font-family: var(--display); font-size: clamp(36px,5.5vw,68px); font-weight: 700; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
+    .cs-stat-desc { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.6; max-width: 160px; }
+
+    /* ════════════════════════════════════════
+       ROW LAYOUT — label | content
+    ════════════════════════════════════════ */
+    .cs-row {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 64px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px var(--margin);
+      border-bottom: 1px solid var(--border);
+    }
+    .cs-row-label { padding-top: 4px; position: sticky; top: 80px; align-self: start; }
+    .cs-row-num { font-family: var(--display); font-size: 10px; color: var(--secondary); opacity: 0.35; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .cs-row-tag { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); line-height: 2; }
+    .cs-row-divider { width: 20px; height: 1px; background: var(--border); margin-top: 14px; }
+
+    /* ── Content typography ── */
+    .cs-h2 { font-family: var(--display); font-size: clamp(22px,3vw,38px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 24px; }
+    .cs-h3 { font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; margin-top: 48px; }
+    .cs-h3:first-child { margin-top: 0; }
+    .cs-body { font-family: var(--font); font-size: 16px; line-height: 1.85; color: var(--text); max-width: 680px; }
     .cs-body + .cs-body { margin-top: 16px; }
 
-    /* Stats */
-    .cs-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 56px; border-top: 1px solid var(--border); }
-    .cs-stat { display: flex; flex-direction: column; gap: 10px; padding: 40px 32px 40px 0; border-right: 1px solid var(--border); }
-    .cs-stat:last-child { border-right: none; padding-right: 0; padding-left: 32px; }
-    .cs-stat:nth-child(2) { padding-left: 32px; }
-    .cs-stat-number { font-family: var(--display); font-size: clamp(48px, 7vw, 80px); font-weight: 700; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
-    .cs-stat-desc { font-family: var(--font); font-size: 13px; font-weight: 400; color: var(--secondary); line-height: 1.6; max-width: 180px; }
+    /* ── Info grid ── */
+    .cs-info-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; margin-top: 40px; border: 1px solid var(--border); }
+    .cs-info-item { padding: 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .cs-info-item:nth-child(3n) { border-right: none; }
+    .cs-info-item:nth-last-child(-n+3) { border-bottom: none; }
+    .cs-info-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); margin-bottom: 8px; }
+    .cs-info-value { font-family: var(--font); font-size: 14px; font-weight: 500; line-height: 1.6; }
 
-    /* Quote */
-    .cs-quote { position: relative; padding: 32px 40px; background: var(--bg-alt); border-left: 4px solid var(--accent); margin: 48px 0; max-width: 720px; }
-    .cs-quote::before { content: '\201C'; font-family: var(--display); font-size: 80px; color: var(--accent); opacity: 0.15; position: absolute; top: -8px; left: 32px; line-height: 1; }
-    .cs-quote p { font-family: var(--display); font-size: 16px; font-weight: 400; font-style: italic; line-height: 1.7; position: relative; z-index: 1; }
-    .cs-quote cite { display: block; margin-top: 16px; font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); font-style: normal; }
+    /* ── Cards ── */
+    .cs-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 40px; background: var(--border); border: 1px solid var(--border); }
+    .cs-card { padding: 32px 24px; background: var(--bg); }
+    .cs-card-num { font-family: var(--display); font-size: 28px; font-weight: 700; color: var(--accent); opacity: 0.4; letter-spacing: -0.04em; margin-bottom: 16px; line-height: 1; }
+    .cs-card-title { font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+    .cs-card-text { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.65; }
 
-    /* Two col */
-    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; margin-top: 40px; }
-
-    /* List */
-    .cs-list { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
-    .cs-list li { display: flex; gap: 16px; font-family: var(--font); font-size: 14px; font-weight: 400; line-height: 1.7; }
-    .cs-list li::before { content: '→'; font-family: var(--display); color: var(--accent); flex-shrink: 0; font-size: 12px; margin-top: 2px; }
-
-    /* Process steps */
-    .cs-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: 40px; background: var(--border); border: 1px solid var(--border); }
+    /* ── Steps ── */
+    .cs-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; margin-top: 40px; background: var(--border); border: 1px solid var(--border); }
     .cs-step { padding: 28px 24px; background: var(--bg); }
     .cs-step-num { font-family: var(--display); font-size: 32px; font-weight: 700; color: var(--accent); letter-spacing: -0.04em; margin-bottom: 16px; line-height: 1; opacity: 0.4; }
     .cs-step-title { font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: 0.04em; margin-bottom: 10px; text-transform: uppercase; }
-    .cs-step-text { font-family: var(--font); font-size: 13px; font-weight: 400; color: var(--secondary); line-height: 1.65; }
+    .cs-step-text { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.65; }
 
-    /* Gradient visual */
-    .cs-visual { width: 100%; border-radius: 4px; overflow: hidden; margin: 48px 0; }
-    .cs-visual-inner { width: 100%; height: 400px; display: flex; align-items: center; justify-content: center; position: relative; }
-    .cs-visual-label { font-family: var(--display); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); position: relative; z-index: 1; }
-    .grad-confidento { background: linear-gradient(135deg, #3d405b 0%, #606c8a 40%, #81b29a 100%); }
+    /* ── Quote ── */
+    .cs-quote { position: relative; padding: 32px 40px; background: var(--bg-alt); border-left: 4px solid var(--accent); margin: 48px 0; max-width: 680px; }
+    .cs-quote::before { content: '\201C'; font-family: var(--display); font-size: 80px; color: var(--accent); opacity: 0.15; position: absolute; top: -8px; left: 32px; line-height: 1; }
+    .cs-quote p { font-family: var(--display); font-size: 15px; font-style: italic; line-height: 1.7; position: relative; z-index: 1; }
+    .cs-quote cite { display: block; margin-top: 16px; font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); font-style: normal; }
 
-    /* Image containers */
+    /* ── Two col ── */
+    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; margin-top: 40px; }
+
+    /* ── List ── */
+    .cs-list { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
+    .cs-list li { display: flex; gap: 16px; font-family: var(--font); font-size: 14px; line-height: 1.7; }
+    .cs-list li::before { content: '→'; font-family: var(--display); color: var(--accent); flex-shrink: 0; font-size: 12px; margin-top: 2px; }
+
+    /* ── Note ── */
+    .cs-note { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 4px; padding: 24px 28px; margin-top: 32px; font-family: var(--font); font-size: 15px; line-height: 1.8; color: var(--secondary); }
+    .cs-note strong { color: var(--text); }
+
+    /* ── Images ── */
     .cs-img { width: 100%; margin: 40px 0; }
+    .cs-img:first-child { margin-top: 0; }
     .cs-img img { width: 100%; height: auto; display: block; border-radius: 8px; }
     .cs-img-border img { border: 1px solid var(--border); }
     .cs-img-caption { font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); text-align: center; margin-top: 12px; }
-
-    /* 2-col image grid */
     .cs-img-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
     .cs-img-2col .cs-img { margin: 0; }
-    .cs-img-2col .cs-img img { height: 100%; object-fit: cover; }
 
-    /* Phone hi-fi grid */
+    /* ── Phone hi-fi grid ── */
     .cs-phone-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; margin-top: 40px; align-items: flex-end; }
     .cs-phone-row img { width: 100%; height: auto; display: block; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.14); }
     .cs-phone-row .cs-img-caption { font-size: 10px; margin-top: 10px; text-align: center; }
 
-    /* Opportunity callout */
+    /* ── Callout ── */
     .cs-callout { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 4px; padding: 20px 24px; margin-top: 24px; }
     .cs-callout-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
     .cs-callout-text { font-family: var(--font); font-size: 14px; line-height: 1.75; }
 
-    /* Feedback table */
+    /* ── Feedback table ── */
     .cs-feedback-table { width: 100%; border-collapse: collapse; margin-top: 32px; border: 1px solid var(--border); }
     .cs-feedback-table th { font-family: var(--display); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); padding: 14px 20px; border-bottom: 1px solid var(--border); text-align: left; background: var(--bg-alt); }
     .cs-feedback-table td { font-family: var(--font); font-size: 14px; line-height: 1.75; padding: 24px 20px; border-bottom: 1px solid var(--border); vertical-align: top; }
     .cs-feedback-table tr:last-child td { border-bottom: none; }
     .cs-feedback-table td:first-child { color: var(--secondary); font-style: italic; border-right: 1px solid var(--border); width: 50%; }
 
-    /* Next project nav */
-    .cs-next { max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; border-top: 1px solid var(--border); }
+    /* ── Gradient visual ── */
+    .cs-visual { width: 100%; border-radius: 4px; overflow: hidden; margin: 48px 0; }
+    .cs-visual-inner { width: 100%; height: 400px; display: flex; align-items: center; justify-content: center; position: relative; }
+    .cs-visual-label { font-family: var(--display); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); position: relative; z-index: 1; }
+    .grad-confidento { background: linear-gradient(135deg, #3d405b 0%, #606c8a 40%, #81b29a 100%); }
+
+    /* ── Conclusion ── */
+    .cs-conclusion { max-width: 1200px; margin: 0 auto; padding: 100px var(--margin); text-align: center; border-bottom: 1px solid var(--border); }
+    .cs-conclusion-eyebrow { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 24px; }
+    .cs-conclusion-text { font-family: var(--display); font-size: clamp(20px,3vw,36px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; max-width: 700px; margin: 0 auto; }
+
+    /* ── Next project ── */
+    .cs-next { max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
     .cs-next-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 10px; }
-    .cs-next-link { font-family: var(--display); font-size: clamp(20px, 2.8vw, 32px); font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; transition: color 0.2s; display: flex; align-items: center; gap: 16px; }
+    .cs-next-link { font-family: var(--display); font-size: clamp(20px,2.8vw,32px); font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; transition: color 0.2s; display: flex; align-items: center; gap: 16px; }
     .cs-next-link:hover { color: var(--accent); }
     .cs-next-link svg { width: 28px; height: 28px; transition: transform 0.2s; }
     .cs-next-link:hover svg { transform: translateX(8px); }
 
-    /* Footer */
+    /* ── Footer ── */
     footer.footer { background: var(--footer-bg); color: #fff; padding: 64px var(--margin) 40px; }
     .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 64px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .footer-tagline { font-family: var(--display); font-size: clamp(16px, 2vw, 22px); font-weight: 700; line-height: 1.45; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .footer-tagline { font-family: var(--display); font-size: clamp(16px,2vw,22px); font-weight: 700; line-height: 1.45; margin-bottom: 12px; letter-spacing: -0.02em; }
     .footer-sub { font-family: var(--font); font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.6; }
     .footer-heading { font-family: var(--display); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 20px; }
     .footer-links { display: flex; flex-direction: column; gap: 12px; }
     .footer-links a { font-family: var(--font); font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; position: relative; width: fit-content; }
-    .footer-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0%; height: 1px; background: var(--accent); transition: width 0.25s ease; }
-    .footer-links a:hover { color: #fff; } .footer-links a:hover::after { width: 100%; }
+    .footer-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0%; height: 1px; background: var(--accent); transition: width 0.25s; }
+    .footer-links a:hover { color: #fff; }
+    .footer-links a:hover::after { width: 100%; }
     .footer-bottom { max-width: 1200px; margin: 32px auto 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
     .footer-copy { font-family: var(--display); font-size: 11px; letter-spacing: 0.05em; color: rgba(255,255,255,0.2); }
 
-    /* Scroll reveal */
-    [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    /* ── Scroll reveal ── */
+    [data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity 0.65s ease, transform 0.65s ease; }
     [data-reveal].revealed { opacity: 1; transform: none; }
 
-    /* Responsive */
+    /* ── Responsive ── */
     @media (max-width: 900px) {
       .cs-hero-split { grid-template-columns: 1fr; }
       .cs-hero-phone { display: none; }
+      .cs-row { grid-template-columns: 1fr; gap: 20px; padding: 56px var(--margin); }
+      .cs-row-label { position: static; }
+      .cs-row-num { display: none; }
       .cs-phone-row { grid-template-columns: repeat(3, 1fr); }
     }
     @media (max-width: 768px) {
       :root { --margin: 20px; }
-      .nav { padding: 10px var(--margin); gap: 0; } .nav-link { font-size: 11px; padding: 6px 12px; }
+      nav.nav { padding: 10px var(--margin); gap: 0; }
+      .nav-link { font-size: 11px; padding: 6px 12px; }
       .cs-stats { grid-template-columns: 1fr 1fr; }
-      .cs-stat { padding: 28px 16px 28px 0; } .cs-stat:last-child { padding-left: 16px; } .cs-stat:nth-child(2) { padding-left: 16px; }
+      .cs-stat { padding: 28px 16px 28px 0; }
+      .cs-stat:not(:first-child) { padding-left: 16px; }
       .cs-two-col { grid-template-columns: 1fr; gap: 32px; }
       .cs-steps { grid-template-columns: 1fr 1fr; }
+      .cs-cards { grid-template-columns: 1fr; }
+      .cs-info-grid { grid-template-columns: 1fr 1fr; }
+      .cs-info-item:nth-child(3n) { border-right: 1px solid var(--border); }
+      .cs-info-item:nth-child(2n) { border-right: none; }
       .cs-img-2col { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; gap: 40px; }
       .cs-next { flex-direction: column; align-items: flex-start; }
@@ -182,19 +299,50 @@
 
 <div class="cursor" id="cursor"></div>
 
-<nav class="nav">
-  <a href="index.html" class="nav-link">Home</a>
-  <a href="index.html#projects" class="nav-link">Work</a>
-  <a href="info.html" class="nav-link">Info</a>
-  <a href="https://purubhardwajdesign.com" class="nav-link" target="_blank" rel="noopener">Portfolio</a>
+<!-- ════════════════════════════════════════
+     FLOATING SECTION NAV (left-aligned)
+════════════════════════════════════════ -->
+<nav class="cs-sidenav" id="csSidenav" aria-label="Case study sections">
+  <ul>
+    <li><a href="#s-overview"    class="csn-link" data-s="s-overview"><span class="csn-dot"></span>Overview</a></li>
+    <li><a href="#s-roadmap"     class="csn-link" data-s="s-roadmap"><span class="csn-dot"></span>Roadmap</a></li>
+    <li><a href="#s-problem"     class="csn-link" data-s="s-problem"><span class="csn-dot"></span>Problem</a></li>
+    <li><a href="#s-research"    class="csn-link" data-s="s-research"><span class="csn-dot"></span>Research</a></li>
+    <li><a href="#s-ia"          class="csn-link" data-s="s-ia"><span class="csn-dot"></span>Architecture</a></li>
+    <li><a href="#s-design"      class="csn-link" data-s="s-design"><span class="csn-dot"></span>Design</a></li>
+    <li><a href="#s-system"      class="csn-link" data-s="s-system"><span class="csn-dot"></span>System</a></li>
+    <li><a href="#s-reflection"  class="csn-link" data-s="s-reflection"><span class="csn-dot"></span>Reflection</a></li>
+  </ul>
+</nav>
+
+<!-- ── Top Nav ── -->
+<nav class="nav" id="nav">
+  <a href="index.html" class="nav-brand">Puru Bhardwaj</a>
+  <div class="nav-links">
+    <a href="index.html#projects" class="nav-link">Work</a>
+    <a href="info.html" class="nav-link">Info</a>
+    <a href="https://purubhardwajdesign.com" class="nav-link" target="_blank" rel="noopener">Portfolio ↗</a>
+  </div>
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-    <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    <svg class="icon-sun" viewBox="0 0 24 24" style="display:none"><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="5"/>
+      <line x1="12" y1="1" x2="12" y2="3" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="12" y1="21" x2="12" y2="23" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="1" y1="12" x2="3" y2="12" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="21" y1="12" x2="23" y2="12" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
   </button>
 </nav>
 
-<!-- Hero -->
-<div class="cs-hero">
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<div class="cs-hero" id="cs-top">
   <a href="index.html#projects" class="cs-back">
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
     All projects
@@ -239,417 +387,467 @@
   </div>
 </div>
 
-<!-- Overview -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Overview</p>
-  <h2 class="cs-h2">Starting with a thank you</h2>
-  <p class="cs-body">I appreciate you taking the time to review this case study. I chose this example because it demonstrates my ability to create creative and elegant solutions to technical problems, my ability to design beyond the typical screen, and my ability to effectively collaborate with both internal and external partners.</p>
-  <p class="cs-body" style="margin-top:16px;">The goal was to create a centralized system where users could learn, practice, track progress, and build confidence through small, repeatable actions. Instead of overwhelming learners with long modules, TheConfidento focuses on bite-sized progression, progress visibility, and autonomous exploration.</p>
-
-  <div class="cs-stats">
-    <div class="cs-stat">
-      <span class="cs-stat-number">54%</span>
-      <span class="cs-stat-desc">Increase in user satisfaction</span>
-    </div>
-    <div class="cs-stat">
-      <span class="cs-stat-number">44%</span>
-      <span class="cs-stat-desc">Increase in average time spent</span>
-    </div>
-    <div class="cs-stat">
-      <span class="cs-stat-number">35%</span>
-      <span class="cs-stat-desc">Improvement in user rating</span>
-    </div>
-  </div>
-</section>
-
-<!-- Project Roadmap -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Project Roadmap</p>
-  <h2 class="cs-h2">Two tracks across six weeks</h2>
-  <p class="cs-body">The project was structured across two parallel tracks — UX Design and UI Design — with research, synthesis, and visual execution happening in sequence. Discovery ran through the first month; visual design and prototyping carried the second.</p>
-  <div class="cs-img cs-img-border">
-    <img src="assets/images/confidento/Image-1.png" alt="Project roadmap Gantt chart">
-    <p class="cs-img-caption">UX &amp; UI Design phases — week by week</p>
-  </div>
-</section>
-
-<!-- Problem Statement -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Problem Statement</p>
-  <h2 class="cs-h2">People have valuable ideas — but struggle to voice them</h2>
-  <div class="cs-two-col">
-    <div>
-      <p class="cs-body">Many people struggle to express themselves confidently despite having valuable thoughts and ideas. TheConfidento seeks to solve this by helping users build public speaking abilities and social confidence through structured learning, practice tracking, and motivation tools.</p>
-      <p class="cs-body" style="margin-top:16px;">Existing tools often focus on "courses" but not motivation systems. They lack a clear learning structure, overwhelm users with long modules, and fail to communicate safety, privacy, or trust.</p>
-    </div>
-    <div>
-      <ul class="cs-list">
-        <li>Focus on courses — but not motivation systems</li>
-        <li>Lack a clear, structured learning path</li>
-        <li>Overwhelm users with long, rigid modules</li>
-        <li>Fail to communicate safety, privacy, or trust</li>
-        <li>Lack personalized, self-paced journeys</li>
-      </ul>
-      <div class="cs-callout">
-        <p class="cs-callout-label">Opportunity</p>
-        <p class="cs-callout-text">A seamless, modular, progress-driven communication learning app that feels safe, enjoyable, and achievable.</p>
+<!-- ════════════════════════════════════════
+     RESULTS — full-width strip
+════════════════════════════════════════ -->
+<section class="cs-results" id="cs-results">
+  <div class="cs-results-inner">
+    <p class="cs-results-label">Outcomes</p>
+    <h2 class="cs-results-title">54% satisfaction lift &middot; 44% more time on app &middot; 35% rating improvement — in 6 weeks</h2>
+    <div class="cs-stats">
+      <div class="cs-stat">
+        <span class="cs-stat-number">54%</span>
+        <span class="cs-stat-desc">Increase in user satisfaction</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">44%</span>
+        <span class="cs-stat-desc">Increase in average time spent</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">35%</span>
+        <span class="cs-stat-desc">Improvement in user rating</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">71</span>
+        <span class="cs-stat-desc">survey respondents informing the research foundation</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- User Survey -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">User Survey</p>
-  <h2 class="cs-h2">71 respondents revealed how people really feel about speaking up</h2>
-  <p class="cs-body">To understand how people actually feel about speaking up, I ran a survey across students and working professionals. The goal: learn how confident they feel speaking in front of others, how often they avoid it, whether they're actively trying to improve, and what motivates them to keep practicing.</p>
-
-  <div class="cs-stats">
-    <div class="cs-stat">
-      <span class="cs-stat-number">50%</span>
-      <span class="cs-stat-desc">Are college-going students</span>
-    </div>
-    <div class="cs-stat">
-      <span class="cs-stat-number">58.8%</span>
-      <span class="cs-stat-desc">Hold back from speaking even when they have something to say</span>
-    </div>
-    <div class="cs-stat">
-      <span class="cs-stat-number">73%</span>
-      <span class="cs-stat-desc">Want to invest at least 1 hour to improve their communication skills</span>
-    </div>
+<!-- ════════════════════════════════════════
+     01 · OVERVIEW
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-overview" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">01</div>
+    <div class="cs-row-tag">Overview</div>
+    <div class="cs-row-divider"></div>
   </div>
-
-  <div class="cs-img cs-img-border" style="margin-top:48px;">
-    <img src="assets/images/confidento/Image-2.png" alt="User survey data — profession, speaking habits, motivation drivers, improvement activity">
-    <p class="cs-img-caption">Survey insights across 71 respondents — profession, speaking habits, motivation drivers</p>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Starting with a thank you</h2>
+    <p class="cs-body">I appreciate you taking the time to review this case study. I chose this example because it demonstrates my ability to create creative and elegant solutions to technical problems, my ability to design beyond the typical screen, and my ability to effectively collaborate with both internal and external partners.</p>
+    <p class="cs-body">The goal was to create a centralized system where users could learn, practice, track progress, and build confidence through small, repeatable actions. Instead of overwhelming learners with long modules, TheConfidento focuses on bite-sized progression, progress visibility, and autonomous exploration.</p>
   </div>
 </section>
 
-<!-- User Persona -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">User Persona</p>
-  <h2 class="cs-h2">Three user categories — one primary persona to guide design</h2>
-  <p class="cs-body">After analysing the survey, we divided target users into 3 primary categories: Working Professionals, College Students, and School-going Students. For each category, we had conversations with multiple individuals and collectively built user personas.</p>
-
-  <div class="cs-img cs-img-border" style="margin-top:40px;">
-    <img src="assets/images/confidento/Carousel.png" alt="User persona — Rohan Malhotra, college student">
-    <p class="cs-img-caption">Primary persona — Rohan Malhotra, College Student</p>
+<!-- ════════════════════════════════════════
+     02 · PROJECT ROADMAP
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-roadmap" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">02</div>
+    <div class="cs-row-tag">Roadmap</div>
+    <div class="cs-row-divider"></div>
   </div>
-</section>
-
-<!-- Competitive Analysis -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Competitive Analysis</p>
-  <h2 class="cs-h2">No competitor combined progress, motivation, and good UX</h2>
-  <p class="cs-body">We audited ELSA, Grammerly, Talk Life, Orator, and Presentation Coach across 7 key feature dimensions. The gap was clear: no single tool combined a progress tracker, reward system, dark mode, 24/7 support, tutor customization, and genuinely good UX.</p>
-
-  <div class="cs-img cs-img-border" style="margin-top:40px;">
-    <img src="assets/images/confidento/Image-3.png" alt="Competitive analysis matrix across 5 apps and 7 feature dimensions">
-    <p class="cs-img-caption">Feature comparison — 5 competitors × 7 dimensions</p>
-  </div>
-</section>
-
-<!-- Empathy Mapping -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Empathy Mapping</p>
-  <h2 class="cs-h2">Anxious, hopeful — and not sure where to start</h2>
-  <div class="cs-two-col">
-    <div>
-      <p class="cs-body">To move forward in the ideation phase, I created an empathy map of what our user says, thinks, does, and feels. This gave us a solid foundation and helped shape the solution to the problems they face.</p>
-      <ul class="cs-list" style="margin-top:24px;">
-        <li><strong>Says:</strong> "I want to improve — but I don't know where to start."</li>
-        <li><strong>Thinks:</strong> "What if I sound bad? What if I'm judged?"</li>
-        <li><strong>Does:</strong> Browses courses but hesitates to commit</li>
-        <li><strong>Feels:</strong> Anxious, shy, unconfident — but genuinely hopeful</li>
-      </ul>
-    </div>
-    <div class="cs-img cs-img-border" style="margin:0;">
-      <img src="assets/images/confidento/Image-4.png" alt="Empathy map — says, thinks, does, feels">
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Two tracks across six weeks</h2>
+    <p class="cs-body">The project was structured across two parallel tracks — UX Design and UI Design — with research, synthesis, and visual execution happening in sequence. Discovery ran through the first month; visual design and prototyping carried the second.</p>
+    <div class="cs-img cs-img-border">
+      <img src="assets/images/confidento/Image-1.png" alt="Project roadmap Gantt chart">
+      <p class="cs-img-caption">UX &amp; UI Design phases — week by week</p>
     </div>
   </div>
 </section>
 
-<!-- Information Architecture -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Information Architecture</p>
-  <h2 class="cs-h2">Six core buckets — one coherent product flow</h2>
-  <p class="cs-body">The entire experience was mapped into 6 core areas: Home (Progress + Recommendations), Courses (Structure, Lessons, AI feedback roadmap), Trackers (Daily learning + consistency streaks), Practice (Playback, prompts, reflection — future phase), Search &amp; Explore, and Profile / Settings.</p>
-
-  <div class="cs-img cs-img-border" style="margin-top:40px;">
-    <img src="assets/images/confidento/Image-5.png" alt="Information architecture and full user flow diagram">
-    <p class="cs-img-caption">Full product information architecture</p>
+<!-- ════════════════════════════════════════
+     03 · PROBLEM STATEMENT
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-problem" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">03</div>
+    <div class="cs-row-tag">Problem</div>
+    <div class="cs-row-divider"></div>
   </div>
-</section>
-
-<!-- Navigation Model -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Navigation Model</p>
-  <h2 class="cs-h2">Step-by-Step for new users. Hub-and-Spoke for returning ones.</h2>
-  <p class="cs-body">The survey data made one thing very clear: people are motivated — but easily distracted, with scattered productivity peaks and difficulty maintaining habits. This directly shaped the navigation strategy for TheConfidento.</p>
-
-  <div class="cs-img" style="margin-top:32px;">
-    <img src="assets/images/confidento/Image-7.png" alt="Step-by-step vs Hub-and-Spoke navigation model diagram">
-    <p class="cs-img-caption">Two navigation models — one for each user state</p>
-  </div>
-
-  <div class="cs-two-col" style="margin-top:48px;">
-    <div>
-      <p style="font-family:var(--display); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:16px;">Step-by-Step · New Users</p>
-      <ul class="cs-list" style="margin-top:0;">
-        <li>Reduces cognitive load in the first session</li>
-        <li>Introduces only the essentials: profile, goals, starting course</li>
-        <li>Builds trust before asking for deeper commitments</li>
-        <li>Ensures users don't feel lost in a complex ecosystem on day one</li>
-      </ul>
-    </div>
-    <div>
-      <p style="font-family:var(--display); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:16px;">Hub-and-Spoke · Returning Users</p>
-      <ul class="cs-list" style="margin-top:0;">
-        <li>Home screen shows progress, streaks, and recommended next actions</li>
-        <li>Each spoke leads to a focused area: Courses, Practice, Tracker, Profile</li>
-        <li>Users resume where they left off — no replaying onboarding</li>
-        <li>Supports short windows of focus and varying times of day</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="cs-quote">
-    <p>Step-by-Step lowered the barrier to entry. Hub-and-Spoke sustained engagement over time.</p>
-  </div>
-</section>
-
-<!-- Whiteboarding & Paper Sketches -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Whiteboarding &amp; Sketches</p>
-  <h2 class="cs-h2">Collaborative ideation from whiteboard to paper</h2>
-  <p class="cs-body">Early explorations happened simultaneously on Zoom whiteboards and paper. These sessions evolved the direction from a linear onboarding model into the hub-and-spoke structure, and surfaced early ideas for card layouts, progress meters, streak motivators, and trust-building banners.</p>
-
-  <div class="cs-img-2col">
-    <div class="cs-img cs-img-border" style="margin:0;">
-      <img src="assets/images/confidento/Image-6.png" alt="Whiteboard sketches from Zoom collaboration sessions">
-      <p class="cs-img-caption">Zoom whiteboard — collaborative exploration sessions</p>
-    </div>
-    <div class="cs-img cs-img-border" style="margin:0;">
-      <img src="assets/images/confidento/Image-8.png" alt="Hand-drawn paper sketches — early wireframe ideas">
-      <p class="cs-img-caption">Paper sketches — card layouts, modular lessons, streak motivators</p>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">People have valuable ideas — but struggle to voice them</h2>
+    <div class="cs-two-col">
+      <div>
+        <p class="cs-body">Many people struggle to express themselves confidently despite having valuable thoughts and ideas. TheConfidento seeks to solve this by helping users build public speaking abilities and social confidence through structured learning, practice tracking, and motivation tools.</p>
+        <p class="cs-body" style="margin-top:16px;">Existing tools often focus on "courses" but not motivation systems. They lack a clear learning structure, overwhelm users with long modules, and fail to communicate safety, privacy, or trust.</p>
+      </div>
+      <div>
+        <ul class="cs-list">
+          <li>Focus on courses — but not motivation systems</li>
+          <li>Lack a clear, structured learning path</li>
+          <li>Overwhelm users with long, rigid modules</li>
+          <li>Fail to communicate safety, privacy, or trust</li>
+          <li>Lack personalized, self-paced journeys</li>
+        </ul>
+        <div class="cs-callout" style="margin-top:24px;">
+          <p class="cs-callout-label">Opportunity</p>
+          <p class="cs-callout-text">A seamless, modular, progress-driven communication learning app that feels safe, enjoyable, and achievable.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Low-Fidelity Wireframes -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Low-Fidelity Wireframes</p>
-  <h2 class="cs-h2">Structure before aesthetics — giving the app its skeleton</h2>
-  <p class="cs-body">Once ideation was complete, we moved into low-fidelity wireframes to give the application its initial structure. These were used for early testing and feedback before any visual design was applied.</p>
-
-  <div class="cs-img cs-img-border">
-    <img src="assets/images/confidento/Image-9.png" alt="Low-fidelity wireframes — Onboarding and Trial flow">
-    <p class="cs-img-caption">Onboarding &amp; Trial — user flow wireframes</p>
+<!-- ════════════════════════════════════════
+     04 · RESEARCH
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-research" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">04</div>
+    <div class="cs-row-tag">Research</div>
+    <div class="cs-row-divider"></div>
   </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">71 respondents revealed how people really feel about speaking up</h2>
+    <p class="cs-body">To understand how people actually feel about speaking up, I ran a survey across students and working professionals. The goal: learn how confident they feel speaking in front of others, how often they avoid it, whether they're actively trying to improve, and what motivates them to keep practicing.</p>
 
-  <div class="cs-img-2col" style="margin-top:0;">
-    <div class="cs-img cs-img-border" style="margin:0;">
-      <img src="assets/images/confidento/Image-10.png" alt="Low-fidelity wireframes — Courses catalog and 24x7 chat support">
-      <p class="cs-img-caption">Courses catalog + 24×7 chat support interface</p>
+    <div class="cs-stats" style="margin-top:48px;">
+      <div class="cs-stat">
+        <span class="cs-stat-number">50%</span>
+        <span class="cs-stat-desc">Are college-going students</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">58.8%</span>
+        <span class="cs-stat-desc">Hold back from speaking even when they have something to say</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">73%</span>
+        <span class="cs-stat-desc">Want to invest at least 1 hour to improve their communication skills</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">71</span>
+        <span class="cs-stat-desc">survey respondents across students and working professionals</span>
+      </div>
     </div>
-    <div class="cs-img cs-img-border" style="margin:0;">
-      <img src="assets/images/confidento/Image-11.png" alt="Low-fidelity wireframes — checkout and payment flow">
-      <p class="cs-img-caption">Course selection &amp; checkout payment flow</p>
+
+    <div class="cs-img cs-img-border" style="margin-top:48px;">
+      <img src="assets/images/confidento/Image-2.png" alt="User survey data — profession, speaking habits, motivation drivers, improvement activity">
+      <p class="cs-img-caption">Survey insights across 71 respondents — profession, speaking habits, motivation drivers</p>
     </div>
-  </div>
-</section>
 
-<!-- User Feedback & Rectification -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">User Feedback &amp; Rectifications</p>
-  <h2 class="cs-h2">Testing revealed a hierarchy problem — and we fixed it</h2>
-  <p class="cs-body">After completing low-fidelity wireframes, we organised feedback sessions with multiple users and noted the problems they faced navigating the prototype. We curated all feedback and rectified the issues that would reduce pain points and improve flow.</p>
-
-  <div class="cs-img cs-img-border" style="margin-top:40px;">
-    <img src="assets/images/confidento/Image-12.png" alt="Before and after — Tracker screen hierarchy redesign">
-    <p class="cs-img-caption">Before → After: Tracker screen — improved hierarchy and readability</p>
-  </div>
-
-  <table class="cs-feedback-table">
-    <thead>
-      <tr>
-        <th>User Feedback</th>
-        <th>Design Rectification</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>"The learning dashboard feels a bit overwhelming for new users, especially those who struggle with confidence. With so many options visible at once, users weren't always sure where to start or what to do next."</td>
-        <td>Redesigned the dashboard into a more structured, modular layout — giving users a clear next step through progress indicators and simplified task cards. Hierarchy was improved to guide attention naturally toward the most important action.</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- Style Guide -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Style Guide</p>
-  <h2 class="cs-h2">Vibrant, warm, and designed to reduce anxiety</h2>
-  <p class="cs-body">The aesthetics of TheConfidento were designed to make users feel supported and motivated as they build confidence. A vibrant gradient of purples, blues, and pinks creates an uplifting, modern atmosphere that reduces anxiety and encourages exploration. A clean, rounded sans-serif adds warmth and readability across light and dark modes.</p>
-  <p class="cs-body" style="margin-top:16px;">Together, these visual choices create a friendly, inspiring environment that helps users feel safe and empowered throughout their learning journey.</p>
-
-  <div class="cs-img cs-img-border" style="margin-top:40px;">
-    <img src="assets/images/confidento/Image-13.png" alt="Style guide — SF Pro typography and color palette (Indigo, Blue, Purple, Orange, Green)">
-    <p class="cs-img-caption">SF Pro typography · color system — Indigo 500, Blue 500, Purple 500, Orange 500, Green 500</p>
-  </div>
-</section>
-
-<!-- High Fidelity -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">High Fidelity</p>
-  <h2 class="cs-h2">Bringing it to life — color, motion, and real personality</h2>
-  <p class="cs-body">After completing all previous steps, it was time to give life to the wireframes by adding color, typography, and components using Material You guidelines. The result: a product that feels safe, enjoyable, and genuinely motivating to use.</p>
-
-  <div class="cs-phone-row">
-    <div>
-      <img src="assets/videos_gifs/confidento/Video.png" alt="Onboarding screen — Build Confidence">
-      <p class="cs-img-caption">Onboarding</p>
+    <h3 class="cs-h3">Three user categories — one primary persona to guide design</h3>
+    <p class="cs-body" style="margin-bottom:32px;">After analysing the survey, we divided target users into 3 primary categories: Working Professionals, College Students, and School-going Students. For each category, we had conversations with multiple individuals and collectively built user personas.</p>
+    <div class="cs-img cs-img-border">
+      <img src="assets/images/confidento/Carousel.png" alt="User persona — Rohan Malhotra, college student">
+      <p class="cs-img-caption">Primary persona — Rohan Malhotra, College Student</p>
     </div>
-    <div>
-      <img src="assets/videos_gifs/confidento/Video2.png" alt="Home dashboard with daily progress">
-      <p class="cs-img-caption">Dashboard</p>
-    </div>
-    <div>
-      <img src="assets/videos_gifs/confidento/Video3.png" alt="Course detail page">
-      <p class="cs-img-caption">Course Detail</p>
-    </div>
-    <div>
-      <img src="assets/videos_gifs/confidento/Video4.png" alt="My Dashboard with Play & Learn games">
-      <p class="cs-img-caption">My Dashboard</p>
-    </div>
-    <div>
-      <img src="assets/videos_gifs/confidento/Video5.png" alt="Search courses — trending and popular">
-      <p class="cs-img-caption">Search</p>
-    </div>
-    <div>
-      <img src="assets/videos_gifs/confidento/Video6.png" alt="Home screen in dark/purple mode">
-      <p class="cs-img-caption">Dark Mode</p>
-    </div>
-  </div>
 
-  <div style="margin-top:64px;">
+    <h3 class="cs-h3">No competitor combined progress, motivation, and good UX</h3>
+    <p class="cs-body" style="margin-bottom:32px;">We audited ELSA, Grammerly, Talk Life, Orator, and Presentation Coach across 7 key feature dimensions. The gap was clear: no single tool combined a progress tracker, reward system, dark mode, 24/7 support, tutor customization, and genuinely good UX.</p>
+    <div class="cs-img cs-img-border">
+      <img src="assets/images/confidento/Image-3.png" alt="Competitive analysis matrix across 5 apps and 7 feature dimensions">
+      <p class="cs-img-caption">Feature comparison — 5 competitors × 7 dimensions</p>
+    </div>
+
+    <h3 class="cs-h3">Anxious, hopeful — and not sure where to start</h3>
     <div class="cs-two-col" style="margin-top:0;">
       <div>
-        <ul class="cs-list">
-          <li><strong>Personalised Dashboard:</strong> Daily progress, learning goals, and course recommendations with cheerful illustrations and a modular layout.</li>
-          <li><strong>Learning Plan &amp; Course Detail:</strong> Courses broken into short, trackable segments with mentor info, pricing, lesson structure, and purchase options — scannable and clear.</li>
-          <li><strong>Search (500+ Courses):</strong> Users can choose from 500+ courses by preference, search via tags or name, and filter by trending or recent.</li>
+        <p class="cs-body">To move forward in the ideation phase, I created an empathy map of what our user says, thinks, does, and feels. This gave us a solid foundation and helped shape the solution to the problems they face.</p>
+        <ul class="cs-list" style="margin-top:24px;">
+          <li><strong>Says:</strong> "I want to improve — but I don't know where to start."</li>
+          <li><strong>Thinks:</strong> "What if I sound bad? What if I'm judged?"</li>
+          <li><strong>Does:</strong> Browses courses but hesitates to commit</li>
+          <li><strong>Feels:</strong> Anxious, shy, unconfident — but genuinely hopeful</li>
+        </ul>
+      </div>
+      <div class="cs-img cs-img-border" style="margin:0;">
+        <img src="assets/images/confidento/Image-4.png" alt="Empathy map — says, thinks, does, feels">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     05 · INFORMATION ARCHITECTURE
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-ia" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">05</div>
+    <div class="cs-row-tag">Architecture</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Six core buckets — one coherent product flow</h2>
+    <p class="cs-body">The entire experience was mapped into 6 core areas: Home (Progress + Recommendations), Courses (Structure, Lessons, AI feedback roadmap), Trackers (Daily learning + consistency streaks), Practice (Playback, prompts, reflection — future phase), Search &amp; Explore, and Profile / Settings.</p>
+
+    <div class="cs-img cs-img-border" style="margin-top:40px;">
+      <img src="assets/images/confidento/Image-5.png" alt="Information architecture and full user flow diagram">
+      <p class="cs-img-caption">Full product information architecture</p>
+    </div>
+
+    <h3 class="cs-h3">Step-by-Step for new users. Hub-and-Spoke for returning ones.</h3>
+    <p class="cs-body">The survey data made one thing very clear: people are motivated — but easily distracted, with scattered productivity peaks and difficulty maintaining habits. This directly shaped the navigation strategy for TheConfidento.</p>
+
+    <div class="cs-img" style="margin-top:32px;">
+      <img src="assets/images/confidento/Image-7.png" alt="Step-by-step vs Hub-and-Spoke navigation model diagram">
+      <p class="cs-img-caption">Two navigation models — one for each user state</p>
+    </div>
+
+    <div class="cs-two-col" style="margin-top:48px;">
+      <div>
+        <p style="font-family:var(--display); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:16px;">Step-by-Step · New Users</p>
+        <ul class="cs-list" style="margin-top:0;">
+          <li>Reduces cognitive load in the first session</li>
+          <li>Introduces only the essentials: profile, goals, starting course</li>
+          <li>Builds trust before asking for deeper commitments</li>
+          <li>Ensures users don't feel lost in a complex ecosystem on day one</li>
         </ul>
       </div>
       <div>
-        <ul class="cs-list">
-          <li><strong>User Dashboard:</strong> Segmented by completed lessons — colour-coded tiles indicate course themes and progress.</li>
-          <li><strong>24×7 Chat Support:</strong> Three options — Assigned Tutor, AI Response, or User Helpline — so users always have somewhere to turn.</li>
-          <li><strong>Dark Mode:</strong> Contrast ratios >4.5:1, soft desaturated backgrounds, brand highlight colors (blues, purples) retained across both modes for full consistency.</li>
+        <p style="font-family:var(--display); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-bottom:16px;">Hub-and-Spoke · Returning Users</p>
+        <ul class="cs-list" style="margin-top:0;">
+          <li>Home screen shows progress, streaks, and recommended next actions</li>
+          <li>Each spoke leads to a focused area: Courses, Practice, Tracker, Profile</li>
+          <li>Users resume where they left off — no replaying onboarding</li>
+          <li>Supports short windows of focus and varying times of day</li>
         </ul>
+      </div>
+    </div>
+
+    <div class="cs-quote">
+      <p>Step-by-Step lowered the barrier to entry. Hub-and-Spoke sustained engagement over time.</p>
+    </div>
+
+    <h3 class="cs-h3">Collaborative ideation from whiteboard to paper</h3>
+    <p class="cs-body" style="margin-bottom:32px;">Early explorations happened simultaneously on Zoom whiteboards and paper. These sessions evolved the direction from a linear onboarding model into the hub-and-spoke structure, and surfaced early ideas for card layouts, progress meters, streak motivators, and trust-building banners.</p>
+    <div class="cs-img-2col">
+      <div class="cs-img cs-img-border" style="margin:0;">
+        <img src="assets/images/confidento/Image-6.png" alt="Whiteboard sketches from Zoom collaboration sessions">
+        <p class="cs-img-caption">Zoom whiteboard — collaborative exploration sessions</p>
+      </div>
+      <div class="cs-img cs-img-border" style="margin:0;">
+        <img src="assets/images/confidento/Image-8.png" alt="Hand-drawn paper sketches — early wireframe ideas">
+        <p class="cs-img-caption">Paper sketches — card layouts, modular lessons, streak motivators</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Designing for Safety & Trust -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Designing for Safety &amp; Trust</p>
-  <h2 class="cs-h2">Confidence thrives in an environment of trust</h2>
-  <p class="cs-body">As I designed TheConfidento, I wanted every interaction to feel as safe as the conversations it inspires. Beyond aesthetics, I focused on creating an experience that made users feel secure, respected, and in control — especially around sensitive data like voice recordings, personal goals, and payment information.</p>
+<!-- ════════════════════════════════════════
+     06 · DESIGN
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-design" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">06</div>
+    <div class="cs-row-tag">Design</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Structure before aesthetics — giving the app its skeleton</h2>
+    <p class="cs-body">Once ideation was complete, we moved into low-fidelity wireframes to give the application its initial structure. These were used for early testing and feedback before any visual design was applied.</p>
 
-  <div class="cs-steps" style="margin-top:40px;">
-    <div class="cs-step">
-      <div class="cs-step-num">01</div>
-      <div class="cs-step-title">Real-World References</div>
-      <div class="cs-step-text">Incorporated Stripe, Google Pay, and Apple Pay to simulate credible financial flows — creating immediate familiarity and reducing friction at the most sensitive touchpoint.</div>
+    <div class="cs-img cs-img-border">
+      <img src="assets/images/confidento/Image-9.png" alt="Low-fidelity wireframes — Onboarding and Trial flow">
+      <p class="cs-img-caption">Onboarding &amp; Trial — user flow wireframes</p>
     </div>
-    <div class="cs-step">
-      <div class="cs-step-num">02</div>
-      <div class="cs-step-title">Reassuring Microcopy</div>
-      <div class="cs-step-text">"Secure checkout powered by Stripe" and "Your progress is safely stored" — small but powerful lines that subtly communicate security without ever breaking the flow.</div>
+
+    <div class="cs-img-2col" style="margin-top:0;">
+      <div class="cs-img cs-img-border" style="margin:0;">
+        <img src="assets/images/confidento/Image-10.png" alt="Low-fidelity wireframes — Courses catalog and 24x7 chat support">
+        <p class="cs-img-caption">Courses catalog + 24×7 chat support interface</p>
+      </div>
+      <div class="cs-img cs-img-border" style="margin:0;">
+        <img src="assets/images/confidento/Image-11.png" alt="Low-fidelity wireframes — checkout and payment flow">
+        <p class="cs-img-caption">Course selection &amp; checkout payment flow</p>
+      </div>
     </div>
-    <div class="cs-step">
-      <div class="cs-step-num">03</div>
-      <div class="cs-step-title">Transparent Feedback Loops</div>
-      <div class="cs-step-text">Progress indicators, stable confirmation states, and timestamped uploads helped users feel grounded in a process that was transparent and reliable.</div>
+
+    <h3 class="cs-h3">Testing revealed a hierarchy problem — and we fixed it</h3>
+    <p class="cs-body" style="margin-bottom:32px;">After completing low-fidelity wireframes, we organised feedback sessions with multiple users and noted the problems they faced navigating the prototype. We curated all feedback and rectified the issues that would reduce pain points and improve flow.</p>
+
+    <div class="cs-img cs-img-border">
+      <img src="assets/images/confidento/Image-12.png" alt="Before and after — Tracker screen hierarchy redesign">
+      <p class="cs-img-caption">Before → After: Tracker screen — improved hierarchy and readability</p>
     </div>
-    <div class="cs-step">
-      <div class="cs-step-num">04</div>
-      <div class="cs-step-title">Ethical by Design</div>
-      <div class="cs-step-text">Designing for safety is not just a functional layer — it's the invisible foundation that allows confidence to grow. Every screen reflected a mindset of trust, empathy, and ethical responsibility.</div>
+
+    <table class="cs-feedback-table">
+      <thead>
+        <tr>
+          <th>User Feedback</th>
+          <th>Design Rectification</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>"The learning dashboard feels a bit overwhelming for new users, especially those who struggle with confidence. With so many options visible at once, users weren't always sure where to start or what to do next."</td>
+          <td>Redesigned the dashboard into a more structured, modular layout — giving users a clear next step through progress indicators and simplified task cards. Hierarchy was improved to guide attention naturally toward the most important action.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="cs-h3">Vibrant, warm, and designed to reduce anxiety</h3>
+    <p class="cs-body">The aesthetics of TheConfidento were designed to make users feel supported and motivated as they build confidence. A vibrant gradient of purples, blues, and pinks creates an uplifting, modern atmosphere that reduces anxiety and encourages exploration. A clean, rounded sans-serif adds warmth and readability across light and dark modes.</p>
+    <p class="cs-body">Together, these visual choices create a friendly, inspiring environment that helps users feel safe and empowered throughout their learning journey.</p>
+
+    <div class="cs-img cs-img-border" style="margin-top:40px;">
+      <img src="assets/images/confidento/Image-13.png" alt="Style guide — SF Pro typography and color palette (Indigo, Blue, Purple, Orange, Green)">
+      <p class="cs-img-caption">SF Pro typography · color system — Indigo 500, Blue 500, Purple 500, Orange 500, Green 500</p>
+    </div>
+
+    <h3 class="cs-h3">Bringing it to life — color, motion, and real personality</h3>
+    <p class="cs-body" style="margin-bottom:32px;">After completing all previous steps, it was time to give life to the wireframes by adding color, typography, and components using Material You guidelines. The result: a product that feels safe, enjoyable, and genuinely motivating to use.</p>
+
+    <div class="cs-phone-row">
+      <div>
+        <img src="assets/videos_gifs/confidento/Video.png" alt="Onboarding screen — Build Confidence">
+        <p class="cs-img-caption">Onboarding</p>
+      </div>
+      <div>
+        <img src="assets/videos_gifs/confidento/Video2.png" alt="Home dashboard with daily progress">
+        <p class="cs-img-caption">Dashboard</p>
+      </div>
+      <div>
+        <img src="assets/videos_gifs/confidento/Video3.png" alt="Course detail page">
+        <p class="cs-img-caption">Course Detail</p>
+      </div>
+      <div>
+        <img src="assets/videos_gifs/confidento/Video4.png" alt="My Dashboard with Play & Learn games">
+        <p class="cs-img-caption">My Dashboard</p>
+      </div>
+      <div>
+        <img src="assets/videos_gifs/confidento/Video5.png" alt="Search courses — trending and popular">
+        <p class="cs-img-caption">Search</p>
+      </div>
+      <div>
+        <img src="assets/videos_gifs/confidento/Video6.png" alt="Home screen in dark/purple mode">
+        <p class="cs-img-caption">Dark Mode</p>
+      </div>
+    </div>
+
+    <div style="margin-top:64px;">
+      <div class="cs-two-col" style="margin-top:0;">
+        <div>
+          <ul class="cs-list">
+            <li><strong>Personalised Dashboard:</strong> Daily progress, learning goals, and course recommendations with cheerful illustrations and a modular layout.</li>
+            <li><strong>Learning Plan &amp; Course Detail:</strong> Courses broken into short, trackable segments with mentor info, pricing, lesson structure, and purchase options — scannable and clear.</li>
+            <li><strong>Search (500+ Courses):</strong> Users can choose from 500+ courses by preference, search via tags or name, and filter by trending or recent.</li>
+          </ul>
+        </div>
+        <div>
+          <ul class="cs-list">
+            <li><strong>User Dashboard:</strong> Segmented by completed lessons — colour-coded tiles indicate course themes and progress.</li>
+            <li><strong>24×7 Chat Support:</strong> Three options — Assigned Tutor, AI Response, or User Helpline — so users always have somewhere to turn.</li>
+            <li><strong>Dark Mode:</strong> Contrast ratios >4.5:1, soft desaturated backgrounds, brand highlight colors (blues, purples) retained across both modes for full consistency.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="cs-h3">Confidence thrives in an environment of trust</h3>
+    <p class="cs-body" style="margin-bottom:32px;">As I designed TheConfidento, I wanted every interaction to feel as safe as the conversations it inspires. Beyond aesthetics, I focused on creating an experience that made users feel secure, respected, and in control — especially around sensitive data like voice recordings, personal goals, and payment information.</p>
+
+    <div class="cs-steps" style="margin-top:0;">
+      <div class="cs-step">
+        <div class="cs-step-num">01</div>
+        <div class="cs-step-title">Real-World References</div>
+        <div class="cs-step-text">Incorporated Stripe, Google Pay, and Apple Pay to simulate credible financial flows — creating immediate familiarity and reducing friction at the most sensitive touchpoint.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">02</div>
+        <div class="cs-step-title">Reassuring Microcopy</div>
+        <div class="cs-step-text">"Secure checkout powered by Stripe" and "Your progress is safely stored" — small but powerful lines that subtly communicate security without ever breaking the flow.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">03</div>
+        <div class="cs-step-title">Transparent Feedback Loops</div>
+        <div class="cs-step-text">Progress indicators, stable confirmation states, and timestamped uploads helped users feel grounded in a process that was transparent and reliable.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">04</div>
+        <div class="cs-step-title">Ethical by Design</div>
+        <div class="cs-step-text">Designing for safety is not just a functional layer — it's the invisible foundation that allows confidence to grow. Every screen reflected a mindset of trust, empathy, and ethical responsibility.</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Design System -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">Design System</p>
-  <h2 class="cs-h2">A reusable UI kit built for scale and consistency</h2>
-  <div class="cs-two-col">
-    <div>
-      <p class="cs-body">The design system was built from scratch in Figma with auto-layout. Every component was designed to be extended, reskinned, or reused across new screens without breaking consistency — giving the product a foundation to grow on.</p>
-      <ul class="cs-list" style="margin-top:24px;">
-        <li><strong>Typography:</strong> Rounded, accessible sans-serif (SF Pro) for a friendly, warm tone</li>
-        <li><strong>Colors:</strong> Youthful and optimistic palette with high contrast across both modes</li>
-        <li><strong>Components:</strong> Reusable UI kit built in Figma with full auto-layout</li>
-      </ul>
+<!-- ════════════════════════════════════════
+     07 · DESIGN SYSTEM
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-system" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">07</div>
+    <div class="cs-row-tag">System</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">A reusable UI kit built for scale and consistency</h2>
+    <div class="cs-two-col" style="margin-top:0;">
+      <div>
+        <p class="cs-body">The design system was built from scratch in Figma with auto-layout. Every component was designed to be extended, reskinned, or reused across new screens without breaking consistency — giving the product a foundation to grow on.</p>
+        <ul class="cs-list" style="margin-top:24px;">
+          <li><strong>Typography:</strong> Rounded, accessible sans-serif (SF Pro) for a friendly, warm tone</li>
+          <li><strong>Colors:</strong> Youthful and optimistic palette with high contrast across both modes</li>
+          <li><strong>Components:</strong> Reusable UI kit built in Figma with full auto-layout</li>
+        </ul>
+      </div>
+      <div>
+        <p class="cs-body">Next steps for the product:</p>
+        <ul class="cs-list" style="margin-top:16px;">
+          <li>Usability testing with first batch of learners via Maze</li>
+          <li>Explore AI-powered speech feedback for future phases</li>
+          <li>Community-based peer review in upcoming versions</li>
+        </ul>
+      </div>
     </div>
-    <div>
-      <p class="cs-body">Next steps for the product:</p>
-      <ul class="cs-list" style="margin-top:16px;">
-        <li>Usability testing with first batch of learners via Maze</li>
-        <li>Explore AI-powered speech feedback for future phases</li>
-        <li>Community-based peer review in upcoming versions</li>
-      </ul>
+
+    <div class="cs-img-2col" style="margin-top:48px;">
+      <div class="cs-img cs-img-border" style="margin:0;">
+        <img src="assets/images/confidento/Image-14.png" alt="TheConfidento app icon on iPhone home screen">
+        <p class="cs-img-caption">App icon — on device</p>
+      </div>
+      <div class="cs-img cs-img-border" style="margin:0;">
+        <img src="assets/images/confidento/Image-15.png" alt="TheConfidento onboarding screen on iPhone">
+        <p class="cs-img-caption">Onboarding — live on device</p>
+      </div>
     </div>
   </div>
+</section>
 
-  <div class="cs-img-2col" style="margin-top:48px;">
-    <div class="cs-img cs-img-border" style="margin:0;">
-      <img src="assets/images/confidento/Image-14.png" alt="TheConfidento app icon on iPhone home screen">
-      <p class="cs-img-caption">App icon — on device</p>
+<!-- ════════════════════════════════════════
+     08 · REFLECTION
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-reflection" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">08</div>
+    <div class="cs-row-tag">Reflection</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Four things this project taught me</h2>
+    <div class="cs-steps" style="margin-top:0;">
+      <div class="cs-step">
+        <div class="cs-step-num">01</div>
+        <div class="cs-step-title">0→1 demands opinionated design</div>
+        <div class="cs-step-text">Without an existing product to react to, every decision required first-principles thinking. The temptation to add features was constant — the discipline was in knowing what to leave out.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">02</div>
+        <div class="cs-step-title">Behavioral ≠ interface design</div>
+        <div class="cs-step-text">An app meant to change behavior requires designing habit loops and emotional momentum, not just usable screens. Streak systems and micro-celebrations were as important as core features.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">03</div>
+        <div class="cs-step-title">Navigation is a product decision</div>
+        <div class="cs-step-text">The choice between step-by-step and hub-and-spoke wasn't aesthetic — it was a product strategy grounded in real research about how and when our users actually learn.</div>
+      </div>
+      <div class="cs-step">
+        <div class="cs-step-num">04</div>
+        <div class="cs-step-title">Trust is invisible until it's missing</div>
+        <div class="cs-step-text">Designing for safety — microcopy, confirmation states, transparent feedback — is the invisible foundation that allows confidence to grow. Remove it, and users feel it immediately.</div>
+      </div>
     </div>
-    <div class="cs-img cs-img-border" style="margin:0;">
-      <img src="assets/images/confidento/Image-15.png" alt="TheConfidento onboarding screen on iPhone">
-      <p class="cs-img-caption">Onboarding — live on device</p>
+
+    <div class="cs-quote" style="margin-top:48px;">
+      <p>This was a quick glimpse of what I did while leading design for this project. Reach out to know more about scaling the feature, design system, use cases, and testing insights.</p>
     </div>
   </div>
 </section>
 
-<!-- What I Learned -->
-<section class="cs-section" data-reveal>
-  <p class="cs-section-label">What I Learned</p>
-  <h2 class="cs-h2">Four things this project taught me</h2>
-  <div class="cs-steps">
-    <div class="cs-step">
-      <div class="cs-step-num">01</div>
-      <div class="cs-step-title">0→1 demands opinionated design</div>
-      <div class="cs-step-text">Without an existing product to react to, every decision required first-principles thinking. The temptation to add features was constant — the discipline was in knowing what to leave out.</div>
-    </div>
-    <div class="cs-step">
-      <div class="cs-step-num">02</div>
-      <div class="cs-step-title">Behavioral ≠ interface design</div>
-      <div class="cs-step-text">An app meant to change behavior requires designing habit loops and emotional momentum, not just usable screens. Streak systems and micro-celebrations were as important as core features.</div>
-    </div>
-    <div class="cs-step">
-      <div class="cs-step-num">03</div>
-      <div class="cs-step-title">Navigation is a product decision</div>
-      <div class="cs-step-text">The choice between step-by-step and hub-and-spoke wasn't aesthetic — it was a product strategy grounded in real research about how and when our users actually learn.</div>
-    </div>
-    <div class="cs-step">
-      <div class="cs-step-num">04</div>
-      <div class="cs-step-title">Trust is invisible until it's missing</div>
-      <div class="cs-step-text">Designing for safety — microcopy, confirmation states, transparent feedback — is the invisible foundation that allows confidence to grow. Remove it, and users feel it immediately.</div>
-    </div>
-  </div>
+<!-- ── Conclusion ── -->
+<div class="cs-conclusion" data-reveal>
+  <p class="cs-conclusion-eyebrow">Conclusion</p>
+  <p class="cs-conclusion-text">TheConfidento taught me that confidence isn't built in one session — it's earned through small wins, clear progress, and a product that feels genuinely safe to use.</p>
+  <p style="font-family:var(--font);font-size:16px;color:var(--secondary);margin-top:24px;line-height:1.8;">In 6 weeks, we went from a blank canvas to a communication learning platform that users actually want to return to. The real win was designing for emotion, not just for tasks.</p>
+  <p style="font-family:var(--display);font-size:13px;color:var(--secondary);margin-top:48px;letter-spacing:0.04em;">Glad we could cross paths.<br>Out of anywhere you could be, you're here.</p>
+</div>
 
-  <div class="cs-quote" style="margin-top:48px;">
-    <p>This was a quick glimpse of what I did while leading design for this project. Reach out to know more about scaling the feature, design system, use cases, and testing insights.</p>
-  </div>
-</section>
-
-<!-- Next project -->
+<!-- ── Next project ── -->
 <div class="cs-next">
   <div>
     <p class="cs-next-label">Next project</p>
@@ -664,7 +862,7 @@
   </a>
 </div>
 
-<!-- Footer -->
+<!-- ── Footer ── -->
 <footer class="footer" id="footer">
   <div class="footer-grid">
     <div>
@@ -689,66 +887,100 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <span class="footer-copy">© 2026 Puru Bhardwaj</span>
+    <span class="footer-copy">&copy; 2026 Puru Bhardwaj</span>
     <span class="footer-copy">Visual Product Designer</span>
   </div>
 </footer>
 
 <script>
-  // Cursor
+  /* ── Cursor ── */
   (function(){
     const cursor = document.getElementById('cursor');
+    if (!cursor) return;
     let mx = window.innerWidth/2, my = window.innerHeight/2, cx = mx, cy = my;
     document.addEventListener('mousemove', function(e){ mx = e.clientX; my = e.clientY; });
-    function animate(){
-      cx += (mx-cx)*0.15; cy += (my-cy)*0.15;
-      cursor.style.transform = 'translate3d('+(cx-6)+'px,'+(cy-6)+'px,0)';
-      requestAnimationFrame(animate);
-    }
+    function animate(){ cx += (mx-cx)*0.15; cy += (my-cy)*0.15; cursor.style.transform = 'translate3d('+(cx-6)+'px,'+(cy-6)+'px,0)'; requestAnimationFrame(animate); }
     animate();
     document.querySelectorAll('a, button').forEach(function(el){
       el.addEventListener('mouseenter', function(){ cursor.classList.add('large'); });
       el.addEventListener('mouseleave', function(){ cursor.classList.remove('large'); });
     });
     const footer = document.querySelector('footer');
-    if(footer){
-      footer.addEventListener('mouseenter', function(){ cursor.classList.add('invert'); });
-      footer.addEventListener('mouseleave', function(){ cursor.classList.remove('invert'); });
-    }
+    if (footer){ footer.addEventListener('mouseenter', function(){ cursor.classList.add('invert'); }); footer.addEventListener('mouseleave', function(){ cursor.classList.remove('invert'); }); }
   })();
 
-  // Scroll reveal
+  /* ── Scroll reveal ── */
   (function(){
     const els = document.querySelectorAll('[data-reveal]');
     const io = new IntersectionObserver(function(entries){
       entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('revealed'); io.unobserve(e.target); } });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.08 });
     els.forEach(function(el){ io.observe(el); });
   })();
 
-  // Theme toggle
+  /* ── Theme toggle ── */
   (function(){
     var toggle = document.getElementById('themeToggle');
+    if (!toggle) return;
     var moon = toggle.querySelector('.icon-moon');
-    var sun = toggle.querySelector('.icon-sun');
-    function applyTheme(theme){
-      document.documentElement.setAttribute('data-theme', theme);
-      if(theme === 'dark'){ moon.style.display = 'none'; sun.style.display = ''; }
+    var sun  = toggle.querySelector('.icon-sun');
+    function applyTheme(t){
+      document.documentElement.setAttribute('data-theme', t);
+      if (t === 'dark'){ moon.style.display = 'none'; sun.style.display = ''; }
       else { moon.style.display = ''; sun.style.display = 'none'; }
     }
     var saved = localStorage.getItem('theme');
-    if(saved){ applyTheme(saved); }
-    else if(window.matchMedia('(prefers-color-scheme: dark)').matches){ applyTheme('dark'); }
+    if (saved){ applyTheme(saved); }
+    else if (window.matchMedia('(prefers-color-scheme: dark)').matches){ applyTheme('dark'); }
     toggle.addEventListener('click', function(){
-      var current = document.documentElement.getAttribute('data-theme');
-      var next = current === 'dark' ? 'light' : 'dark';
+      var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       localStorage.setItem('theme', next);
       applyTheme(next);
     });
+  })();
+
+  /* ── Floating Side Nav ── */
+  (function(){
+    var sidenav  = document.getElementById('csSidenav');
+    var links    = Array.from(document.querySelectorAll('.csn-link'));
+    var sections = links.map(function(l){ return document.getElementById(l.getAttribute('data-s')); }).filter(Boolean);
+    var hero     = document.getElementById('cs-top');
+
+    if (!sidenav || !sections.length) return;
+
+    var heroBottom = 0;
+    function updateHeroBottom(){ heroBottom = hero ? hero.getBoundingClientRect().bottom + window.scrollY : 400; }
+    updateHeroBottom();
+    window.addEventListener('resize', updateHeroBottom);
+
+    var current = '';
+    function onScroll(){
+      if (window.scrollY > heroBottom - 100){
+        sidenav.classList.add('is-visible');
+      } else {
+        sidenav.classList.remove('is-visible');
+      }
+      var scrollMid = window.scrollY + window.innerHeight * 0.4;
+      var active = sections[0];
+      sections.forEach(function(s){
+        if (s.offsetTop <= scrollMid) active = s;
+      });
+      var id = active ? active.id : '';
+      if (id !== current){
+        current = id;
+        links.forEach(function(l){
+          l.classList.toggle('active', l.getAttribute('data-s') === id);
+        });
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   })();
 </script>
 
   <!-- Chatbase Widget -->
   <script>(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="2vjF7npvsR2sIMI6aaciU";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();</script>
+
 </body>
 </html>
