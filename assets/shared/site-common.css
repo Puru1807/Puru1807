@@ -24,18 +24,25 @@ html {
 /* Keep light/dark toggle icon style visually consistent */
 .theme-toggle .icon-sun,
 .theme-toggle .icon-moon {
-  width: 19px;
-  height: 19px;
-  color: var(--secondary);
-  fill: currentColor !important;
-  stroke: currentColor !important;
+  width: 18px;
+  height: 18px;
+  color: var(--text);
+  fill: currentColor;
+  stroke: currentColor;
   filter: none !important;
 }
 
-.theme-toggle .icon-sun line,
-.theme-toggle .icon-sun circle {
+.theme-toggle .icon-sun {
+  fill: none;
+  stroke-width: 2;
+}
+
+.theme-toggle .icon-sun circle,
+.theme-toggle .icon-sun line {
   stroke: currentColor !important;
-  fill: currentColor !important;
+  fill: none !important;
+  stroke-width: 2 !important;
+  stroke-linecap: round;
 }
 
 /* Keep button chrome identical between light and dark themes */
@@ -150,7 +157,7 @@ html {
 
 /* Home spline zoom-out tweak */
 .spline-wrap canvas.spline-zoom-adjust {
-  transform: scale(0.82);
+  transform: scale(0.72);
   transform-origin: center center;
 }
 
@@ -161,7 +168,7 @@ html {
 
 @media (max-width: 960px) {
   .spline-wrap canvas.spline-zoom-adjust {
-    transform: scale(0.88);
+    transform: scale(0.8);
   }
 
   .project-row {
