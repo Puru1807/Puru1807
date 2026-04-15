@@ -4,13 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Crisis-Courier-UAV — Puru Bhardwaj</title>
-  <meta name="description" content="Disaster-zone UAV supply delivery system — 52% cognitive load reduction, human systems design for high-stakes environments.">
+  <meta name="description" content="Human systems engineering project — designing a high-performance UAV for rapid delivery of critical supplies in disaster zones.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>P</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
   <style>
-    /* ── Tokens ── */
     :root {
       --text: #040202; --secondary: #AAAAAA; --bg: #ffffff;
       --bg-alt: #F0EFED; --accent: #6F767E; --accent-dim: rgba(111,118,126,0.14);
@@ -25,14 +24,12 @@
     ::selection { background: var(--accent); color: #fff; }
     @media (hover: hover) and (pointer: fine) { html, body { cursor: none; } a, button { cursor: none; } }
 
-    /* ── Cursor ── */
     .cursor { width: 12px; height: 12px; background: var(--text); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: transform 0.15s ease, background 0.2s, opacity 0.2s, width 0.25s, height 0.25s; will-change: transform; }
     .cursor.large { width: 32px; height: 32px; }
     .cursor.hidden { opacity: 0; }
     .cursor.invert { background: var(--bg); }
     @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
 
-    /* ── Top Nav ── */
     nav.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; gap: 4px; padding: 14px var(--margin); background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
     .nav-brand { font-family: var(--display); font-size: 13px; font-weight: 400; letter-spacing: -0.01em; color: var(--text); text-decoration: none; flex-shrink: 0; transition: opacity 0.2s ease; }
     .nav-brand:hover { opacity: 0.6; }
@@ -42,7 +39,6 @@
     .nav-link:hover, .nav-link.active { color: var(--bg); }
     .nav-link:hover::before, .nav-link.active::before { transform: scale(1); }
 
-    /* ── Theme Toggle ── */
     .theme-toggle { background: var(--bg-alt); border: 1.5px solid var(--border); padding: 8px 14px; border-radius: 100px; cursor: none; transition: background 0.25s, border-color 0.25s, transform 0.15s; display: flex; align-items: center; justify-content: center; margin-left: auto; flex-shrink: 0; }
     .theme-toggle:hover { border-color: var(--text); transform: scale(1.05); }
     .theme-toggle:active { transform: scale(0.96); }
@@ -51,60 +47,22 @@
     [data-theme="dark"] .theme-toggle { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
     [data-theme="dark"] .theme-toggle:hover { border-color: rgba(255,255,255,0.25); }
 
-    /* ── Dark Mode ── */
     [data-theme="dark"] { --text: #F0EDE8; --secondary: #777370; --bg: #111010; --bg-alt: #1A1918; --border: #2A2826; --footer-bg: #0A0909; --accent-dim: rgba(111,118,126,0.24); }
     [data-theme="dark"] nav.nav { background: rgba(17,16,16,0.88); }
 
-    /* ════════════════════════════════════════
-       FLOATING SECTION NAV
-    ════════════════════════════════════════ */
-    .cs-sidenav {
-      position: fixed;
-      left: 24px;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 800;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-    }
-    .cs-sidenav.is-visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .cs-sidenav { position: fixed; left: 24px; top: 50%; transform: translateY(-50%); z-index: 800; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+    .cs-sidenav.is-visible { opacity: 1; pointer-events: auto; }
     .cs-sidenav ul { list-style: none; display: flex; flex-direction: column; gap: 2px; }
-    .csn-link {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: var(--display);
-      font-size: 9px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--secondary);
-      text-decoration: none;
-      transition: color 0.2s;
-      padding: 5px 0;
-      white-space: nowrap;
-    }
-    .csn-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      border: 1.5px solid currentColor;
-      flex-shrink: 0;
-      transition: background 0.2s, border-color 0.2s, transform 0.25s;
-    }
+    .csn-link { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); text-decoration: none; transition: color 0.2s; padding: 5px 0; white-space: nowrap; }
+    .csn-dot { width: 5px; height: 5px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink: 0; transition: background 0.2s, border-color 0.2s, transform 0.25s; }
     .csn-link:hover { color: var(--text); }
     .csn-link:hover .csn-dot { background: var(--text); border-color: var(--text); }
     .csn-link.active { color: var(--accent); }
     .csn-link.active .csn-dot { background: var(--accent); border-color: var(--accent); transform: scale(1.5); }
     @media (max-width: 1340px) { .cs-sidenav { display: none; } }
 
-    /* ════════════════════════════════════════
-       HERO
-    ════════════════════════════════════════ */
-    .cs-hero { padding: 130px var(--margin) 72px; max-width: 960px; margin: 0 auto; }
+    .cs-hero { padding: 130px var(--margin) 72px; max-width: 1200px; margin: 0 auto; }
+    .cs-hero-split { display: grid; grid-template-columns: 1fr; gap: 0; align-items: center; }
     .cs-back { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--secondary); text-decoration: none; margin-bottom: 48px; transition: color 0.2s; }
     .cs-back:hover { color: var(--accent); }
     .cs-back svg { width: 14px; height: 14px; }
@@ -117,71 +75,53 @@
     .cs-meta-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
     .cs-meta-value { font-family: var(--font); font-size: 14px; font-weight: 500; }
 
-    /* ════════════════════════════════════════
-       RESULTS STRIP (full-width)
-    ════════════════════════════════════════ */
     .cs-results { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-alt); }
     .cs-results-inner { max-width: 1200px; margin: 0 auto; padding: 64px var(--margin); }
     .cs-results-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
     .cs-results-title { font-family: var(--display); font-size: clamp(17px,2vw,26px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 48px; }
     .cs-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; border-top: 1px solid var(--border); }
-    .cs-stats.row2 { border-top: 1px solid var(--border); }
     .cs-stat { display: flex; flex-direction: column; gap: 10px; padding: 40px 32px 40px 0; border-right: 1px solid var(--border); }
     .cs-stat:last-child { border-right: none; }
     .cs-stat:not(:first-child) { padding-left: 32px; }
     .cs-stat-number { font-family: var(--display); font-size: clamp(36px,5.5vw,68px); font-weight: 700; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
     .cs-stat-desc { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.6; max-width: 160px; }
 
-    /* ════════════════════════════════════════
-       ROW LAYOUT — label | content
-    ════════════════════════════════════════ */
-    .cs-row {
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 64px;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 80px var(--margin);
-      border-bottom: 1px solid var(--border);
-    }
+    .cs-row { display: grid; grid-template-columns: 180px 1fr; gap: 64px; max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); border-bottom: 1px solid var(--border); }
     .cs-row-label { padding-top: 4px; position: sticky; top: 80px; align-self: start; }
     .cs-row-num { font-family: var(--display); font-size: 10px; color: var(--secondary); opacity: 0.35; letter-spacing: 0.06em; margin-bottom: 8px; }
     .cs-row-tag { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); line-height: 2; }
     .cs-row-divider { width: 20px; height: 1px; background: var(--border); margin-top: 14px; }
 
-    /* ── Content typography ── */
     .cs-h2 { font-family: var(--display); font-size: clamp(22px,3vw,38px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 24px; }
     .cs-h3 { font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; margin-top: 48px; }
     .cs-h3:first-child { margin-top: 0; }
     .cs-body { font-family: var(--font); font-size: 16px; line-height: 1.85; color: var(--text); max-width: 680px; }
     .cs-body + .cs-body { margin-top: 16px; }
 
-    /* ── Steps ── */
+    .cs-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 40px; background: var(--border); border: 1px solid var(--border); }
+    .cs-card { padding: 32px 24px; background: var(--bg); }
+    .cs-card-num { font-family: var(--display); font-size: 28px; font-weight: 700; color: var(--accent); opacity: 0.4; letter-spacing: -0.04em; margin-bottom: 16px; line-height: 1; }
+    .cs-card-title { font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+    .cs-card-text { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.65; }
+
     .cs-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; margin-top: 40px; background: var(--border); border: 1px solid var(--border); }
     .cs-step { padding: 28px 24px; background: var(--bg); }
     .cs-step-num { font-family: var(--display); font-size: 32px; font-weight: 700; color: var(--accent); letter-spacing: -0.04em; margin-bottom: 16px; line-height: 1; opacity: 0.4; }
     .cs-step-title { font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: 0.04em; margin-bottom: 10px; text-transform: uppercase; }
     .cs-step-text { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.65; }
 
-    /* ── Quote ── */
     .cs-quote { position: relative; padding: 32px 40px; background: var(--bg-alt); border-left: 4px solid var(--accent); margin: 48px 0; max-width: 680px; }
     .cs-quote::before { content: '\201C'; font-family: var(--display); font-size: 80px; color: var(--accent); opacity: 0.15; position: absolute; top: -8px; left: 32px; line-height: 1; }
     .cs-quote p { font-family: var(--display); font-size: 15px; font-style: italic; line-height: 1.7; position: relative; z-index: 1; }
     .cs-quote cite { display: block; margin-top: 16px; font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); font-style: normal; }
 
-    /* ── Two col ── */
     .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; margin-top: 40px; }
-
-    /* ── List ── */
     .cs-list { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
     .cs-list li { display: flex; gap: 16px; font-family: var(--font); font-size: 14px; line-height: 1.7; }
-    .cs-list li::before { content: '→'; font-family: var(--display); color: var(--accent); flex-shrink: 0; font-size: 12px; margin-top: 2px; }
-
-    /* ── Note ── */
+    .cs-list li::before { content: '\2192'; font-family: var(--display); color: var(--accent); flex-shrink: 0; font-size: 12px; margin-top: 2px; }
     .cs-note { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 4px; padding: 24px 28px; margin-top: 32px; font-family: var(--font); font-size: 15px; line-height: 1.8; color: var(--secondary); }
     .cs-note strong { color: var(--text); }
 
-    /* ── Images ── */
     .cs-img { width: 100%; margin: 40px 0; }
     .cs-img:first-child { margin-top: 0; }
     .cs-img img { width: 100%; height: auto; display: block; border-radius: 8px; }
@@ -190,26 +130,19 @@
     .cs-img-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
     .cs-img-2col .cs-img { margin: 0; }
 
-    /* ── Gradient visual ── */
-    .cs-visual { width: 100%; border-radius: 4px; overflow: hidden; margin: 48px 0; }
-    .cs-visual-inner { width: 100%; height: 400px; display: flex; align-items: center; justify-content: center; position: relative; }
-    .cs-visual-label { font-family: var(--display); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); position: relative; z-index: 1; }
-    .grad-crisis { background: linear-gradient(135deg, #0f2027 0%, #203a43 40%, #2c5364 100%); }
+    .cs-visual { width: 100%; border-radius: 12px; overflow: hidden; margin: 48px 0; }
     .cs-visual img { width: 100%; height: auto; display: block; border-radius: inherit; border: 1px solid var(--border); object-fit: contain; }
 
-    /* ── Constraint cards ── */
     .constraint-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 32px; background: var(--border); border: 1px solid var(--border); }
     .constraint-card { padding: 24px; background: var(--bg); position: relative; }
     .constraint-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--accent); }
     .constraint-title { font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
     .constraint-text { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.65; }
 
-    /* ── Conclusion ── */
     .cs-conclusion { max-width: 1200px; margin: 0 auto; padding: 100px var(--margin); text-align: center; border-bottom: 1px solid var(--border); }
     .cs-conclusion-eyebrow { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 24px; }
     .cs-conclusion-text { font-family: var(--display); font-size: clamp(20px,3vw,36px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; max-width: 700px; margin: 0 auto; }
 
-    /* ── Next project ── */
     .cs-next { max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
     .cs-next-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 10px; }
     .cs-next-link { font-family: var(--display); font-size: clamp(20px,2.8vw,32px); font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; transition: color 0.2s; display: flex; align-items: center; gap: 16px; }
@@ -217,7 +150,6 @@
     .cs-next-link svg { width: 28px; height: 28px; transition: transform 0.2s; }
     .cs-next-link:hover svg { transform: translateX(8px); }
 
-    /* ── Footer ── */
     footer.footer { background: var(--footer-bg); color: #fff; padding: 64px var(--margin) 40px; }
     .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 64px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.06); }
     .footer-tagline { font-family: var(--display); font-size: clamp(16px,2vw,22px); font-weight: 700; line-height: 1.45; margin-bottom: 12px; letter-spacing: -0.02em; }
@@ -231,11 +163,9 @@
     .footer-bottom { max-width: 1200px; margin: 32px auto 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
     .footer-copy { font-family: var(--display); font-size: 11px; letter-spacing: 0.05em; color: rgba(255,255,255,0.2); }
 
-    /* ── Scroll reveal ── */
     [data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity 0.65s ease, transform 0.65s ease; }
     [data-reveal].revealed { opacity: 1; transform: none; }
 
-    /* ── Responsive ── */
     @media (max-width: 900px) {
       .cs-row { grid-template-columns: 1fr; gap: 20px; padding: 56px var(--margin); }
       .cs-row-label { position: static; }
@@ -250,6 +180,7 @@
       .cs-stat:not(:first-child) { padding-left: 16px; }
       .cs-two-col { grid-template-columns: 1fr; gap: 32px; }
       .cs-steps { grid-template-columns: 1fr 1fr; }
+      .cs-cards { grid-template-columns: 1fr; }
       .constraint-grid { grid-template-columns: 1fr; }
       .cs-img-2col { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -266,21 +197,17 @@
 
 <div class="cursor" id="cursor"></div>
 
-<!-- ════════════════════════════════════════
-     FLOATING SECTION NAV (left-aligned)
-════════════════════════════════════════ -->
 <nav class="cs-sidenav" id="csSidenav" aria-label="Case study sections">
   <ul>
     <li><a href="#s-overview"    class="csn-link" data-s="s-overview"><span class="csn-dot"></span>Overview</a></li>
     <li><a href="#s-challenge"   class="csn-link" data-s="s-challenge"><span class="csn-dot"></span>Challenge</a></li>
-    <li><a href="#s-process"     class="csn-link" data-s="s-process"><span class="csn-dot"></span>Process</a></li>
-    <li><a href="#s-solution"    class="csn-link" data-s="s-solution"><span class="csn-dot"></span>Solution</a></li>
+    <li><a href="#s-needs"       class="csn-link" data-s="s-needs"><span class="csn-dot"></span>Needs</a></li>
+    <li><a href="#s-workstation" class="csn-link" data-s="s-workstation"><span class="csn-dot"></span>Workstation</a></li>
     <li><a href="#s-results"     class="csn-link" data-s="s-results"><span class="csn-dot"></span>Results</a></li>
     <li><a href="#s-reflection"  class="csn-link" data-s="s-reflection"><span class="csn-dot"></span>Reflection</a></li>
   </ul>
 </nav>
 
-<!-- ── Top Nav ── -->
 <div id="siteShellMount"></div>
 
 <!-- ════════════════════════════════════════
@@ -291,48 +218,51 @@
     <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
     All projects
   </a>
-  <div class="cs-tags">
-    <span class="cs-tag">Human Systems</span>
-    <span class="cs-tag">Disaster Response</span>
-    <span class="cs-tag">UAV Interface</span>
-    <span class="cs-tag">Safety-Critical Design</span>
-  </div>
-  <h1 class="cs-title">Crisis-Courier-UAV</h1>
-  <p class="cs-subtitle">Designing the human interface for an autonomous UAV supply delivery system in disaster zones — where cognitive overload isn't an inconvenience, it's a mission failure.</p>
-  <div class="cs-meta-row">
-    <div class="cs-meta-item">
-      <span class="cs-meta-label">Role</span>
-      <span class="cs-meta-value">Human Systems Designer</span>
-    </div>
-    <div class="cs-meta-item">
-      <span class="cs-meta-label">Timeline</span>
-      <span class="cs-meta-value">Aug – Dec 2024</span>
-    </div>
-    <div class="cs-meta-item">
-      <span class="cs-meta-label">Domain</span>
-      <span class="cs-meta-value">Disaster Relief / UAV Systems</span>
-    </div>
-    <div class="cs-meta-item">
-      <span class="cs-meta-label">Context</span>
-      <span class="cs-meta-value">Academic Research</span>
+  <div class="cs-hero-split">
+    <div>
+      <div class="cs-tags">
+        <span class="cs-tag">Human Systems Engineering</span>
+        <span class="cs-tag">Aerospace &amp; Defense</span>
+        <span class="cs-tag">UAV Interface</span>
+        <span class="cs-tag">Safety-Critical Design</span>
+      </div>
+      <h1 class="cs-title">Crisis-Courier-UAV</h1>
+      <p class="cs-subtitle">A human systems engineering project focused on designing a high-performance UAV for rapid, reliable delivery of critical supplies in disaster zones, optimized for turbulent and low-visibility conditions through advanced navigation and payload systems.</p>
+      <div class="cs-meta-row">
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Role</span>
+          <span class="cs-meta-value">Human System Engineer</span>
+        </div>
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Timeline</span>
+          <span class="cs-meta-value">Aug 2024 &ndash; Dec 2024</span>
+        </div>
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Industry</span>
+          <span class="cs-meta-value">Aerospace &amp; Defense</span>
+        </div>
+        <div class="cs-meta-item">
+          <span class="cs-meta-label">Revenue</span>
+          <span class="cs-meta-value">$5 billion (2024)</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- Full-width visual -->
 <div style="max-width:1200px;margin:0 auto;padding:0 var(--margin);">
-  <div class="cs-visual">
-    <img src="assets/images/UAV/Image-2.png" alt="Crisis-Courier-UAV ground control interface overview" loading="lazy">
+  <div class="cs-img cs-img-border" style="margin-top:0;">
+    <img src="assets/images/UAV/H@4x.png" alt="Crisis-Courier-UAV ground control interface overview" width="5760" height="3840" loading="eager">
   </div>
 </div>
 
 <!-- ════════════════════════════════════════
-     RESULTS — full-width strip
+     RESULTS STRIP
 ════════════════════════════════════════ -->
 <section class="cs-results" id="cs-results">
   <div class="cs-results-inner">
     <p class="cs-results-label">Outcomes</p>
-    <h2 class="cs-results-title">52% cognitive load reduction &middot; 3&times; UAV capacity per operator &middot; 0 critical errors &mdash; across all simulations</h2>
+    <h2 class="cs-results-title">Advanced navigation &middot; Optimized payload delivery &middot; Designed for turbulence &amp; low-visibility conditions</h2>
     <div class="cs-stats">
       <div class="cs-stat">
         <span class="cs-stat-number">52%</span>
@@ -340,7 +270,7 @@
       </div>
       <div class="cs-stat">
         <span class="cs-stat-number">3&times;</span>
-        <span class="cs-stat-desc">more UAVs manageable per operator vs. baseline system</span>
+        <span class="cs-stat-desc">more UAVs manageable per operator vs. baseline</span>
       </div>
       <div class="cs-stat">
         <span class="cs-stat-number">0</span>
@@ -364,14 +294,19 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">When the interface fails, the mission fails — designing for zero errors under pressure</h2>
-    <p class="cs-body">Crisis-Courier-UAV is an autonomous drone system designed to deliver medical supplies, food, and communications equipment into disaster zones inaccessible to ground vehicles. The human interface — the ground control station used by relief coordinators to manage fleet operations — is where human judgment meets autonomous systems.</p>
-    <p class="cs-body">This project applied human factors and safety-critical design principles to the ground control interface. The core design challenge: operators are already under extreme cognitive load from the disaster context. The interface cannot add to that load — it must actively reduce it.</p>
+    <h2 class="cs-h2">Delivering critical supplies when every second counts</h2>
+    <p class="cs-body">Crisis-Courier-UAV is a high-performance drone system designed to deliver medical supplies, food, and communications equipment into disaster zones inaccessible to ground vehicles. Optimized for turbulent and low-visibility conditions, the system integrates advanced navigation and payload systems with a human-centered ground control interface.</p>
+    <p class="cs-body">This project applied human systems engineering principles to balance automation with operator judgment &mdash; ensuring the interface actively reduces cognitive load during high-pressure disaster response scenarios.</p>
+
+    <div class="cs-img cs-img-border" style="margin-top:48px;">
+      <img src="assets/images/UAV/Dd@4x.png" alt="UAV system context — disaster zone delivery scenario" width="5760" height="3840" loading="lazy">
+      <p class="cs-img-caption">System context &mdash; disaster zone delivery scenario</p>
+    </div>
   </div>
 </section>
 
 <!-- ════════════════════════════════════════
-     02 · THE CHALLENGE
+     02 · CHALLENGE
 ════════════════════════════════════════ -->
 <section class="cs-row" id="s-challenge" data-reveal>
   <div class="cs-row-label">
@@ -380,106 +315,141 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">Extreme constraints — designing for the worst possible conditions</h2>
-    <p class="cs-body">Disaster zone operation means the operators using this interface are working under conditions that no normal UX research accounts for: physical exhaustion, emotional stress, sleep deprivation, partial information, and time pressure measured in minutes, not hours.</p>
-    <p class="cs-body">Standard usability principles — while necessary — aren't sufficient. The design had to draw on aviation human factors, military interface standards (MIL-STD-1472), and emergency dispatch system research to establish the right baseline.</p>
+    <h2 class="cs-h2">Balancing automation with human judgment</h2>
 
-    <div class="constraint-grid" style="margin-top:40px;">
-      <div class="constraint-card">
-        <div class="constraint-title">Cognitive Overload</div>
-        <div class="constraint-text">Operators managing multiple simultaneous UAV missions while coordinating with field teams via radio and tracking supply inventory.</div>
+    <h3 class="cs-h3" style="margin-top:0;">Reasons for Automation</h3>
+    <div class="cs-cards" style="grid-template-columns: repeat(2,1fr);">
+      <div class="cs-card">
+        <div class="cs-card-num">01</div>
+        <div class="cs-card-title">Precision &amp; Stability</div>
+        <div class="cs-card-text">Automation provides high accuracy, constant monitoring, and multitasking &mdash; critical for UAV stability, precise navigation, and processing sensor data in real-time.</div>
       </div>
-      <div class="constraint-card">
-        <div class="constraint-title">Environmental Noise</div>
-        <div class="constraint-text">Field stations may be improvised — poor lighting, generator noise, damaged equipment. Interface must function at 50% visual attention.</div>
-      </div>
-      <div class="constraint-card">
-        <div class="constraint-title">Intermittent Connectivity</div>
-        <div class="constraint-text">Satellite uplink may be degraded or interrupted. Interface must handle partial data and predict UAV state between updates.</div>
-      </div>
-      <div class="constraint-card">
-        <div class="constraint-title">Non-Expert Operators</div>
-        <div class="constraint-text">Relief coordinators are domain experts (logistics, medicine) but not drone pilots. Interface must be learnable in under 2 hours.</div>
-      </div>
-      <div class="constraint-card">
-        <div class="constraint-title">Zero Tolerance for Error</div>
-        <div class="constraint-text">A misrouted UAV carrying insulin to the wrong location isn't a UX problem — it's a life-safety incident. Error prevention is existential.</div>
-      </div>
-      <div class="constraint-card">
-        <div class="constraint-title">Autonomy Calibration</div>
-        <div class="constraint-text">Too much automation: operators lose situational awareness. Too little: they're overwhelmed. The interface must find the right human-automation balance.</div>
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <div class="cs-card-title">Human Workload</div>
+        <div class="cs-card-text">Tasks that are tedious, repetitive, or dangerous &mdash; like UAV management, stability control, and flight path monitoring &mdash; are better handled by automation.</div>
       </div>
     </div>
 
-    <div class="cs-quote" style="margin-top:48px;">
-      <p>"In a disaster, every decision costs something. The interface can't make me think harder — it has to think with me."</p>
-      <cite>— Emergency logistics coordinator, user research session</cite>
+    <h3 class="cs-h3">Function Allocation</h3>
+    <div class="cs-two-col" style="margin-top:0;">
+      <div>
+        <p class="cs-body"><strong>Automation excels at:</strong></p>
+        <ul class="cs-list" style="margin-top:12px;">
+          <li>Flight operations and path control</li>
+          <li>Data processing and sensor fusion</li>
+          <li>Repetitive monitoring cycles</li>
+          <li>Resource management and logistics</li>
+        </ul>
+      </div>
+      <div>
+        <p class="cs-body"><strong>Human operators excel at:</strong></p>
+        <ul class="cs-list" style="margin-top:12px;">
+          <li>Decision-making under uncertainty</li>
+          <li>Judgment and problem-solving</li>
+          <li>Team coordination and communication</li>
+          <li>Situational awareness and adaptation</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cs-img cs-img-border" style="margin-top:48px;">
+      <img src="assets/images/UAV/Image@4x-1.png" alt="Function allocation diagram — human vs. automation tasks" width="2924" height="1544" loading="lazy">
+      <p class="cs-img-caption">Function allocation &mdash; human vs. automation</p>
     </div>
   </div>
 </section>
 
 <!-- ════════════════════════════════════════
-     03 · PROCESS
+     03 · NEEDS
 ════════════════════════════════════════ -->
-<section class="cs-row" id="s-process" data-reveal>
+<section class="cs-row" id="s-needs" data-reveal>
   <div class="cs-row-label">
     <div class="cs-row-num">03</div>
-    <div class="cs-row-tag">Process</div>
+    <div class="cs-row-tag">Needs</div>
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">Human factors methodology — not standard UX practice</h2>
-    <p class="cs-body">This project required stepping beyond typical product design research. I applied a human factors framework: cognitive task analysis (CTA) to understand what operators actually need to think about, workload assessment using NASA-TLX, and simulation-based testing with disaster scenario scripts.</p>
+    <h2 class="cs-h2">Operator display &amp; alert design</h2>
 
-    <div class="cs-steps" style="margin-top:40px;">
-      <div class="cs-step">
-        <div class="cs-step-num">01</div>
-        <div class="cs-step-title">Cognitive Task Analysis</div>
-        <div class="cs-step-text">Mapped every decision an operator needs to make during active UAV operations. Identified 14 concurrent information needs during peak operations.</div>
+    <h3 class="cs-h3" style="margin-top:0;">Visual Display &mdash; Cargo Status</h3>
+    <p class="cs-body">To visually confirm that the package has been successfully dispatched from the UAV. A green checkmark icon appears on the display, accompanied by a confirmation message stating &ldquo;Package Dispatched&rdquo; along with a timestamp. Yellow colour displays cargo delivery in process.</p>
+
+    <div class="cs-img cs-img-border" style="margin-top:32px;">
+      <img src="assets/images/UAV/Fff@4x.png" alt="UAV cargo status display — dispatched confirmation" width="5760" height="3840" loading="lazy">
+      <p class="cs-img-caption">Cargo status display &mdash; dispatched confirmation</p>
+    </div>
+
+    <h3 class="cs-h3">Auditory Alerts</h3>
+    <div class="cs-two-col" style="margin-top:0;">
+      <div>
+        <p class="cs-body"><strong>Collision Warning</strong></p>
+        <p class="cs-body">Notifies when the UAV is at imminent risk of colliding with the ground or an obstacle. A distinct, abrupt sound conveys urgency &mdash; adhering to key principles of attention, perception, and memory to enhance safety during operations.</p>
       </div>
-      <div class="cs-step">
-        <div class="cs-step-num">02</div>
-        <div class="cs-step-title">Literature Review</div>
-        <div class="cs-step-text">Aviation HCI, military interface standards (MIL-STD-1472), emergency dispatch research. Established design principles from validated safety-critical systems.</div>
+      <div>
+        <p class="cs-body"><strong>Low Battery Warning</strong></p>
+        <p class="cs-body">Provides regular updates on the UAV's battery level. A recurring low-frequency tone accompanied by a verbal announcement of battery percentage (e.g., &ldquo;Battery at 30%&rdquo;). Design follows key principles of attention and perception.</p>
       </div>
-      <div class="cs-step">
-        <div class="cs-step-num">03</div>
-        <div class="cs-step-title">Design</div>
-        <div class="cs-step-text">Ground control interface with 3 information zones: tactical map (where), fleet status (what), and action queue (what next). Designed for glanceable comprehension.</div>
+    </div>
+
+    <h3 class="cs-h3">Situational Awareness</h3>
+    <p class="cs-body">All operator displays have mechanisms to increase situational awareness through integrated chat functionality, enabling operators to communicate in real-time during missions.</p>
+
+    <div class="cs-img-2col" style="margin-top:32px;">
+      <div class="cs-img cs-img-border" style="margin:0;">
+        <img src="assets/images/UAV/Pilot view@4x.png" alt="Pilot view — primary operator display" width="5760" height="3840" loading="lazy">
+        <p class="cs-img-caption">Pilot view</p>
       </div>
-      <div class="cs-step">
-        <div class="cs-step-num">04</div>
-        <div class="cs-step-title">Simulation Testing</div>
-        <div class="cs-step-text">4 simulated disaster scenarios with NASA-TLX workload assessment. Compared against baseline interface. Iterated until cognitive load metrics improved by target threshold.</div>
+      <div class="cs-img cs-img-border" style="margin:0;">
+        <img src="assets/images/UAV/Navigator view@4x.png" alt="Navigator view — secondary operator display" width="5760" height="3840" loading="lazy">
+        <p class="cs-img-caption">Navigator view</p>
       </div>
+    </div>
+
+    <h3 class="cs-h3">Mission Initiation Alert</h3>
+    <p class="cs-body">Designed to efficiently deliver critical supplies to disaster-affected regions. A concise, attention-grabbing tone followed by a robotic voice stating &ldquo;Package dispatched from UAV&rdquo; provides clear auditory feedback.</p>
+
+    <h3 class="cs-h3">Autopilot Alert</h3>
+    <p class="cs-body">Notifies the operator when the autopilot system is activated or deactivated. A blinking red indicator light signals the change, supplemented by a dynamic label &mdash; <strong style="color:#16a34a;">AUTOPILOT ON</strong> (green) and <strong style="color:#dc2626;">AUTOPILOT OFF</strong> (red).</p>
+
+    <div class="cs-img cs-img-border" style="margin-top:32px;">
+      <img src="assets/images/UAV/1332@4x.png" alt="Autopilot status indicator display" width="5760" height="3840" loading="lazy">
+      <p class="cs-img-caption">Autopilot status indicator</p>
     </div>
   </div>
 </section>
 
 <!-- ════════════════════════════════════════
-     04 · SOLUTION
+     04 · WORKSTATION DEMO
 ════════════════════════════════════════ -->
-<section class="cs-row" id="s-solution" data-reveal>
+<section class="cs-row" id="s-workstation" data-reveal>
   <div class="cs-row-label">
     <div class="cs-row-num">04</div>
-    <div class="cs-row-tag">Solution</div>
+    <div class="cs-row-tag">Workstation</div>
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">Situational awareness by design — the right information, always visible</h2>
-    <p class="cs-body">The ground control interface is organized around the concept of situational awareness zones: a tactical map at center (geographic reality), fleet status panels at left (UAV states at a glance), and an action queue at right (what decisions need to be made, in priority order). Nothing is hidden behind tabs during active operations.</p>
+    <h2 class="cs-h2">UAV Workstation Demo</h2>
+    <p class="cs-body">The complete workstation interface brings together all operator displays &mdash; pilot view, navigator view, cargo status, and alert systems &mdash; into a unified ground control station optimized for disaster response operations.</p>
 
-    <ul class="cs-list" style="max-width:640px;margin-top:32px;">
-      <li><strong>Glanceable fleet status:</strong> Each UAV is a single card showing battery, payload, status, and ETA. Designed to be understood in under 3 seconds without reading.</li>
-      <li><strong>Priority-based action queue:</strong> The interface surfaces decisions that need human input, ranked by urgency. Operators respond to the queue — they don't have to monitor everything constantly.</li>
-      <li><strong>Alert hierarchy:</strong> Three levels of alert — informational (blue), attention (amber), critical (red). Critical alerts include a mandatory acknowledgment step. No alert fatigue from overuse of red.</li>
-      <li><strong>Autonomy dial:</strong> Per-UAV automation level (1–5) lets operators increase human control for sensitive missions (medical delivery to specific recipient) and reduce it for bulk supply runs.</li>
-      <li><strong>Predictive state display:</strong> During connectivity loss, the interface shows last-known state + predicted current position based on flight plan. Prevents false emergency responses.</li>
-      <li><strong>2-hour onboarding:</strong> Role-based interface defaults surface only the features relevant to the operator's task. Advanced controls are present but de-emphasized until needed.</li>
-    </ul>
+    <div class="cs-img" style="margin-top:48px;">
+      <img src="assets/images/UAV/Dashboard@4x.png" alt="Full UAV workstation dashboard — ground control station" width="23040" height="15360" loading="lazy" style="border-radius:0;">
+      <p class="cs-img-caption">Complete UAV ground control workstation</p>
+    </div>
 
-    <div class="cs-visual" style="margin-top:48px;">
-      <img src="assets/images/UAV/Slideshow.png" alt="Ground control station tactical map and fleet status view" loading="lazy">
+    <div class="cs-img-2col" style="margin-top:24px;">
+      <div class="cs-img cs-img-border" style="margin:0;">
+        <img src="assets/images/UAV/Dd@4x-1.png" alt="Workstation detail — mission planning interface" width="4664" height="3110" loading="lazy">
+        <p class="cs-img-caption">Mission planning interface</p>
+      </div>
+      <div class="cs-img cs-img-border" style="margin:0;">
+        <img src="assets/images/UAV/Image@4x.png" alt="Workstation detail — system overview panel" width="2924" height="2412" loading="lazy">
+        <p class="cs-img-caption">System overview panel</p>
+      </div>
+    </div>
+
+    <div class="cs-img" style="margin-top:24px;">
+      <img src="assets/images/UAV/Carousel@4x.png" alt="UAV interface component overview strip" width="1600" height="800" loading="lazy" style="border-radius:0;">
     </div>
   </div>
 </section>
@@ -495,30 +465,11 @@
   </div>
   <div class="cs-row-content">
     <h2 class="cs-h2">Lower load, higher capacity, zero critical errors</h2>
-    <p class="cs-body">Simulation testing against a baseline interface showed substantial improvements across all measured dimensions. The 52% reduction in NASA-TLX cognitive load score was the primary target metric. The increase in manageable UAVs per operator — from 2 to 6 — has direct operational impact on how many people can be reached in a disaster scenario.</p>
+    <p class="cs-body">Simulation testing against a baseline interface showed substantial improvements across all measured dimensions. The 52% reduction in NASA-TLX cognitive load score was the primary target metric.</p>
 
-    <div class="cs-stats" style="margin-top:48px;">
-      <div class="cs-stat">
-        <span class="cs-stat-number">52%</span>
-        <span class="cs-stat-desc">reduction in NASA-TLX cognitive load score</span>
-      </div>
-      <div class="cs-stat">
-        <span class="cs-stat-number">3&times;</span>
-        <span class="cs-stat-desc">more UAVs managed per operator (2 → 6)</span>
-      </div>
-      <div class="cs-stat">
-        <span class="cs-stat-number">0</span>
-        <span class="cs-stat-desc">critical mission errors across all simulation runs</span>
-      </div>
-      <div class="cs-stat">
-        <span class="cs-stat-number">4</span>
-        <span class="cs-stat-desc">disaster scenarios tested across full simulation suite</span>
-      </div>
-    </div>
-
-    <div class="cs-quote" style="margin-top:48px;">
-      <p>"For the first time I felt like I was flying with the system, not fighting against it. I could actually see what I needed to see."</p>
-      <cite>— Logistics coordinator, post-simulation debrief</cite>
+    <div class="cs-quote">
+      <p>"With our new visual identity and design language, the updated UAV Crisis Courier brand powerfully reflects the urgency, precision, and compassion that define both our mission and stakeholders &mdash; from frontline responders and healthcare providers to the communities. It captures the essence of our current and future impact, your dedicated team, and the values that drive us to deliver when it matters most."</p>
+      <cite>&mdash; Jamie Gorman, Foundation Human System Engineering, Professor, Arizona State University</cite>
     </div>
   </div>
 </section>
@@ -537,23 +488,23 @@
     <div class="cs-steps" style="margin-top:0;">
       <div class="cs-step">
         <div class="cs-step-num">01</div>
-        <div class="cs-step-title">Cognitive load is a life-safety issue</div>
-        <div class="cs-step-text">Every extra click, every unclear label, every ambiguous status indicator becomes a liability when operators are managing a UAV in a disaster zone. The 52% load reduction wasn't a metric — it was the entire design goal.</div>
+        <div class="cs-step-title">Cognitive Load Is Life-Safety</div>
+        <div class="cs-step-text">Every extra click, every unclear label becomes a liability in a disaster zone. The 52% load reduction wasn't just a metric &mdash; it was the entire design goal.</div>
       </div>
       <div class="cs-step">
         <div class="cs-step-num">02</div>
-        <div class="cs-step-title">Information hierarchy over information density</div>
-        <div class="cs-step-text">The instinct was to show everything — telemetry, battery, location, cargo, weather. The insight was to show the right thing at the right time. Progressive disclosure and alert prioritization were the core design patterns.</div>
+        <div class="cs-step-title">Hierarchy Over Density</div>
+        <div class="cs-step-text">The instinct was to show everything. The insight was to show the right thing at the right time. Progressive disclosure and alert prioritization were the core patterns.</div>
       </div>
       <div class="cs-step">
         <div class="cs-step-num">03</div>
-        <div class="cs-step-title">Human factors engineering is UX for extreme contexts</div>
-        <div class="cs-step-text">This project introduced me to MIL-STD-1472 standards and aerospace UI conventions. Designing within those constraints taught me more about fundamental usability than any consumer app project.</div>
+        <div class="cs-step-title">Human Factors Is UX for Extremes</div>
+        <div class="cs-step-text">MIL-STD-1472 standards and aerospace UI conventions taught me more about fundamental usability than any consumer app project.</div>
       </div>
       <div class="cs-step">
         <div class="cs-step-num">04</div>
-        <div class="cs-step-title">Automation requires trust calibration</div>
-        <div class="cs-step-text">Designing the autonomy dial was as much a philosophical challenge as a UX one. Users needed to feel in control without being overwhelmed — a balance that required both research and iteration.</div>
+        <div class="cs-step-title">Automation Requires Trust</div>
+        <div class="cs-step-text">Designing the autonomy dial was as much philosophical as it was UX. Users needed control without overwhelm &mdash; a balance requiring research and iteration.</div>
       </div>
     </div>
   </div>
@@ -562,8 +513,8 @@
 <!-- ── Conclusion ── -->
 <div class="cs-conclusion" data-reveal>
   <p class="cs-conclusion-eyebrow">Conclusion</p>
-  <p class="cs-conclusion-text">Crisis-Courier-UAV taught me that design in high-stakes environments is about subtraction, not addition — removing every bit of friction so that human judgment can operate at its best.</p>
-  <p style="font-family:var(--font);font-size:16px;color:var(--secondary);margin-top:24px;line-height:1.8;">A 52% reduction in cognitive load isn't just a metric. In a disaster zone, it means more missions completed, fewer errors, and more lives reached. That's the real measure of this design.</p>
+  <p class="cs-conclusion-text">The redesign effectively resolved key usability challenges, resulting in a faster, more intuitive experience for emergency responders.</p>
+  <p style="font-family:var(--font);font-size:16px;color:var(--secondary);margin-top:24px;line-height:1.8;">The enhanced UX/UI not only improved operational efficiency but also boosted adoption and trust among field users &mdash; highlighting the life-saving impact of thoughtful, human-centered design in critical delivery systems.</p>
   <p style="font-family:var(--display);font-size:13px;color:var(--secondary);margin-top:48px;letter-spacing:0.04em;">Glad we could cross paths.<br>Out of anywhere you could be, you're here.</p>
 </div>
 
@@ -587,7 +538,7 @@
   <div class="footer-grid">
     <div>
       <p class="footer-tagline">You made it through!</p>
-      <p class="footer-sub">This website was hand-coded with ♥ in HTML, CSS and JS by Puru Bhardwaj.</p>
+      <p class="footer-sub">This website was hand-coded with &hearts; in HTML, CSS and JS by Puru Bhardwaj.</p>
     </div>
     <div>
       <h3 class="footer-heading">Recent Work</h3>
@@ -621,7 +572,6 @@
 </script>
 <script src="assets/shared/site-common.js"></script>
 <script>
-  /* ── Cursor ── */
   (function(){
     const cursor = document.getElementById('cursor');
     if (!cursor) return;
@@ -637,7 +587,6 @@
     if (footer){ footer.addEventListener('mouseenter', function(){ cursor.classList.add('invert'); }); footer.addEventListener('mouseleave', function(){ cursor.classList.remove('invert'); }); }
   })();
 
-  /* ── Scroll reveal ── */
   (function(){
     const els = document.querySelectorAll('[data-reveal]');
     const io = new IntersectionObserver(function(entries){
@@ -646,7 +595,6 @@
     els.forEach(function(el){ io.observe(el); });
   })();
 
-  /* ── Theme toggle ── */
   (function(){
     if (window.__USE_SHARED_THEME__) return;
     var toggle = document.getElementById('themeToggle');
@@ -668,48 +616,35 @@
     });
   })();
 
-  /* ── Floating Side Nav ── */
   (function(){
     if (window.__USE_SHARED_FLOATING_NAV__) return;
     var sidenav  = document.getElementById('csSidenav');
     var links    = Array.from(document.querySelectorAll('.csn-link'));
     var sections = links.map(function(l){ return document.getElementById(l.getAttribute('data-s')); }).filter(Boolean);
     var hero     = document.getElementById('cs-top');
-
     if (!sidenav || !sections.length) return;
-
     var heroBottom = 0;
     function updateHeroBottom(){ heroBottom = hero ? hero.getBoundingClientRect().bottom + window.scrollY : 400; }
     updateHeroBottom();
     window.addEventListener('resize', updateHeroBottom);
-
     var current = '';
     function onScroll(){
-      if (window.scrollY > heroBottom - 100){
-        sidenav.classList.add('is-visible');
-      } else {
-        sidenav.classList.remove('is-visible');
-      }
+      if (window.scrollY > heroBottom - 100){ sidenav.classList.add('is-visible'); }
+      else { sidenav.classList.remove('is-visible'); }
       var scrollMid = window.scrollY + window.innerHeight * 0.4;
       var active = sections[0];
-      sections.forEach(function(s){
-        if (s.offsetTop <= scrollMid) active = s;
-      });
+      sections.forEach(function(s){ if (s.offsetTop <= scrollMid) active = s; });
       var id = active ? active.id : '';
       if (id !== current){
         current = id;
-        links.forEach(function(l){
-          l.classList.toggle('active', l.getAttribute('data-s') === id);
-        });
+        links.forEach(function(l){ l.classList.toggle('active', l.getAttribute('data-s') === id); });
       }
     }
-
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
   })();
 </script>
 
-  <!-- Chatbase Widget -->
   <script>(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="2vjF7npvsR2sIMI6aaciU";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();</script>
 
 </body>
