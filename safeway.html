@@ -140,6 +140,32 @@
     .cs-visual { width: 100%; border-radius: 12px; overflow: hidden; margin: 48px 0; }
     .cs-visual img { width: 100%; height: auto; display: block; border-radius: inherit; border: 1px solid var(--border); object-fit: contain; }
 
+    /* ── Persona Carousel ── */
+    .cs-carousel { position: relative; overflow: hidden; border-radius: 8px; border: 1px solid var(--border); }
+    .cs-carousel-track { display: flex; transition: transform 0.45s cubic-bezier(0.4,0,0.2,1); }
+    .cs-carousel-slide { min-width: 100%; }
+    .cs-carousel-slide img { width: 100%; height: auto; display: block; }
+    .cs-carousel-control {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 46px; height: 46px; border-radius: 50%; border: none;
+      background: rgba(4,2,2,0.66); box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s ease, transform 0.2s ease;
+      z-index: 2;
+    }
+    .cs-carousel-control:hover { background: rgba(4,2,2,0.82); transform: translateY(-50%) scale(1.04); }
+    .cs-carousel-control:focus-visible { outline: 2px solid var(--bg); outline-offset: 2px; }
+    .cs-carousel-control svg { width: 22px; height: 22px; color: #fff; stroke-width: 2; }
+    .cs-carousel-control.prev { left: 16px; }
+    .cs-carousel-control.next { right: 16px; }
+    .cs-carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
+    .cs-carousel-dot {
+      width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--accent);
+      background: transparent; padding: 0; transition: background 0.2s, transform 0.2s;
+    }
+    .cs-carousel-dot.active { background: var(--accent); transform: scale(1.25); }
+    @media (prefers-reduced-motion: reduce) { .cs-carousel-track { transition: none; } }
+
     .cs-conclusion { max-width: 1200px; margin: 0 auto; padding: 100px var(--margin); text-align: center; border-bottom: 1px solid var(--border); }
     .cs-conclusion-eyebrow { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 24px; }
     .cs-conclusion-text { font-family: var(--display); font-size: clamp(20px,3vw,36px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; max-width: 700px; margin: 0 auto; }
@@ -458,19 +484,28 @@
       </div>
     </div>
 
-    <div class="cs-img cs-img-border" style="margin-top:48px;">
-      <img src="assets/images/Safeway Kiosk/Black and White Simple User Persona Brainstorm (2)@4x.png" alt="User persona — frequent Safeway shopper" width="3224" height="1814" loading="lazy">
-      <p class="cs-img-caption">Persona 1 &mdash; frequent shopper</p>
-    </div>
-    <div class="cs-img-2col">
-      <div class="cs-img cs-img-border" style="margin:0;">
-        <img src="assets/images/Safeway Kiosk/Black and White Simple User Persona Brainstorm (3)@4x.png" alt="User persona — occasional visitor" width="3220" height="1812" loading="lazy">
-        <p class="cs-img-caption">Persona 2 &mdash; occasional visitor</p>
+    <div class="cs-img" style="margin-top:48px;">
+      <div class="cs-carousel" data-carousel aria-label="User personas carousel">
+        <div class="cs-carousel-track">
+          <figure class="cs-carousel-slide">
+            <img src="assets/images/Safeway Kiosk/Black and White Simple User Persona Brainstorm (2)@4x.png" alt="User persona — frequent Safeway shopper" width="3224" height="1814" loading="lazy">
+          </figure>
+          <figure class="cs-carousel-slide">
+            <img src="assets/images/Safeway Kiosk/Black and White Simple User Persona Brainstorm (3)@4x.png" alt="User persona — occasional visitor" width="3220" height="1812" loading="lazy">
+          </figure>
+          <figure class="cs-carousel-slide">
+            <img src="assets/images/Safeway Kiosk/Black and White Simple User Persona Brainstorm (4)@4x.png" alt="User persona — first-time kiosk user" width="3224" height="1814" loading="lazy">
+          </figure>
+        </div>
+        <button class="cs-carousel-control prev" type="button" aria-label="Previous persona">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="cs-carousel-control next" type="button" aria-label="Next persona">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
       </div>
-      <div class="cs-img cs-img-border" style="margin:0;">
-        <img src="assets/images/Safeway Kiosk/Black and White Simple User Persona Brainstorm (4)@4x.png" alt="User persona — first-time kiosk user" width="3224" height="1814" loading="lazy">
-        <p class="cs-img-caption">Persona 3 &mdash; first-time user</p>
-      </div>
+      <div class="cs-carousel-dots" aria-label="Persona slide controls"></div>
+      <p class="cs-img-caption">User Personas &mdash; frequent shopper, occasional visitor, first-time user</p>
     </div>
 
     <h3 class="cs-h3">User Journey Map</h3>
@@ -733,6 +768,41 @@
     }
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+  })();
+
+  (function(){
+    document.querySelectorAll('[data-carousel]').forEach(function(carousel){
+      var track = carousel.querySelector('.cs-carousel-track');
+      var slides = Array.from(carousel.querySelectorAll('.cs-carousel-slide'));
+      var prev = carousel.querySelector('.cs-carousel-control.prev');
+      var next = carousel.querySelector('.cs-carousel-control.next');
+      var dotsWrap = carousel.parentElement.querySelector('.cs-carousel-dots');
+      if (!track || slides.length < 2) return;
+      var idx = 0;
+      var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      slides.forEach(function(_, i){
+        var dot = document.createElement('button');
+        dot.className = 'cs-carousel-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        dot.addEventListener('click', function(){ goTo(i); });
+        dotsWrap.appendChild(dot);
+      });
+      var dots = Array.from(dotsWrap.querySelectorAll('.cs-carousel-dot'));
+
+      function goTo(n){
+        idx = (n + slides.length) % slides.length;
+        if (reducedMotion) track.style.transition = 'none';
+        track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+        dots.forEach(function(d, i){ d.classList.toggle('active', i === idx); });
+      }
+      prev.addEventListener('click', function(){ goTo(idx - 1); });
+      next.addEventListener('click', function(){ goTo(idx + 1); });
+      carousel.addEventListener('keydown', function(e){
+        if (e.key === 'ArrowLeft') goTo(idx - 1);
+        if (e.key === 'ArrowRight') goTo(idx + 1);
+      });
+    });
   })();
 </script>
 
