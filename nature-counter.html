@@ -221,28 +221,44 @@
     .cs-visual--library { background: transparent; border-color: transparent; overflow: visible; }
     .cs-visual--library img { height: auto; object-fit: contain; border: none; border-radius: 8px; }
 
-    /* ── Asset gallery ── */
-    .asset-gallery {
+    /* ── Asset bento grid ── */
+    .asset-bento {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 16px;
       margin-top: 40px;
     }
-    .asset-card {
+    .ab-card {
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
       background: var(--bg-alt);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
     }
-    .asset-card img {
+    @media (hover: hover) {
+      .ab-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ab-card { transition: none; }
+    }
+    .ab-full  { grid-column: span 6; }
+    .ab-half  { grid-column: span 3; }
+    .ab-wide  { grid-column: span 4; }
+    .ab-sq    { grid-column: span 2; }
+    .ab-sq3   { grid-column: span 3; }
+    .ab-card img {
       width: 100%;
-      height: auto;
+      height: 100%;
       display: block;
-      object-fit: contain;
-      image-rendering: auto;
+      object-fit: cover;
       background: var(--bg);
     }
-    .asset-card-caption {
+    .ab-full img  { aspect-ratio: 2.71 / 1; }
+    .ab-half img  { aspect-ratio: 1.57 / 1; }
+    .ab-wide img  { aspect-ratio: 1.89 / 1; }
+    .ab-sq img    { aspect-ratio: 0.92 / 1; }
+    .ab-sq3 img   { aspect-ratio: 0.92 / 1; }
+    .ab-caption {
       font-family: var(--display);
       font-size: 10px;
       letter-spacing: 0.08em;
@@ -298,6 +314,11 @@
       .cs-row { grid-template-columns: 1fr; gap: 20px; padding: 56px var(--margin); }
       .cs-row-label { position: static; }
       .cs-row-num { display: none; }
+      .asset-bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .ab-full { grid-column: span 2; }
+      .ab-half, .ab-wide, .ab-sq, .ab-sq3 { grid-column: span 1; }
+      .ab-sq img, .ab-sq3 img { aspect-ratio: 0.92 / 1; }
+      .ab-wide img { aspect-ratio: 1.57 / 1; }
     }
     @media (max-width: 768px) {
       :root { --margin: 20px; }
@@ -316,7 +337,9 @@
       .footer-grid { grid-template-columns: 1fr; gap: 40px; }
       .cs-next { flex-direction: column; align-items: flex-start; }
       .token-grid { grid-template-columns: repeat(2,1fr); }
-      .asset-gallery { grid-template-columns: 1fr; }
+      .asset-bento { grid-template-columns: 1fr; }
+      .ab-full, .ab-half, .ab-wide, .ab-sq, .ab-sq3 { grid-column: span 1; }
+      .ab-card img { aspect-ratio: auto; height: auto; }
     }
     @media (max-width: 480px) {
       .cs-stats { grid-template-columns: 1fr; }
@@ -613,34 +636,43 @@
   <div class="cs-row-content">
     <h2 class="cs-h2">Nature Counter visual asset showcase</h2>
     <p class="cs-body">All available files from the Nature Counter image folder are surfaced below for quick review and reference in one place.</p>
-    <div class="asset-gallery">
-      <div class="asset-card">
-        <img src="assets/images/Nature Counter/New modified.png" alt="Nature Counter asset New modified" loading="lazy">
-        <p class="asset-card-caption">New modified</p>
+    <div class="asset-bento">
+      <!-- Row 1 — ultra-wide panoramic banner -->
+      <div class="ab-card ab-full">
+        <img src="assets/images/Nature Counter/New modified.png" alt="Nature Counter hero composition — full design system overview" width="3832" height="1416" loading="lazy">
+        <p class="ab-caption">Design System Overview</p>
       </div>
-      <div class="asset-card">
-        <img src="assets/images/Nature Counter/Image@3x.png" alt="Nature Counter asset Image@3x" loading="lazy">
-        <p class="asset-card-caption">Image@3x</p>
+      <!-- Row 2 — two standard landscape halves -->
+      <div class="ab-card ab-half">
+        <img src="assets/images/Nature Counter/Image@3x.png" alt="Nature Counter component library — primary UI components" width="2880" height="1830" loading="lazy">
+        <p class="ab-caption">Component Library</p>
       </div>
-      <div class="asset-card">
-        <img src="assets/images/Nature Counter/Image@4x.png" alt="Nature Counter asset Image@4x" loading="lazy">
-        <p class="asset-card-caption">Image@4x</p>
+      <div class="ab-card ab-half">
+        <img src="assets/images/Nature Counter/Image@4x.png" alt="Nature Counter design tokens — color, type, and spacing system" width="3840" height="2440" loading="lazy">
+        <p class="ab-caption">Design Tokens</p>
       </div>
-      <div class="asset-card">
-        <img src="assets/images/Nature Counter/Image@77x.png" alt="Nature Counter asset Image@77x" loading="lazy">
-        <p class="asset-card-caption">Image@77x</p>
+      <!-- Row 3 — wide landscape + near-square portrait -->
+      <div class="ab-card ab-wide">
+        <img src="assets/images/Nature Counter/Image@99x.png" alt="Nature Counter interaction patterns — states and transitions" width="2000" height="1060" loading="lazy">
+        <p class="ab-caption">Interaction Patterns</p>
       </div>
-      <div class="asset-card">
-        <img src="assets/images/Nature Counter/Image@99x.png" alt="Nature Counter asset Image@99x" loading="lazy">
-        <p class="asset-card-caption">Image@99x</p>
+      <div class="ab-card ab-sq">
+        <img src="assets/images/Nature Counter/Image@77x.png" alt="Nature Counter mobile component — compact layout variant" width="720" height="784" loading="lazy">
+        <p class="ab-caption">Mobile Component</p>
       </div>
-      <div class="asset-card">
-        <img src="assets/images/Nature Counter/Image@DSx.png" alt="Nature Counter asset Image@DSx" loading="lazy">
-        <p class="asset-card-caption">Image@DSx</p>
+      <!-- Row 4 — two near-square halves -->
+      <div class="ab-card ab-sq3">
+        <img src="assets/images/Nature Counter/Image@DSx.png" alt="Nature Counter design system detail — iconography grid" width="720" height="784" loading="lazy">
+        <p class="ab-caption">Iconography</p>
       </div>
-      <div class="asset-card">
-        <img src="assets/images/Nature Counter/Image@Small DSx.png" alt="Nature Counter asset Image@Small DSx" loading="lazy">
-        <p class="asset-card-caption">Image@Small DSx</p>
+      <div class="ab-card ab-sq3">
+        <img src="assets/images/Nature Counter/Image@Small DSx.png" alt="Nature Counter design system detail — spacing and rhythm" width="720" height="784" loading="lazy">
+        <p class="ab-caption">Spacing &amp; Rhythm</p>
+      </div>
+      <!-- Row 5 — ultra-wide panoramic bookend -->
+      <div class="ab-card ab-full">
+        <img src="assets/images/Nature Counter/Image@2x.png" alt="Nature Counter final composition — end-to-end system view" width="1916" height="708" loading="lazy">
+        <p class="ab-caption">System Overview</p>
       </div>
     </div>
   </div>
