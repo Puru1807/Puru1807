@@ -105,7 +105,7 @@
        HERO
     ════════════════════════════════════════ */
     .cs-hero { padding: 130px var(--margin) 72px; max-width: 1200px; margin: 0 auto; }
-    .cs-hero-split { display: grid; grid-template-columns: 1fr; gap: 0; align-items: center; }
+    .cs-hero-split { display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center; }
     .cs-hero-phone { display: flex; justify-content: center; align-items: flex-end; }
     .cs-hero-phone img { width: 100%; max-width: 260px; height: auto; border-radius: 28px; box-shadow: 0 32px 80px rgba(0,0,0,0.15); display: block; }
     .cs-back { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--secondary); text-decoration: none; margin-bottom: 48px; transition: color 0.2s; }
@@ -207,6 +207,79 @@
     .cs-img-caption { font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); text-align: center; margin-top: 12px; }
     .cs-img-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
     .cs-img-2col .cs-img { margin: 0; }
+
+    /* ── Horizontal persona carousel ── */
+    .cs-carousel {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+    }
+    .cs-carousel-track {
+      display: flex;
+      transition: transform 0.45s ease;
+      will-change: transform;
+    }
+    .cs-carousel-slide {
+      min-width: 100%;
+      flex: 0 0 100%;
+    }
+    .cs-carousel-slide img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 0;
+      border: none;
+    }
+    .cs-carousel-control {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(4, 2, 2, 0.66);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+      transition: background 0.2s ease, transform 0.2s ease;
+      z-index: 2;
+    }
+    .cs-carousel-control:hover { background: rgba(4, 2, 2, 0.82); transform: translateY(-50%) scale(1.04); }
+    .cs-carousel-control:focus-visible { outline: 2px solid var(--bg); outline-offset: 2px; }
+    .cs-carousel-control.prev { left: 12px; }
+    .cs-carousel-control.next { right: 12px; }
+    .cs-carousel-control svg { width: 22px; height: 22px; color: #fff; stroke-width: 2; }
+    .cs-carousel-dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .cs-carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: 1px solid var(--secondary);
+      background: transparent;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+    .cs-carousel-dot.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      transform: scale(1.15);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cs-carousel-track { transition: none; }
+      .cs-carousel-dot, .cs-carousel-control { transition: none; }
+    }
 
     /* ── Phone hi-fi grid ── */
     .cs-phone-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; margin-top: 40px; align-items: flex-end; }
@@ -353,13 +426,11 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- Full-width visual -->
-<div style="max-width:1200px;margin:0 auto;padding:0 var(--margin);">
-  <div class="cs-visual">
-    <img src="assets/images/TheGainBox/Image-4.png" alt="TheGainBox product visual" loading="lazy">
+    <div style="border-radius:16px; overflow:hidden; box-shadow:0 24px 64px rgba(0,0,0,0.12); border:1px solid var(--border); max-height:420px;">
+      <video autoplay loop muted playsinline style="height:420px;width:auto;display:block;">
+        <source src="assets/images/confidento/Scene (3).mp4" type="video/mp4">
+      </video>
+    </div>
   </div>
 </div>
 
@@ -420,7 +491,7 @@
     <h2 class="cs-h2">Two tracks across six weeks</h2>
     <p class="cs-body">The project was structured across two parallel tracks — UX Design and UI Design — with research, synthesis, and visual execution happening in sequence. Discovery ran through the first month; visual design and prototyping carried the second.</p>
     <div class="cs-img cs-img-border">
-      <img src="assets/images/confidento/Image-1.png" alt="Project roadmap Gantt chart">
+      <img src="assets/images/confidento/App Roadmap Presentation (2).png" alt="Project roadmap Gantt chart">
       <p class="cs-img-caption">UX &amp; UI Design phases — week by week</p>
     </div>
   </div>
@@ -492,38 +563,54 @@
     </div>
 
     <div class="cs-img cs-img-border" style="margin-top:48px;">
-      <img src="assets/images/confidento/Image-2.png" alt="User survey data — profession, speaking habits, motivation drivers, improvement activity">
+      <img src="assets/images/confidento/App Roadmap Presentation (1).png" alt="User survey data — profession, speaking habits, motivation drivers, improvement activity">
       <p class="cs-img-caption">Survey insights across 71 respondents — profession, speaking habits, motivation drivers</p>
     </div>
 
     <h3 class="cs-h3">Three user categories — one primary persona to guide design</h3>
     <p class="cs-body" style="margin-bottom:32px;">After analysing the survey, we divided target users into 3 primary categories: Working Professionals, College Students, and School-going Students. For each category, we had conversations with multiple individuals and collectively built user personas.</p>
-    <div class="cs-img cs-img-border">
-      <img src="assets/images/confidento/Carousel.png" alt="User persona — Rohan Malhotra, college student">
+    <div class="cs-img">
+      <div class="cs-carousel" data-carousel aria-label="User personas carousel">
+        <div class="cs-carousel-track">
+          <figure class="cs-carousel-slide">
+            <img src="assets/images/confidento/App Roadmap Presentation (4).png" alt="User persona card — Rohan Malhotra, college student" width="1920" height="1080" loading="lazy">
+          </figure>
+          <figure class="cs-carousel-slide">
+            <img src="assets/images/confidento/App Roadmap Presentation (5).png" alt="User persona card — Ananya Sengupta, school student" width="1920" height="1080" loading="lazy">
+          </figure>
+          <figure class="cs-carousel-slide">
+            <img src="assets/images/confidento/App Roadmap Presentation (6).png" alt="User persona card — Maya Kumar, working professional" width="1920" height="1080" loading="lazy">
+          </figure>
+        </div>
+        <button class="cs-carousel-control prev" type="button" aria-label="Previous persona">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+        </button>
+        <button class="cs-carousel-control next" type="button" aria-label="Next persona">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3l5 5-5 5"/></svg>
+        </button>
+      </div>
+      <div class="cs-carousel-dots" aria-label="Persona slide controls"></div>
       <p class="cs-img-caption">Primary persona — Rohan Malhotra, College Student</p>
     </div>
 
     <h3 class="cs-h3">No competitor combined progress, motivation, and good UX</h3>
     <p class="cs-body" style="margin-bottom:32px;">We audited ELSA, Grammerly, Talk Life, Orator, and Presentation Coach across 7 key feature dimensions. The gap was clear: no single tool combined a progress tracker, reward system, dark mode, 24/7 support, tutor customization, and genuinely good UX.</p>
     <div class="cs-img cs-img-border">
-      <img src="assets/images/confidento/Image-3.png" alt="Competitive analysis matrix across 5 apps and 7 feature dimensions">
+      <img src="assets/images/confidento/App Roadmap Presentation (10).png" alt="Competitive analysis matrix across 5 apps and 7 feature dimensions">
       <p class="cs-img-caption">Feature comparison — 5 competitors × 7 dimensions</p>
     </div>
 
     <h3 class="cs-h3">Anxious, hopeful — and not sure where to start</h3>
-    <div class="cs-two-col" style="margin-top:0;">
-      <div>
-        <p class="cs-body">To move forward in the ideation phase, I created an empathy map of what our user says, thinks, does, and feels. This gave us a solid foundation and helped shape the solution to the problems they face.</p>
-        <ul class="cs-list" style="margin-top:24px;">
-          <li><strong>Says:</strong> "I want to improve — but I don't know where to start."</li>
-          <li><strong>Thinks:</strong> "What if I sound bad? What if I'm judged?"</li>
-          <li><strong>Does:</strong> Browses courses but hesitates to commit</li>
-          <li><strong>Feels:</strong> Anxious, shy, unconfident — but genuinely hopeful</li>
-        </ul>
-      </div>
-      <div class="cs-img cs-img-border" style="margin:0;">
-        <img src="assets/images/confidento/Image-4.png" alt="Empathy map — says, thinks, does, feels">
-      </div>
+    <p class="cs-body">To move forward in the ideation phase, I created an empathy map of what our user says, thinks, does, and feels. This gave us a solid foundation and helped shape the solution to the problems they face.</p>
+    <ul class="cs-list" style="margin-top:24px;">
+      <li><strong>Says:</strong> "I want to improve — but I don't know where to start."</li>
+      <li><strong>Thinks:</strong> "What if I sound bad? What if I'm judged?"</li>
+      <li><strong>Does:</strong> Browses courses but hesitates to commit</li>
+      <li><strong>Feels:</strong> Anxious, shy, unconfident — but genuinely hopeful</li>
+    </ul>
+    <div class="cs-img cs-img-border" style="margin-top:40px;">
+      <img src="assets/images/confidento/App Roadmap Presentation (11).png" alt="Empathy map — says, thinks, does, feels">
+      <p class="cs-img-caption">Empathy map — Says, Thinks, Does, Feels</p>
     </div>
   </div>
 </section>
@@ -542,16 +629,19 @@
     <p class="cs-body">The entire experience was mapped into 6 core areas: Home (Progress + Recommendations), Courses (Structure, Lessons, AI feedback roadmap), Trackers (Daily learning + consistency streaks), Practice (Playback, prompts, reflection — future phase), Search &amp; Explore, and Profile / Settings.</p>
 
     <div class="cs-img cs-img-border" style="margin-top:40px;">
-      <img src="assets/images/confidento/Image-5.png" alt="Information architecture and full user flow diagram">
+      <img src="assets/images/confidento/App Roadmap Presentation (16).png" alt="Information architecture and full user flow diagram">
       <p class="cs-img-caption">Full product information architecture</p>
     </div>
 
-    <h3 class="cs-h3">Step-by-Step for new users. Hub-and-Spoke for returning ones.</h3>
-    <p class="cs-body">The survey data made one thing very clear: people are motivated — but easily distracted, with scattered productivity peaks and difficulty maintaining habits. This directly shaped the navigation strategy for TheConfidento.</p>
-
-    <div class="cs-img" style="margin-top:32px;">
-      <img src="assets/images/confidento/Image-7.png" alt="Step-by-step vs Hub-and-Spoke navigation model diagram">
-      <p class="cs-img-caption">Two navigation models — one for each user state</p>
+    <div class="cs-two-col" style="margin-top:0; align-items:center;">
+      <div>
+        <h3 class="cs-h3" style="margin-top:0;">Step-by-Step for new users. Hub-and-Spoke for returning ones.</h3>
+        <p class="cs-body">The survey data made one thing very clear: people are motivated — but easily distracted, with scattered productivity peaks and difficulty maintaining habits. This directly shaped the navigation strategy for TheConfidento.</p>
+      </div>
+      <div class="cs-img cs-img-border" style="margin:0;">
+        <img src="assets/images/confidento/Image-7.png" alt="Step-by-step vs Hub-and-Spoke navigation model diagram">
+        <p class="cs-img-caption">Two navigation models — one for each user state</p>
+      </div>
     </div>
 
     <div class="cs-two-col" style="margin-top:48px;">
@@ -608,17 +698,17 @@
     <p class="cs-body">Once ideation was complete, we moved into low-fidelity wireframes to give the application its initial structure. These were used for early testing and feedback before any visual design was applied.</p>
 
     <div class="cs-img cs-img-border">
-      <img src="assets/images/confidento/Image-9.png" alt="Low-fidelity wireframes — Onboarding and Trial flow">
+      <img src="assets/images/confidento/App Roadmap Presentation (12).png" alt="Low-fidelity wireframes — Onboarding and Trial flow">
       <p class="cs-img-caption">Onboarding &amp; Trial — user flow wireframes</p>
     </div>
 
-    <div class="cs-img-2col" style="margin-top:0;">
+    <div class="cs-img-2col" style="margin-top:0; grid-template-columns: 1fr;">
       <div class="cs-img cs-img-border" style="margin:0;">
-        <img src="assets/images/confidento/Image-10.png" alt="Low-fidelity wireframes — Courses catalog and 24x7 chat support">
+        <img src="assets/images/confidento/App Roadmap Presentation (13).png" alt="Low-fidelity wireframes — Courses catalog and 24x7 chat support">
         <p class="cs-img-caption">Courses catalog + 24×7 chat support interface</p>
       </div>
       <div class="cs-img cs-img-border" style="margin:0;">
-        <img src="assets/images/confidento/Image-11.png" alt="Low-fidelity wireframes — checkout and payment flow">
+        <img src="assets/images/confidento/App Roadmap Presentation (14).png" alt="Low-fidelity wireframes — checkout and payment flow">
         <p class="cs-img-caption">Course selection &amp; checkout payment flow</p>
       </div>
     </div>
@@ -627,7 +717,7 @@
     <p class="cs-body" style="margin-bottom:32px;">After completing low-fidelity wireframes, we organised feedback sessions with multiple users and noted the problems they faced navigating the prototype. We curated all feedback and rectified the issues that would reduce pain points and improve flow.</p>
 
     <div class="cs-img cs-img-border">
-      <img src="assets/images/confidento/Image-12.png" alt="Before and after — Tracker screen hierarchy redesign">
+      <img src="assets/images/confidento/App Roadmap Presentation (18).png" alt="Before and after — Tracker screen hierarchy redesign">
       <p class="cs-img-caption">Before → After: Tracker screen — improved hierarchy and readability</p>
     </div>
 
@@ -650,8 +740,8 @@
     <p class="cs-body">The aesthetics of TheConfidento were designed to make users feel supported and motivated as they build confidence. A vibrant gradient of purples, blues, and pinks creates an uplifting, modern atmosphere that reduces anxiety and encourages exploration. A clean, rounded sans-serif adds warmth and readability across light and dark modes.</p>
     <p class="cs-body">Together, these visual choices create a friendly, inspiring environment that helps users feel safe and empowered throughout their learning journey.</p>
 
-    <div class="cs-img cs-img-border" style="margin-top:40px;">
-      <img src="assets/images/confidento/Image-13.png" alt="Style guide — SF Pro typography and color palette (Indigo, Blue, Purple, Orange, Green)">
+    <div class="cs-img cs-img-border" style="margin-top:40px; overflow:hidden;">
+      <img src="assets/images/confidento/App Roadmap Presentation (19).png" alt="Style guide — SF Pro typography and color palette (Indigo, Blue, Purple, Orange, Green)" style="object-fit:cover; object-position:center; aspect-ratio:3/1;">
       <p class="cs-img-caption">SF Pro typography · color system — Indigo 500, Blue 500, Purple 500, Orange 500, Green 500</p>
     </div>
 
@@ -759,17 +849,10 @@
           <li>Explore AI-powered speech feedback for future phases</li>
           <li>Community-based peer review in upcoming versions</li>
         </ul>
-      </div>
-    </div>
-
-    <div class="cs-img-2col" style="margin-top:48px;">
-      <div class="cs-img cs-img-border" style="margin:0;">
-        <img src="assets/images/confidento/Image-14.png" alt="TheConfidento app icon on iPhone home screen">
-        <p class="cs-img-caption">App icon — on device</p>
-      </div>
-      <div class="cs-img cs-img-border" style="margin:0;">
-        <img src="assets/images/confidento/Image-15.png" alt="TheConfidento onboarding screen on iPhone">
-        <p class="cs-img-caption">Onboarding — live on device</p>
+        <div class="cs-img cs-img-border" style="margin-top:32px; max-width:280px;">
+          <img src="assets/images/confidento/Image-14.png" alt="TheConfidento app icon on iPhone home screen">
+          <p class="cs-img-caption">App icon — on device</p>
+        </div>
       </div>
     </div>
   </div>
@@ -962,6 +1045,55 @@
 
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+  })();
+
+  /* ── Horizontal persona carousel ── */
+  (function(){
+    var carousels = document.querySelectorAll('[data-carousel]');
+    if (!carousels.length) return;
+
+    carousels.forEach(function(carousel){
+      var track = carousel.querySelector('.cs-carousel-track');
+      var slides = Array.from(carousel.querySelectorAll('.cs-carousel-slide'));
+      var prevBtn = carousel.querySelector('.cs-carousel-control.prev');
+      var nextBtn = carousel.querySelector('.cs-carousel-control.next');
+      var dotsWrap = carousel.parentElement.querySelector('.cs-carousel-dots');
+      if (!track || slides.length < 2 || !prevBtn || !nextBtn || !dotsWrap) return;
+
+      var current = 0;
+      var dots = slides.map(function(_, idx){
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'cs-carousel-dot' + (idx === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Go to persona ' + (idx + 1));
+        dot.addEventListener('click', function(){ goTo(idx); });
+        dotsWrap.appendChild(dot);
+        return dot;
+      });
+
+      function render(){
+        track.style.transform = 'translateX(' + (current * -100) + '%)';
+        dots.forEach(function(dot, idx){
+          dot.classList.toggle('active', idx === current);
+        });
+      }
+
+      function goTo(idx){
+        current = (idx + slides.length) % slides.length;
+        render();
+      }
+
+      prevBtn.addEventListener('click', function(){ goTo(current - 1); });
+      nextBtn.addEventListener('click', function(){ goTo(current + 1); });
+
+      carousel.addEventListener('keydown', function(e){
+        if (e.key === 'ArrowLeft') goTo(current - 1);
+        if (e.key === 'ArrowRight') goTo(current + 1);
+      });
+      carousel.setAttribute('tabindex', '0');
+
+      render();
+    });
   })();
 </script>
 
