@@ -785,9 +785,9 @@
       </div>
     </div>
 
-    <div class="cs-img cs-img-border">
-      <img src="assets/images/DreamCollege/Image-10.png" alt="Drop-off -77%, follow-up AI engagement +63%">
-      <p class="cs-img-caption">Drop-off −77% &middot; Follow-up AI engagement +63%</p>
+    <div class="cs-img" style="padding:24px;border:1px solid var(--border);border-radius:8px;">
+      <object id="dropoff-svg" type="image/svg+xml" data="assets/images/DreamCollege/Dropoff.svg" aria-label="Drop-off -77%, follow-up AI engagement +63%" style="width:100%;height:auto;display:block;"></object>
+      <p class="cs-img-caption">Drop-off &minus;77% &middot; Follow-up AI engagement +63%</p>
     </div>
     <div class="cs-img cs-img-border">
       <img src="assets/images/DreamCollege/Section 3.png" alt="Progressive profile building and transparent AI in production">
@@ -1090,10 +1090,18 @@
     if (!toggle) return;
     var moon = toggle.querySelector('.icon-moon');
     var sun  = toggle.querySelector('.icon-sun');
+    function syncSvgTheme(isDark){
+      var obj = document.getElementById('dropoff-svg');
+      if(obj && obj.contentDocument){
+        var svg = obj.contentDocument.querySelector('svg');
+        if(svg){ svg.classList.toggle('dark', isDark); svg.classList.toggle('light', !isDark); }
+      }
+    }
     function applyTheme(t){
       document.documentElement.setAttribute('data-theme', t);
       if (t === 'dark'){ moon.style.display = 'none'; sun.style.display = ''; }
       else { moon.style.display = ''; sun.style.display = 'none'; }
+      syncSvgTheme(t === 'dark');
     }
     var saved = localStorage.getItem('theme');
     if (saved){ applyTheme(saved); }
@@ -1103,6 +1111,8 @@
       localStorage.setItem('theme', next);
       applyTheme(next);
     });
+    var svgObj = document.getElementById('dropoff-svg');
+    if(svgObj){ svgObj.addEventListener('load', function(){ syncSvgTheme(document.documentElement.getAttribute('data-theme') === 'dark'); }); }
   })();
 
   /* ── Floating Side Nav ── */
