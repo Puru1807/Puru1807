@@ -548,14 +548,17 @@
       justify-content: flex-end;
       padding: 20px 22px;
       position: relative;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
     .project-preview-inner::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: inherit;
-      animation: gradientShift 4s ease infinite alternate;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0.05) 100%);
+      z-index: 0;
     }
 
     .preview-title {
@@ -580,13 +583,13 @@
       z-index: 1;
     }
 
-    /* Preview gradients */
-    .preview-dreamcollege .project-preview-inner { background: linear-gradient(135deg, #1a1a2e 0%, #6c63ff 100%); }
-    .preview-nature .project-preview-inner { background: linear-gradient(135deg, #1b4332 0%, #95d5b2 100%); }
-    .preview-saarthi .project-preview-inner { background: linear-gradient(135deg, #c1121f 0%, #fca311 100%); }
+    /* Preview backgrounds — fallback gradients, images set via JS */
+    .preview-dreamcollege .project-preview-inner { background-color: #1a1a2e; }
+    .preview-nature .project-preview-inner { background-color: #1b4332; }
+    .preview-saarthi .project-preview-inner { background-color: #c1121f; }
     .preview-confidento .project-preview-inner { background: linear-gradient(135deg, #3d405b 0%, #81b29a 100%); }
-    .preview-safeway .project-preview-inner { background: linear-gradient(135deg, #023e8a 0%, #48cae4 100%); }
-    .preview-crisis .project-preview-inner { background: linear-gradient(135deg, #2b2d42 0%, #ef8354 100%); }
+    .preview-safeway .project-preview-inner { background-color: #023e8a; }
+    .preview-crisis .project-preview-inner { background-color: #2b2d42; }
 
     @media (hover: none), (pointer: coarse) {
       .project-preview { display: none; }
@@ -713,11 +716,6 @@
     @keyframes projectShow {
       from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes gradientShift {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.08) rotate(2deg); }
     }
 
     /* ——— Responsive ——— */
@@ -1113,12 +1111,12 @@
       const rows = document.querySelectorAll('.project-row');
 
       const previewData = {
-        dreamcollege: { title: 'DreamCollege AI', metric: '150K+ Users  ·  63% Retention Lift' },
-        nature: { title: 'Nature Counter', metric: '100K+ Users  ·  45% Faster Handoff' },
-        saarthi: { title: 'Saarthi', metric: '90% Satisfaction  ·  62% Faster' },
-        confidento: { title: 'TheConfidento', metric: '88% Satisfaction  ·  4.5 Stars' },
-        safeway: { title: 'Safeway Kiosk', metric: '84% User Retention' },
-        crisis: { title: 'Crisis-Courier-UAV', metric: '52% Load Reduction' }
+        dreamcollege: { title: 'DreamCollege AI', metric: '150K+ Users  ·  63% Retention Lift', img: 'assets/images/DreamCollege/Image-1.png' },
+        nature: { title: 'Nature Counter', metric: '100K+ Users  ·  45% Faster Handoff', img: 'assets/images/Nature Counter/Scene.gif' },
+        saarthi: { title: 'Saarthi', metric: '90% Satisfaction  ·  62% Faster', img: 'assets/images/Saarthi/Heroimage.png' },
+        confidento: { title: 'TheConfidento', metric: '88% Satisfaction  ·  4.5 Stars', img: '' },
+        safeway: { title: 'Safeway Kiosk', metric: '84% User Retention', img: 'assets/images/Safeway Kiosk/Hero Iamge.png' },
+        crisis: { title: 'Crisis-Courier-UAV', metric: '52% Load Reduction', img: 'assets/images/UAV/H@4x.png' }
       };
 
       rows.forEach(function(row) {
@@ -1130,7 +1128,14 @@
           previewTitle.textContent = data.title;
           previewMetric.textContent = data.metric;
 
-          // Reset classes and set preview gradient
+          // Set hero image as background
+          if (data.img) {
+            previewInner.style.backgroundImage = 'url(' + encodeURI(data.img) + ')';
+          } else {
+            previewInner.style.backgroundImage = '';
+          }
+
+          // Reset classes and set preview style
           preview.className = 'project-preview preview-' + key;
 
           // Small delay for class application

@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 340" style="fill:none;stroke:none;">
+  <style>
+    svg { background-color: transparent !important; }
+    .t-text { fill: #2c2c2c; font-family: 'Plus Jakarta Sans', -apple-system, Helvetica, Arial, sans-serif; }
+    .t-mono { fill: #2c2c2c; font-family: 'Space Mono', 'Courier New', monospace; }
+    .t-line { stroke: #d0cec9; }
+    .t-axis { stroke: #2c2c2c; }
+    .t-tick { fill: #999; font-family: 'Space Mono', 'Courier New', monospace; font-size: 11px; }
+    svg.dark { background-color: transparent !important; }
+    svg.dark .t-text { fill: #F0EDE8; }
+    svg.dark .t-mono { fill: #F0EDE8; }
+    svg.dark .t-line { stroke: #2A2826; }
+    svg.dark .t-axis { stroke: #F0EDE8; }
+    svg.dark .t-tick { fill: #777370; }
+    @media (prefers-color-scheme: dark) {
+      svg:not(.light) { background-color: transparent !important; }
+      svg:not(.light) .t-text { fill: #F0EDE8; }
+      svg:not(.light) .t-mono { fill: #F0EDE8; }
+      svg:not(.light) .t-line { stroke: #2A2826; }
+      svg:not(.light) .t-axis { stroke: #F0EDE8; }
+      svg:not(.light) .t-tick { fill: #777370; }
+    }
+  </style>
+
+  <!-- Title -->
+  <text class="t-text" x="410" y="32" text-anchor="middle" font-size="18" font-weight="700" letter-spacing="-0.02em">Project timeline (first 12 weeks)</text>
+
+  <!-- Grid lines -->
+  <g class="t-line" stroke-width="1" stroke-dasharray="3,4">
+    <line x1="80" y1="56" x2="80" y2="280"/>
+    <line x1="140" y1="56" x2="140" y2="280"/>
+    <line x1="200" y1="56" x2="200" y2="280"/>
+    <line x1="260" y1="56" x2="260" y2="280"/>
+    <line x1="320" y1="56" x2="320" y2="280"/>
+    <line x1="380" y1="56" x2="380" y2="280"/>
+    <line x1="440" y1="56" x2="440" y2="280"/>
+    <line x1="500" y1="56" x2="500" y2="280"/>
+    <line x1="560" y1="56" x2="560" y2="280"/>
+    <line x1="620" y1="56" x2="620" y2="280"/>
+    <line x1="680" y1="56" x2="680" y2="280"/>
+    <line x1="740" y1="56" x2="740" y2="280"/>
+  </g>
+
+  <!-- X-axis -->
+  <line class="t-axis" x1="78" y1="280" x2="742" y2="280" stroke-width="1.5"/>
+
+  <!-- X-axis tick labels -->
+  <g class="t-tick" text-anchor="middle">
+    <text x="80" y="300">1</text>
+    <text x="140" y="300">2</text>
+    <text x="200" y="300">3</text>
+    <text x="260" y="300">4</text>
+    <text x="320" y="300">5</text>
+    <text x="380" y="300">6</text>
+    <text x="440" y="300">7</text>
+    <text x="500" y="300">8</text>
+    <text x="560" y="300">9</text>
+    <text x="620" y="300">10</text>
+    <text x="680" y="300">11</text>
+    <text x="740" y="300">12</text>
+  </g>
+  <text class="t-tick" x="410" y="326" text-anchor="middle" font-size="12" letter-spacing="0.08em">WEEKS</text>
+
+  <!-- Phase 1: Discovery & research — Weeks 1–2 -->
+  <rect x="80" y="68" width="120" height="28" rx="4" fill="#4272E5"/>
+  <text x="92" y="87" font-size="12" font-weight="600" fill="#fff" font-family="'Plus Jakarta Sans', sans-serif">Discovery &amp; research</text>
+
+  <!-- Phase 2: Problem framing — Weeks 2–3 -->
+  <rect x="140" y="108" width="120" height="28" rx="4" fill="#E88832"/>
+  <text x="152" y="127" font-size="12" font-weight="600" fill="#fff" font-family="'Plus Jakarta Sans', sans-serif">Problem framing</text>
+
+  <!-- Phase 3: IA & journey redesign — Weeks 3–5 -->
+  <rect x="200" y="148" width="180" height="28" rx="4" fill="#3EAF5C"/>
+  <text x="212" y="167" font-size="12" font-weight="600" fill="#fff" font-family="'Plus Jakarta Sans', sans-serif">IA &amp; journey redesign</text>
+
+  <!-- Phase 4: Visual system & components — Weeks 4–7 -->
+  <rect x="260" y="188" width="240" height="28" rx="4" fill="#D94452"/>
+  <text x="272" y="207" font-size="12" font-weight="600" fill="#fff" font-family="'Plus Jakarta Sans', sans-serif">Visual system &amp; components</text>
+
+  <!-- Phase 5: Conversational AI UX — Weeks 5–8 -->
+  <rect x="320" y="228" width="240" height="28" rx="4" fill="#8B5CF6"/>
+  <text x="332" y="247" font-size="12" font-weight="600" fill="#fff" font-family="'Plus Jakarta Sans', sans-serif">Conversational AI UX</text>
+
+  <!-- Phase 6: Testing & iteration — Weeks 7–12 -->
+  <rect x="440" y="268" width="300" height="28" rx="4" fill="#7A5C44"/>
+  <text x="452" y="287" font-size="12" font-weight="600" fill="#fff" font-family="'Plus Jakarta Sans', sans-serif">Testing &amp; iteration</text>
+</svg>
