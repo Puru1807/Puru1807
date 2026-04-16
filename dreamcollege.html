@@ -786,7 +786,7 @@
     </div>
 
     <div class="cs-img" style="padding:24px;border:1px solid var(--border);border-radius:8px;">
-      <object id="dropoff-svg" type="image/svg+xml" data="assets/images/DreamCollege/Dropoff.svg" aria-label="Drop-off -77%, follow-up AI engagement +63%" style="width:100%;height:auto;display:block;"></object>
+      <object id="dropoff-svg" data-theme-svg type="image/svg+xml" data="assets/images/DreamCollege/Dropoff.svg" aria-label="Drop-off -77%, follow-up AI engagement +63%" style="width:100%;height:auto;display:block;"></object>
       <p class="cs-img-caption">Drop-off &minus;77% &middot; Follow-up AI engagement +63%</p>
     </div>
     <div class="cs-img cs-img-border">
@@ -881,8 +881,8 @@
 
     <h3 class="cs-h3">Designing for AI is designing for the unknown</h3>
     <p class="cs-body" style="margin-bottom:32px;">AI products introduce design challenges that traditional UX patterns don't solve: responses change as the model learns, user control must be preserved, and a user base spanning 30+ countries created unexpected localization complexity.</p>
-    <div class="cs-img cs-img-border">
-      <img src="assets/images/DreamCollege/Image-13.png" alt="AI design challenges iceberg">
+    <div class="cs-img" style="padding:24px;border:1px solid var(--border);border-radius:8px;">
+      <object id="mountain-svg" data-theme-svg type="image/svg+xml" data="assets/images/DreamCollege/Mountain.svg" aria-label="AI design challenges: surface vs. depth" style="width:100%;height:auto;display:block;"></object>
       <p class="cs-img-caption">AI design challenges — surface vs. depth</p>
     </div>
 
@@ -1091,11 +1091,12 @@
     var moon = toggle.querySelector('.icon-moon');
     var sun  = toggle.querySelector('.icon-sun');
     function syncSvgTheme(isDark){
-      var obj = document.getElementById('dropoff-svg');
-      if(obj && obj.contentDocument){
-        var svg = obj.contentDocument.querySelector('svg');
-        if(svg){ svg.classList.toggle('dark', isDark); svg.classList.toggle('light', !isDark); }
-      }
+      document.querySelectorAll('[data-theme-svg]').forEach(function(obj){
+        if(obj.contentDocument){
+          var svg = obj.contentDocument.querySelector('svg');
+          if(svg){ svg.classList.toggle('dark', isDark); svg.classList.toggle('light', !isDark); }
+        }
+      });
     }
     function applyTheme(t){
       document.documentElement.setAttribute('data-theme', t);
@@ -1111,8 +1112,9 @@
       localStorage.setItem('theme', next);
       applyTheme(next);
     });
-    var svgObj = document.getElementById('dropoff-svg');
-    if(svgObj){ svgObj.addEventListener('load', function(){ syncSvgTheme(document.documentElement.getAttribute('data-theme') === 'dark'); }); }
+    document.querySelectorAll('[data-theme-svg]').forEach(function(obj){
+      obj.addEventListener('load', function(){ syncSvgTheme(document.documentElement.getAttribute('data-theme') === 'dark'); });
+    });
   })();
 
   /* ── Floating Side Nav ── */
