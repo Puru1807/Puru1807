@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg style="fill:none;stroke:none;fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="885" height="642" viewBox="0 0 885 642"><style class="text-font-style fontImports" data-font-family="Roboto">@import url(https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;amp;display=block);
+svg{background-color:transparent!important}
 .m-stroke{stroke:#2c2c2c;stroke-opacity:1}
 .m-text{fill:#2c2c2c;fill-opacity:1}
 svg.dark .m-stroke{stroke:#fafafa}
