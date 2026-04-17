@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/shared/site-common.css">
   <style>
     /* ——— Tokens ——— */
     :root {
@@ -228,31 +229,9 @@
 
   <div class="cursor" id="cursor"></div>
 
-  <!-- Nav -->
-  <nav class="nav" id="nav">
-    <a href="index.html" class="nav-brand">Puru Bhardwaj</a>
-    <div class="nav-links">
-      <a href="index.html#projects" class="nav-link">Work</a>
-      <a href="info.html" class="nav-link active">Info</a>
-      <a href="assets/Puru_Bhardwaj_Resume.pdf" class="nav-link" download="Puru_Bhardwaj_Resume.pdf">Resume</a>
-    </div>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-      <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-      </svg>
-      <svg class="icon-sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="12" cy="12" r="5"/>
-        <line x1="12" y1="1" x2="12" y2="3" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="12" y1="21" x2="12" y2="23" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="1" y1="12" x2="3" y2="12" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="21" y1="12" x2="23" y2="12" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="#F59E0B" stroke-width="2.5" stroke-linecap="round"/>
-      </svg>
-    </button>
-  </nav>
+  <script>window.PORTFOLIO_CONFIG = { navActive: 'info' };</script>
+  <script src="assets/shared/site-common.js" defer></script>
+  <div id="siteShellMount"></div>
 
   <!-- ——— Hero ——— -->
   <section class="info-hero" id="info-top">
@@ -672,27 +651,6 @@
       els.forEach(function(el) { obs.observe(el); });
     })();
 
-    // ——— Theme Toggle ———
-    (function() {
-      var toggle = document.getElementById('themeToggle');
-      var moon = toggle.querySelector('.icon-moon');
-      var sun = toggle.querySelector('.icon-sun');
-      function applyTheme(t) {
-        document.documentElement.setAttribute('data-theme', t);
-        moon.style.display = t === 'dark' ? 'none' : '';
-        sun.style.display = t === 'dark' ? '' : 'none';
-      }
-      var saved = localStorage.getItem('theme');
-      if (saved) { applyTheme(saved); }
-      else if (window.matchMedia('(prefers-color-scheme: dark)').matches) { applyTheme('dark'); }
-      else { sun.style.display = 'none'; }
-      toggle.addEventListener('click', function() {
-        var cur = document.documentElement.getAttribute('data-theme');
-        var next = cur === 'dark' ? 'light' : 'dark';
-        localStorage.setItem('theme', next);
-        applyTheme(next);
-      });
-    })();
   </script>
 
   <!-- Chatbase Widget -->
