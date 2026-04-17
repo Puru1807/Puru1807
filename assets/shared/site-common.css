@@ -14,6 +14,19 @@ html {
   color-scheme: dark;
 }
 
+/* ── Scroll progress bar ── */
+.scroll-progress {
+  position: fixed;
+  top: var(--nav-h, 56px);
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--text);
+  z-index: 999;
+  transition: width 0.05s linear;
+  pointer-events: none;
+}
+
 .nav-link:focus-visible,
 .theme-toggle:focus-visible,
 .csn-link:focus-visible {
