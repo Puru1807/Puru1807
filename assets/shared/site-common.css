@@ -17,13 +17,13 @@ html {
 /* ── Scroll progress bar ── */
 .scroll-progress {
   position: fixed;
-  top: var(--nav-h, 56px);
+  top: 0;
   left: 0;
   width: 0%;
-  height: 2px;
+  height: 3px;
   background: var(--text);
-  z-index: 999;
-  transition: width 0.05s linear;
+  z-index: 1001;
+  transition: width 0.08s linear;
   pointer-events: none;
 }
 
