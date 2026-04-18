@@ -294,6 +294,7 @@
     <li><a href="#s-define"    class="csn-link" data-s="s-define"><span class="csn-dot"></span>Define</a></li>
     <li><a href="#s-develop"   class="csn-link" data-s="s-develop"><span class="csn-dot"></span>Develop</a></li>
     <li><a href="#s-deliver"   class="csn-link" data-s="s-deliver"><span class="csn-dot"></span>Deliver</a></li>
+    <li><a href="#s-constraints" class="csn-link" data-s="s-constraints"><span class="csn-dot"></span>Constraints</a></li>
     <li><a href="#s-reflection" class="csn-link" data-s="s-reflection"><span class="csn-dot"></span>Reflection</a></li>
   </ul>
 </nav>
@@ -769,11 +770,51 @@
 </section>
 
 <!-- ════════════════════════════════════════
-     07 · REFLECTION
+     07 · CONSTRAINTS
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-constraints" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">07</div>
+    <div class="cs-row-tag">Constraints</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">The PM dropped 13 hemophilia factors on me mid-sprint. That became my research.</h2>
+    <p class="cs-body">Saarthi was the project where the PM was the domain expert — and the domain was genuinely complex. Hemophilia has 13 clotting factors. 98% of patients have Factor 9. Infusion history isn't a nice-to-have; it directly shapes emergency triage hierarchy. I had no time for independent clinical research. So I made the PM's knowledge my research backbone and designed fast from there.</p>
+
+    <h3 class="cs-h3">The triangle: I picked Scope + Quality. Time was the non-negotiable.</h3>
+    <p class="cs-body">The NGO had delivery timelines tied to their operational rollout — patients and coordinators couldn't wait for a perfect system. So I controlled scope aggressively: only the flows that touched life-critical decisions (infusion logging, emergency escalation, severity triage) made V1. Everything else was documented and deferred.</p>
+
+    <div class="cs-cards" style="margin-top:32px;">
+      <div class="cs-card">
+        <div class="cs-card-num">01</div>
+        <div class="cs-card-title">Finding Assumptions at Clinical Speed</div>
+        <div class="cs-card-text">I didn't have time to recruit hemophilia patients. So I structured deep-dive sessions with the PM and medical coordinators — treating them as proxy users. The 13-factor breakdown and the Factor 9 majority insight completely reshaped the information hierarchy. The data structure wasn't a design decision; it was a clinical one, and the PM handed it to me. I built the UI around clinical reality, not UX convention.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <div class="cs-card-title">What Got Cut to V2</div>
+        <div class="cs-card-text">The feedback module — where coordinators could report outcomes after infusions — was fully designed and then cut. It added valuable data for the NGO but created friction in the critical path. In a healthcare tool, friction in the core flow is more dangerous than a missing feature. The feedback loop was documented as a V2 priority with a clear trigger: once the core adoption metrics were stable.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">03</div>
+        <div class="cs-card-title">How AI Made Clinical Logic Designable</div>
+        <div class="cs-card-text">Translating 13 clotting factors and emergency severity tiers into a colour-coded, tap-first UI required rapid prototyping. Figma Make helped me generate severity-coded card variants quickly. AnswerGrid helped synthesise coordinator feedback from early testing sessions into actionable patterns without manual synthesis taking days. The result: 90% user satisfaction without a single lab usability study.</div>
+      </div>
+    </div>
+
+    <div class="cs-quote" style="margin-top:40px;">
+      <p>"When the PM is the domain expert, your job isn't to research — it's to translate clinical reality into something a coordinator can use at 2am."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     08 · REFLECTION
 ════════════════════════════════════════ -->
 <section class="cs-row" id="s-reflection" data-reveal>
   <div class="cs-row-label">
-    <div class="cs-row-num">07</div>
+    <div class="cs-row-num">08</div>
     <div class="cs-row-tag">Reflection</div>
     <div class="cs-row-divider"></div>
   </div>

@@ -204,6 +204,7 @@
     <li><a href="#s-needs"       class="csn-link" data-s="s-needs"><span class="csn-dot"></span>Needs</a></li>
     <li><a href="#s-workstation" class="csn-link" data-s="s-workstation"><span class="csn-dot"></span>Workstation</a></li>
     <li><a href="#s-results"     class="csn-link" data-s="s-results"><span class="csn-dot"></span>Results</a></li>
+    <li><a href="#s-constraints" class="csn-link" data-s="s-constraints"><span class="csn-dot"></span>Constraints</a></li>
     <li><a href="#s-reflection"  class="csn-link" data-s="s-reflection"><span class="csn-dot"></span>Reflection</a></li>
   </ul>
 </nav>
@@ -466,11 +467,51 @@
 </section>
 
 <!-- ════════════════════════════════════════
-     06 · REFLECTION
+     06 · CONSTRAINTS
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-constraints" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">06</div>
+    <div class="cs-row-tag">Constraints</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Safety-critical design under a semester deadline. Every cut had to be intentional.</h2>
+    <p class="cs-body">Designing for disaster-zone operators means the stakes of a bad UI are not just frustration — they're operational failure when it matters most. But this was also a semester sprint. The constraint was real: design something that a first responder could pick up under cognitive load, in a simulation environment, with zero training. Not ideal conditions. Not unlimited time. Just the constraint, and the work.</p>
+
+    <h3 class="cs-h3">The triangle: I picked Time + Quality. Scope was fixed at the MVP boundary.</h3>
+    <p class="cs-body">The NASA-TLX cognitive load score was my quality target — 52% reduction wasn't arbitrary, it was the benchmark between a usable tool and a liability in the field. To protect that target, scope was locked: single-drone delivery management, emergency escalation, and clear status communication. Multi-drone coordination and advanced route optimisation were documented as V2 and dropped.</p>
+
+    <div class="cs-cards" style="margin-top:32px;">
+      <div class="cs-card">
+        <div class="cs-card-num">01</div>
+        <div class="cs-card-title">Finding Assumptions Through HFE Literature</div>
+        <div class="cs-card-text">No access to real first responders. So I built on Human Factors and Ergonomics research — specifically cognitive load literature, military UI principles, and published studies on emergency dispatch interfaces. The assumption was simple: if it works under high cognitive load in analogous safety-critical domains, it'll work here. AnswerGrid helped synthesise research faster than manual reading. The simulation testing validated the assumption: zero critical errors.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <div class="cs-card-title">What Got Cut and Documented</div>
+        <div class="cs-card-text">Multi-drone coordination views, predictive route optimisation, and a detailed mission debrief screen were all designed in wireframe and then cut. In safety-critical design, feature additions under time pressure are liabilities — every new element is another thing an operator has to process at 2am in a disaster zone. V1 shipped with single-drone focus. Everything cut was handed off as a spec with clear success criteria for when to add it.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">03</div>
+        <div class="cs-card-title">Prototyping for Cognitive Load, Fast</div>
+        <div class="cs-card-text">Testing cognitive load requires working prototypes — not sketches. Figma Make helped generate high-fidelity simulation states rapidly so we could run NASA-TLX testing earlier in the sprint than normal. Claude Code helped prototype the status escalation logic interactively. Getting to testable fidelity faster meant more test cycles, which meant the 52% load reduction was evidence, not a claim.</div>
+      </div>
+    </div>
+
+    <div class="cs-quote" style="margin-top:40px;">
+      <p>"In disaster-zone design, the most important feature is the one you didn't add — the thing that would have cost an operator a second when seconds count."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     07 · REFLECTION
 ════════════════════════════════════════ -->
 <section class="cs-row" id="s-reflection" data-reveal>
   <div class="cs-row-label">
-    <div class="cs-row-num">06</div>
+    <div class="cs-row-num">07</div>
     <div class="cs-row-tag">Reflection</div>
     <div class="cs-row-divider"></div>
   </div>

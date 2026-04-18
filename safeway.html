@@ -234,6 +234,7 @@
     <li><a href="#s-research"   class="csn-link" data-s="s-research"><span class="csn-dot"></span>Research</a></li>
     <li><a href="#s-solutions"  class="csn-link" data-s="s-solutions"><span class="csn-dot"></span>Solutions</a></li>
     <li><a href="#s-results"    class="csn-link" data-s="s-results"><span class="csn-dot"></span>Results</a></li>
+    <li><a href="#s-constraints" class="csn-link" data-s="s-constraints"><span class="csn-dot"></span>Constraints</a></li>
     <li><a href="#s-reflection" class="csn-link" data-s="s-reflection"><span class="csn-dot"></span>Reflection</a></li>
   </ul>
 </nav>
@@ -600,11 +601,51 @@
 </section>
 
 <!-- ════════════════════════════════════════
-     06 · REFLECTION
+     06 · CONSTRAINTS
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-constraints" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">06</div>
+    <div class="cs-row-tag">Constraints</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">A semester deadline. No live store access. Ship something a real cashier would actually use.</h2>
+    <p class="cs-body">The Safeway Kiosk brief was academically framed but operationally real — the goal wasn't a polished concept deck, it was a usable self-checkout interface that would hold up under real shopper stress. The constraint wasn't inspiration; it was time. A semester sprint meant I had to ship a testable, working prototype or nothing at all.</p>
+
+    <h3 class="cs-h3">The triangle: I picked Time + Quality. Scope was ruthlessly trimmed.</h3>
+    <p class="cs-body">With a fixed semester deadline and a target of 40% faster checkout times, quality in the critical path was non-negotiable. Loyalty card integration, personalisation features, and accessibility edge cases were consciously parked. The base checkout flow had to be bulletproof — every extra feature was a risk to the core.</p>
+
+    <div class="cs-cards" style="margin-top:32px;">
+      <div class="cs-card">
+        <div class="cs-card-num">01</div>
+        <div class="cs-card-title">No Safeway Access? Use Published Research.</div>
+        <div class="cs-card-text">I couldn't recruit Safeway shoppers or access the store's backend data. So I anchored assumptions to existing retail kiosk failure research — Forrester, NN/g, and field observations at public kiosks. The patterns were consistent: unclear affordances, unhelpful error states, and no forgiveness for mis-scans. I didn't need proprietary data to know what was broken.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <div class="cs-card-title">What Shipped vs. What Waited</div>
+        <div class="cs-card-text">V1 was the complete checkout path — scan, pay, receipt. No loyalty, no personalised offers, no accessibility mode (documented for V2). The constraint forced a useful principle: design the most-travelled path first, design it perfectly, then expand. Testing showed 40% faster checkout without any of those add-ons. The base case was the case.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">03</div>
+        <div class="cs-card-title">Prototyping Speed Under Pressure</div>
+        <div class="cs-card-text">Figma Make helped me generate kiosk-scale UI variants (large touch targets, high-contrast states) rapidly without building each state manually. What would have taken 3 days of component work compressed to an afternoon. The saved time went into usability testing — three rounds instead of one, which is why the error prevention insights were as sharp as they were.</div>
+      </div>
+    </div>
+
+    <div class="cs-quote" style="margin-top:40px;">
+      <p>"The best retail UX isn't clever. It's invisible. If the user is thinking about the interface, you've already lost."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     07 · REFLECTION
 ════════════════════════════════════════ -->
 <section class="cs-row" id="s-reflection" data-reveal>
   <div class="cs-row-label">
-    <div class="cs-row-num">06</div>
+    <div class="cs-row-num">07</div>
     <div class="cs-row-tag">Reflection</div>
     <div class="cs-row-divider"></div>
   </div>
