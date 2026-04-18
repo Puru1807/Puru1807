@@ -216,6 +216,26 @@
       html:not([data-theme="light"]) .mountain-svg-inline .m-stroke { stroke: #fafafa; }
       html:not([data-theme="light"]) .mountain-svg-inline .m-text   { fill:   #fafafa; }
     }
+
+    /* ── Inline Timeline SVG dark-mode ── */
+    .timeline-svg-inline { width: 100%; height: auto; display: block; border-radius: 8px; }
+    .timeline-svg-inline .t-text { fill: #2c2c2c; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .timeline-svg-inline .t-mono { fill: #2c2c2c; font-family: 'Space Mono', monospace; }
+    .timeline-svg-inline .t-line { stroke: #d0cec9; }
+    .timeline-svg-inline .t-axis { stroke: #2c2c2c; }
+    .timeline-svg-inline .t-tick { fill: #999; font-family: 'Space Mono', monospace; font-size: 11px; }
+    [data-theme="dark"] .timeline-svg-inline .t-text { fill: #F0EDE8; }
+    [data-theme="dark"] .timeline-svg-inline .t-mono { fill: #F0EDE8; }
+    [data-theme="dark"] .timeline-svg-inline .t-line { stroke: #2A2826; }
+    [data-theme="dark"] .timeline-svg-inline .t-axis { stroke: #F0EDE8; }
+    [data-theme="dark"] .timeline-svg-inline .t-tick { fill: #777370; }
+    @media (prefers-color-scheme: dark) {
+      html:not([data-theme="light"]) .timeline-svg-inline .t-text { fill: #F0EDE8; }
+      html:not([data-theme="light"]) .timeline-svg-inline .t-mono { fill: #F0EDE8; }
+      html:not([data-theme="light"]) .timeline-svg-inline .t-line { stroke: #2A2826; }
+      html:not([data-theme="light"]) .timeline-svg-inline .t-axis { stroke: #F0EDE8; }
+      html:not([data-theme="light"]) .timeline-svg-inline .t-tick { fill: #777370; }
+    }
     .cs-img-caption { font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); text-align: center; margin-top: 12px; }
     .cs-img-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
     .cs-img-2col .cs-img { margin: 0; }
@@ -686,7 +706,28 @@
     <p class="cs-body">Discovery and design ran in parallel due to the 4-month runway. Competitive analysis of 8 platforms, journey mapping across 6 personas, and heuristic evaluation of AI chatbots in education informed every decision.</p>
 
     <div class="cs-img cs-img-border" style="margin-top:40px;">
-      <object data-theme-svg type="image/svg+xml" data="assets/images/DreamCollege/timeline.svg" aria-label="Project timeline Gantt chart — 12 weeks, 6 phases" style="width:100%;height:auto;display:block;"></object>
+      <svg class="timeline-svg-inline" role="img" aria-label="Project timeline Gantt chart — 12 weeks, 6 phases" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 340" style="fill:none;stroke:none;">
+        <!-- Title -->
+        <text class="t-text" x="410" y="32" text-anchor="middle" font-size="18" font-weight="700" letter-spacing="-0.02em">Project timeline (first 12 weeks)</text>
+        <!-- Grid lines -->
+        <g class="t-line" stroke-width="1" stroke-dasharray="3,4">
+          <line x1="80" y1="56" x2="80" y2="280"/><line x1="140" y1="56" x2="140" y2="280"/><line x1="200" y1="56" x2="200" y2="280"/><line x1="260" y1="56" x2="260" y2="280"/><line x1="320" y1="56" x2="320" y2="280"/><line x1="380" y1="56" x2="380" y2="280"/><line x1="440" y1="56" x2="440" y2="280"/><line x1="500" y1="56" x2="500" y2="280"/><line x1="560" y1="56" x2="560" y2="280"/><line x1="620" y1="56" x2="620" y2="280"/><line x1="680" y1="56" x2="680" y2="280"/><line x1="740" y1="56" x2="740" y2="280"/>
+        </g>
+        <!-- X-axis -->
+        <line class="t-axis" x1="78" y1="280" x2="742" y2="280" stroke-width="1.5"/>
+        <!-- Tick labels -->
+        <g class="t-tick" text-anchor="middle">
+          <text x="80" y="300">1</text><text x="140" y="300">2</text><text x="200" y="300">3</text><text x="260" y="300">4</text><text x="320" y="300">5</text><text x="380" y="300">6</text><text x="440" y="300">7</text><text x="500" y="300">8</text><text x="560" y="300">9</text><text x="620" y="300">10</text><text x="680" y="300">11</text><text x="740" y="300">12</text>
+        </g>
+        <text class="t-tick" x="410" y="326" text-anchor="middle" font-size="12" letter-spacing="0.08em">WEEKS</text>
+        <!-- Phase bars -->
+        <rect x="80"  y="68"  width="120" height="28" rx="4" fill="#4272E5"/><text x="92"  y="87"  font-size="12" font-weight="600" fill="#fff" font-family="'Plus Jakarta Sans',sans-serif">Discovery &amp; research</text>
+        <rect x="140" y="108" width="120" height="28" rx="4" fill="#E88832"/><text x="152" y="127" font-size="12" font-weight="600" fill="#fff" font-family="'Plus Jakarta Sans',sans-serif">Problem framing</text>
+        <rect x="200" y="148" width="180" height="28" rx="4" fill="#3EAF5C"/><text x="212" y="167" font-size="12" font-weight="600" fill="#fff" font-family="'Plus Jakarta Sans',sans-serif">IA &amp; journey redesign</text>
+        <rect x="260" y="188" width="240" height="28" rx="4" fill="#D94452"/><text x="272" y="207" font-size="12" font-weight="600" fill="#fff" font-family="'Plus Jakarta Sans',sans-serif">Visual system &amp; components</text>
+        <rect x="320" y="228" width="240" height="28" rx="4" fill="#8B5CF6"/><text x="332" y="247" font-size="12" font-weight="600" fill="#fff" font-family="'Plus Jakarta Sans',sans-serif">Conversational AI UX</text>
+        <rect x="440" y="268" width="300" height="28" rx="4" fill="#7A5C44"/><text x="452" y="287" font-size="12" font-weight="600" fill="#fff" font-family="'Plus Jakarta Sans',sans-serif">Testing &amp; iteration</text>
+      </svg>
       <p class="cs-img-caption">Project timeline — 12 weeks, 6 phases</p>
     </div>
 
