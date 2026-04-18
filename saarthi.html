@@ -867,7 +867,7 @@
     if (!cursor) return;
     let mx = window.innerWidth/2, my = window.innerHeight/2, cx = mx, cy = my;
     document.addEventListener('mousemove', function(e){ mx = e.clientX; my = e.clientY; });
-    function animate(){ cx += (mx-cx)*0.15; cy += (my-cy)*0.15; cursor.style.transform = 'translate3d('+(cx-6)+'px,'+(cy-6)+'px,0)'; requestAnimationFrame(animate); }
+    function animate(){ cx = mx; cy = my; cursor.style.transform = 'translate3d('+(cx-6)+'px,'+(cy-6)+'px,0)'; requestAnimationFrame(animate); }
     animate();
     document.querySelectorAll('a, button').forEach(function(el){
       el.addEventListener('mouseenter', function(){ cursor.classList.add('large'); });

@@ -1041,8 +1041,8 @@
       });
 
       function updateCursor() {
-        curX += (targetX - curX) * 0.15;
-        curY += (targetY - curY) * 0.15;
+        curX = targetX;
+        curY = targetY;
         cursor.style.left = curX + 'px';
         cursor.style.top = curY + 'px';
         requestAnimationFrame(updateCursor);
