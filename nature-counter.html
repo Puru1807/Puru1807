@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nature Counter Design System — Puru Bhardwaj</title>
-  <meta name="description" content="Scalable design system for a wellness platform serving 100K+ users — 30% reduction in UI inconsistencies, 45% faster handoff.">
+  <meta name="description" content="Scalable design system for a wellness iOS app — 30% reduction in UI inconsistencies, 25% faster feature rollout, 84% onboarding completion.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>P</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -456,13 +456,13 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">One source of truth for a platform that grew faster than its design</h2>
-    <p class="cs-body">Created the core design system for NatureCounter, a wellness app promoting outdoor journaling. The challenge was building a scalable token-based system that non-design-system-savvy engineers could implement without friction — while maintaining visual richness across 40+ component types.</p>
-    <p class="cs-body">I led the design system initiative from scratch — establishing foundations, building a component library in Figma and code, and creating documentation that made adoption easy for engineers with zero design background.</p>
+    <h2 class="cs-h2">Building the design foundation for an app that reconnects people with nature</h2>
+    <p class="cs-body">NatureCounter is an early-stage wellbeing app encouraging users to spend mindful time outdoors by logging, sharing, and setting goals around their nature exposure. When I joined, the app had core functionality in place — but lacked UX consistency, scalable design components, and a visual language to guide future growth.</p>
+    <p class="cs-body">I built the design system from the ground up: defining the foundations, creating a reusable Figma component library, and producing documentation that made adoption seamless for engineers. The goal was to empower the team to build new features faster without sacrificing quality or consistency.</p>
     <div class="cs-info-grid">
       <div class="cs-info-item">
         <p class="cs-info-label">Industry</p>
-        <p class="cs-info-value">Wellness &middot; Outdoor Journaling</p>
+        <p class="cs-info-value">Health, Wellness &amp; Fitness</p>
       </div>
       <div class="cs-info-item">
         <p class="cs-info-label">Timeline</p>
@@ -470,7 +470,7 @@
       </div>
       <div class="cs-info-item">
         <p class="cs-info-label">Platform</p>
-        <p class="cs-info-value">iOS &middot; Android &middot; Web</p>
+        <p class="cs-info-value">iOS</p>
       </div>
       <div class="cs-info-item">
         <p class="cs-info-label">Components Built</p>
@@ -481,8 +481,8 @@
         <p class="cs-info-value">Design Systems &middot; Tokens &middot; Figma Variables &middot; Accessibility &middot; Documentation</p>
       </div>
       <div class="cs-info-item">
-        <p class="cs-info-label">Users</p>
-        <p class="cs-info-value">100,000+</p>
+        <p class="cs-info-label">HQ</p>
+        <p class="cs-info-value">California, USA &middot; Founded 2020</p>
       </div>
     </div>
   </div>
@@ -498,26 +498,25 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">A product that outgrew its design — three platforms, zero consistency</h2>
+    <h2 class="cs-h2">Core functionality was there — but no visual language, no consistency, no foundation to build from</h2>
     <div class="cs-two-col">
       <div>
-        <p class="cs-body">Nature Counter had been designed piecemeal by different contractors over 18 months. Each surface — the iOS app, the Android app, and the web dashboard — had diverged in color, spacing, typography, and interaction patterns.</p>
-        <p class="cs-body">Engineers were spending significant time debating implementation details that should have been pre-decided. Each new feature required redundant design work because there was no reusable foundation to build from.</p>
+        <p class="cs-body">NatureCounter had core journaling functionality when I joined, but the app had grown without a shared design foundation. Components were built in isolation, styling was applied inconsistently across screens, and there was no token layer to anchor decisions. Every new feature meant starting from scratch.</p>
+        <p class="cs-body">The first-time user experience in particular was fragmented — onboarding and goal-setting flows lacked the visual clarity needed to convert curious newcomers into committed nature journalers. The team needed a system that could scale with the product, not just patch it.</p>
       </div>
       <div>
         <ul class="cs-list">
-          <li>6 different button variants with no shared base style</li>
-          <li>No design token layer — hex values hardcoded across 200+ Figma frames</li>
-          <li>Accessibility failures on color contrast across 30% of UI elements</li>
-          <li>Design and dev using different names for the same components</li>
-          <li>New features took 2× longer to design due to from-scratch work</li>
+          <li>No shared component library — UI elements rebuilt screen by screen</li>
+          <li>No token layer — styling decisions made ad hoc with no single source of truth</li>
+          <li>Inconsistent interaction patterns across journaling, goal, and home flows</li>
+          <li>FTUE (first-time user experience) had no clear design language to guide new users</li>
+          <li>Design–dev handoff relied on verbal explanations, not documented specs</li>
         </ul>
       </div>
     </div>
 
     <div class="cs-quote">
-      <p>"Every time we shipped a new screen, I'd catch three things that didn't match the rest of the app. It was death by a thousand cuts."</p>
-      <cite>— Engineering lead, internal retro session</cite>
+      <p>"Every new screen felt like a negotiation — what should a button look like here? What's the right spacing? A design system answers those questions before they're even asked."</p>
     </div>
   </div>
 </section>
@@ -532,29 +531,29 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">Audit, architect, then build — in that order</h2>
-    <p class="cs-body">Design systems fail when they're built in isolation. I started with a cross-functional audit — involving both engineers and the product manager — to ensure the system would actually be used, not just admired.</p>
+    <h2 class="cs-h2">Foundation first, then components, then documentation</h2>
+    <p class="cs-body">Design systems fail when they're built in isolation. I started with a collaborative foundation sprint — working with engineers and the PM to ensure the system would actually get used, not just specced and shelved.</p>
 
     <div class="cs-steps">
       <div class="cs-step">
         <div class="cs-step-num">01</div>
-        <div class="cs-step-title">Audit</div>
-        <div class="cs-step-text">Catalogued 200+ existing UI elements across all platforms. Identified 6 button types, 4 type scales, 12 color inconsistencies, and 8 spacing increments.</div>
+        <div class="cs-step-title">Design System Foundation</div>
+        <div class="cs-step-text">Defined the visual hierarchy for typography, iconography, and spacing across the app. Introduced atomic principles — buttons, form elements, feedback states — and established consistent layouts from home dashboards to journal entries with clear call-to-action flows.</div>
       </div>
       <div class="cs-step">
         <div class="cs-step-num">02</div>
-        <div class="cs-step-title">Foundations</div>
-        <div class="cs-step-text">Defined token layer: color primitives → semantic tokens → component tokens. Unified type scale, spacing system (4px base), and motion curve library.</div>
+        <div class="cs-step-title">Scalable Components</div>
+        <div class="cs-step-text">Built reusable Figma components for modals, buttons, pickers (time/date), cards, inputs, and navigation. Designed for flexibility and edge cases — e.g., AM/PM toggles, error handling for required fields, disabled states like the "Save Journal" button.</div>
       </div>
       <div class="cs-step">
         <div class="cs-step-num">03</div>
-        <div class="cs-step-title">Components</div>
-        <div class="cs-step-text">Built 40+ production-ready components in Figma with auto-layout. Paired with engineering to define the code API for each component.</div>
+        <div class="cs-step-title">Interaction Guidelines</div>
+        <div class="cs-step-text">Standardised interaction patterns for journaling workflows and goal tracking. Created documentation for micro-interactions: start timers, select times, edit goals. Set behavioral rules for button states, transition animations for journal submissions, and onboarding flow.</div>
       </div>
       <div class="cs-step">
         <div class="cs-step-num">04</div>
-        <div class="cs-step-title">Documentation</div>
-        <div class="cs-step-text">Wrote usage guidelines, accessibility notes, and do/don't examples for every component. Made it a reference tool, not just a spec doc.</div>
+        <div class="cs-step-title">Handoff &amp; Visual QA</div>
+        <div class="cs-step-text">Led Figma-to-dev handoff via component naming conventions and usage guidelines. Ran VQA rounds on time pickers, journal cards, and calendar views. Collaborated with PM and engineers to handle edge cases — zero states, visual feedback for errors, and first-launch experience.</div>
       </div>
     </div>
   </div>
@@ -597,30 +596,29 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">Faster, more consistent, accessible by default</h2>
-    <p class="cs-body">Three months after full rollout, measurable improvements across every tracked metric. The 45% handoff speed improvement translated directly to shipping velocity — the team went from 2-week feature cycles to under 10 days for medium-complexity features.</p>
+    <h2 class="cs-h2">Consistent, faster to ship, easier to onboard</h2>
+    <p class="cs-body">After rollout, measurable improvements across every tracked dimension. The design system removed the guesswork from feature development — new screens could be assembled from existing components instead of rebuilt, and engineers had clear specs to work from on day one.</p>
 
     <div class="cs-cards" style="margin-top:40px;">
       <div class="cs-card">
         <div class="cs-card-num">30%</div>
-        <div class="cs-card-title">Fewer UI Inconsistencies</div>
-        <div class="cs-card-text">UI inconsistencies flagged in QA dropped by 30% within the first three months of full rollout.</div>
+        <div class="cs-card-title">Reduction in UI Inconsistencies</div>
+        <div class="cs-card-text">UI inconsistencies caught in QA dropped by 30% — component reuse replaced ad-hoc decisions with pre-validated patterns.</div>
       </div>
       <div class="cs-card">
-        <div class="cs-card-num">45%</div>
-        <div class="cs-card-title">Faster Handoff</div>
-        <div class="cs-card-text">Design-to-dev handoff time cut nearly in half. Medium-complexity features went from 2-week cycles to under 10 days.</div>
+        <div class="cs-card-num">25%</div>
+        <div class="cs-card-title">Faster Feature Rollout</div>
+        <div class="cs-card-text">Feature development velocity improved by 25% — new screens were assembled from the library, not built from scratch each time.</div>
       </div>
       <div class="cs-card">
-        <div class="cs-card-num">100%</div>
-        <div class="cs-card-title">WCAG AA Compliance</div>
-        <div class="cs-card-text">All new components launched with full WCAG AA accessibility compliance — accessibility is built in, not bolted on.</div>
+        <div class="cs-card-num">84%</div>
+        <div class="cs-card-title">Onboarding Completion</div>
+        <div class="cs-card-text">First-time user experience redesign drove an 84% onboarding completion rate — clearer flows, better visual guidance, less drop-off at key moments.</div>
       </div>
     </div>
 
     <div class="cs-quote">
-      <p>"Now when someone asks 'what does a modal look like in this app?' — there's one answer. That alone cut our review cycles in half."</p>
-      <cite>— Product Manager, Nature Counter</cite>
+      <p>"A robust design system not only enhanced app reliability — it made it easier to iterate, scale, and adapt the product with confidence."</p>
     </div>
   </div>
 </section>
