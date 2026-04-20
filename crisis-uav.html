@@ -53,11 +53,11 @@
     .cs-sidenav { position: fixed; left: 24px; top: 50%; transform: translateY(-50%); z-index: 800; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
     .cs-sidenav.is-visible { opacity: 1; pointer-events: auto; }
     .cs-sidenav ul { list-style: none; display: flex; flex-direction: column; gap: 2px; }
-    .csn-link { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); text-decoration: none; transition: color 0.2s; padding: 5px 0; white-space: nowrap; }
+    .csn-link { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); text-decoration: none; transition: color 0.25s ease, font-size 0.3s cubic-bezier(0.4,0,0.2,1), font-weight 0.25s ease, letter-spacing 0.3s ease; padding: 5px 0; white-space: nowrap; }
     .csn-dot { width: 5px; height: 5px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink: 0; transition: background 0.2s, border-color 0.2s, transform 0.25s; }
     .csn-link:hover { color: var(--text); }
     .csn-link:hover .csn-dot { background: var(--text); border-color: var(--text); }
-    .csn-link.active { color: var(--accent); }
+    .csn-link.active { color: var(--accent); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; }
     .csn-link.active .csn-dot { background: var(--accent); border-color: var(--accent); transform: scale(1.5); }
     @media (max-width: 1340px) { .cs-sidenav { display: none; } }
 

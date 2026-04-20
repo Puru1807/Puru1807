@@ -83,7 +83,7 @@
       text-transform: uppercase;
       color: var(--secondary);
       text-decoration: none;
-      transition: color 0.2s;
+      transition: color 0.25s ease, font-size 0.3s cubic-bezier(0.4,0,0.2,1), font-weight 0.25s ease, letter-spacing 0.3s ease;
       padding: 5px 0;
       white-space: nowrap;
     }
@@ -97,7 +97,7 @@
     }
     .csn-link:hover { color: var(--text); }
     .csn-link:hover .csn-dot { background: var(--text); border-color: var(--text); }
-    .csn-link.active { color: var(--accent); }
+    .csn-link.active { color: var(--accent); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; }
     .csn-link.active .csn-dot { background: var(--accent); border-color: var(--accent); transform: scale(1.5); }
     @media (max-width: 1340px) { .cs-sidenav { display: none; } }
 
