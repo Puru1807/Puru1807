@@ -7,11 +7,15 @@
     if (localStorage.getItem(STORAGE_KEY) === "1") return;
   } catch (e) { /* localStorage blocked — fall through and show gate */ }
 
-  // Hide page until user authenticates. Inserted as soon as the script runs
-  // (must be loaded synchronously in <head> before <body>).
+  // Hide page content until user authenticates. We hide direct children of
+  // <body> instead of the body itself, so we can append the gate overlay
+  // to <body> and still have it visible.
   var styleHide = document.createElement("style");
   styleHide.id = "siteGateHideStyle";
-  styleHide.textContent = "html.is-locked body { visibility: hidden !important; }";
+  styleHide.textContent = [
+    "html.is-locked body > *:not(#siteGateOverlay) { visibility: hidden !important; }",
+    "html.is-locked, html.is-locked body { overflow: hidden !important; }"
+  ].join("\n");
   document.head.appendChild(styleHide);
   document.documentElement.classList.add("is-locked");
 
@@ -46,6 +50,7 @@
       "padding:24px",
       "font-family:'Plus Jakarta Sans',-apple-system,sans-serif",
       "opacity:0",
+      "visibility:visible",
       "transition:opacity .35s ease"
     ].join(";");
 
