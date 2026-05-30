@@ -418,6 +418,9 @@
     .project-row:nth-child(4) { animation-delay: 1.3s; }
     .project-row:nth-child(5) { animation-delay: 1.4s; }
     .project-row:nth-child(6) { animation-delay: 1.5s; }
+    .project-row:nth-child(7) { animation-delay: 1.6s; }
+    .project-row:nth-child(8) { animation-delay: 1.7s; }
+    .project-row:nth-child(9) { animation-delay: 1.8s; }
 
     .project-row:first-child { border-top: 1px solid var(--border); }
 
@@ -584,6 +587,9 @@
     }
 
     /* Preview backgrounds — fallback gradients, images set via JS */
+    .preview-goldman .project-preview-inner { background: linear-gradient(135deg, #0a1929 0%, #7AB8C7 100%); }
+    .preview-tcs .project-preview-inner { background: linear-gradient(135deg, #1E3A8A 0%, #6366f1 100%); }
+    .preview-maxtra .project-preview-inner { background: linear-gradient(135deg, #064e3b 0%, #34d399 100%); }
     .preview-dreamcollege .project-preview-inner { background-color: #1a1a2e; }
     .preview-nature .project-preview-inner { background-color: #1b4332; }
     .preview-saarthi .project-preview-inner { background-color: #c1121f; }
@@ -864,8 +870,9 @@
   <section class="filters">
     <p class="filters-label">What are you looking for?</p>
     <div class="pill-row">
-      <button class="pill active" data-filter="all">All (6)</button>
-      <button class="pill" data-filter="ai">AI &amp; SaaS (2)</button>
+      <button class="pill active" data-filter="all">All (9)</button>
+      <button class="pill" data-filter="fintech">Fintech (3)</button>
+      <button class="pill" data-filter="ai">AI &amp; SaaS (3)</button>
       <button class="pill" data-filter="healthcare">Healthcare (2)</button>
       <button class="pill" data-filter="product">Product 0&#8594;1 (4)</button>
     </div>
@@ -874,8 +881,44 @@
   <!-- Projects -->
   <section class="projects" id="projects">
 
-    <a href="dreamcollege.html" class="project-row" data-categories="ai product" data-preview="dreamcollege">
+    <a href="goldman-sachs.html" class="project-row" data-categories="ai fintech" data-preview="goldman">
       <span class="project-num">01</span>
+      <div class="project-title-col">
+        <span class="project-name">Goldman Sachs <span class="arrow">→</span></span>
+        <span class="project-tag">AI &amp; Wealth Mgmt</span>
+      </div>
+      <div class="project-desc-col">
+        <p class="project-desc">Led product design for an AI-powered wealth advisory platform — citation-backed recommendations, confidence visibility, editable AI outputs. Activation 52% → 68%, AI acceptance 38% → 67%.</p>
+        <div class="project-arrow-btn">→</div>
+      </div>
+    </a>
+
+    <a href="tcs.html" class="project-row" data-categories="fintech" data-preview="tcs">
+      <span class="project-num">02</span>
+      <div class="project-title-col">
+        <span class="project-name">Tata Consultancy Services <span class="arrow">→</span></span>
+        <span class="project-tag">B2B Wealth Analytics</span>
+      </div>
+      <div class="project-desc-col">
+        <p class="project-desc">B2B wealth analytics platform for ~800 RMs. Cut portfolio review time from 25 to 14 minutes via a unified canvas architecture — ~9,167 advisor hours/month reclaimed at scale.</p>
+        <div class="project-arrow-btn">→</div>
+      </div>
+    </a>
+
+    <a href="maxtra.html" class="project-row" data-categories="fintech" data-preview="maxtra">
+      <span class="project-num">03</span>
+      <div class="project-title-col">
+        <span class="project-name">Maxtra Technologies <span class="arrow">→</span></span>
+        <span class="project-tag">Digital Banking</span>
+      </div>
+      <div class="project-desc-col">
+        <p class="project-desc">Digital banking KYC redesign for SME onboarding — completion 35% → ~58% via conditional disclosure, six-week ship vs. four-month wait. ~₹8.6 Cr/month newly-activated revenue.</p>
+        <div class="project-arrow-btn">→</div>
+      </div>
+    </a>
+
+    <a href="dreamcollege.html" class="project-row" data-categories="ai product" data-preview="dreamcollege">
+      <span class="project-num">04</span>
       <div class="project-title-col">
         <span class="project-name">DreamCollege AI <span class="arrow">→</span></span>
         <span class="project-tag">Product &amp; AI</span>
@@ -887,7 +930,7 @@
     </a>
 
     <a href="nature-counter.html" class="project-row" data-categories="product" data-preview="nature">
-      <span class="project-num">02</span>
+      <span class="project-num">05</span>
       <div class="project-title-col">
         <span class="project-name">Nature Counter <span class="arrow">→</span></span>
         <span class="project-tag">Design Systems</span>
@@ -899,7 +942,7 @@
     </a>
 
     <a href="saarthi.html" class="project-row" data-categories="healthcare product" data-preview="saarthi">
-      <span class="project-num">03</span>
+      <span class="project-num">06</span>
       <div class="project-title-col">
         <span class="project-name">Saarthi <span class="arrow">→</span></span>
         <span class="project-tag">Healthcare</span>
@@ -911,7 +954,7 @@
     </a>
 
     <a href="confidento.html" class="project-row" data-categories="product" data-preview="confidento">
-      <span class="project-num">04</span>
+      <span class="project-num">07</span>
       <div class="project-title-col">
         <span class="project-name">TheConfidento <span class="arrow">→</span></span>
         <span class="project-tag">Product 0&#8594;1</span>
@@ -923,7 +966,7 @@
     </a>
 
     <a href="safeway.html" class="project-row" data-categories="product" data-preview="safeway">
-      <span class="project-num">05</span>
+      <span class="project-num">08</span>
       <div class="project-title-col">
         <span class="project-name">Safeway Kiosk <span class="arrow">→</span></span>
         <span class="project-tag">Product &amp; Retail</span>
@@ -935,7 +978,7 @@
     </a>
 
     <a href="crisis-uav.html" class="project-row" data-categories="healthcare" data-preview="crisis">
-      <span class="project-num">06</span>
+      <span class="project-num">09</span>
       <div class="project-title-col">
         <span class="project-name">Crisis-Courier-UAV <span class="arrow">→</span></span>
         <span class="project-tag">Human Systems</span>
@@ -1128,6 +1171,9 @@
       const rows = document.querySelectorAll('.project-row');
 
       const previewData = {
+        goldman: { title: 'Goldman Sachs', metric: 'Activation +16pt  ·  AI Acceptance +29pt', img: '' },
+        tcs: { title: 'Tata Consultancy Services', metric: '25 → 14 min  ·  ~9,167 hrs/mo reclaimed', img: '' },
+        maxtra: { title: 'Maxtra Technologies', metric: 'KYC 35% → 58%  ·  ~₹8.6 Cr/mo', img: '' },
         dreamcollege: { title: 'DreamCollege AI', metric: '150K+ Users  ·  63% Retention Lift', img: 'assets/images/DreamCollege/Image-1.png' },
         nature: { title: 'Nature Counter', metric: '100K+ Users  ·  45% Faster Handoff', img: 'assets/images/Nature Counter/Scene.gif' },
         saarthi: { title: 'Saarthi', metric: '90% Satisfaction  ·  62% Faster', img: 'assets/images/Saarthi/Heroimage.png' },

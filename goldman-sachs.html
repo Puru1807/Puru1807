@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goldman Sachs — Puru Bhardwaj</title>
+  <meta name="description" content="AI-powered wealth advisory platform — activation 52% → 68%, AI recommendation acceptance 38% → 67%, citation-backed trust patterns for financial advisors.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>P</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --text: #040202; --secondary: #AAAAAA; --bg: #ffffff;
+      --bg-alt: #F0EFED; --accent: #6F767E; --accent-dim: rgba(111,118,126,0.14);
+      --border: #e0deda; --footer-bg: #040202;
+      --margin: 40px;
+      --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --display: 'Space Mono', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    ::selection { background: var(--accent); color: #fff; }
+    @media (hover: hover) and (pointer: fine) { html, body { cursor: none; } a, button { cursor: none; } }
+
+    .cursor { width: 12px; height: 12px; background: var(--text); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: transform 0.15s ease, background 0.2s, opacity 0.2s, width 0.25s, height 0.25s; will-change: transform; }
+    .cursor.large { width: 32px; height: 32px; }
+    .cursor.hidden { opacity: 0; }
+    .cursor.invert { background: var(--bg); }
+    @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
+
+    nav.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; gap: 4px; padding: 14px var(--margin); background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-brand { font-family: var(--display); font-size: 13px; font-weight: 400; letter-spacing: -0.01em; color: var(--text); text-decoration: none; flex-shrink: 0; transition: opacity 0.2s ease; }
+    .nav-brand:hover { opacity: 0.6; }
+    .nav-links { display: flex; align-items: center; gap: 4px; margin-left: auto; margin-right: 12px; }
+    .nav-link { font-family: var(--display); font-size: 12px; letter-spacing: 0.04em; color: var(--text); text-decoration: none; padding: 7px 18px; border-radius: 20px; position: relative; z-index: 1; transition: color 0.25s; }
+    .nav-link::before { content: ''; position: absolute; inset: 0; background: var(--text); border-radius: 20px; transform: scale(0); transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); z-index: -1; }
+    .nav-link:hover, .nav-link.active { color: var(--bg); }
+    .nav-link:hover::before, .nav-link.active::before { transform: scale(1); }
+
+    .theme-toggle { background: var(--bg-alt); border: 1.5px solid var(--border); padding: 8px 14px; border-radius: 100px; cursor: none; transition: background 0.25s, border-color 0.25s, transform 0.15s; display: flex; align-items: center; justify-content: center; margin-left: auto; flex-shrink: 0; }
+    .theme-toggle:hover { border-color: var(--text); transform: scale(1.05); }
+    .theme-toggle:active { transform: scale(0.96); }
+    .icon-sun { width: 20px; height: 20px; stroke: #F59E0B; fill: #F59E0B; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 6px rgba(245,158,11,0.55)); display: none; }
+    .icon-moon { width: 19px; height: 19px; stroke: #6B7EAA; fill: #6B7EAA; stroke-width: 0; filter: drop-shadow(0 0 5px rgba(107,126,170,0.4)); }
+    [data-theme="dark"] .theme-toggle { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+    [data-theme="dark"] .theme-toggle:hover { border-color: rgba(255,255,255,0.25); }
+
+    [data-theme="dark"] { --text: #F0EDE8; --secondary: #777370; --bg: #111010; --bg-alt: #1A1918; --border: #2A2826; --footer-bg: #0A0909; --accent-dim: rgba(111,118,126,0.24); }
+    [data-theme="dark"] nav.nav { background: rgba(17,16,16,0.88); }
+
+    .cs-sidenav { position: fixed; left: 24px; top: 50%; transform: translateY(-50%); z-index: 800; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+    .cs-sidenav.is-visible { opacity: 1; pointer-events: auto; }
+    .cs-sidenav ul { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .csn-link { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); text-decoration: none; transition: color 0.25s ease, font-size 0.3s cubic-bezier(0.4,0,0.2,1), font-weight 0.25s ease, letter-spacing 0.3s ease; padding: 5px 0; white-space: nowrap; }
+    .csn-dot { width: 5px; height: 5px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink: 0; transition: background 0.2s, border-color 0.2s, transform 0.25s; }
+    .csn-link:hover { color: var(--text); }
+    .csn-link:hover .csn-dot { background: var(--text); border-color: var(--text); }
+    .csn-link.active { color: var(--accent); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; }
+    .csn-link.active .csn-dot { background: var(--accent); border-color: var(--accent); transform: scale(1.5); }
+    @media (max-width: 1340px) { .cs-sidenav { display: none; } }
+
+    .cs-hero { padding: 130px var(--margin) 72px; max-width: 1200px; margin: 0 auto; }
+    .cs-back { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--secondary); text-decoration: none; margin-bottom: 48px; transition: color 0.2s; }
+    .cs-back:hover { color: var(--accent); }
+    .cs-back svg { width: 14px; height: 14px; }
+    .cs-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+    .cs-tag { font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); border: 1px solid var(--border); border-radius: 2px; padding: 5px 12px; }
+    .cs-title { font-family: var(--display); font-size: clamp(36px,6vw,72px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 28px; }
+    .cs-subtitle { font-family: var(--font); font-size: 17px; color: var(--secondary); max-width: 720px; line-height: 1.7; margin-bottom: 48px; }
+    .cs-meta-row { display: flex; gap: 48px; flex-wrap: wrap; padding-top: 40px; border-top: 1px solid var(--border); }
+    .cs-meta-item { display: flex; flex-direction: column; gap: 6px; }
+    .cs-meta-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+    .cs-meta-value { font-family: var(--font); font-size: 14px; font-weight: 500; }
+
+    .cs-stakes-strip { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-alt); }
+    .cs-stakes-inner { max-width: 1200px; margin: 0 auto; padding: 56px var(--margin); }
+    .cs-stakes-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #E0533C; margin-bottom: 12px; }
+    .cs-stakes-headline { font-family: var(--display); font-size: clamp(20px,2.4vw,30px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; max-width: 900px; }
+
+    .cs-results { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-alt); }
+    .cs-results-inner { max-width: 1200px; margin: 0 auto; padding: 64px var(--margin); }
+    .cs-results-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .cs-results-title { font-family: var(--display); font-size: clamp(17px,2vw,26px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 48px; }
+    .cs-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; border-top: 1px solid var(--border); }
+    .cs-stat { display: flex; flex-direction: column; gap: 10px; padding: 40px 32px 40px 0; border-right: 1px solid var(--border); }
+    .cs-stat:last-child { border-right: none; }
+    .cs-stat:not(:first-child) { padding-left: 32px; }
+    .cs-stat-number { font-family: var(--display); font-size: clamp(36px,5.5vw,68px); font-weight: 700; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
+    .cs-stat-desc { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.6; max-width: 180px; }
+
+    .cs-row { display: grid; grid-template-columns: 180px 1fr; gap: 64px; max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); border-bottom: 1px solid var(--border); }
+    .cs-row-label { padding-top: 4px; position: sticky; top: 80px; align-self: start; }
+    .cs-row-num { font-family: var(--display); font-size: 10px; color: var(--secondary); opacity: 0.35; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .cs-row-tag { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); line-height: 2; }
+    .cs-row-divider { width: 20px; height: 1px; background: var(--border); margin-top: 14px; }
+
+    .cs-h2 { font-family: var(--display); font-size: clamp(22px,3vw,38px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 24px; }
+    .cs-h3 { font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; margin-top: 48px; }
+    .cs-h3:first-child { margin-top: 0; }
+    .cs-body { font-family: var(--font); font-size: 16px; line-height: 1.85; color: var(--text); max-width: 720px; }
+    .cs-body + .cs-body { margin-top: 16px; }
+    .cs-body strong { font-weight: 600; }
+
+    .cs-info-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; margin-top: 40px; border: 1px solid var(--border); }
+    .cs-info-item { padding: 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .cs-info-item:nth-child(3n) { border-right: none; }
+    .cs-info-item:nth-last-child(-n+3) { border-bottom: none; }
+    .cs-info-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); margin-bottom: 8px; }
+    .cs-info-value { font-family: var(--font); font-size: 14px; font-weight: 500; line-height: 1.6; }
+
+    .cs-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 40px; background: var(--border); border: 1px solid var(--border); }
+    .cs-card { padding: 32px 24px; background: var(--bg); }
+    .cs-card-num { font-family: var(--display); font-size: 28px; font-weight: 700; color: var(--accent); opacity: 0.4; letter-spacing: -0.04em; margin-bottom: 16px; line-height: 1; }
+    .cs-card-title { font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+    .cs-card-text { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.65; }
+
+    .cs-quote { position: relative; padding: 32px 40px; background: var(--bg-alt); border-left: 4px solid var(--accent); margin: 48px 0; max-width: 720px; }
+    .cs-quote::before { content: '\201C'; font-family: var(--display); font-size: 80px; color: var(--accent); opacity: 0.15; position: absolute; top: -8px; left: 32px; line-height: 1; }
+    .cs-quote p { font-family: var(--display); font-size: 15px; font-style: italic; line-height: 1.7; position: relative; z-index: 1; }
+    .cs-quote cite { display: block; margin-top: 16px; font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); font-style: normal; }
+
+    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; margin-top: 40px; }
+    .cs-list { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
+    .cs-list li { display: flex; gap: 16px; font-family: var(--font); font-size: 14px; line-height: 1.7; }
+    .cs-list li::before { content: '\2192'; font-family: var(--display); color: var(--accent); flex-shrink: 0; font-size: 12px; margin-top: 2px; }
+    .cs-note { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 4px; padding: 24px 28px; margin-top: 32px; font-family: var(--font); font-size: 15px; line-height: 1.8; color: var(--secondary); }
+    .cs-note strong { color: var(--text); }
+
+    /* Problem statement formula box */
+    .cs-formula { background: var(--bg-alt); border-left: 3px solid #E0533C; padding: 28px 32px; margin-top: 32px; max-width: 760px; font-family: var(--font); font-size: 16px; line-height: 1.85; }
+    .cs-formula strong { color: #E0533C; font-weight: 600; }
+    .cs-formula-label { font-family: var(--display); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: #E0533C; display: block; margin-bottom: 14px; }
+
+    /* Tradeoff matrix */
+    .cs-tradeoff { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 32px; background: var(--border); border: 1px solid var(--border); }
+    .cs-tradeoff-cell { padding: 24px; background: var(--bg); }
+    .cs-tradeoff-label { font-family: var(--display); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 14px; }
+    .cs-tradeoff-cell.gained .cs-tradeoff-label { color: #3CB371; }
+    .cs-tradeoff-cell.lost .cs-tradeoff-label { color: #E0533C; }
+    .cs-tradeoff-cell.why .cs-tradeoff-label { color: var(--accent); }
+    .cs-tradeoff-text { font-family: var(--font); font-size: 13px; line-height: 1.7; color: var(--text); }
+
+    /* Options considered */
+    .cs-options { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+    .cs-option { padding: 24px 28px; border: 1px solid var(--border); border-radius: 4px; }
+    .cs-option-tag { font-family: var(--display); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 10px; }
+    .cs-option.rejected .cs-option-tag { color: #E0533C; }
+    .cs-option.chosen .cs-option-tag { color: #3CB371; }
+    .cs-option-title { font-family: var(--display); font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+    .cs-option-text { font-family: var(--font); font-size: 14px; color: var(--secondary); line-height: 1.7; }
+    .cs-option.chosen { background: rgba(60,179,113,0.04); border-color: rgba(60,179,113,0.25); }
+
+    .cs-conclusion { max-width: 1200px; margin: 0 auto; padding: 100px var(--margin); text-align: center; border-bottom: 1px solid var(--border); }
+    .cs-conclusion-eyebrow { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 24px; }
+    .cs-conclusion-text { font-family: var(--display); font-size: clamp(20px,3vw,36px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; max-width: 760px; margin: 0 auto; }
+
+    .cs-next { max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
+    .cs-next-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 10px; }
+    .cs-next-link { font-family: var(--display); font-size: clamp(20px,2.8vw,32px); font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; transition: color 0.2s; display: flex; align-items: center; gap: 16px; }
+    .cs-next-link:hover { color: var(--accent); }
+    .cs-next-link svg { width: 28px; height: 28px; transition: transform 0.2s; }
+    .cs-next-link:hover svg { transform: translateX(8px); }
+
+    footer.footer { background: var(--footer-bg); color: #fff; padding: 64px var(--margin) 40px; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 64px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .footer-tagline { font-family: var(--display); font-size: clamp(16px,2vw,22px); font-weight: 700; line-height: 1.45; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .footer-sub { font-family: var(--font); font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.6; }
+    .footer-heading { font-family: var(--display); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 20px; }
+    .footer-links { display: flex; flex-direction: column; gap: 12px; }
+    .footer-links a { font-family: var(--font); font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; position: relative; width: fit-content; }
+    .footer-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0%; height: 1px; background: var(--accent); transition: width 0.25s; }
+    .footer-links a:hover { color: #fff; }
+    .footer-links a:hover::after { width: 100%; }
+    .footer-bottom { max-width: 1200px; margin: 32px auto 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .footer-copy { font-family: var(--display); font-size: 11px; letter-spacing: 0.05em; color: rgba(255,255,255,0.2); }
+
+    [data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    [data-reveal].revealed { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      .cs-row { grid-template-columns: 1fr; gap: 20px; padding: 56px var(--margin); }
+      .cs-row-label { position: static; }
+      .cs-row-num { display: none; }
+    }
+    @media (max-width: 768px) {
+      :root { --margin: 20px; }
+      nav.nav { padding: 10px var(--margin); gap: 0; }
+      .nav-link { font-size: 11px; padding: 6px 12px; }
+      .cs-stats { grid-template-columns: 1fr 1fr; }
+      .cs-stat { padding: 28px 16px 28px 0; }
+      .cs-stat:not(:first-child) { padding-left: 16px; }
+      .cs-two-col { grid-template-columns: 1fr; gap: 32px; }
+      .cs-cards { grid-template-columns: 1fr; }
+      .cs-tradeoff { grid-template-columns: 1fr; }
+      .cs-info-grid { grid-template-columns: 1fr 1fr; }
+      .cs-info-item:nth-child(3n) { border-right: 1px solid var(--border); }
+      .cs-info-item:nth-child(2n) { border-right: none; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+      .cs-next { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 480px) {
+      .cs-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/shared/site-common.css">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav class="cs-sidenav" id="csSidenav" aria-label="Case study sections">
+  <ul>
+    <li><a href="#s-overview"    class="csn-link" data-s="s-overview"><span class="csn-dot"></span>Overview</a></li>
+    <li><a href="#s-problem"     class="csn-link" data-s="s-problem"><span class="csn-dot"></span>Problem</a></li>
+    <li><a href="#s-research"    class="csn-link" data-s="s-research"><span class="csn-dot"></span>Research</a></li>
+    <li><a href="#s-options"     class="csn-link" data-s="s-options"><span class="csn-dot"></span>Options</a></li>
+    <li><a href="#s-decision"    class="csn-link" data-s="s-decision"><span class="csn-dot"></span>Decision</a></li>
+    <li><a href="#s-design"      class="csn-link" data-s="s-design"><span class="csn-dot"></span>Design</a></li>
+    <li><a href="#s-outcome"     class="csn-link" data-s="s-outcome"><span class="csn-dot"></span>Outcome</a></li>
+    <li><a href="#s-next"        class="csn-link" data-s="s-next"><span class="csn-dot"></span>What's Next</a></li>
+    <li><a href="#s-constraints" class="csn-link" data-s="s-constraints"><span class="csn-dot"></span>Constraints</a></li>
+    <li><a href="#s-reflection"  class="csn-link" data-s="s-reflection"><span class="csn-dot"></span>Reflection</a></li>
+  </ul>
+</nav>
+
+<div id="siteShellMount"></div>
+
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<div class="cs-hero" id="cs-top">
+  <a href="index.html#projects" class="cs-back">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+    All projects
+  </a>
+  <div class="cs-tags">
+    <span class="cs-tag">AI Product Design</span>
+    <span class="cs-tag">Wealth Management</span>
+    <span class="cs-tag">Enterprise SaaS</span>
+    <span class="cs-tag">Trust &amp; Explainability</span>
+  </div>
+  <h1 class="cs-title">Goldman Sachs</h1>
+  <p class="cs-subtitle">Led product design for an AI-powered wealth advisory platform — building citation-backed recommendations, confidence visibility, and editable AI outputs that financial advisors would actually trust enough to send to clients.</p>
+  <div class="cs-meta-row">
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Role</span>
+      <span class="cs-meta-value">Product Designer &mdash; AI SaaS Platform</span>
+    </div>
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Timeline</span>
+      <span class="cs-meta-value">Jun 2025 &mdash; Present</span>
+    </div>
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Platform</span>
+      <span class="cs-meta-value">Web SaaS &middot; Advisor + Client portals</span>
+    </div>
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Domain</span>
+      <span class="cs-meta-value">AI &middot; Wealth Management &middot; Compliance</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     STAKES STRIP
+════════════════════════════════════════ -->
+<section class="cs-stakes-strip">
+  <div class="cs-stakes-inner">
+    <p class="cs-stakes-label">The Stakes</p>
+    <h2 class="cs-stakes-headline">New-advisor activation was stuck at 52%. Every untapped advisor represented a multi-million dollar AUM cohort the platform couldn't activate. The product wasn't broken &mdash; it was untrusted.</h2>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     RESULTS STRIP
+════════════════════════════════════════ -->
+<section class="cs-results" id="cs-results">
+  <div class="cs-results-inner">
+    <p class="cs-results-label">Outcomes &mdash; two product releases</p>
+    <h2 class="cs-results-title">Activation 52% &rarr; 68% &middot; AI acceptance 38% &rarr; 67% &middot; Trust patterns adopted as platform standard</h2>
+    <div class="cs-stats">
+      <div class="cs-stat">
+        <span class="cs-stat-number">+16pt</span>
+        <span class="cs-stat-desc">new-advisor activation lift over two product releases (52% &rarr; 68%)</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">+29pt</span>
+        <span class="cs-stat-desc">AI recommendation acceptance lift after citation + confidence patterns shipped</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">~60%</span>
+        <span class="cs-stat-desc">estimated reduction in "why did the AI suggest this" support tickets post-release</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">3</span>
+        <span class="cs-stat-desc">trust patterns shipped &mdash; confidence visibility, citations, editable outputs</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     01 · OVERVIEW
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-overview" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">01</div>
+    <div class="cs-row-tag">Overview</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">An AI advisory tool that advisors didn't trust enough to use</h2>
+    <p class="cs-body">Goldman Sachs has been building AI-powered tools to augment its wealth advisory workflows &mdash; helping advisors generate personalised investment recommendations, summarise client portfolios, and draft client-ready commentary in seconds rather than hours. The technology worked. The adoption didn't.</p>
+    <p class="cs-body">I joined the AI SaaS team to own the redesign of onboarding, recommendation flows, and the trust layer that sits between an LLM output and a human advisor's reputation. In financial advisory, a wrong AI recommendation isn't just a UX problem &mdash; it's a regulatory and fiduciary one. Trust isn't a feature. It's the product.</p>
+    <div class="cs-info-grid">
+      <div class="cs-info-item">
+        <p class="cs-info-label">Headquarters</p>
+        <p class="cs-info-value">New York, USA</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">Founded</p>
+        <p class="cs-info-value">1869</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">Industry</p>
+        <p class="cs-info-value">Investment Banking &middot; Wealth Mgmt</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">AUM</p>
+        <p class="cs-info-value">~$2.8T (public, 2024)</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">Platform Users</p>
+        <p class="cs-info-value">~3,000 advisors (internal SaaS)</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">Compliance Surface</p>
+        <p class="cs-info-value">SEC &middot; FINRA &middot; internal IB controls</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     02 · PROBLEM
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-problem" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">02</div>
+    <div class="cs-row-tag">Problem</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Advisors weren't abandoning the AI because it was wrong. They abandoned because they couldn't audit it.</h2>
+    <p class="cs-body">When I joined the team, the platform was hitting only 52% activation among new advisors. AI recommendations were displayed as confident, polished outputs &mdash; with no visible reasoning, no source data, no way to amend before sending to clients. In a regulated industry where every advice document gets archived for seven years, that's not "AI being helpful." That's career risk.</p>
+
+    <div class="cs-formula">
+      <span class="cs-formula-label">Problem statement</span>
+      <strong>First-time platform users</strong> (wealth advisors, 5&ndash;15 years tenure) <strong>failed to complete activation</strong> because <strong>AI-generated recommendations lacked source provenance, confidence signalling, and edit affordances</strong> &mdash; resulting in <strong>48% of new advisors abandoning within their first two weeks</strong>, documented via internal product analytics across the first two release cohorts.
+    </div>
+
+    <div class="cs-quote">
+      <p>"I'm not going to send a client a recommendation I can't defend to compliance. The AI gives me a clean answer, but I can't see where it came from. So I just... don't use it."</p>
+      <cite>&mdash; Senior wealth advisor, week-2 platform exit interview</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     03 · RESEARCH
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-research" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">03</div>
+    <div class="cs-row-tag">Research</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Three sources of evidence pointed to the same root cause</h2>
+    <p class="cs-body">I treated the activation drop as a research problem before treating it as a design one. The thesis wasn't "the UI is confusing" &mdash; it was "advisors don't trust outputs they can't trace." Three independent evidence streams converged on the same answer.</p>
+
+    <div class="cs-cards">
+      <div class="cs-card">
+        <div class="cs-card-num">01</div>
+        <div class="cs-card-title">Activation Funnel Analysis</div>
+        <div class="cs-card-text">Internal product analytics showed 48% of new advisors dropped between first AI recommendation view and first AI recommendation accepted. The drop was concentrated in a single 90-second window after the AI output rendered. The pattern was hesitation, not navigation failure.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <div class="cs-card-title">Advisor Shadowing (n=12)</div>
+        <div class="cs-card-text">I shadowed 12 advisors during live client portfolio reviews. Eight of them mentioned, unprompted, that they "couldn't see the AI's working." Four had built personal spreadsheets to reverse-engineer AI recommendations before using them. That's a strong signal that the trust layer was missing.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">03</div>
+        <div class="cs-card-title">Industry Benchmark</div>
+        <div class="cs-card-text">Gartner's 2024 "Trust in AI Financial Tools" report found 73% of financial advisors reject AI recommendations that lack visible source citations &mdash; even when the recommendation is correct. This wasn't a Goldman-specific behaviour. It was a category-wide pattern we hadn't designed for.</div>
+      </div>
+    </div>
+
+    <h3 class="cs-h3">What the data didn't say &mdash; and how I filled the gap</h3>
+    <p class="cs-body">Internal analytics could tell us where advisors dropped off, but not why a specific recommendation got rejected. To get to mechanism, I partnered with the AI/ML team to build a lightweight feedback loop: a one-tap "this wasn't useful" signal, with optional reason codes. Within three weeks we had categorised reasons for 1,200+ rejections. The top three: "no source visible" (38%), "can't edit before sending" (24%), "confidence not stated" (19%). 81% of rejections were trust-layer problems, not AI-quality problems.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     04 · OPTIONS
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-options" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">04</div>
+    <div class="cs-row-tag">Options Considered</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Three approaches. Two rejected. Here's the reasoning.</h2>
+
+    <div class="cs-options">
+      <div class="cs-option rejected">
+        <div class="cs-option-tag">Option A &mdash; Rejected</div>
+        <div class="cs-option-title">Full automation &mdash; AI auto-applies recommendations to client portfolios</div>
+        <div class="cs-option-text">The fastest path to "AI is doing the work" &mdash; but a non-starter. Regulatory liability exposure was unacceptable: SEC fiduciary duty rules require human attestation on advice. Compliance team flagged it on day one. The design didn't need to bypass advisors; it needed to make advisors faster.</div>
+      </div>
+      <div class="cs-option rejected">
+        <div class="cs-option-tag">Option B &mdash; Rejected</div>
+        <div class="cs-option-title">AI as a "suggestion bot" &mdash; vague, low-confidence outputs only</div>
+        <div class="cs-option-text">The safest path. The platform would only surface hedged suggestions ("you might consider...") and let the advisor do all the work. Rejected because pilot feedback was unambiguous: advisors complained the AI was "too cautious to be useful." A tool that doesn't make a real recommendation provides no leverage &mdash; advisors would just bypass it.</div>
+      </div>
+      <div class="cs-option chosen">
+        <div class="cs-option-tag">Option C &mdash; Chosen</div>
+        <div class="cs-option-title">AI as auditable co-pilot &mdash; confident outputs with full provenance + edit affordances</div>
+        <div class="cs-option-text">Surface every AI recommendation with: (1) a numerical confidence score, (2) inline citations to the underlying data sources, and (3) editable fields so advisors could amend before sending to clients. The AI does the heavy lifting; the advisor stays in the loop and stays accountable. This is the position the regulator, the advisor, and the AI/ML team could all defend.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     05 · DECISION + TRADEOFF
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-decision" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">05</div>
+    <div class="cs-row-tag">Decision &amp; Tradeoff</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">We chose explainability over speed. Here's what we gave up to do that.</h2>
+    <p class="cs-body">Every AI recommendation now takes <strong>2.4 seconds longer to render</strong> than it did pre-redesign. That's not a bug &mdash; that's the cost of rendering confidence scores, retrieving citations from the source data layer, and laying out the edit affordances inline. The product team initially pushed back on the latency hit. Here's how we defended it.</p>
+
+    <div class="cs-tradeoff">
+      <div class="cs-tradeoff-cell gained">
+        <div class="cs-tradeoff-label">+ Gained</div>
+        <div class="cs-tradeoff-text">Advisor trust. AI recommendation acceptance went from 38% to 67%. Activation rose 16 points. Estimated 60% reduction in "why did the AI suggest this" support tickets.</div>
+      </div>
+      <div class="cs-tradeoff-cell lost">
+        <div class="cs-tradeoff-label">&minus; Lost</div>
+        <div class="cs-tradeoff-text">2.4 seconds of perceived latency per recommendation. Compared to the prior version, the AI feels slower. For high-throughput advisors generating 30+ recommendations per day, that's ~70 seconds of cumulative wait time.</div>
+      </div>
+      <div class="cs-tradeoff-cell why">
+        <div class="cs-tradeoff-label">Why accepted</div>
+        <div class="cs-tradeoff-text">A 2.4s delay on a usable tool beats a 0s delay on an untrusted one. The data was unambiguous: 81% of rejections were trust-layer problems, not speed problems. Optimising for the bottleneck was the only call.</div>
+      </div>
+    </div>
+
+    <h3 class="cs-h3">The three trust patterns we shipped</h3>
+    <p class="cs-body"><strong>Confidence visibility.</strong> Every recommendation displays a 0&ndash;100 confidence score with a visual band (high/medium/low). Advisors can filter the queue to "high confidence only" if they want to triage faster. The number is generated by the model's actual logit distribution &mdash; not a vibe.</p>
+    <p class="cs-body"><strong>Citation-backed recommendations.</strong> Every claim links inline to the underlying portfolio data, market signal, or client preference that triggered it. Click any citation; the source panel opens with the raw data. This is the single most-used feature in the release &mdash; 84% of activated advisors use it at least daily.</p>
+    <p class="cs-body"><strong>Editable AI responses.</strong> Advisors can amend any AI output before sending to a client. Edits are tracked, attributed, and don't get lost on regeneration. This was the compliance team's hard requirement &mdash; and it turned out to be the design feature advisors valued most.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     06 · DESIGN
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-design" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">06</div>
+    <div class="cs-row-tag">Design Decisions</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Every UI decision pointed back to one question: can the advisor defend this to compliance?</h2>
+
+    <h3 class="cs-h3">The recommendation card &mdash; annotated decisions</h3>
+    <div class="cs-two-col" style="margin-top:0;">
+      <div>
+        <p class="cs-body"><strong>Confidence band placed top-right, not bottom.</strong></p>
+        <p class="cs-body">Eye-tracking from pilot sessions showed advisors scanned recommendations in a top-right Z pattern. Placing the confidence score in their first visual stop meant trust evaluation happened before reading content &mdash; not after.</p>
+      </div>
+      <div>
+        <p class="cs-body"><strong>Citations underlined, not chip-styled.</strong></p>
+        <p class="cs-body">Initial design used pill-shaped chips for citations. Tested poorly &mdash; advisors read chips as "tags" not "sources." Inline underlines (the document convention they'd seen for 20+ years) tested 3&times; higher in click-through on first encounter.</p>
+      </div>
+    </div>
+
+    <h3 class="cs-h3">Onboarding flow &mdash; sequencing the trust narrative</h3>
+    <p class="cs-body">The activation funnel had a specific failure point: the first AI recommendation. So we rebuilt onboarding to <em>teach trust before testing it</em>. First screen: a guided tour through one pre-built recommendation, narrating the confidence score and citation system before the advisor sees their own data. Second screen: a sandbox recommendation against fake client data, where the advisor can test editing without risk. Only on screen three does live client data appear. The sequence: <strong>watch &rarr; practice &rarr; do.</strong></p>
+
+    <h3 class="cs-h3">Design system contribution</h3>
+    <p class="cs-body">I built and maintained the centralised Figma design system that the recommendation card patterns now live in &mdash; with reusable components, governance standards, and explicit documentation on which components are "AI-output" vs "advisor-output" (a critical compliance distinction). Engineering handoff time on AI-pattern work dropped substantially after the system shipped, and the cross-team consistency made downstream features faster to design and faster to review.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     07 · OUTCOME
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-outcome" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">07</div>
+    <div class="cs-row-tag">Outcome</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Activation 52% &rarr; 68%. AI acceptance 38% &rarr; 67%. The numbers, and what they mean at scale.</h2>
+
+    <h3 class="cs-h3">Measured outcomes &mdash; two release cohorts</h3>
+    <p class="cs-body"><strong>New-advisor activation: 52% &rarr; 68%</strong> (+16 percentage points). Measured via internal product analytics across the first two product releases post-redesign. The improvement was concentrated among advisors with 5&ndash;15 years of tenure &mdash; exactly the cohort the research had flagged as most trust-sensitive.</p>
+    <p class="cs-body"><strong>AI recommendation acceptance rate: 38% &rarr; 67%</strong> (+29 percentage points). Measured per-recommendation across all activated advisors. The lift validated the trust thesis: when advisors can audit AI outputs, they accept them at nearly twice the rate.</p>
+    <p class="cs-body"><strong>Support ticket reduction (estimated):</strong> tickets categorised as "AI behaviour unclear" or "why did this happen" dropped an estimated 60% in the first quarter post-release, based on the ticketing system's auto-tag classifier (calibrated against a manual audit of 200 tickets). Methodology: pre/post comparison of 90-day windows, holding ticket volume baseline constant.</p>
+
+    <h3 class="cs-h3">Business framing &mdash; the leverage of a 16-point activation lift</h3>
+    <p class="cs-body">Goldman's wealth platform serves ~3,000 internal advisors. A 16-point activation lift translates to <strong>~480 additional activated advisors</strong> beyond the prior baseline. With an average book of ~$200M AUM per advisor (a publicly-cited Goldman PWM range), that's an estimated <strong>~$96B in AUM newly under AI-augmented management</strong> &mdash; not new assets, but newly capable of being managed with the platform's AI tooling. The framing here matters: design didn't acquire AUM, but it removed the trust ceiling that was blocking the AI from generating leverage on existing AUM.</p>
+
+    <div class="cs-quote">
+      <p>"The redesign didn't change the AI model. It changed whether advisors believed the AI model. That's the entire game in regulated industries."</p>
+      <cite>&mdash; Product lead, internal release retro</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     08 · WHAT'S NEXT
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-next" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">08</div>
+    <div class="cs-row-tag">What's Next</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Cohort-specific confidence visualisations &mdash; A/B test in next release</h2>
+    <p class="cs-body">The 67% AI acceptance rate is strong, but the residual 33% is informative. Reason-code data shows senior advisors (15+ yrs) reject recommendations because the confidence display feels "too prescriptive" &mdash; they prefer a range to a single number. Junior advisors (under 5 yrs) reject because they want <em>more</em> guidance, not less. One UI doesn't serve both cohorts.</p>
+    <p class="cs-body"><strong>Hypothesis:</strong> rendering confidence as a range (e.g., 78&ndash;84%) for senior advisors and as a single number + plain-language explanation for junior advisors will lift acceptance by another 8&ndash;12 percentage points. <strong>Instrumentation</strong> is already in place: tenure-segmented analytics, cohort-segmented A/B framework, and a rollback plan if the senior cohort sees acceptance drop instead.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     09 · CONSTRAINTS
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-constraints" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">09</div>
+    <div class="cs-row-tag">Constraints</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">A regulated industry. A black-box AI. A two-release window. Pick your battles.</h2>
+    <p class="cs-body">Goldman's AI advisory platform doesn't have the luxury of consumer-app constraints. Every design decision had to clear three filters before it shipped: compliance, model interpretability, and advisor trust. The constraint wasn't time &mdash; it was the surface area I could realistically influence inside a two-release product cycle.</p>
+
+    <h3 class="cs-h3">The triangle: I picked Scope + Quality. Time was the dial I managed.</h3>
+    <p class="cs-body">Compliance reviews don't compress. The AI model couldn't change. So the conscious sacrifice was timeline: the trust-layer redesign shipped across two releases instead of one, with the confidence pattern in release 1 and citations + editability in release 2. Cutting scope was unsafe (an incomplete trust layer is worse than no trust layer). Cutting quality was unthinkable (a regulated industry). Time stretched. That was the right call.</p>
+
+    <div class="cs-cards" style="margin-top:32px;">
+      <div class="cs-card">
+        <div class="cs-card-num">01</div>
+        <div class="cs-card-title">Finding Assumptions Without Bypassing Compliance</div>
+        <div class="cs-card-text">Traditional UX research with external users wasn't an option &mdash; advisor workflows touch client data covered by attorney-client privilege equivalents. So I designed a synthetic-advisor research protocol: shadowing real advisors during real reviews, but only capturing interaction patterns, not data content. 12 sessions produced the qualitative signal; analytics produced the quantitative.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <div class="cs-card-title">What Moved to V3</div>
+        <div class="cs-card-text">Cohort-specific confidence rendering. Automated regression flags when AI confidence drops below a per-client trust threshold. Multi-modal citations (chart-based, not just text). All documented with clear ownership and instrumentation already in place &mdash; so the next sprint inherits a brief, not a blank page.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">03</div>
+        <div class="cs-card-title">How AI Tooling Compressed Design Cycles</div>
+        <div class="cs-card-text">Figma Make accelerated component scaffolding for the recommendation card variants (we needed 14 confidence-band states). Claude Code prototyped the citation expansion microinteractions so I could pressure-test them before engineering committed. The result: a compliance-sensitive surface shipped in two releases instead of three.</div>
+      </div>
+    </div>
+
+    <div class="cs-quote" style="margin-top:40px;">
+      <p>"In regulated AI, the design constraint isn't time. It's how much you can change before the legal review cycle resets. Pick your changes carefully &mdash; and make every one count."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     10 · REFLECTION
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-reflection" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">10</div>
+    <div class="cs-row-tag">Reflection</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Three lessons that will shape how I design AI products from here</h2>
+    <div class="cs-cards">
+      <div class="cs-card">
+        <div class="cs-card-num">01</div>
+        <div class="cs-card-title">Trust Is The Product</div>
+        <div class="cs-card-text">In regulated industries, AI adoption isn't blocked by model quality &mdash; it's blocked by the absence of an auditable trust layer. The most important UI on the screen isn't the AI's answer. It's the explanation behind it.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <div class="cs-card-title">Slower Beats Untrusted</div>
+        <div class="cs-card-text">Performance is a feature only when the baseline product is being used. A 2.4-second latency cost was the right tradeoff because the alternative was a faster product that no one trusted enough to adopt. Speed is downstream of trust.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">03</div>
+        <div class="cs-card-title">Design The Audit Trail</div>
+        <div class="cs-card-text">Every AI surface I design now starts from "how does the human prove they reviewed this?" not "how do we display the model output?" That single reframe changes the entire information architecture &mdash; from confidence visibility to edit history to citation density.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Conclusion ── -->
+<div class="cs-conclusion" data-reveal>
+  <p class="cs-conclusion-eyebrow">Conclusion</p>
+  <p class="cs-conclusion-text">In regulated AI, you don't ship a model. You ship the proof that a human can defend it.</p>
+  <p style="font-family:var(--font);font-size:16px;color:var(--secondary);margin-top:24px;line-height:1.8;max-width:680px;margin-left:auto;margin-right:auto;">The trust patterns shipped at Goldman Sachs &mdash; confidence visibility, citation-backed recommendations, editable AI outputs &mdash; are now adopted as the platform standard for AI-output surfaces across the broader wealth advisory product line.</p>
+  <p style="font-family:var(--display);font-size:13px;color:var(--secondary);margin-top:48px;letter-spacing:0.04em;">Glad we could cross paths.<br>Out of anywhere you could be, you're here.</p>
+</div>
+
+<!-- ── Next project ── -->
+<div class="cs-next">
+  <div>
+    <p class="cs-next-label">Next project</p>
+    <a href="tcs.html" class="cs-next-link">
+      Tata Consultancy Services
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 16h20M18 8l8 8-8 8"/></svg>
+    </a>
+  </div>
+  <a href="index.html#projects" class="cs-back" style="margin-bottom:0;">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+    All projects
+  </a>
+</div>
+
+<!-- ── Footer ── -->
+<footer class="footer" id="footer">
+  <div class="footer-grid">
+    <div>
+      <p class="footer-tagline">You made it through!</p>
+      <p class="footer-sub">This website was hand-coded with &hearts; in HTML, CSS and JS by Puru Bhardwaj.</p>
+    </div>
+    <div>
+      <h3 class="footer-heading">Recent Work</h3>
+      <div class="footer-links">
+        <a href="goldman-sachs.html">Goldman Sachs</a>
+        <a href="tcs.html">Tata Consultancy Services</a>
+        <a href="maxtra.html">Maxtra Technologies</a>
+      </div>
+    </div>
+    <div>
+      <h3 class="footer-heading">Say Hi!</h3>
+      <div class="footer-links">
+        <a href="https://linkedin.com/in/purubhardwaj9/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:purubhardwaj99@gmail.com">Email</a>
+        <a href="https://purubhardwajdesign.com" target="_blank" rel="noopener">Portfolio</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">&copy; 2026 Puru Bhardwaj</span>
+    <span class="footer-copy">Visual Product Designer</span>
+  </div>
+</footer>
+
+<script>
+  window.PORTFOLIO_CONFIG = {
+    navActive: 'work',
+    brandHref: 'index.html#top',
+    heroAnchorId: 'cs-top'
+  };
+</script>
+<script src="assets/shared/site-common.js"></script>
+<script>
+  (function(){
+    const cursor = document.getElementById('cursor');
+    if (!cursor) return;
+    let mx = window.innerWidth/2, my = window.innerHeight/2, cx = mx, cy = my;
+    document.addEventListener('mousemove', function(e){ mx = e.clientX; my = e.clientY; });
+    function animate(){ cx = mx; cy = my; cursor.style.transform = 'translate3d('+(cx-6)+'px,'+(cy-6)+'px,0)'; requestAnimationFrame(animate); }
+    animate();
+    document.querySelectorAll('a, button').forEach(function(el){
+      el.addEventListener('mouseenter', function(){ cursor.classList.add('large'); });
+      el.addEventListener('mouseleave', function(){ cursor.classList.remove('large'); });
+    });
+    const footer = document.querySelector('footer');
+    if (footer){ footer.addEventListener('mouseenter', function(){ cursor.classList.add('invert'); }); footer.addEventListener('mouseleave', function(){ cursor.classList.remove('invert'); }); }
+  })();
+
+  (function(){
+    const els = document.querySelectorAll('[data-reveal]');
+    const io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('revealed'); io.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    els.forEach(function(el){ io.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
