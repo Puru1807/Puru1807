@@ -380,12 +380,54 @@
       color: var(--bg);
     }
 
+    /* ——— Section header (Work / Case Studies) ——— */
+    .section-header {
+      padding: 80px var(--margin) 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 32px;
+      border-top: 1px solid var(--border);
+    }
+    .section-header.no-border { border-top: none; padding-top: 40px; }
+    .section-eyebrow {
+      font-family: var(--display);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: var(--display);
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.0;
+      color: var(--text);
+    }
+    .section-sub {
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--secondary);
+      max-width: 420px;
+      padding-bottom: 8px;
+    }
+    @media (max-width: 768px) {
+      .section-header { grid-template-columns: 1fr; padding: 56px var(--margin) 16px; gap: 16px; }
+      .section-sub { max-width: 100%; padding-bottom: 0; }
+    }
+
     /* ——— Projects ——— */
-    .projects {
+    .projects, .work-section {
       padding: 0 var(--margin) 100px;
       max-width: 1200px;
       margin: 0 auto;
     }
+    .work-section { padding-bottom: 24px; }
 
     .project-row {
       display: grid;
@@ -866,20 +908,18 @@
     </div>
   </section>
 
-  <!-- Filters -->
-  <section class="filters">
-    <p class="filters-label">What are you looking for?</p>
-    <div class="pill-row">
-      <button class="pill active" data-filter="all">All (9)</button>
-      <button class="pill" data-filter="fintech">Fintech (3)</button>
-      <button class="pill" data-filter="ai">AI &amp; SaaS (3)</button>
-      <button class="pill" data-filter="healthcare">Healthcare (2)</button>
-      <button class="pill" data-filter="product">Product 0&#8594;1 (4)</button>
+  <!-- ════════════════════════════════════════
+       WORK — Professional Experience
+  ════════════════════════════════════════ -->
+  <div class="section-header no-border" id="work">
+    <div>
+      <p class="section-eyebrow">01 &middot; Professional Experience</p>
+      <h2 class="section-title">Work</h2>
     </div>
-  </section>
+    <p class="section-sub">Product design across AI, fintech, and enterprise SaaS &mdash; Goldman Sachs, TCS, Maxtra Technologies.</p>
+  </div>
 
-  <!-- Projects -->
-  <section class="projects" id="projects">
+  <section class="work-section">
 
     <a href="goldman-sachs.html" class="project-row" data-categories="ai fintech" data-preview="goldman">
       <span class="project-num">01</span>
@@ -917,8 +957,35 @@
       </div>
     </a>
 
+  </section>
+
+  <!-- ════════════════════════════════════════
+       CASE STUDIES — Selected Projects
+  ════════════════════════════════════════ -->
+  <div class="section-header" id="case-studies">
+    <div>
+      <p class="section-eyebrow">02 &middot; Selected Projects</p>
+      <h2 class="section-title">Case Studies</h2>
+    </div>
+    <p class="section-sub">Deep-dive projects across AI, healthcare, design systems, and 0&rarr;1 product design.</p>
+  </div>
+
+  <!-- Filters -->
+  <section class="filters">
+    <p class="filters-label">What are you looking for?</p>
+    <div class="pill-row">
+      <button class="pill active" data-filter="all">All (6)</button>
+      <button class="pill" data-filter="ai">AI &amp; SaaS (1)</button>
+      <button class="pill" data-filter="healthcare">Healthcare (2)</button>
+      <button class="pill" data-filter="product">Product 0&#8594;1 (5)</button>
+    </div>
+  </section>
+
+  <!-- Case Studies -->
+  <section class="projects" id="projects">
+
     <a href="dreamcollege.html" class="project-row" data-categories="ai product" data-preview="dreamcollege">
-      <span class="project-num">04</span>
+      <span class="project-num">01</span>
       <div class="project-title-col">
         <span class="project-name">DreamCollege AI <span class="arrow">→</span></span>
         <span class="project-tag">Product &amp; AI</span>
@@ -930,7 +997,7 @@
     </a>
 
     <a href="nature-counter.html" class="project-row" data-categories="product" data-preview="nature">
-      <span class="project-num">05</span>
+      <span class="project-num">02</span>
       <div class="project-title-col">
         <span class="project-name">Nature Counter <span class="arrow">→</span></span>
         <span class="project-tag">Design Systems</span>
@@ -942,7 +1009,7 @@
     </a>
 
     <a href="saarthi.html" class="project-row" data-categories="healthcare product" data-preview="saarthi">
-      <span class="project-num">06</span>
+      <span class="project-num">03</span>
       <div class="project-title-col">
         <span class="project-name">Saarthi <span class="arrow">→</span></span>
         <span class="project-tag">Healthcare</span>
@@ -954,7 +1021,7 @@
     </a>
 
     <a href="confidento.html" class="project-row" data-categories="product" data-preview="confidento">
-      <span class="project-num">07</span>
+      <span class="project-num">04</span>
       <div class="project-title-col">
         <span class="project-name">TheConfidento <span class="arrow">→</span></span>
         <span class="project-tag">Product 0&#8594;1</span>
@@ -966,7 +1033,7 @@
     </a>
 
     <a href="safeway.html" class="project-row" data-categories="product" data-preview="safeway">
-      <span class="project-num">08</span>
+      <span class="project-num">05</span>
       <div class="project-title-col">
         <span class="project-name">Safeway Kiosk <span class="arrow">→</span></span>
         <span class="project-tag">Product &amp; Retail</span>
@@ -978,7 +1045,7 @@
     </a>
 
     <a href="crisis-uav.html" class="project-row" data-categories="healthcare" data-preview="crisis">
-      <span class="project-num">09</span>
+      <span class="project-num">06</span>
       <div class="project-title-col">
         <span class="project-name">Crisis-Courier-UAV <span class="arrow">→</span></span>
         <span class="project-tag">Human Systems</span>
@@ -1309,7 +1376,8 @@
       heroAnchorId: 'top',
       floatingSections: [
         { id: 'top', label: 'Intro' },
-        { id: 'projects', label: 'Work' },
+        { id: 'work', label: 'Work' },
+        { id: 'case-studies', label: 'Case Studies' },
         { id: 'recognition', label: 'Awards' },
         { id: 'footer', label: 'Connect' }
       ]
