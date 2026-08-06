@@ -35,7 +35,9 @@
     // Figure out which project the visitor is opening so we can label the gate
     var path = (location.pathname || "").toLowerCase();
     var projectName = "Work project";
-    if (path.indexOf("goldman") !== -1) projectName = "Goldman Sachs";
+    if (path.indexOf("morgan") !== -1) projectName = "Morgan Stanley";
+    else if (path.indexOf("tcs") !== -1) projectName = "Ameriprise";
+    else if (path.indexOf("maxtra") !== -1) projectName = "Maxtra Technologies";
 
     var overlay = document.createElement("div");
     overlay.id = "workGateOverlay";
@@ -62,7 +64,7 @@
       + '<div style="width:100%;max-width:440px;text-align:center;">'
       +   '<div style="font-family:\'Space Mono\',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:' + secondary + ';margin-bottom:24px;">Puru Bhardwaj &middot; Work &middot; ' + projectName + '</div>'
       +   '<h1 style="font-family:\'Space Mono\',monospace;font-size:clamp(28px,5vw,42px);font-weight:700;letter-spacing:-0.02em;line-height:1.1;margin:0 0 16px;">This project is under NDA.</h1>'
-      +   '<p style="font-size:15px;line-height:1.6;color:' + secondary + ';margin:0 0 36px;">Professional work is password-protected. If you don\'t have the password, reach out at <a href="mailto:purubhardwaj99@gmail.com" style="color:' + text + ';text-decoration:underline;text-underline-offset:3px;">purubhardwaj99@gmail.com</a>.</p>'
+      +   '<p style="font-size:15px;line-height:1.6;color:' + secondary + ';margin:0 0 36px;">Professional work for Morgan Stanley, Ameriprise, and Maxtra Technologies is password-protected. If you don\'t have the password, reach out at <a href="mailto:purubhardwaj99@gmail.com" style="color:' + text + ';text-decoration:underline;text-underline-offset:3px;">purubhardwaj99@gmail.com</a>.</p>'
       +   '<form id="workGateForm" autocomplete="off" novalidate>'
       +     '<input id="workGatePass" type="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Password" '
       +       'style="width:100%;padding:16px 18px;font-family:\'Space Mono\',monospace;font-size:15px;letter-spacing:0.08em;background:' + inputBg + ';color:' + text + ';border:1.5px solid ' + border + ';border-radius:10px;outline:none;text-align:center;transition:border-color .2s;">'

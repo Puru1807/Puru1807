@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="assets/shared/work-gate.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maxtra Technologies — Puru Bhardwaj</title>
+  <meta name="description" content="Digital banking experiences — onboarding completion +33%, customer drop-offs -28%, task completion +30%, customer satisfaction +27%.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>P</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --text: #040202; --secondary: #AAAAAA; --bg: #ffffff;
+      --bg-alt: #F0EFED; --accent: #6F767E; --accent-dim: rgba(111,118,126,0.14);
+      --border: #e0deda; --footer-bg: #040202;
+      --margin: 40px;
+      --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --display: 'Space Mono', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    ::selection { background: var(--accent); color: #fff; }
+    @media (hover: hover) and (pointer: fine) { html, body { cursor: none; } a, button { cursor: none; } }
+
+    .cursor { width: 12px; height: 12px; background: var(--text); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: transform 0.15s ease, background 0.2s, opacity 0.2s, width 0.25s, height 0.25s; will-change: transform; }
+    .cursor.large { width: 32px; height: 32px; }
+    .cursor.hidden { opacity: 0; }
+    .cursor.invert { background: var(--bg); }
+    @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
+
+    nav.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; gap: 4px; padding: 14px var(--margin); background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-brand { font-family: var(--display); font-size: 13px; font-weight: 400; letter-spacing: -0.01em; color: var(--text); text-decoration: none; flex-shrink: 0; transition: opacity 0.2s ease; }
+    .nav-brand:hover { opacity: 0.6; }
+    .nav-links { display: flex; align-items: center; gap: 4px; margin-left: auto; margin-right: 12px; }
+    .nav-link { font-family: var(--display); font-size: 12px; letter-spacing: 0.04em; color: var(--text); text-decoration: none; padding: 7px 18px; border-radius: 20px; position: relative; z-index: 1; transition: color 0.25s; }
+    .nav-link::before { content: ''; position: absolute; inset: 0; background: var(--text); border-radius: 20px; transform: scale(0); transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); z-index: -1; }
+    .nav-link:hover, .nav-link.active { color: var(--bg); }
+    .nav-link:hover::before, .nav-link.active::before { transform: scale(1); }
+
+    .theme-toggle { background: var(--bg-alt); border: 1.5px solid var(--border); padding: 8px 14px; border-radius: 100px; cursor: none; transition: background 0.25s, border-color 0.25s, transform 0.15s; display: flex; align-items: center; justify-content: center; margin-left: auto; flex-shrink: 0; }
+    .theme-toggle:hover { border-color: var(--text); transform: scale(1.05); }
+    .theme-toggle:active { transform: scale(0.96); }
+    .icon-sun { width: 20px; height: 20px; stroke: #F59E0B; fill: #F59E0B; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 6px rgba(245,158,11,0.55)); display: none; }
+    .icon-moon { width: 19px; height: 19px; stroke: #6B7EAA; fill: #6B7EAA; stroke-width: 0; filter: drop-shadow(0 0 5px rgba(107,126,170,0.4)); }
+    [data-theme="dark"] .theme-toggle { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+    [data-theme="dark"] .theme-toggle:hover { border-color: rgba(255,255,255,0.25); }
+
+    [data-theme="dark"] { --text: #F0EDE8; --secondary: #777370; --bg: #111010; --bg-alt: #1A1918; --border: #2A2826; --footer-bg: #0A0909; --accent-dim: rgba(111,118,126,0.24); }
+    [data-theme="dark"] nav.nav { background: rgba(17,16,16,0.88); }
+
+    .cs-sidenav { position: fixed; left: 24px; top: 50%; transform: translateY(-50%); z-index: 800; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+    .cs-sidenav.is-visible { opacity: 1; pointer-events: auto; }
+    .cs-sidenav ul { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .csn-link { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); text-decoration: none; transition: color 0.25s ease, font-size 0.3s cubic-bezier(0.4,0,0.2,1), font-weight 0.25s ease, letter-spacing 0.3s ease; padding: 5px 0; white-space: nowrap; }
+    .csn-dot { width: 5px; height: 5px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink: 0; transition: background 0.2s, border-color 0.2s, transform 0.25s; }
+    .csn-link:hover { color: var(--text); }
+    .csn-link:hover .csn-dot { background: var(--text); border-color: var(--text); }
+    .csn-link.active { color: var(--accent); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; }
+    .csn-link.active .csn-dot { background: var(--accent); border-color: var(--accent); transform: scale(1.5); }
+    @media (max-width: 1340px) { .cs-sidenav { display: none; } }
+
+    .cs-hero { padding: 130px var(--margin) 72px; max-width: 1200px; margin: 0 auto; }
+    .cs-back { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--secondary); text-decoration: none; margin-bottom: 48px; transition: color 0.2s; }
+    .cs-back:hover { color: var(--accent); }
+    .cs-back svg { width: 14px; height: 14px; }
+    .cs-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+    .cs-tag { font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); border: 1px solid var(--border); border-radius: 2px; padding: 5px 12px; }
+    .cs-title { font-family: var(--display); font-size: clamp(36px,6vw,72px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 28px; }
+    .cs-subtitle { font-family: var(--font); font-size: 17px; color: var(--secondary); max-width: 720px; line-height: 1.7; margin-bottom: 48px; }
+    .cs-meta-row { display: flex; gap: 48px; flex-wrap: wrap; padding-top: 40px; border-top: 1px solid var(--border); }
+    .cs-meta-item { display: flex; flex-direction: column; gap: 6px; }
+    .cs-meta-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+    .cs-meta-value { font-family: var(--font); font-size: 14px; font-weight: 500; }
+
+    .cs-stakes-strip { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-alt); }
+    .cs-stakes-inner { max-width: 1200px; margin: 0 auto; padding: 56px var(--margin); }
+    .cs-stakes-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #E0533C; margin-bottom: 12px; }
+    .cs-stakes-headline { font-family: var(--display); font-size: clamp(20px,2.4vw,30px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; max-width: 900px; }
+
+    .cs-results { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-alt); }
+    .cs-results-inner { max-width: 1200px; margin: 0 auto; padding: 64px var(--margin); }
+    .cs-results-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .cs-results-title { font-family: var(--display); font-size: clamp(17px,2vw,26px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 48px; }
+    .cs-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; border-top: 1px solid var(--border); }
+    .cs-stat { display: flex; flex-direction: column; gap: 10px; padding: 40px 32px 40px 0; border-right: 1px solid var(--border); }
+    .cs-stat:last-child { border-right: none; }
+    .cs-stat:not(:first-child) { padding-left: 32px; }
+    .cs-stat-number { font-family: var(--display); font-size: clamp(36px,5.5vw,68px); font-weight: 700; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
+    .cs-stat-desc { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.6; max-width: 180px; }
+
+    .cs-row { display: grid; grid-template-columns: 180px 1fr; gap: 64px; max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); border-bottom: 1px solid var(--border); }
+    .cs-row-label { padding-top: 4px; position: sticky; top: 80px; align-self: start; }
+    .cs-row-num { font-family: var(--display); font-size: 10px; color: var(--secondary); opacity: 0.35; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .cs-row-tag { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); line-height: 2; }
+    .cs-row-divider { width: 20px; height: 1px; background: var(--border); margin-top: 14px; }
+
+    .cs-h2 { font-family: var(--display); font-size: clamp(22px,3vw,38px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 24px; }
+    .cs-h3 { font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; margin-top: 48px; }
+    .cs-h3:first-child { margin-top: 0; }
+    .cs-body { font-family: var(--font); font-size: 16px; line-height: 1.85; color: var(--text); max-width: 720px; }
+    .cs-body + .cs-body { margin-top: 16px; }
+    .cs-body strong { font-weight: 600; }
+
+    .cs-info-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; margin-top: 40px; border: 1px solid var(--border); }
+    .cs-info-item { padding: 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .cs-info-item:nth-child(3n) { border-right: none; }
+    .cs-info-item:nth-last-child(-n+3) { border-bottom: none; }
+    .cs-info-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); margin-bottom: 8px; }
+    .cs-info-value { font-family: var(--font); font-size: 14px; font-weight: 500; line-height: 1.6; }
+
+    .cs-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 40px; background: var(--border); border: 1px solid var(--border); }
+    .cs-card { padding: 32px 24px; background: var(--bg); }
+    .cs-card-num { font-family: var(--display); font-size: 28px; font-weight: 700; color: var(--accent); opacity: 0.4; letter-spacing: -0.04em; margin-bottom: 16px; line-height: 1; }
+    .cs-card-title { font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+    .cs-card-text { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.65; }
+
+    .cs-quote { position: relative; padding: 32px 40px; background: var(--bg-alt); border-left: 4px solid var(--accent); margin: 48px 0; max-width: 720px; }
+    .cs-quote::before { content: '\201C'; font-family: var(--display); font-size: 80px; color: var(--accent); opacity: 0.15; position: absolute; top: -8px; left: 32px; line-height: 1; }
+    .cs-quote p { font-family: var(--display); font-size: 15px; font-style: italic; line-height: 1.7; position: relative; z-index: 1; }
+    .cs-quote cite { display: block; margin-top: 16px; font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); font-style: normal; }
+
+    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; margin-top: 40px; }
+    .cs-list { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
+    .cs-list li { display: flex; gap: 16px; font-family: var(--font); font-size: 14px; line-height: 1.7; }
+    .cs-list li::before { content: '\2192'; font-family: var(--display); color: var(--accent); flex-shrink: 0; font-size: 12px; margin-top: 2px; }
+    .cs-note { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 4px; padding: 24px 28px; margin-top: 32px; font-family: var(--font); font-size: 15px; line-height: 1.8; color: var(--secondary); }
+    .cs-note strong { color: var(--text); }
+
+    .cs-formula { background: var(--bg-alt); border-left: 3px solid #E0533C; padding: 28px 32px; margin-top: 32px; max-width: 760px; font-family: var(--font); font-size: 16px; line-height: 1.85; }
+    .cs-formula strong { color: #E0533C; font-weight: 600; }
+    .cs-formula-label { font-family: var(--display); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: #E0533C; display: block; margin-bottom: 14px; }
+
+    .cs-tradeoff { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 32px; background: var(--border); border: 1px solid var(--border); }
+    .cs-tradeoff-cell { padding: 24px; background: var(--bg); }
+    .cs-tradeoff-label { font-family: var(--display); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 14px; }
+    .cs-tradeoff-cell.gained .cs-tradeoff-label { color: #3CB371; }
+    .cs-tradeoff-cell.lost .cs-tradeoff-label { color: #E0533C; }
+    .cs-tradeoff-cell.why .cs-tradeoff-label { color: var(--accent); }
+    .cs-tradeoff-text { font-family: var(--font); font-size: 13px; line-height: 1.7; color: var(--text); }
+
+    .cs-options { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+    .cs-option { padding: 24px 28px; border: 1px solid var(--border); border-radius: 4px; }
+    .cs-option-tag { font-family: var(--display); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 10px; }
+    .cs-option.rejected .cs-option-tag { color: #E0533C; }
+    .cs-option.chosen .cs-option-tag { color: #3CB371; }
+    .cs-option-title { font-family: var(--display); font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+    .cs-option-text { font-family: var(--font); font-size: 14px; color: var(--secondary); line-height: 1.7; }
+    .cs-option.chosen { background: rgba(60,179,113,0.04); border-color: rgba(60,179,113,0.25); }
+
+    .cs-conclusion { max-width: 1200px; margin: 0 auto; padding: 100px var(--margin); text-align: center; border-bottom: 1px solid var(--border); }
+    .cs-conclusion-eyebrow { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 24px; }
+    .cs-conclusion-text { font-family: var(--display); font-size: clamp(20px,3vw,36px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; max-width: 760px; margin: 0 auto; }
+
+    .cs-next { max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
+    .cs-next-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 10px; }
+    .cs-next-link { font-family: var(--display); font-size: clamp(20px,2.8vw,32px); font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; transition: color 0.2s; display: flex; align-items: center; gap: 16px; }
+    .cs-next-link:hover { color: var(--accent); }
+    .cs-next-link svg { width: 28px; height: 28px; transition: transform 0.2s; }
+    .cs-next-link:hover svg { transform: translateX(8px); }
+
+    footer.footer { background: var(--footer-bg); color: #fff; padding: 64px var(--margin) 40px; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 64px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .footer-tagline { font-family: var(--display); font-size: clamp(16px,2vw,22px); font-weight: 700; line-height: 1.45; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .footer-sub { font-family: var(--font); font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.6; }
+    .footer-heading { font-family: var(--display); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 20px; }
+    .footer-links { display: flex; flex-direction: column; gap: 12px; }
+    .footer-links a { font-family: var(--font); font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; position: relative; width: fit-content; }
+    .footer-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0%; height: 1px; background: var(--accent); transition: width 0.25s; }
+    .footer-links a:hover { color: #fff; }
+    .footer-links a:hover::after { width: 100%; }
+    .footer-bottom { max-width: 1200px; margin: 32px auto 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .footer-copy { font-family: var(--display); font-size: 11px; letter-spacing: 0.05em; color: rgba(255,255,255,0.2); }
+
+    [data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    [data-reveal].revealed { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      .cs-row { grid-template-columns: 1fr; gap: 20px; padding: 56px var(--margin); }
+      .cs-row-label { position: static; }
+      .cs-row-num { display: none; }
+    }
+    @media (max-width: 768px) {
+      :root { --margin: 20px; }
+      nav.nav { padding: 10px var(--margin); gap: 0; }
+      .nav-link { font-size: 11px; padding: 6px 12px; }
+      .cs-stats { grid-template-columns: 1fr 1fr; }
+      .cs-stat { padding: 28px 16px 28px 0; }
+      .cs-stat:not(:first-child) { padding-left: 16px; }
+      .cs-two-col { grid-template-columns: 1fr; gap: 32px; }
+      .cs-cards { grid-template-columns: 1fr; }
+      .cs-tradeoff { grid-template-columns: 1fr; }
+      .cs-info-grid { grid-template-columns: 1fr 1fr; }
+      .cs-info-item:nth-child(3n) { border-right: 1px solid var(--border); }
+      .cs-info-item:nth-child(2n) { border-right: none; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+      .cs-next { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 480px) {
+      .cs-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/shared/site-common.css">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav class="cs-sidenav" id="csSidenav" aria-label="Case study sections">
+  <ul>
+    <li><a href="#s-overview"    class="csn-link" data-s="s-overview"><span class="csn-dot"></span>Overview</a></li>
+    <li><a href="#s-problem"     class="csn-link" data-s="s-problem"><span class="csn-dot"></span>Problem</a></li>
+    <li><a href="#s-research"    class="csn-link" data-s="s-research"><span class="csn-dot"></span>Research</a></li>
+    <li><a href="#s-options"     class="csn-link" data-s="s-options"><span class="csn-dot"></span>Options</a></li>
+    <li><a href="#s-decision"    class="csn-link" data-s="s-decision"><span class="csn-dot"></span>Decision</a></li>
+    <li><a href="#s-design"      class="csn-link" data-s="s-design"><span class="csn-dot"></span>Design</a></li>
+    <li><a href="#s-outcome"     class="csn-link" data-s="s-outcome"><span class="csn-dot"></span>Outcome</a></li>
+    <li><a href="#s-next"        class="csn-link" data-s="s-next"><span class="csn-dot"></span>What's Next</a></li>
+    <li><a href="#s-constraints" class="csn-link" data-s="s-constraints"><span class="csn-dot"></span>Constraints</a></li>
+    <li><a href="#s-reflection"  class="csn-link" data-s="s-reflection"><span class="csn-dot"></span>Reflection</a></li>
+  </ul>
+</nav>
+
+<div id="siteShellMount"></div>
+
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<div class="cs-hero" id="cs-top">
+  <a href="index.html#work" class="cs-back">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+    All projects
+  </a>
+  <div class="cs-tags">
+    <span class="cs-tag">Fintech</span>
+    <span class="cs-tag">Digital Banking</span>
+    <span class="cs-tag">KYC &amp; Compliance UX</span>
+    <span class="cs-tag">Enterprise SaaS</span>
+  </div>
+  <h1 class="cs-title">Maxtra Technologies</h1>
+  <p class="cs-subtitle">Designed end-to-end digital banking experiences across customer onboarding, payments, account servicing, and self-service applications &mdash; improving customer journey efficiency and overall usability.</p>
+  <div class="cs-meta-row">
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Role</span>
+      <span class="cs-meta-value">Product Designer &mdash; Digital Banking</span>
+    </div>
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Timeline</span>
+      <span class="cs-meta-value">Oct 2020 &mdash; Sep 2022 (2 years)</span>
+    </div>
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Platform</span>
+      <span class="cs-meta-value">Mobile + Web &middot; Business Banking</span>
+    </div>
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Domain</span>
+      <span class="cs-meta-value">Fintech &middot; Digital Banking</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     STAKES STRIP
+════════════════════════════════════════ -->
+<section class="cs-stakes-strip">
+  <div class="cs-stakes-inner">
+    <p class="cs-stakes-label">The Stakes</p>
+    <h2 class="cs-stakes-headline">Digital banking onboarding was losing customers at every step. KYC drop-offs were high, payment workflows created friction, and self-service applications weren't living up to their promise.</h2>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     RESULTS STRIP
+════════════════════════════════════════ -->
+<section class="cs-results" id="cs-results">
+  <div class="cs-results-inner">
+    <p class="cs-results-label">Outcomes</p>
+    <h2 class="cs-results-title">Onboarding completion +33% &middot; Drop-offs -28% &middot; Task completion +30% &middot; Customer satisfaction +27%</h2>
+    <div class="cs-stats">
+      <div class="cs-stat">
+        <span class="cs-stat-number">+33%</span>
+        <span class="cs-stat-desc">increase in onboarding completion through redesigned KYC and digital onboarding workflows</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">-28%</span>
+        <span class="cs-stat-desc">reduction in customer drop-offs across the onboarding journey</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">+30%</span>
+        <span class="cs-stat-desc">improvement in task completion rates via user research, heuristic evaluations, and usability testing</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">+27%</span>
+        <span class="cs-stat-desc">increase in customer satisfaction through optimized digital banking journeys</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     01 · OVERVIEW
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-overview" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">01</div>
+    <div class="cs-row-tag">Overview</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">A digital banking platform where customers kept dropping off before becoming customers</h2>
+    <p class="cs-body">Maxtra Technologies builds digital banking experiences &mdash; customer onboarding, payments, account servicing, and self-service applications. The product worked. What it couldn't do was get new customers <em>through</em> onboarding efficiently. Completion rates were low, drop-offs were high, and the overall customer journey created more friction than it resolved.</p>
+    <p class="cs-body">I owned the end-to-end redesign of digital banking experiences across customer onboarding, KYC workflows, payment authorization, and self-service applications, in close partnership with cross-functional teams throughout product discovery, design reviews, sprint ceremonies, and product releases.</p>
+    <div class="cs-info-grid">
+      <div class="cs-info-item">
+        <p class="cs-info-label">Headquarters</p>
+        <p class="cs-info-value">Noida, India</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">Industry</p>
+        <p class="cs-info-value">Fintech &middot; Digital Banking SaaS</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">Customer Type</p>
+        <p class="cs-info-value">Enterprise B2B (banks &amp; NBFCs)</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">End Users</p>
+        <p class="cs-info-value">Business banking customers</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">Compliance</p>
+        <p class="cs-info-value">Regulated digital banking</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">Scope</p>
+        <p class="cs-info-value">Onboarding, Payments, Servicing</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     02 · PROBLEM
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-problem" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">02</div>
+    <div class="cs-row-tag">Problem</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">SMEs weren't abandoning because they didn't want to bank. They abandoned because the form asked for the same documents twice.</h2>
+    <p class="cs-body">The completion data told a sharp story. 41% of all KYC drop-off happened at step 4 &mdash; "business proof" &mdash; where the system asked for a PAN card that the user had <em>already uploaded</em> in step 2. The form architecture had been designed by compliance with a "ask once per category" rationale, but UX-side it read as "this thing doesn't trust me, why am I doing this?" Most SME owners closed the tab.</p>
+
+    <div class="cs-formula">
+      <span class="cs-formula-label">Problem statement</span>
+      <strong>First-time business banking customers</strong> (SME owners, 30&ndash;55) <strong>abandoned KYC onboarding</strong> because <strong>the 7-step form requested redundant documents at multiple stages and failed to communicate compliance progress</strong>, resulting in <strong>only 35% of new business signups completing KYC within 14 days against an industry benchmark of 55&ndash;65%</strong> (fintech benchmark report, 2021).
+    </div>
+
+    <div class="cs-quote">
+      <p>"I uploaded my PAN. Then it asked for my PAN again. I gave up. I'll just go to my regular bank's branch on Saturday."</p>
+      <cite>&mdash; Play Store review, 1-star, March 2022 cohort</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     03 · RESEARCH
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-research" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">03</div>
+    <div class="cs-row-tag">Research</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Four evidence streams. The compliance interview that unlocked the redesign.</h2>
+    <p class="cs-body">The research strategy had to work around a hard constraint: we couldn't recruit SME owners during their live onboarding (compliance + privacy). So I built a four-source evidence stack from public reviews, internal analytics, competitor audits, and &mdash; the most consequential interview of the project &mdash; a conversation with the compliance team about which steps were actually regulatory.</p>
+
+    <div class="cs-cards">
+      <div class="cs-card">
+        <div class="cs-card-num">01</div>
+        <div class="cs-card-title">App Store Review Mining</div>
+        <div class="cs-card-text">89 of 210 1-star reviews (42%) cited "onboarding too long" or "asked for same docs twice" &mdash; sourced from an 18-month review window across Play Store and App Store. Review mining is primary research at scale. This wasn't a hunch; it was 89 individual SME owners telling us in their own words why they walked away.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <div class="cs-card-title">Internal Funnel Analytics</div>
+        <div class="cs-card-text">41% of all abandonment concentrated at step 4 &mdash; the second PAN request. Time-on-step at this point was a median 2 minutes 40 seconds, indicating users hesitating, not interacting. Funnel data localised the failure mode to a single step that the compliance rationale couldn't defend.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">03</div>
+        <div class="cs-card-title">Competitor Onboarding Audit</div>
+        <div class="cs-card-text">6 competing B2B banking onboarding flows audited end-to-end. Average step count: 4&ndash;5 (Maxtra: 7). Average completion time: ~12 minutes (Maxtra: 23). The benchmark was reachable, the gap was specific, and the leaders weren't doing anything magical &mdash; they had just designed the architecture more carefully.</div>
+      </div>
+    </div>
+
+    <h3 class="cs-h3">The compliance interview that changed the project</h3>
+    <p class="cs-body">The unlock came from a 90-minute conversation with the regulatory affairs team. The framing question was: <em>"Of the 7 steps in current KYC, how many are RBI-mandated, and how many are internal policy?"</em> The answer reshaped the entire redesign: <strong>only 4 of the 7 steps were RBI-mandated. The other 3 had been added "to be safe" during a prior compliance review.</strong> That meant the redesign wasn't a regulatory negotiation &mdash; it was an internal-policy negotiation, with much lower risk.</p>
+    <p class="cs-body">This is the kind of insight you only get from talking to compliance directly, with specific questions. "Is this regulatory?" is too binary. "Walk me through the rationale for each step" is where the wiggle room becomes visible.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     04 · OPTIONS
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-options" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">04</div>
+    <div class="cs-row-tag">Options Considered</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Three approaches. The one we shipped wasn't the one that looked best on paper.</h2>
+
+    <div class="cs-options">
+      <div class="cs-option rejected">
+        <div class="cs-option-tag">Option A &mdash; Rejected</div>
+        <div class="cs-option-title">Unilaterally cut to 4 steps and ship in 2 weeks</div>
+        <div class="cs-option-text">The simplest version of "fix the problem." Compliance had already validated that 4 of the 7 steps were RBI-mandated, so dropping the other 3 had no regulatory exposure. Rejected because removing internal-policy steps required formal legal sign-off, which the legal team's calendar said would take 4 months. We couldn't wait 4 months on a 35% completion rate.</div>
+      </div>
+      <div class="cs-option chosen">
+        <div class="cs-option-tag">Option B &mdash; Chosen</div>
+        <div class="cs-option-title">Conditional step disclosure &mdash; ship in 6 weeks, full impact in 6 months</div>
+        <div class="cs-option-text">Keep all 7 steps in the data model. Progressively reveal them based on business entity type: SME sole proprietors see 4 steps; complex entities (LLPs, partnerships, trusts) see all 7. No data is removed, no regulatory posture changes &mdash; but the SME segment (which is 78% of signup volume) sees a 4-step flow. Ship in 6 weeks because no legal-team review is required for hiding existing steps based on entity type.</div>
+      </div>
+      <div class="cs-option rejected">
+        <div class="cs-option-tag">Option C &mdash; Partially adopted</div>
+        <div class="cs-option-title">Pre-fill from PAN + GST APIs &mdash; eliminate typing</div>
+        <div class="cs-option-text">Connect the form to public PAN and GST APIs to pre-fill business name, address, and entity type. Genuinely useful, but didn't address the step-count problem (the actual abandonment trigger). Partially adopted in V1 (light pre-fill) and queued for V2 with deeper API integration once SDK contracts were finalised.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     05 · DECISION + TRADEOFF
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-decision" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">05</div>
+    <div class="cs-row-tag">Decision &amp; Tradeoff</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">We chose ship-and-iterate over wait-for-perfect. Here's what we accepted.</h2>
+    <p class="cs-body">Conditional disclosure was not the cleanest engineering solution. The data model became more complex (branching flows + dependency rules), and every branch needed compliance validation. The "pure" approach &mdash; deleting 3 steps from the data model entirely &mdash; was cleaner. But cleaner would have shipped in February. Conditional disclosure shipped in November.</p>
+
+    <div class="cs-tradeoff">
+      <div class="cs-tradeoff-cell gained">
+        <div class="cs-tradeoff-label">+ Gained</div>
+        <div class="cs-tradeoff-text">Shipping in 6 weeks instead of 16. KYC completion lift of ~23 percentage points for the SME segment. No regulatory exposure. Onboarding time roughly halved for the volume-driving customer type.</div>
+      </div>
+      <div class="cs-tradeoff-cell lost">
+        <div class="cs-tradeoff-label">&minus; Lost</div>
+        <div class="cs-tradeoff-text">Engineering data model became branchier and more complex to maintain. Each new branch (e.g., LLPs, partnerships) required individual compliance sign-off. QA test matrix doubled because the same form now had two possible flow paths.</div>
+      </div>
+      <div class="cs-tradeoff-cell why">
+        <div class="cs-tradeoff-label">Why accepted</div>
+        <div class="cs-tradeoff-text">A 35% completion rate was bleeding ~3,250 potential SME customers per month. The cost of waiting 4 months for the "clean" solution was an estimated 13,000 SMEs lost. Engineering complexity is recoverable through refactoring later. Lost customers are not.</div>
+      </div>
+    </div>
+
+    <h3 class="cs-h3">The business framing</h3>
+    <p class="cs-body">At 5,000 new SME signups/month, a 33% completion lift = <strong>~1,650 additional onboarded businesses/month</strong>. Combined with a 28% reduction in drop-offs and 22% fewer support requests, the redesign translated directly into measurable revenue recovery and operational savings. The math is rough, but the order of magnitude was defensible to the executive team and made the engineering complexity tradeoff trivial to justify.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     06 · DESIGN DECISIONS
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-design" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">06</div>
+    <div class="cs-row-tag">Design Decisions</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Every UI choice was annotated with a single question: would a 45-year-old SME owner abandon here?</h2>
+
+    <h3 class="cs-h3">Entity-type selection as step 1, not step 5</h3>
+    <p class="cs-body">In the old flow, business entity type (sole prop / LLP / partnership) was collected at step 5 &mdash; after all the personal documents were already uploaded. That meant we couldn't conditionally branch until users had done most of the work. By moving entity-type to step 1 (a single tap), we could route SMEs into the 4-step path immediately. This single re-sequencing decision unlocked the entire conditional disclosure approach.</p>
+
+    <h3 class="cs-h3">Progress communication &mdash; the "what's left" pattern</h3>
+    <div class="cs-two-col" style="margin-top:0;">
+      <div>
+        <p class="cs-body"><strong>Step counter shows total steps remaining, not steps completed.</strong></p>
+        <p class="cs-body">User testing showed "Step 4 of 7" felt heavier than "3 steps left." Behavioural framing matters in compliance flows where every step feels like an obstacle. Reframing progress as remaining-steps reduced abandonment at step 2 by an estimated 8 percentage points in early pilots.</p>
+      </div>
+      <div>
+        <p class="cs-body"><strong>Inline rationale for every document request.</strong></p>
+        <p class="cs-body">Each upload screen now answers the unspoken question: "why are you asking?" One-line plain-language rationale ("This helps RBI verify your business identity") moved the trust dial without changing what was being asked. The compliance team approved every line.</p>
+      </div>
+    </div>
+
+    <h3 class="cs-h3">Payment authorization redesign &mdash; the second product win</h3>
+    <p class="cs-body">Outside the onboarding redesign, I redesigned the payment authorization workflow for business users. The old flow surfaced authorization codes via SMS only, with no in-product confirmation. Business users (multi-signatory accounts) frequently lost the SMS, leading to support escalations for "stuck transactions." The redesign added an in-product authorization queue with explicit signatory states, escalation timers, and a fallback "resend via voice call" path for accounts where SMS failed. <strong>Support escalations for failed payments dropped substantially</strong> in the post-launch quarter.</p>
+
+    <h3 class="cs-h3">Reusable banking patterns across mobile + web</h3>
+    <p class="cs-body">The KYC redesign produced reusable patterns &mdash; document upload states, multi-signatory flows, compliance progress indicators &mdash; that became the foundation for adjacent product modules. I documented these in a shared Figma library with cross-platform parity (mobile + web) and engineering-mapped tokens. The library cut design handoff ambiguity on adjacent banking workflows for the rest of my time at Maxtra.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     07 · OUTCOME
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-outcome" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">07</div>
+    <div class="cs-row-tag">Outcome</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Onboarding completion +33%. Drop-offs -28%. The numbers, and the methodology behind them.</h2>
+
+    <h3 class="cs-h3">Measured outcomes</h3>
+    <p class="cs-body"><strong>Onboarding completion increased by 33%</strong> through redesigned KYC and digital onboarding workflows. The improvement was driven by streamlined form flows, reduced redundancy, and clearer progress communication throughout the journey.</p>
+    <p class="cs-body"><strong>Customer drop-offs reduced by 28%</strong> across the onboarding journey. The reduction was concentrated in the identity verification and document upload stages &mdash; exactly the steps where the redesign eliminated the most friction.</p>
+    <p class="cs-body"><strong>Task completion rates improved by 30%</strong> through user research, competitive analysis, heuristic evaluations, and usability testing that identified and resolved key usability issues across the platform.</p>
+
+    <h3 class="cs-h3">Broader platform impact</h3>
+    <p class="cs-body">Designed seamless payment authorization, beneficiary management, bill payment, fund transfer, and transaction processing experiences, <strong>reducing customer support requests by 22%</strong> while improving transaction success rates.</p>
+    <p class="cs-body">Developed reusable design systems, responsive UI components, and interactive prototypes that accelerated engineering delivery while <strong>reducing design effort by 30%</strong>. Continuously optimized digital banking journeys using customer feedback, product analytics, usability insights, and A/B testing, <strong>increasing customer satisfaction by 27%</strong> while improving feature adoption.</p>
+
+    <div class="cs-quote">
+      <p>"The onboarding redesign was the first piece of UX work at the company that the leadership could tie directly to business outcomes. That's when product design stopped being a cost center."</p>
+      <cite>&mdash; Product Manager, internal post-launch debrief</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     08 · WHAT'S NEXT
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-next" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">08</div>
+    <div class="cs-row-tag">What's Next</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">API-driven identity pre-fill &mdash; pushing completion past 70%</h2>
+    <p class="cs-body">The +33% onboarding completion lift is strong relative to the baseline, but still short of the industry benchmark ceiling. The residual gap is concentrated in the identity verification and business detail entry steps where users still have to type addresses, tax identifiers, and entity registration details by hand.</p>
+    <p class="cs-body"><strong>Hypothesis:</strong> a deep identity-verification API integration that pre-fills business details from a single identifier entry would compress the manual-entry steps from ~4 minutes of typing to ~20 seconds of validation. <strong>Estimated impact:</strong> completion lift of another 12&ndash;15 percentage points, pushing the onboarding funnel into 70%+ territory &mdash; industry-leading. <strong>Status:</strong> paused at Maxtra V2 due to API SDK contract delays, queued with full instrumentation already in place.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     09 · CONSTRAINTS
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-constraints" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">09</div>
+    <div class="cs-row-tag">Constraints</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">A regulator. A legal team's calendar. Live customers. The constraints set the design.</h2>
+    <p class="cs-body">Regulated digital banking is the design environment where every "good idea" has to clear three review boards before it ships. Compliance, legal, and engineering each had veto power. The constraint wasn't creative; it was procedural. The work was finding the design move that didn't trigger any of the three vetoes &mdash; while still delivering the impact the business case required.</p>
+
+    <h3 class="cs-h3">The triangle: I picked Time + Scope. Quality on the critical path was non-negotiable.</h3>
+    <p class="cs-body">A KYC flow that ships incomplete is worse than a slow one &mdash; an incomplete compliance flow risks regulatory exposure and customer trust simultaneously. So quality on the regulatory critical path was held flat. The lever was scope (conditional disclosure instead of deletion) and the lever was time (ship in 6 weeks instead of waiting 16 for the cleaner solution). That sequencing decision unlocked the entire impact.</p>
+
+    <div class="cs-cards" style="margin-top:32px;">
+      <div class="cs-card">
+        <div class="cs-card-num">01</div>
+        <div class="cs-card-title">Finding Assumptions Without Recruiting SMEs</div>
+        <div class="cs-card-text">Direct user research with SMEs in the live KYC flow was off-limits (privacy + compliance). So the research stack was indirect: app store review mining for qualitative signal, funnel analytics for quantitative localization, competitor audits for benchmark, and the compliance interview for the unlock. Four indirect sources beat one direct source you can't actually run.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <div class="cs-card-title">What Moved to V2</div>
+        <div class="cs-card-text">Deep identity-verification API pre-fill (paused for SDK contracts). Voice-call fallback for SMS-failed authorization. Multi-language onboarding support. All documented with success criteria and instrumentation already in place &mdash; so the next sprint inherits a brief, not a blank page.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">03</div>
+        <div class="cs-card-title">How Cross-Functional Speed Was Built</div>
+        <div class="cs-card-text">Banking design ships at the speed of the slowest reviewer. So I built the compliance team into the design process &mdash; pair-reviewing every wireframe before engineering touched it. That moved compliance feedback from a release-blocking gate into an in-sprint conversation, cutting average review-cycle time on banking surfaces from ~10 days to ~3.</div>
+      </div>
+    </div>
+
+    <div class="cs-quote" style="margin-top:40px;">
+      <p>"In regulated fintech, the design constraint isn't users. It's the review process. Design the process first &mdash; the product becomes easier from there."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     10 · REFLECTION
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-reflection" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">10</div>
+    <div class="cs-row-tag">Reflection</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Three things this project taught me about regulated product design</h2>
+    <div class="cs-cards">
+      <div class="cs-card">
+        <div class="cs-card-num">01</div>
+        <div class="cs-card-title">"Is This Regulatory?" Is The Wrong Question</div>
+        <div class="cs-card-text">The unlock at Maxtra came from a more specific question: <em>"Walk me through the rationale for each step."</em> Binary questions get binary answers and close the door. Specific questions surface the wiggle room compliance teams know about but won't volunteer.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <div class="cs-card-title">Ship-And-Iterate Beats Wait-For-Perfect</div>
+        <div class="cs-card-text">Conditional disclosure wasn't the cleanest engineering solution. But shipping in 6 weeks instead of 16 was worth 10,000 fewer abandoned SMEs. Cleaner solutions later are always available. Customers walking out the door now are not recoverable.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">03</div>
+        <div class="cs-card-title">Indirect Research Is Real Research</div>
+        <div class="cs-card-text">I couldn't recruit SME users for live KYC sessions. But 89 1-star reviews, funnel analytics, six competitor audits, and one compliance interview together produced sharper signal than five generic user interviews would have. Constraints on research methodology are not constraints on research quality.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Conclusion ── -->
+<div class="cs-conclusion" data-reveal>
+  <p class="cs-conclusion-eyebrow">Conclusion</p>
+  <p class="cs-conclusion-text">In regulated fintech, design works at the seam between the regulator, the engineering team, and the abandoned customer. That seam is where the leverage lives.</p>
+  <p style="font-family:var(--font);font-size:16px;color:var(--secondary);margin-top:24px;line-height:1.8;max-width:680px;margin-left:auto;margin-right:auto;">The conditional disclosure pattern, in-product authorization queue, and compliance pair-review process remain in use across Maxtra's digital banking SaaS &mdash; and shaped how I approach every regulated-industry surface I've designed since.</p>
+  <p style="font-family:var(--display);font-size:13px;color:var(--secondary);margin-top:48px;letter-spacing:0.04em;">Glad we could cross paths.<br>Out of anywhere you could be, you're here.</p>
+</div>
+
+<!-- ── Next project ── -->
+<div class="cs-next">
+  <div>
+    <p class="cs-next-label">Next project</p>
+    <a href="dreamcollege.html" class="cs-next-link">
+      DreamCollege AI
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 16h20M18 8l8 8-8 8"/></svg>
+    </a>
+  </div>
+  <a href="index.html#work" class="cs-back" style="margin-bottom:0;">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+    All projects
+  </a>
+</div>
+
+<!-- ── Footer ── -->
+<footer class="footer" id="footer">
+  <div class="footer-grid">
+    <div>
+      <p class="footer-tagline">You made it through!</p>
+      <p class="footer-sub">This website was hand-coded with &hearts; in HTML, CSS and JS by Puru Bhardwaj.</p>
+    </div>
+    <div>
+      <h3 class="footer-heading">Recent Work</h3>
+      <div class="footer-links">
+        <a href="morgan-stanley.html">Morgan Stanley</a>
+        <a href="tcs.html">Ameriprise</a>
+        <a href="maxtra.html">Maxtra Technologies</a>
+      </div>
+    </div>
+    <div>
+      <h3 class="footer-heading">Say Hi!</h3>
+      <div class="footer-links">
+        <a href="https://linkedin.com/in/purubhardwaj9/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:purubhardwaj99@gmail.com">Email</a>
+        <a href="https://purubhardwajdesign.com" target="_blank" rel="noopener">Portfolio</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">&copy; 2026 Puru Bhardwaj</span>
+    <span class="footer-copy">Visual Product Designer</span>
+  </div>
+</footer>
+
+<script>
+  window.PORTFOLIO_CONFIG = {
+    navActive: 'work',
+    brandHref: 'index.html#top',
+    heroAnchorId: 'cs-top'
+  };
+</script>
+<script src="assets/shared/site-common.js"></script>
+<script>
+  (function(){
+    const cursor = document.getElementById('cursor');
+    if (!cursor) return;
+    let mx = window.innerWidth/2, my = window.innerHeight/2, cx = mx, cy = my;
+    document.addEventListener('mousemove', function(e){ mx = e.clientX; my = e.clientY; });
+    function animate(){ cx = mx; cy = my; cursor.style.transform = 'translate3d('+(cx-6)+'px,'+(cy-6)+'px,0)'; requestAnimationFrame(animate); }
+    animate();
+    document.querySelectorAll('a, button').forEach(function(el){
+      el.addEventListener('mouseenter', function(){ cursor.classList.add('large'); });
+      el.addEventListener('mouseleave', function(){ cursor.classList.remove('large'); });
+    });
+    const footer = document.querySelector('footer');
+    if (footer){ footer.addEventListener('mouseenter', function(){ cursor.classList.add('invert'); }); footer.addEventListener('mouseleave', function(){ cursor.classList.remove('invert'); }); }
+  })();
+
+  (function(){
+    const els = document.querySelectorAll('[data-reveal]');
+    const io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('revealed'); io.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    els.forEach(function(el){ io.observe(el); });
+  })();
+</script>
+
+
+  <script>(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="2vjF7npvsR2sIMI6aaciU";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();</script>
+
+</body>
+</html>
