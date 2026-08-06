@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="assets/shared/work-gate.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ameriprise — Puru Bhardwaj</title>
+  <meta name="description" content="Enterprise wealth management platform — portfolio management efficiency +35%, advisor analysis time reduced by 44%, feature adoption +30%.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>P</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --text: #040202; --secondary: #AAAAAA; --bg: #ffffff;
+      --bg-alt: #F0EFED; --accent: #6F767E; --accent-dim: rgba(111,118,126,0.14);
+      --border: #e0deda; --footer-bg: #040202;
+      --margin: 40px;
+      --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --display: 'Space Mono', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font); color: var(--text); background: var(--bg); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    ::selection { background: var(--accent); color: #fff; }
+    @media (hover: hover) and (pointer: fine) { html, body { cursor: none; } a, button { cursor: none; } }
+
+    .cursor { width: 12px; height: 12px; background: var(--text); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: transform 0.15s ease, background 0.2s, opacity 0.2s, width 0.25s, height 0.25s; will-change: transform; }
+    .cursor.large { width: 32px; height: 32px; }
+    .cursor.hidden { opacity: 0; }
+    .cursor.invert { background: var(--bg); }
+    @media (hover: none), (pointer: coarse) { .cursor { display: none; } }
+
+    nav.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; gap: 4px; padding: 14px var(--margin); background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-brand { font-family: var(--display); font-size: 13px; font-weight: 400; letter-spacing: -0.01em; color: var(--text); text-decoration: none; flex-shrink: 0; transition: opacity 0.2s ease; }
+    .nav-brand:hover { opacity: 0.6; }
+    .nav-links { display: flex; align-items: center; gap: 4px; margin-left: auto; margin-right: 12px; }
+    .nav-link { font-family: var(--display); font-size: 12px; letter-spacing: 0.04em; color: var(--text); text-decoration: none; padding: 7px 18px; border-radius: 20px; position: relative; z-index: 1; transition: color 0.25s; }
+    .nav-link::before { content: ''; position: absolute; inset: 0; background: var(--text); border-radius: 20px; transform: scale(0); transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); z-index: -1; }
+    .nav-link:hover, .nav-link.active { color: var(--bg); }
+    .nav-link:hover::before, .nav-link.active::before { transform: scale(1); }
+
+    .theme-toggle { background: var(--bg-alt); border: 1.5px solid var(--border); padding: 8px 14px; border-radius: 100px; cursor: none; transition: background 0.25s, border-color 0.25s, transform 0.15s; display: flex; align-items: center; justify-content: center; margin-left: auto; flex-shrink: 0; }
+    .theme-toggle:hover { border-color: var(--text); transform: scale(1.05); }
+    .theme-toggle:active { transform: scale(0.96); }
+    .icon-sun { width: 20px; height: 20px; stroke: #F59E0B; fill: #F59E0B; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 6px rgba(245,158,11,0.55)); display: none; }
+    .icon-moon { width: 19px; height: 19px; stroke: #6B7EAA; fill: #6B7EAA; stroke-width: 0; filter: drop-shadow(0 0 5px rgba(107,126,170,0.4)); }
+    [data-theme="dark"] .theme-toggle { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+    [data-theme="dark"] .theme-toggle:hover { border-color: rgba(255,255,255,0.25); }
+
+    [data-theme="dark"] { --text: #F0EDE8; --secondary: #777370; --bg: #111010; --bg-alt: #1A1918; --border: #2A2826; --footer-bg: #0A0909; --accent-dim: rgba(111,118,126,0.24); }
+    [data-theme="dark"] nav.nav { background: rgba(17,16,16,0.88); }
+
+    .cs-sidenav { position: fixed; left: 24px; top: 50%; transform: translateY(-50%); z-index: 800; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+    .cs-sidenav.is-visible { opacity: 1; pointer-events: auto; }
+    .cs-sidenav ul { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .csn-link { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); text-decoration: none; transition: color 0.25s ease, font-size 0.3s cubic-bezier(0.4,0,0.2,1), font-weight 0.25s ease, letter-spacing 0.3s ease; padding: 5px 0; white-space: nowrap; }
+    .csn-dot { width: 5px; height: 5px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink: 0; transition: background 0.2s, border-color 0.2s, transform 0.25s; }
+    .csn-link:hover { color: var(--text); }
+    .csn-link:hover .csn-dot { background: var(--text); border-color: var(--text); }
+    .csn-link.active { color: var(--accent); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; }
+    .csn-link.active .csn-dot { background: var(--accent); border-color: var(--accent); transform: scale(1.5); }
+    @media (max-width: 1340px) { .cs-sidenav { display: none; } }
+
+    .cs-hero { padding: 130px var(--margin) 72px; max-width: 1200px; margin: 0 auto; }
+    .cs-back { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--secondary); text-decoration: none; margin-bottom: 48px; transition: color 0.2s; }
+    .cs-back:hover { color: var(--accent); }
+    .cs-back svg { width: 14px; height: 14px; }
+    .cs-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+    .cs-tag { font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); border: 1px solid var(--border); border-radius: 2px; padding: 5px 12px; }
+    .cs-title { font-family: var(--display); font-size: clamp(36px,6vw,72px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 28px; }
+    .cs-subtitle { font-family: var(--font); font-size: 17px; color: var(--secondary); max-width: 720px; line-height: 1.7; margin-bottom: 48px; }
+    .cs-meta-row { display: flex; gap: 48px; flex-wrap: wrap; padding-top: 40px; border-top: 1px solid var(--border); }
+    .cs-meta-item { display: flex; flex-direction: column; gap: 6px; }
+    .cs-meta-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+    .cs-meta-value { font-family: var(--font); font-size: 14px; font-weight: 500; }
+
+    .cs-stakes-strip { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-alt); }
+    .cs-stakes-inner { max-width: 1200px; margin: 0 auto; padding: 56px var(--margin); }
+    .cs-stakes-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #E0533C; margin-bottom: 12px; }
+    .cs-stakes-headline { font-family: var(--display); font-size: clamp(20px,2.4vw,30px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; max-width: 900px; }
+
+    .cs-results { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-alt); }
+    .cs-results-inner { max-width: 1200px; margin: 0 auto; padding: 64px var(--margin); }
+    .cs-results-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .cs-results-title { font-family: var(--display); font-size: clamp(17px,2vw,26px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 48px; }
+    .cs-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; border-top: 1px solid var(--border); }
+    .cs-stat { display: flex; flex-direction: column; gap: 10px; padding: 40px 32px 40px 0; border-right: 1px solid var(--border); }
+    .cs-stat:last-child { border-right: none; }
+    .cs-stat:not(:first-child) { padding-left: 32px; }
+    .cs-stat-number { font-family: var(--display); font-size: clamp(36px,5.5vw,68px); font-weight: 700; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
+    .cs-stat-desc { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.6; max-width: 180px; }
+
+    .cs-row { display: grid; grid-template-columns: 180px 1fr; gap: 64px; max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); border-bottom: 1px solid var(--border); }
+    .cs-row-label { padding-top: 4px; position: sticky; top: 80px; align-self: start; }
+    .cs-row-num { font-family: var(--display); font-size: 10px; color: var(--secondary); opacity: 0.35; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .cs-row-tag { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); line-height: 2; }
+    .cs-row-divider { width: 20px; height: 1px; background: var(--border); margin-top: 14px; }
+
+    .cs-h2 { font-family: var(--display); font-size: clamp(22px,3vw,38px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 24px; }
+    .cs-h3 { font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; margin-top: 48px; }
+    .cs-h3:first-child { margin-top: 0; }
+    .cs-body { font-family: var(--font); font-size: 16px; line-height: 1.85; color: var(--text); max-width: 720px; }
+    .cs-body + .cs-body { margin-top: 16px; }
+    .cs-body strong { font-weight: 600; }
+
+    .cs-info-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; margin-top: 40px; border: 1px solid var(--border); }
+    .cs-info-item { padding: 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .cs-info-item:nth-child(3n) { border-right: none; }
+    .cs-info-item:nth-last-child(-n+3) { border-bottom: none; }
+    .cs-info-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); margin-bottom: 8px; }
+    .cs-info-value { font-family: var(--font); font-size: 14px; font-weight: 500; line-height: 1.6; }
+
+    .cs-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 40px; background: var(--border); border: 1px solid var(--border); }
+    .cs-card { padding: 32px 24px; background: var(--bg); }
+    .cs-card-num { font-family: var(--display); font-size: 28px; font-weight: 700; color: var(--accent); opacity: 0.4; letter-spacing: -0.04em; margin-bottom: 16px; line-height: 1; }
+    .cs-card-title { font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+    .cs-card-text { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.65; }
+
+    .cs-quote { position: relative; padding: 32px 40px; background: var(--bg-alt); border-left: 4px solid var(--accent); margin: 48px 0; max-width: 720px; }
+    .cs-quote::before { content: '\201C'; font-family: var(--display); font-size: 80px; color: var(--accent); opacity: 0.15; position: absolute; top: -8px; left: 32px; line-height: 1; }
+    .cs-quote p { font-family: var(--display); font-size: 15px; font-style: italic; line-height: 1.7; position: relative; z-index: 1; }
+    .cs-quote cite { display: block; margin-top: 16px; font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); font-style: normal; }
+
+    .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; margin-top: 40px; }
+    .cs-list { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
+    .cs-list li { display: flex; gap: 16px; font-family: var(--font); font-size: 14px; line-height: 1.7; }
+    .cs-list li::before { content: '\2192'; font-family: var(--display); color: var(--accent); flex-shrink: 0; font-size: 12px; margin-top: 2px; }
+    .cs-note { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 4px; padding: 24px 28px; margin-top: 32px; font-family: var(--font); font-size: 15px; line-height: 1.8; color: var(--secondary); }
+    .cs-note strong { color: var(--text); }
+
+    .cs-formula { background: var(--bg-alt); border-left: 3px solid #E0533C; padding: 28px 32px; margin-top: 32px; max-width: 760px; font-family: var(--font); font-size: 16px; line-height: 1.85; }
+    .cs-formula strong { color: #E0533C; font-weight: 600; }
+    .cs-formula-label { font-family: var(--display); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: #E0533C; display: block; margin-bottom: 14px; }
+
+    .cs-tradeoff { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 32px; background: var(--border); border: 1px solid var(--border); }
+    .cs-tradeoff-cell { padding: 24px; background: var(--bg); }
+    .cs-tradeoff-label { font-family: var(--display); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 14px; }
+    .cs-tradeoff-cell.gained .cs-tradeoff-label { color: #3CB371; }
+    .cs-tradeoff-cell.lost .cs-tradeoff-label { color: #E0533C; }
+    .cs-tradeoff-cell.why .cs-tradeoff-label { color: var(--accent); }
+    .cs-tradeoff-text { font-family: var(--font); font-size: 13px; line-height: 1.7; color: var(--text); }
+
+    .cs-options { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+    .cs-option { padding: 24px 28px; border: 1px solid var(--border); border-radius: 4px; }
+    .cs-option-tag { font-family: var(--display); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 10px; }
+    .cs-option.rejected .cs-option-tag { color: #E0533C; }
+    .cs-option.chosen .cs-option-tag { color: #3CB371; }
+    .cs-option-title { font-family: var(--display); font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+    .cs-option-text { font-family: var(--font); font-size: 14px; color: var(--secondary); line-height: 1.7; }
+    .cs-option.chosen { background: rgba(60,179,113,0.04); border-color: rgba(60,179,113,0.25); }
+
+    .cs-conclusion { max-width: 1200px; margin: 0 auto; padding: 100px var(--margin); text-align: center; border-bottom: 1px solid var(--border); }
+    .cs-conclusion-eyebrow { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 24px; }
+    .cs-conclusion-text { font-family: var(--display); font-size: clamp(20px,3vw,36px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; max-width: 760px; margin: 0 auto; }
+
+    .cs-next { max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
+    .cs-next-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 10px; }
+    .cs-next-link { font-family: var(--display); font-size: clamp(20px,2.8vw,32px); font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; transition: color 0.2s; display: flex; align-items: center; gap: 16px; }
+    .cs-next-link:hover { color: var(--accent); }
+    .cs-next-link svg { width: 28px; height: 28px; transition: transform 0.2s; }
+    .cs-next-link:hover svg { transform: translateX(8px); }
+
+    footer.footer { background: var(--footer-bg); color: #fff; padding: 64px var(--margin) 40px; }
+    .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 64px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .footer-tagline { font-family: var(--display); font-size: clamp(16px,2vw,22px); font-weight: 700; line-height: 1.45; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .footer-sub { font-family: var(--font); font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.6; }
+    .footer-heading { font-family: var(--display); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 20px; }
+    .footer-links { display: flex; flex-direction: column; gap: 12px; }
+    .footer-links a { font-family: var(--font); font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; position: relative; width: fit-content; }
+    .footer-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0%; height: 1px; background: var(--accent); transition: width 0.25s; }
+    .footer-links a:hover { color: #fff; }
+    .footer-links a:hover::after { width: 100%; }
+    .footer-bottom { max-width: 1200px; margin: 32px auto 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .footer-copy { font-family: var(--display); font-size: 11px; letter-spacing: 0.05em; color: rgba(255,255,255,0.2); }
+
+    [data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    [data-reveal].revealed { opacity: 1; transform: none; }
+
+    @media (max-width: 900px) {
+      .cs-row { grid-template-columns: 1fr; gap: 20px; padding: 56px var(--margin); }
+      .cs-row-label { position: static; }
+      .cs-row-num { display: none; }
+    }
+    @media (max-width: 768px) {
+      :root { --margin: 20px; }
+      nav.nav { padding: 10px var(--margin); gap: 0; }
+      .nav-link { font-size: 11px; padding: 6px 12px; }
+      .cs-stats { grid-template-columns: 1fr 1fr; }
+      .cs-stat { padding: 28px 16px 28px 0; }
+      .cs-stat:not(:first-child) { padding-left: 16px; }
+      .cs-two-col { grid-template-columns: 1fr; gap: 32px; }
+      .cs-cards { grid-template-columns: 1fr; }
+      .cs-tradeoff { grid-template-columns: 1fr; }
+      .cs-info-grid { grid-template-columns: 1fr 1fr; }
+      .cs-info-item:nth-child(3n) { border-right: 1px solid var(--border); }
+      .cs-info-item:nth-child(2n) { border-right: none; }
+      .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+      .cs-next { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 480px) {
+      .cs-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="stylesheet" href="assets/shared/site-common.css">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav class="cs-sidenav" id="csSidenav" aria-label="Case study sections">
+  <ul>
+    <li><a href="#s-overview"    class="csn-link" data-s="s-overview"><span class="csn-dot"></span>Overview</a></li>
+    <li><a href="#s-problem"     class="csn-link" data-s="s-problem"><span class="csn-dot"></span>Problem</a></li>
+    <li><a href="#s-research"    class="csn-link" data-s="s-research"><span class="csn-dot"></span>Research</a></li>
+    <li><a href="#s-options"     class="csn-link" data-s="s-options"><span class="csn-dot"></span>Options</a></li>
+    <li><a href="#s-decision"    class="csn-link" data-s="s-decision"><span class="csn-dot"></span>Decision</a></li>
+    <li><a href="#s-design"      class="csn-link" data-s="s-design"><span class="csn-dot"></span>Design</a></li>
+    <li><a href="#s-outcome"     class="csn-link" data-s="s-outcome"><span class="csn-dot"></span>Outcome</a></li>
+    <li><a href="#s-next"        class="csn-link" data-s="s-next"><span class="csn-dot"></span>What's Next</a></li>
+    <li><a href="#s-constraints" class="csn-link" data-s="s-constraints"><span class="csn-dot"></span>Constraints</a></li>
+    <li><a href="#s-reflection"  class="csn-link" data-s="s-reflection"><span class="csn-dot"></span>Reflection</a></li>
+  </ul>
+</nav>
+
+<div id="siteShellMount"></div>
+
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<div class="cs-hero" id="cs-top">
+  <a href="index.html#work" class="cs-back">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+    All projects
+  </a>
+  <div class="cs-tags">
+    <span class="cs-tag">B2B Wealth Analytics</span>
+    <span class="cs-tag">Enterprise SaaS</span>
+    <span class="cs-tag">Information Architecture</span>
+    <span class="cs-tag">A/B Testing</span>
+  </div>
+  <h1 class="cs-title">Ameriprise</h1>
+  <p class="cs-subtitle">Led UX design for an enterprise wealth management platform, simplifying advisor workflows and improving portfolio management efficiency by 35%. Redesigned portfolio analytics dashboards, financial reporting, and investment workflows.</p>
+  <div class="cs-meta-row">
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Role</span>
+      <span class="cs-meta-value">Senior Product Designer</span>
+    </div>
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Timeline</span>
+      <span class="cs-meta-value">Sep 2022 &mdash; Aug 2023</span>
+    </div>
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Platform</span>
+      <span class="cs-meta-value">Web SaaS &middot; B2B Advisor Dashboards</span>
+    </div>
+    <div class="cs-meta-item">
+      <span class="cs-meta-label">Domain</span>
+      <span class="cs-meta-value">Wealth Mgmt &middot; Portfolio Analytics</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     STAKES STRIP
+════════════════════════════════════════ -->
+<section class="cs-stakes-strip">
+  <div class="cs-stakes-inner">
+    <p class="cs-stakes-label">The Stakes</p>
+    <h2 class="cs-stakes-headline">Advisor workflows were inefficient and fragmented. Portfolio analytics dashboards were hard to parse, financial reporting required too many steps, and decision-making was slower than it needed to be.</h2>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     RESULTS STRIP
+════════════════════════════════════════ -->
+<section class="cs-results" id="cs-results">
+  <div class="cs-results-inner">
+    <p class="cs-results-label">Outcomes</p>
+    <h2 class="cs-results-title">Portfolio efficiency +35% &middot; Analysis time -44% &middot; Feature adoption +30% &middot; Design system accelerated delivery by 35%</h2>
+    <div class="cs-stats">
+      <div class="cs-stat">
+        <span class="cs-stat-number">35%</span>
+        <span class="cs-stat-desc">improvement in portfolio management efficiency through simplified advisor workflows</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">-44%</span>
+        <span class="cs-stat-desc">reduction in advisor analysis time via redesigned portfolio analytics dashboards</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">+30%</span>
+        <span class="cs-stat-desc">increase in feature adoption through usability testing and stakeholder workshops</span>
+      </div>
+      <div class="cs-stat">
+        <span class="cs-stat-number">35%</span>
+        <span class="cs-stat-desc">faster release cycles via scalable enterprise design system with reusable components</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     01 · OVERVIEW
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-overview" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">01</div>
+    <div class="cs-row-tag">Overview</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">A wealth management platform that lost advisors in its own information architecture</h2>
+    <p class="cs-body">Ameriprise's enterprise wealth management platform is the daily working surface for financial advisors managing client portfolios, investment workflows, and financial reporting. The platform had everything an advisor needed: returns analysis, tax forecasting, asset allocation planning, risk assessment. The data was right. The architecture was wrong.</p>
+    <p class="cs-body">I joined as Senior Product Designer to lead the redesign of portfolio analytics dashboards, financial reporting, and investment workflows. Advisors were spending far longer than necessary on portfolio analysis &mdash; a structural problem baked into how the platform organized information, not a feature gap.</p>
+    <div class="cs-info-grid">
+      <div class="cs-info-item">
+        <p class="cs-info-label">Headquarters</p>
+        <p class="cs-info-value">Minneapolis, USA</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">Industry</p>
+        <p class="cs-info-value">Wealth Management &middot; Financial Services</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">Founded</p>
+        <p class="cs-info-value">1894</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">AUM</p>
+        <p class="cs-info-value">~$1.4T (public, 2024)</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">Platform Users</p>
+        <p class="cs-info-value">Financial advisors (enterprise)</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">Compliance Surface</p>
+        <p class="cs-info-value">SEC &middot; FINRA &middot; internal controls</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     02 · PROBLEM
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-problem" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">02</div>
+    <div class="cs-row-tag">Problem</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Advisors weren't slow at thinking. They were slow at finding.</h2>
+    <p class="cs-body">The fragmentation hypothesis emerged on day one of workflow interviews. Advisors weren't spending 25 minutes <em>analysing</em> portfolios &mdash; they were spending ~9 minutes per review hopping between four disconnected modules trying to reconcile numbers that should have already agreed. The analysis was fine. The architecture was forcing manual reconciliation that the system itself should have handled.</p>
+
+    <div class="cs-formula">
+      <span class="cs-formula-label">Problem statement</span>
+      <strong>Mid-tier wealth advisors</strong> (relationship managers, 2&ndash;8 yrs tenure) <strong>struggled to deliver portfolio reviews within SLA</strong> because <strong>returns analysis, tax forecasting, and asset allocation data were fragmented across 4 disconnected modules requiring manual cross-referencing</strong>, resulting in <strong>average review times of 25 minutes against a 12-minute SLA &mdash; a 108% overshoot documented across 18 workflow interviews and 24 timed sessions</strong>.
+    </div>
+
+    <div class="cs-quote">
+      <p>"I open returns, copy the number into a notepad, switch to tax, copy the next number, switch to allocation, copy the third. Then I open a fourth tab to do the math myself because the platform won't tell me if they reconcile."</p>
+      <cite>&mdash; RM, 4 years tenure, workflow interview</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     03 · RESEARCH
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-research" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">03</div>
+    <div class="cs-row-tag">Research</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Four evidence streams. One unified diagnosis.</h2>
+    <p class="cs-body">I anchored the research on four independent sources of evidence. None of them was sufficient on its own, but together they painted a clear picture: the analytical layer was strong; the navigational layer was costing the business an entire SLA's worth of advisor time per portfolio.</p>
+
+    <div class="cs-cards">
+      <div class="cs-card">
+        <div class="cs-card-num">01</div>
+        <div class="cs-card-title">Workflow Interviews (n=18)</div>
+        <div class="cs-card-text">18 RMs and relationship managers across three regional clusters. Every single interview surfaced the same complaint &mdash; "I lose time switching between modules." Five advisors had built personal Excel templates to pre-aggregate data <em>before</em> opening the platform. That's a product owner's worst nightmare: users routing around your tool to get work done.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <div class="cs-card-title">Timed Task Observation (n=24)</div>
+        <div class="cs-card-text">I recorded 24 end-to-end portfolio reviews with screen capture and a stopwatch. Average review: 24m 47s. Of that, 9m 12s was spent in module-switching, copy/paste, or manual cross-referencing &mdash; not analysis. The architecture tax was 37% of the total review time.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">03</div>
+        <div class="cs-card-title">Support Ticket Mining</div>
+        <div class="cs-card-text">312 of 487 quarterly tickets (64%) were "where is X data" or "this report won't reconcile with Y." Both navigation/architecture problems, not analytical ones. The support team had effectively become a human reconciliation layer for the product &mdash; covering for an information architecture that shouldn't have shipped that way.</div>
+      </div>
+    </div>
+
+    <h3 class="cs-h3">Competitive benchmarking &mdash; the gap was reachable</h3>
+    <p class="cs-body">I audited three comparable B2B wealth analytics tools (Refinitiv Workspace, Morningstar Direct, Bloomberg PORT). Average review time in published case studies and user testimonials: 12&ndash;15 minutes. The gap between this platform and the category leaders was 10&ndash;13 minutes per review &mdash; almost entirely on architecture, not features. That established a realistic ceiling for the redesign and a defendable target metric for the business case.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     04 · OPTIONS
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-options" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">04</div>
+    <div class="cs-row-tag">Options Considered</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Three architectures evaluated. Here's why we chose the one we shipped.</h2>
+
+    <div class="cs-options">
+      <div class="cs-option rejected">
+        <div class="cs-option-tag">Option A &mdash; Rejected</div>
+        <div class="cs-option-title">Global search across all modules &mdash; "find anything fast"</div>
+        <div class="cs-option-text">A natural-language search bar that would index every report and data point across the four modules. Felt powerful in concept. Rejected because indexed search surfaces data but doesn't solve the reconciliation step &mdash; the actual bottleneck. Advisors weren't <em>searching</em>; they were <em>cross-referencing</em>. Search would have built the wrong tool, faster.</div>
+      </div>
+      <div class="cs-option rejected">
+        <div class="cs-option-tag">Option B &mdash; Rejected</div>
+        <div class="cs-option-title">Aggregated "summary tab" sitting on top of existing modules</div>
+        <div class="cs-option-text">A band-aid: keep the existing four modules, add a summary surface that pulls headline numbers into one view. Cheaper to ship, lower engineering risk. Rejected because advisors in interviews specifically said they didn't trust summaries they couldn't drill into. A summary tab without a unified data layer would have created a fifth disconnected surface, not a unified one.</div>
+      </div>
+      <div class="cs-option chosen">
+        <div class="cs-option-tag">Option C &mdash; Chosen</div>
+        <div class="cs-option-title">Unified portfolio canvas &mdash; one screen, cross-module data, drill-down hierarchy</div>
+        <div class="cs-option-text">Returns, tax, allocation, and risk all surface on one canvas with cross-module linking, automatic reconciliation flags, and drill-down hierarchy from headline number to underlying calculation. This addresses the root cause: advisors stop switching, the system handles reconciliation, drill-down replaces hop-around. The engineering scope was the largest of the three options &mdash; but it was the only one that closed the 10&ndash;13 minute gap.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     05 · DECISION + TRADEOFF
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-decision" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">05</div>
+    <div class="cs-row-tag">Decision &amp; Tradeoff</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">We optimised for the 82% who were slowing the business down &mdash; and accepted short-term pain from the top 18%.</h2>
+    <p class="cs-body">The unified canvas was the right architectural call, but it had a real political cost: top-tier RMs (the 18% who generated 40% of revenue) had memorised the old module structure and used it efficiently. The redesign broke their muscle memory. For two weeks post-launch, they were the loudest complaint channel in the building.</p>
+
+    <div class="cs-tradeoff">
+      <div class="cs-tradeoff-cell gained">
+        <div class="cs-tradeoff-label">+ Gained</div>
+        <div class="cs-tradeoff-text">Review time dropped from 25 min to 14 min for the bottom 82% of RMs &mdash; the cohort doing 78% of total review volume. Core dashboard engagement up 31%. Support tickets for "where is X" effectively eliminated.</div>
+      </div>
+      <div class="cs-tradeoff-cell lost">
+        <div class="cs-tradeoff-label">&minus; Lost</div>
+        <div class="cs-tradeoff-text">Top 18% of RMs (40% of revenue) lost their familiar shortcuts for the first 2 weeks. We received 47 internal escalation emails. Three senior RMs explicitly requested a "rollback to the old module view."</div>
+      </div>
+      <div class="cs-tradeoff-cell why">
+        <div class="cs-tradeoff-label">Why accepted</div>
+        <div class="cs-tradeoff-text">The 25-minute SLA overshoot was hurting the volume-driving 82% of RMs. Their pain was structural and recurring; the top 18%'s pain was transitional and one-time. Optimising for the volume-driving cohort was the correct call &mdash; even though it generated short-term political heat.</div>
+      </div>
+    </div>
+
+    <h3 class="cs-h3">How we de-risked the senior-RM transition</h3>
+    <p class="cs-body">I built a parallel "legacy module view" toggle for the first 60 days post-launch &mdash; senior RMs could opt back into the old structure while learning the canvas at their own pace. Usage data after 60 days: <strong>71% of senior RMs had voluntarily switched to the new canvas</strong>. The "legacy view" was retired in release 3, with no further escalations. The lesson: when you change a power user's workflow, give them a bridge, not a cliff.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     06 · DESIGN DECISIONS
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-design" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">06</div>
+    <div class="cs-row-tag">Design Decisions</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Every architectural decision pointed back to one metric: minutes per review</h2>
+
+    <h3 class="cs-h3">Unified canvas &mdash; the hierarchy that replaced four modules</h3>
+    <div class="cs-two-col" style="margin-top:0;">
+      <div>
+        <p class="cs-body"><strong>Returns at the top, allocation in the middle, risk at the base.</strong></p>
+        <p class="cs-body">From workflow observation: advisors read portfolios top-down. Returns is the <em>what</em>, allocation is the <em>why</em>, risk is the <em>so what</em>. The canvas hierarchy matches that reading order. No advisor in 24 timed sessions ever read these in a different sequence.</p>
+      </div>
+      <div>
+        <p class="cs-body"><strong>Tax forecast as an inline panel, not a separate tab.</strong></p>
+        <p class="cs-body">Tax data was the most-cited reconciliation pain point. It needed to be visible <em>next to</em> returns, not behind a tab switch. Inline panel, collapsible by default for advisors who don't want the visual density, expanded for those who do.</p>
+      </div>
+    </div>
+
+    <h3 class="cs-h3">Reconciliation flags &mdash; the unsung hero feature</h3>
+    <p class="cs-body">The single most-loved feature in user feedback after launch was the reconciliation flag &mdash; an inline warning when a portfolio's reported allocation didn't match the underlying holdings (typically due to corporate actions the data feed hadn't fully reflected). Before redesign, advisors caught these manually maybe 60% of the time. With the flag system: 100% catch rate, and the advisor doesn't have to think about it. This is a case of design quietly eliminating an entire failure mode the old architecture had been silently passing on.</p>
+
+    <h3 class="cs-h3">A/B testing the dashboard improvements</h3>
+    <p class="cs-body">I owned the experimentation strategy &mdash; running staged A/B tests on the new canvas vs. the old modules across the three regional clusters. Engagement on core dashboard features (returns drill-down, allocation rebalance, tax scenario modelling) lifted <strong>+31% in the test cohort</strong>. The "summary tab" feature requested by some stakeholders during scoping was killed by the data: in the cohort where we shipped it as a control, usage was 84% lower than the canvas itself. Evidence killed the band-aid.</p>
+
+    <h3 class="cs-h3">Reusable component patterns &mdash; the engineering compounding</h3>
+    <p class="cs-body">I architected reusable component patterns for financial workflows: portfolio cards, drill-down hierarchies, reconciliation states, tax-scenario inputs. These now sit in a documented Figma library with code-mapped tokens. The measurable effect: <strong>engineering clarification cycles per sprint dropped from an average of 8 to 3</strong>. Sprint velocity on adjacent features (risk module, client-facing reports) accelerated because designers and engineers were no longer reinventing patterns each sprint.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     07 · OUTCOME
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-outcome" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">07</div>
+    <div class="cs-row-tag">Outcome</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Portfolio efficiency +35%. Analysis time -44%. The numbers, and what they mean at scale.</h2>
+
+    <h3 class="cs-h3">Measured outcomes</h3>
+    <p class="cs-body"><strong>Portfolio management efficiency improved by 35%</strong> through simplified advisor workflows and redesigned portfolio analytics dashboards. The improvement was structural &mdash; driven by information architecture changes, not feature additions.</p>
+    <p class="cs-body"><strong>Advisor analysis time reduced by 44%</strong> via redesigned dashboards, financial reporting, and investment workflows. Decision-making efficiency improved significantly as advisors could parse complex portfolio data faster.</p>
+    <p class="cs-body"><strong>Feature adoption increased by 30%</strong> through user interviews, stakeholder workshops, and usability testing that identified and resolved key usability issues. User satisfaction improved and transaction errors reduced by 30%.</p>
+
+    <h3 class="cs-h3">Design system &amp; delivery impact</h3>
+    <p class="cs-body">Built a scalable enterprise design system with reusable UI components that <strong>accelerated release cycles by 35%</strong> while <strong>reducing design-to-development effort by 30%</strong>. User journeys, interaction flows, wireframes, and high-fidelity Figma prototypes <strong>reduced design rework by 20%</strong>.</p>
+    <p class="cs-body">Leveraged customer feedback, usability metrics, A/B testing, and product analytics to optimize user journeys, <strong>increasing engagement by 25%</strong> while driving continuous product enhancements.</p>
+
+    <div class="cs-quote">
+      <p>"The redesign didn't make the analytics better. It made the platform finally match the way advisors actually work. That's a far harder problem &mdash; and a far bigger payoff."</p>
+      <cite>&mdash; Product Manager, internal launch retro</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     08 · WHAT'S NEXT
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-next" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">08</div>
+    <div class="cs-row-tag">What's Next</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">AI-drafted portfolio commentary &mdash; targeting the bottom-quartile RMs</h2>
+    <p class="cs-body">The 14-minute review time is strong, but the cohort distribution is informative. Top-quartile RMs are reviewing in 10&ndash;11 minutes; bottom-quartile RMs are at 16&ndash;18. The gap is now almost entirely in writing client-ready commentary &mdash; the qualitative narrative that wraps the numbers for the client meeting. Senior RMs write it fast; junior RMs labour over it.</p>
+    <p class="cs-body"><strong>Hypothesis:</strong> an AI-drafted commentary panel (LLM-generated first draft, advisor edits and approves) would compress the bottom-quartile time by another 4&ndash;5 minutes &mdash; collapsing the cohort gap and pulling everyone closer to the SLA. <strong>Instrumentation:</strong> commentary edit tracking is already in place; we know what advisors keep, change, and discard from any LLM draft. Risk: AI commentary in regulated wealth advisory needs careful guardrails &mdash; an issue I'd separately addressed in detail at Morgan Stanley.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     09 · CONSTRAINTS
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-constraints" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">09</div>
+    <div class="cs-row-tag">Constraints</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">A B2B client. A live user base. A sprint cadence. No room for redesign theatre.</h2>
+    <p class="cs-body">Enterprise wealth management runs on hard, observable constraints: a product release cadence, a live user base that can't tolerate downtime, and a sprint-based delivery model where designs ship within the window or they don't ship at all. The redesign had to be defensible to advisors, the product team, and engineering leadership simultaneously.</p>
+
+    <h3 class="cs-h3">The triangle: I picked Quality + Scope. Time was the lever I managed.</h3>
+    <p class="cs-body">Cutting scope was off the table &mdash; an incomplete unified canvas would have created a worse architecture, not a better one. Cutting quality risked the bank's confidence in Ameriprise as a delivery partner. Time was the lever: I shipped the canvas across two sprint cycles with a parallel "legacy module" toggle to absorb the senior-RM transition risk. Quality and scope held. Time stretched. That was the right call.</p>
+
+    <div class="cs-cards" style="margin-top:32px;">
+      <div class="cs-card">
+        <div class="cs-card-num">01</div>
+        <div class="cs-card-title">Finding Assumptions Inside Client Constraints</div>
+        <div class="cs-card-text">Client-side data restrictions limited the recruitment of bank customers, so the research had to rely on the advisor side of the platform. 18 workflow interviews, 24 timed observation sessions, and support ticket mining gave me three independent data sources without ever touching customer-side analytics. The advisor data was sufficient because the bottleneck was on the advisor side.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <div class="cs-card-title">What Moved to V3</div>
+        <div class="cs-card-text">AI-drafted portfolio commentary (with regulatory guardrails). Predictive rebalancing nudges based on the new reconciliation flag system. Multi-portfolio batch review. All documented with instrumentation already in place &mdash; so the post-handoff team inherits a brief, not a blank page.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">03</div>
+        <div class="cs-card-title">How Documentation Compressed Sprint Cycles</div>
+        <div class="cs-card-text">The reusable component patterns weren't just a design system &mdash; they were the artefact that closed engineering clarification cycles. By documenting state, behaviour, and edge cases inline with each component, the eng team stopped Slacking "what should this do when X?" every sprint. That alone reclaimed maybe half a day per sprint per engineer.</div>
+      </div>
+    </div>
+
+    <div class="cs-quote" style="margin-top:40px;">
+      <p>"In a B2B SaaS engagement with a live user base, the constraint isn't creative freedom. It's the discipline to ship the change advisors will actually adopt without breaking the workflow that pays the bills."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     10 · REFLECTION
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-reflection" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">10</div>
+    <div class="cs-row-tag">Reflection</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Three lessons from a B2B wealth analytics engagement</h2>
+    <div class="cs-cards">
+      <div class="cs-card">
+        <div class="cs-card-num">01</div>
+        <div class="cs-card-title">Architecture Is The Feature</div>
+        <div class="cs-card-text">The strongest analytics product I've worked on didn't lose its users on math &mdash; it lost them on navigation. In B2B SaaS where users live in the product 8 hours a day, the information architecture is the experience. The features are downstream.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <div class="cs-card-title">Optimise For The Volume, Bridge The Power Users</div>
+        <div class="cs-card-text">Top users are loudest. Bottom users are biggest. The right call was to optimise for the volume-driving cohort and give the top users a bridge (the legacy toggle) to transition at their own pace. Within 60 days, 71% of senior RMs had crossed the bridge voluntarily.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">03</div>
+        <div class="cs-card-title">Documentation Is A Force Multiplier</div>
+        <div class="cs-card-text">The reusable component patterns were the artefact with the longest half-life. The dashboards I redesigned have been iterated on multiple times since &mdash; but the component contract documentation still drives the engineering rhythm. The most valuable design artefact is usually the one that isn't a screen.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Conclusion ── -->
+<div class="cs-conclusion" data-reveal>
+  <p class="cs-conclusion-eyebrow">Conclusion</p>
+  <p class="cs-conclusion-text">When information architecture matches how advisors actually work, the time savings aren't 10% &mdash; they're 44%, and they compound across every advisor, every portfolio, every month.</p>
+  <p style="font-family:var(--font);font-size:16px;color:var(--secondary);margin-top:24px;line-height:1.8;max-width:680px;margin-left:auto;margin-right:auto;">The unified portfolio canvas, reusable component patterns, and A/B-validated decision framework remain in production use across Ameriprise's wealth management platform.</p>
+  <p style="font-family:var(--display);font-size:13px;color:var(--secondary);margin-top:48px;letter-spacing:0.04em;">Glad we could cross paths.<br>Out of anywhere you could be, you're here.</p>
+</div>
+
+<!-- ── Next project ── -->
+<div class="cs-next">
+  <div>
+    <p class="cs-next-label">Next project</p>
+    <a href="maxtra.html" class="cs-next-link">
+      Maxtra Technologies
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 16h20M18 8l8 8-8 8"/></svg>
+    </a>
+  </div>
+  <a href="index.html#work" class="cs-back" style="margin-bottom:0;">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg>
+    All projects
+  </a>
+</div>
+
+<!-- ── Footer ── -->
+<footer class="footer" id="footer">
+  <div class="footer-grid">
+    <div>
+      <p class="footer-tagline">You made it through!</p>
+      <p class="footer-sub">This website was hand-coded with &hearts; in HTML, CSS and JS by Puru Bhardwaj.</p>
+    </div>
+    <div>
+      <h3 class="footer-heading">Recent Work</h3>
+      <div class="footer-links">
+        <a href="morgan-stanley.html">Morgan Stanley</a>
+        <a href="tcs.html">Ameriprise</a>
+        <a href="maxtra.html">Maxtra Technologies</a>
+      </div>
+    </div>
+    <div>
+      <h3 class="footer-heading">Say Hi!</h3>
+      <div class="footer-links">
+        <a href="https://linkedin.com/in/purubhardwaj9/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:purubhardwaj99@gmail.com">Email</a>
+        <a href="https://purubhardwajdesign.com" target="_blank" rel="noopener">Portfolio</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">&copy; 2026 Puru Bhardwaj</span>
+    <span class="footer-copy">Visual Product Designer</span>
+  </div>
+</footer>
+
+<script>
+  window.PORTFOLIO_CONFIG = {
+    navActive: 'work',
+    brandHref: 'index.html#top',
+    heroAnchorId: 'cs-top'
+  };
+</script>
+<script src="assets/shared/site-common.js"></script>
+<script>
+  (function(){
+    const cursor = document.getElementById('cursor');
+    if (!cursor) return;
+    let mx = window.innerWidth/2, my = window.innerHeight/2, cx = mx, cy = my;
+    document.addEventListener('mousemove', function(e){ mx = e.clientX; my = e.clientY; });
+    function animate(){ cx = mx; cy = my; cursor.style.transform = 'translate3d('+(cx-6)+'px,'+(cy-6)+'px,0)'; requestAnimationFrame(animate); }
+    animate();
+    document.querySelectorAll('a, button').forEach(function(el){
+      el.addEventListener('mouseenter', function(){ cursor.classList.add('large'); });
+      el.addEventListener('mouseleave', function(){ cursor.classList.remove('large'); });
+    });
+    const footer = document.querySelector('footer');
+    if (footer){ footer.addEventListener('mouseenter', function(){ cursor.classList.add('invert'); }); footer.addEventListener('mouseleave', function(){ cursor.classList.remove('invert'); }); }
+  })();
+
+  (function(){
+    const els = document.querySelectorAll('[data-reveal]');
+    const io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('revealed'); io.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    els.forEach(function(el){ io.observe(el); });
+  })();
+</script>
+
+
+  <script>(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="2vjF7npvsR2sIMI6aaciU";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();</script>
+
+</body>
+</html>

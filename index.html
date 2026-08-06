@@ -380,12 +380,45 @@
       color: var(--bg);
     }
 
+    /* ——— Section header (Work / Case Studies) ——— */
+    .section-header {
+      padding: 80px var(--margin) 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 32px;
+      border-top: 1px solid var(--border);
+    }
+    .section-header.no-border { border-top: none; padding-top: 40px; }
+    .section-eyebrow {
+      font-family: var(--display);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: var(--display);
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.0;
+      color: var(--text);
+    }
+    @media (max-width: 768px) {
+      .section-header { grid-template-columns: 1fr; padding: 56px var(--margin) 16px; gap: 16px; }
+    }
+
     /* ——— Projects ——— */
-    .projects {
+    .projects, .work-section {
       padding: 0 var(--margin) 100px;
       max-width: 1200px;
       margin: 0 auto;
     }
+    .work-section { padding-bottom: 24px; }
 
     .project-row {
       display: grid;
@@ -590,6 +623,9 @@
     .preview-confidento .project-preview-inner { background: linear-gradient(135deg, #3d405b 0%, #81b29a 100%); }
     .preview-safeway .project-preview-inner { background-color: #023e8a; }
     .preview-crisis .project-preview-inner { background-color: #2b2d42; }
+    .preview-morgan .project-preview-inner { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); }
+    .preview-tcs .project-preview-inner { background: linear-gradient(135deg, #1E3A8A 0%, #6366f1 100%); }
+    .preview-maxtra .project-preview-inner { background: linear-gradient(135deg, #064e3b 0%, #34d399 100%); }
 
     @media (hover: none), (pointer: coarse) {
       .project-preview { display: none; }
@@ -860,6 +896,66 @@
     </div>
   </section>
 
+  <!-- ════════════════════════════════════════
+       WORK — Professional Experience
+  ════════════════════════════════════════ -->
+  <div class="section-header no-border" id="work">
+    <div>
+      <p class="section-eyebrow">01 &middot; Professional Experience</p>
+      <h2 class="section-title">Work</h2>
+    </div>
+  </div>
+
+  <section class="work-section">
+
+    <a href="morgan-stanley.html" class="project-row" data-categories="fintech" data-preview="morgan">
+      <span class="project-num">01</span>
+      <div class="project-title-col">
+        <span class="project-name">Morgan Stanley <span class="arrow">→</span></span>
+        <span class="project-tag">Wealth Management</span>
+      </div>
+      <div class="project-desc-col">
+        <p class="project-desc">Enterprise wealth management platform — productivity +35%, adoption +28%, portfolio analysis 40% faster. Reduced design inconsistencies by 45% and accelerated product delivery by 35%.</p>
+        <div class="project-arrow-btn">→</div>
+      </div>
+    </a>
+
+    <a href="tcs.html" class="project-row" data-categories="fintech" data-preview="tcs">
+      <span class="project-num">02</span>
+      <div class="project-title-col">
+        <span class="project-name">Ameriprise <span class="arrow">→</span></span>
+        <span class="project-tag">B2B Wealth Analytics</span>
+      </div>
+      <div class="project-desc-col">
+        <p class="project-desc">B2B wealth analytics platform for ~800 advisors. Portfolio efficiency +35%, analysis time -44%, feature adoption +30%. Release cycles accelerated by 35%.</p>
+        <div class="project-arrow-btn">→</div>
+      </div>
+    </a>
+
+    <a href="maxtra.html" class="project-row" data-categories="fintech" data-preview="maxtra">
+      <span class="project-num">03</span>
+      <div class="project-title-col">
+        <span class="project-name">Maxtra Technologies <span class="arrow">→</span></span>
+        <span class="project-tag">Digital Banking</span>
+      </div>
+      <div class="project-desc-col">
+        <p class="project-desc">Digital banking onboarding redesign — completion +33%, drop-offs -28%, task completion +30%. Reduced support requests by 22% and increased satisfaction by 27%.</p>
+        <div class="project-arrow-btn">→</div>
+      </div>
+    </a>
+
+  </section>
+
+  <!-- ════════════════════════════════════════
+       CASE STUDIES — Selected Projects
+  ════════════════════════════════════════ -->
+  <div class="section-header" id="case-studies">
+    <div>
+      <p class="section-eyebrow">02 &middot; Selected Projects</p>
+      <h2 class="section-title">Case Studies</h2>
+    </div>
+  </div>
+
   <!-- Filters -->
   <section class="filters">
     <p class="filters-label">What are you looking for?</p>
@@ -988,9 +1084,10 @@
       <div class="footer-col">
         <h3 class="footer-heading">Recent Work</h3>
         <div class="footer-links">
+          <a href="morgan-stanley.html">Morgan Stanley</a>
+          <a href="tcs.html">Ameriprise</a>
+          <a href="maxtra.html">Maxtra Technologies</a>
           <a href="dreamcollege.html">DreamCollege AI</a>
-          <a href="nature-counter.html">Nature Counter</a>
-          <a href="saarthi.html">Saarthi</a>
         </div>
       </div>
       <div class="footer-col">
@@ -1128,6 +1225,9 @@
       const rows = document.querySelectorAll('.project-row');
 
       const previewData = {
+        morgan: { title: 'Morgan Stanley', metric: 'Productivity +35%  ·  Adoption +28%', img: '' },
+        tcs: { title: 'Ameriprise', metric: 'Efficiency +35%  ·  Analysis time -44%', img: '' },
+        maxtra: { title: 'Maxtra Technologies', metric: 'Onboarding +33%  ·  Drop-offs -28%', img: '' },
         dreamcollege: { title: 'DreamCollege AI', metric: '150K+ Users  ·  63% Retention Lift', img: 'assets/images/DreamCollege/Image-1.png' },
         nature: { title: 'Nature Counter', metric: '100K+ Users  ·  45% Faster Handoff', img: 'assets/images/Nature Counter/Scene.gif' },
         saarthi: { title: 'Saarthi', metric: '90% Satisfaction  ·  62% Faster', img: 'assets/images/Saarthi/Heroimage.png' },
@@ -1263,7 +1363,8 @@
       heroAnchorId: 'top',
       floatingSections: [
         { id: 'top', label: 'Intro' },
-        { id: 'projects', label: 'Work' },
+        { id: 'work', label: 'Work' },
+        { id: 'case-studies', label: 'Case Studies' },
         { id: 'recognition', label: 'Awards' },
         { id: 'footer', label: 'Connect' }
       ]
