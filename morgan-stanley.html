@@ -120,6 +120,43 @@
     .cs-card-text { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.65; }
 
     /* ——— Wireframe figures ——— */
+    /* ——— Reading progress: orientation cue for a long read ——— */
+    .cs-progress { position: fixed; top: 0; left: 0; height: 2px; width: 0; background: var(--accent); z-index: 1200; transition: width 0.1s linear; }
+
+    /* ——— At a glance: the whole case in one screen, for a 40-second read ——— */
+    .cs-glance { max-width: 1200px; margin: 0 auto; padding: 0 var(--margin) 72px; }
+    .cs-glance-inner { border: 1px solid var(--border); background: var(--bg-alt); }
+    .cs-glance-head { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding: 20px 28px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    .cs-glance-eyebrow { font-family: var(--ui); font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+    .cs-glance-time { font-family: var(--ui); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); }
+    .cs-glance-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .cs-glance-cell { padding: 26px 28px 30px; border-right: 1px solid var(--border); }
+    .cs-glance-cell:last-child { border-right: none; }
+    .cs-glance-label { display: flex; align-items: center; gap: 8px; font-family: var(--ui); font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--secondary); margin-bottom: 14px; }
+    .cs-glance-label svg { width: 13px; height: 13px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 1.6; }
+    .cs-glance-text { font-family: var(--font); font-size: 14.5px; line-height: 1.65; color: var(--text); }
+    .cs-glance-text strong { font-weight: 600; }
+    .cs-glance-metrics { display: flex; flex-wrap: wrap; gap: 6px 22px; }
+    .cs-glance-metric { display: flex; flex-direction: column; gap: 1px; }
+    .cs-glance-metric b { font-family: var(--display); font-size: 27px; font-weight: 400; line-height: 1; color: var(--accent); letter-spacing: -0.01em; }
+    .cs-glance-metric span { font-family: var(--ui); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--secondary); }
+
+    /* Visual proof, surfaced early instead of buried halfway down */
+    .cs-glance-proof { border-top: 1px solid var(--border); padding: 22px 28px 26px; }
+    .cs-proof-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 14px; }
+    .cs-proof-item { display: block; text-decoration: none; border: 1px solid var(--border); background: var(--bg); padding: 12px 12px 10px; transition: border-color 0.2s ease, transform 0.2s ease; }
+    .cs-proof-item:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .cs-proof-item svg { display: block; width: 100%; height: auto; color: var(--text); opacity: 0.75; }
+    .cs-proof-item span { display: block; font-family: var(--ui); font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--secondary); margin-top: 10px; line-height: 1.4; }
+    .cs-proof-item:hover span { color: var(--accent); }
+
+    @media (max-width: 900px) {
+      .cs-glance-grid { grid-template-columns: 1fr; }
+      .cs-glance-cell { border-right: none; border-bottom: 1px solid var(--border); }
+      .cs-glance-cell:last-child { border-bottom: none; }
+      .cs-proof-strip { grid-template-columns: 1fr 1fr; }
+    }
+
     .cs-wire { margin: 44px 0 0; min-width: 0; }
     .cs-wire-frame { border: 1px solid var(--border); background: var(--bg-alt); padding: 20px; overflow-x: auto; min-width: 0; max-width: 100%; }
     .cs-wire-frame svg { display: block; width: 100%; height: auto; min-width: 620px; color: var(--text); }
@@ -238,6 +275,7 @@
   </ul>
 </nav>
 
+<div class="cs-progress" id="csProgress"></div>
 <div id="siteShellMount"></div>
 
 <!-- ════════════════════════════════════════
@@ -279,6 +317,92 @@
     </div>
   </div>
 </div>
+
+<!-- ════════════════════════════════════════
+     AT A GLANCE — the whole case in one screen
+════════════════════════════════════════ -->
+<section class="cs-glance" data-reveal>
+  <div class="cs-glance-inner">
+    <div class="cs-glance-head">
+      <span class="cs-glance-eyebrow">At a glance</span>
+      <span class="cs-glance-time">Full read &middot; 18 min &nbsp;|&nbsp; Skim &middot; 40 sec</span>
+    </div>
+
+    <div class="cs-glance-grid">
+      <div class="cs-glance-cell">
+        <p class="cs-glance-label">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+          The problem
+        </p>
+        <p class="cs-glance-text">Advisors reviewed only part of their alert queue and let the rest age &mdash; because judging one alert meant leaving the queue and losing their place, and closing it recorded <strong>no reason at all</strong>.</p>
+      </div>
+      <div class="cs-glance-cell">
+        <p class="cs-glance-label">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h9"/></svg>
+          What I did
+        </p>
+        <p class="cs-glance-text">Put the queue and the client's history on one screen so nobody loses their place, and replaced the single close button with <strong>statuses that record why</strong> &mdash; turning routine work into data the business could use.</p>
+      </div>
+      <div class="cs-glance-cell">
+        <p class="cs-glance-label">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M8 16v-5M13 16V8M18 16v-3"/></svg>
+          The result
+        </p>
+        <div class="cs-glance-metrics">
+          <span class="cs-glance-metric"><b>+35%</b><span>Productivity</span></span>
+          <span class="cs-glance-metric"><b>+28%</b><span>Adoption</span></span>
+          <span class="cs-glance-metric"><b>40%</b><span>Faster review</span></span>
+          <span class="cs-glance-metric"><b>&minus;32%</b><span>Task time</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cs-glance-proof">
+      <p class="cs-glance-label" style="margin-bottom:0;">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M15 4v16M3 9h12"/></svg>
+        The four decisions &mdash; jump to any wireframe
+      </p>
+      <div class="cs-proof-strip">
+        <a href="#s-wireframes" class="cs-proof-item">
+          <svg viewBox="0 0 120 62" fill="none" stroke="currentColor" stroke-width="1.4">
+            <rect x="1" y="1" width="52" height="26" rx="1"/><rect x="1" y="35" width="52" height="26" rx="1"/>
+            <rect x="67" y="1" width="34" height="60" rx="1"/><rect x="104" y="1" width="15" height="60" rx="1"/>
+            <path d="M60 31h5M63 28l3 3-3 3" stroke-linecap="round"/>
+          </svg>
+          <span>01 &middot; One queue, not two views</span>
+        </a>
+        <a href="#s-wireframes" class="cs-proof-item">
+          <svg viewBox="0 0 120 62" fill="none" stroke="currentColor" stroke-width="1.4">
+            <rect x="24" y="1" width="72" height="60" rx="1"/>
+            <circle cx="36" cy="14" r="3"/><path d="M45 14h38" stroke-linecap="round"/>
+            <circle cx="36" cy="26" r="3"/><path d="M45 26h30" stroke-linecap="round"/>
+            <path d="M28 34h64" stroke-dasharray="3 3"/>
+            <circle cx="36" cy="43" r="3" opacity="0.45"/><path d="M45 43h34" stroke-linecap="round" opacity="0.45"/>
+            <circle cx="36" cy="54" r="3" opacity="0.45"/><path d="M45 54h26" stroke-linecap="round" opacity="0.45"/>
+          </svg>
+          <span>02 &middot; Statuses that record why</span>
+        </a>
+        <a href="#s-wireframes" class="cs-proof-item">
+          <svg viewBox="0 0 120 62" fill="none" stroke="currentColor" stroke-width="1.4">
+            <rect x="1" y="1" width="118" height="60" rx="1"/><path d="M1 13h118"/>
+            <rect x="8" y="20" width="104" height="13" rx="1"/>
+            <rect x="8" y="38" width="104" height="13" rx="1" opacity="0.5"/>
+            <path d="M104 5.5h8" stroke-linecap="round"/>
+          </svg>
+          <span>03 &middot; A history that survives handover</span>
+        </a>
+        <a href="#s-wireframes" class="cs-proof-item">
+          <svg viewBox="0 0 120 62" fill="none" stroke="currentColor" stroke-width="1.4">
+            <rect x="1" y="1" width="118" height="60" rx="1"/><path d="M1 17h118M31 1v16"/>
+            <path d="M12 50V33M31 50V26M50 50V38M69 50V29M88 50V44M107 50V36" stroke-linecap="round"/>
+            <path d="M6 55h108" opacity="0.4"/>
+          </svg>
+          <span>04 &middot; How much is still open</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ════════════════════════════════════════
      STAKES STRIP
@@ -1114,6 +1238,23 @@
       entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('revealed'); io.unobserve(e.target); } });
     }, { threshold: 0.08 });
     els.forEach(function(el){ io.observe(el); });
+  })();
+
+  // Reading progress — orientation cue on a long page
+  (function(){
+    var bar = document.getElementById('csProgress');
+    if (!bar) return;
+    var ticking = false;
+    function update(){
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+      ticking = false;
+    }
+    window.addEventListener('scroll', function(){
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
   })();
 </script>
 
