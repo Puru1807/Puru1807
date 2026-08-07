@@ -136,7 +136,7 @@
     .cs-glance-label svg { width: 13px; height: 13px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 1.6; }
     .cs-glance-text { font-family: var(--font); font-size: 14.5px; line-height: 1.65; color: var(--text); }
     .cs-glance-text strong { font-weight: 600; }
-    .cs-glance-metrics { display: flex; flex-wrap: wrap; gap: 6px 22px; }
+    .cs-glance-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 18px; }
     .cs-glance-metric { display: flex; flex-direction: column; gap: 1px; }
     .cs-glance-metric b { font-family: var(--display); font-size: 27px; font-weight: 400; line-height: 1; color: var(--accent); letter-spacing: -0.01em; }
     .cs-glance-metric span { font-family: var(--ui); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--secondary); }
@@ -156,6 +156,11 @@
       .cs-glance-cell:last-child { border-bottom: none; }
       .cs-proof-strip { grid-template-columns: 1fr 1fr; }
     }
+
+    /* ——— Inline diagram: breaks up long prose without the weight of a full wireframe ——— */
+    .cs-dia { margin: 34px 0; border: 1px solid var(--border); background: var(--bg-alt); padding: 20px 20px 16px; overflow-x: auto; max-width: 760px; }
+    .cs-dia svg { display: block; width: 100%; height: auto; min-width: 460px; color: var(--text); }
+    .cs-dia figcaption { font-family: var(--ui); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); margin-top: 14px; }
 
     .cs-wire { margin: 44px 0 0; min-width: 0; }
     .cs-wire-frame { border: 1px solid var(--border); background: var(--bg-alt); padding: 20px; overflow-x: auto; min-width: 0; max-width: 100%; }
@@ -325,7 +330,7 @@
   <div class="cs-glance-inner">
     <div class="cs-glance-head">
       <span class="cs-glance-eyebrow">At a glance</span>
-      <span class="cs-glance-time">Full read &middot; 18 min &nbsp;|&nbsp; Skim &middot; 40 sec</span>
+      <span class="cs-glance-time">Full read &middot; 22 min &nbsp;|&nbsp; This panel &middot; 40 sec</span>
     </div>
 
     <div class="cs-glance-grid">
@@ -456,6 +461,33 @@
     <p class="cs-body">Morgan Stanley is a global financial services firm operating in 40+ countries, where 80,000+ employees advise roughly 3.5 million clients. Its wealth management platform generates <strong>alerts on client account activity</strong> &mdash; a large outgoing transfer, an unusual movement of funds, a balance crossing a threshold &mdash; and routes them to the advisors who cover those clients. Each alert is a judgment call: is this a client conversation worth having, or is it noise?</p>
     <p class="cs-body">The alerts were being generated correctly. The workflow for acting on them was the problem. Advisors reviewed the top of the queue and let the rest age, the reasoning behind their decisions was never captured, and the system had no mechanism to learn which alerts were worth sending in the first place.</p>
     <p class="cs-body">I joined as Product Designer to lead end-to-end redesign of that workflow &mdash; the alerts workbench itself, the dashboard modules that summarise it, the data visualizations advisors read before deciding, and the enterprise design system tying it together. The engagement ran in two phases: a three-month research and definition cycle, then design-and-build across two releases &mdash; working one sprint ahead of engineering in Agile, alongside 2 PMs and a 15-engineer platform team.</p>
+    <figure class="cs-dia">
+      <svg viewBox="0 0 700 118" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flow diagram: account activity triggers an alert, the alert is routed to the covering advisor, the advisor judges whether it is worth a client conversation, and the outcome is either an opportunity or a close. The judgment step is marked as the expensive one.">
+        <g fill="none" stroke="currentColor" stroke-width="1.2">
+          <rect x="1" y="30" width="132" height="42" rx="1" opacity="0.5"/>
+          <rect x="167" y="30" width="132" height="42" rx="1" opacity="0.5"/>
+          <rect x="333" y="30" width="132" height="42" rx="1"/>
+          <rect x="499" y="30" width="132" height="42" rx="1" opacity="0.5"/>
+        </g>
+        <g font-family="monospace" font-size="9.5" fill="currentColor" text-anchor="middle">
+          <text x="67" y="48">account</text><text x="67" y="61">activity</text>
+          <text x="233" y="48">alert routed</text><text x="233" y="61">to advisor</text>
+          <text x="399" y="48">is this worth</text><text x="399" y="61">a conversation?</text>
+          <text x="565" y="48">opportunity</text><text x="565" y="61">&mdash; or closed</text>
+        </g>
+        <!-- arrows -->
+        <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.55" stroke-linecap="round">
+          <path d="M141 51h18M147 46l5 5-5 5"/>
+          <path d="M307 51h18M313 46l5 5-5 5"/>
+          <path d="M473 51h18M479 46l5 5-5 5"/>
+        </g>
+        <!-- the expensive step -->
+        <path d="M399 78v12" fill="none" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+        <text x="399" y="105" font-family="monospace" font-size="9.5" fill="currentColor" text-anchor="middle" opacity="0.8">the whole redesign is about this one step</text>
+      </svg>
+      <figcaption>Where the work sits &mdash; one judgment, made thousands of times a week</figcaption>
+    </figure>
+
     <div class="cs-info-grid">
       <div class="cs-info-item">
         <p class="cs-info-label">Headquarters</p>
@@ -1005,6 +1037,45 @@
       </div>
     </div>
 
+    <figure class="cs-dia">
+      <svg viewBox="0 0 700 132" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram of one queue row, showing the status dot, the owner's name directly beneath it, and the note and outcome columns at the end of the row">
+        <!-- row frame -->
+        <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.5">
+          <rect x="1" y="26" width="698" height="42" rx="1"/>
+          <path d="M96 26v42M232 26v42M380 26v42M512 26v42M604 26v42"/>
+        </g>
+        <!-- column headers -->
+        <g font-family="monospace" font-size="8.5" fill="currentColor" opacity="0.5" letter-spacing="1">
+          <text x="12" y="18">STATUS</text><text x="108" y="18">DATE</text><text x="244" y="18">CLIENT</text>
+          <text x="392" y="18">AMOUNT</text><text x="524" y="18">NOTES</text><text x="616" y="18">OUTCOME</text>
+        </g>
+        <!-- status + owner stacked in one cell -->
+        <circle cx="14" cy="42" r="3.5" fill="currentColor"/>
+        <g font-family="monospace" font-size="9" fill="currentColor">
+          <text x="24" y="45">In Progress</text>
+          <text x="24" y="59" opacity="0.55">J. Okonkwo</text>
+          <text x="108" y="50" opacity="0.6">07 / 03</text>
+          <text x="244" y="50" opacity="0.6">————————</text>
+          <text x="392" y="50" opacity="0.6">——————</text>
+        </g>
+        <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.6">
+          <rect x="524" y="40" width="13" height="15" rx="1"/>
+          <rect x="616" y="40" width="60" height="15" rx="1"/>
+        </g>
+        <!-- callouts -->
+        <g fill="none" stroke="currentColor" stroke-width="1" opacity="0.35">
+          <path d="M40 72v14h60"/><path d="M560 72v14h-60"/>
+        </g>
+        <g font-family="monospace" font-size="9" fill="currentColor" opacity="0.75">
+          <text x="104" y="90">owner sits under the status, so it survives</text>
+          <text x="104" y="103">when the panel hides columns</text>
+          <text x="326" y="90" text-anchor="end">note state and outcome stay</text>
+          <text x="326" y="103" text-anchor="end">at the end of the row</text>
+        </g>
+      </svg>
+      <figcaption>One row, annotated &mdash; what stays visible when the panel takes a third of the width</figcaption>
+    </figure>
+
     <h3 class="cs-h3">Notes &mdash; designing the empty state first</h3>
     <p class="cs-body">Most alerts have no history, so the empty panel is the state advisors see most often &mdash; and it's the one that decides whether the feature gets used at all. Rather than leave a blank region, the empty state names the next action directly and keeps the entry controls visible below it, with the submit action disabled until there's something to submit. The tags sit above the free-text field, in the order testing said people actually work: classify what happened, then add the exception if there is one.</p>
     <p class="cs-body">The full state solves the opposite problem. Entries are only ever added, newest first, each one carrying its author and the time it was written, so a long history reads as a record rather than a wall &mdash; and the newest context is where someone picking up the account will look first.</p>
@@ -1021,6 +1092,59 @@
 
     <h3 class="cs-h3">Accessibility as a design constraint, not a QA pass</h3>
     <p class="cs-body">Financial charts carry an accessibility problem most screens don't: allocation, gain/loss, and risk banding are all conventionally encoded in colour alone. Working with the firm's accessibility team, I designed every chart to carry a second, non-colour channel &mdash; texture and pattern fills on comparative bars, direct labelling in place of legend-only keys, and a tabular equivalent for every visualisation. Contrast targets were treated as a design input from the first exploration rather than something remediated after handoff, which meant compliance review found issues to confirm rather than issues to fix.</p>
+
+    <figure class="cs-dia">
+      <svg viewBox="0 0 700 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Comparison showing bars distinguished by colour alone versus the same bars carrying pattern fills and direct labels, so the meaning survives without colour">
+        <defs>
+          <pattern id="msHatch" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="5" stroke="currentColor" stroke-width="2" opacity="0.55"/>
+          </pattern>
+          <pattern id="msDots" width="5" height="5" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.1" fill="currentColor" opacity="0.55"/>
+          </pattern>
+        </defs>
+
+        <g font-family="monospace" font-size="9" letter-spacing="1" fill="currentColor" opacity="0.55">
+          <text x="0" y="12">COLOUR ONLY</text>
+          <text x="380" y="12">COLOUR + A SECOND CHANNEL</text>
+        </g>
+
+        <!-- left: colour-only, shown as indistinguishable greys -->
+        <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45">
+          <path d="M8 150h300M8 30v120"/>
+        </g>
+        <g fill="currentColor">
+          <rect x="34" y="74" width="34" height="76" opacity="0.34"/>
+          <rect x="86" y="52" width="34" height="98" opacity="0.30"/>
+          <rect x="138" y="96" width="34" height="54" opacity="0.36"/>
+          <rect x="190" y="62" width="34" height="88" opacity="0.32"/>
+          <rect x="242" y="108" width="34" height="42" opacity="0.33"/>
+        </g>
+        <g font-family="monospace" font-size="8.5" fill="currentColor" opacity="0.45">
+          <text x="34" y="166">?</text><text x="86" y="166">?</text><text x="138" y="166">?</text>
+          <text x="190" y="166">?</text><text x="242" y="166">?</text>
+        </g>
+        <text x="8" y="184" font-family="monospace" font-size="9" fill="currentColor" opacity="0.6">legend off to one side; meaning lost without hue</text>
+
+        <!-- right: pattern + direct labels -->
+        <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45">
+          <path d="M388 150h304M388 30v120"/>
+        </g>
+        <g stroke="currentColor" stroke-width="1.1">
+          <rect x="414" y="74" width="34" height="76" fill="url(#msHatch)"/>
+          <rect x="466" y="52" width="34" height="98" fill="url(#msDots)"/>
+          <rect x="518" y="96" width="34" height="54" fill="none"/>
+          <rect x="570" y="62" width="34" height="88" fill="url(#msHatch)"/>
+          <rect x="622" y="108" width="34" height="42" fill="url(#msDots)"/>
+        </g>
+        <g font-family="monospace" font-size="8.5" fill="currentColor" opacity="0.8">
+          <text x="414" y="166">EQ</text><text x="466" y="166">FI</text><text x="518" y="166">RE</text>
+          <text x="570" y="166">CA</text><text x="622" y="166">ALT</text>
+        </g>
+        <text x="388" y="184" font-family="monospace" font-size="9" fill="currentColor" opacity="0.6">pattern + direct label; readable with no colour at all</text>
+      </svg>
+      <figcaption>Every chart carries a second, non-colour channel &mdash; so the meaning survives a colour-blind reader, a greyscale print, and a compliance review</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -1066,6 +1190,32 @@
     <p class="cs-body">The redesign made the queue produce data. It did not yet make anything consume it. Dismissal reasons currently land in reporting, where someone has to go looking for them &mdash; which means the signal exists but the loop is still manual, and a rule that fires badly will keep firing until a person notices the pattern.</p>
     <p class="cs-body"><strong>Hypothesis:</strong> routing those closing reasons back to the team that owns the alert rules &mdash; surfaced as a ranked list of which rules are generating the most "shouldn't have fired" closures &mdash; will cut low-value alert volume without any advisor having to file a ticket. The measure of success isn't a UI metric; it's whether the queue gets smaller on its own.</p>
     <p class="cs-body"><strong>The tracking</strong> is already in place from release one, which is the argument for doing it next: the data is accumulating whether or not we act on it, and the longer it accumulates the better the first pass at rule tuning will be. The open design question is where that surface lives &mdash; a report the rules team pulls, or something that reaches them without being asked for.</p>
+
+    <figure class="cs-dia">
+      <svg viewBox="0 0 700 156" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Loop diagram: closing reasons feed the rules team, which tunes the alert rules, which produces fewer low-value alerts and a smaller queue. The link from closing reasons back to the rules team is drawn as a dashed line, marked as the piece not yet built.">
+        <g fill="none" stroke="currentColor" stroke-width="1.2">
+          <rect x="1" y="18" width="150" height="44" rx="1"/>
+          <rect x="275" y="18" width="150" height="44" rx="1" stroke-dasharray="4 4" opacity="0.55"/>
+          <rect x="549" y="18" width="150" height="44" rx="1" opacity="0.5"/>
+        </g>
+        <g font-family="monospace" font-size="9.5" fill="currentColor" text-anchor="middle">
+          <text x="76" y="36">closing reasons</text><text x="76" y="49">(shipped)</text>
+          <text x="350" y="36" opacity="0.75">rules team</text><text x="350" y="49" opacity="0.75">tunes the rules</text>
+          <text x="624" y="36" opacity="0.75">fewer low-value</text><text x="624" y="49" opacity="0.75">alerts</text>
+        </g>
+        <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+          <path d="M159 40h108" stroke-dasharray="4 4" opacity="0.55"/><path d="M255 35l5 5-5 5" opacity="0.55"/>
+          <path d="M433 40h108" opacity="0.5"/><path d="M529 35l5 5-5 5" opacity="0.5"/>
+        </g>
+        <!-- return loop -->
+        <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45" stroke-linecap="round">
+          <path d="M624 70v28H76v-28"/><path d="M71 75l5-5 5 5"/>
+        </g>
+        <text x="350" y="115" font-family="monospace" font-size="9.5" fill="currentColor" text-anchor="middle" opacity="0.65">a smaller queue means fewer alerts to close</text>
+        <text x="350" y="140" font-family="monospace" font-size="9.5" fill="currentColor" text-anchor="middle" opacity="0.85">dashed = the one link not yet built</text>
+      </svg>
+      <figcaption>The loop the redesign made possible &mdash; and the single connection still missing</figcaption>
+    </figure>
   </div>
 </section>
 
