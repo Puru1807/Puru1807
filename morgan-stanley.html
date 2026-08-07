@@ -1090,6 +1090,44 @@
     <p class="cs-body">The portfolio dashboards were built on the platform's existing charting library, and its default patterns weren't always the clearest way to communicate the underlying data. The clearest example: to let advisors compare allocation drift against benchmark within a single period, I needed the paired bars set tighter than the library's default spacing allowed &mdash; and the customisation to do it was non-trivial for the team to estimate. Rather than design around the constraint or push an unbounded estimate onto the sprint, I pulled in an engineer from a sibling team who had already solved similar customisations, and we sized the work together before it entered the build queue.</p>
     <p class="cs-body">The broader lesson held across the release: the library's defaults are built for drawing quickly, not for being understood. Every chart in the dashboard got interrogated against what the advisor was actually comparing &mdash; and where the default fought that, we either customised deliberately or changed the chart type rather than accepting a visualisation that rendered cleanly but read poorly.</p>
 
+    <figure class="cs-dia">
+      <svg viewBox="0 0 700 176" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Comparison of bar spacing. On the left, the charting library's default spacing separates each pair so the two values read as unrelated. On the right, the pair is set tight and grouped, so the gap between them reads as the comparison itself.">
+        <g font-family="monospace" font-size="9" letter-spacing="1" fill="currentColor" opacity="0.55">
+          <text x="0" y="12">LIBRARY DEFAULT</text>
+          <text x="380" y="12">WHAT THE COMPARISON NEEDED</text>
+        </g>
+
+        <!-- left: evenly spaced, pairs not readable as pairs -->
+        <path d="M8 132h300" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45"/>
+        <g fill="currentColor" opacity="0.4">
+          <rect x="26" y="62" width="20" height="70"/><rect x="70" y="86" width="20" height="46"/>
+          <rect x="122" y="52" width="20" height="80"/><rect x="166" y="94" width="20" height="38"/>
+          <rect x="218" y="74" width="20" height="58"/><rect x="262" y="70" width="20" height="62"/>
+        </g>
+        <g font-family="monospace" font-size="9" fill="currentColor" opacity="0.6">
+          <text x="8" y="152">even gaps everywhere &mdash; the eye can't tell</text>
+          <text x="8" y="165">which two bars belong together</text>
+        </g>
+
+        <!-- right: tight pairs, clear grouping -->
+        <path d="M388 132h304" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45"/>
+        <g fill="currentColor">
+          <rect x="410" y="62" width="20" height="70" opacity="0.75"/><rect x="432" y="86" width="20" height="46" opacity="0.35"/>
+          <rect x="502" y="52" width="20" height="80" opacity="0.75"/><rect x="524" y="94" width="20" height="38" opacity="0.35"/>
+          <rect x="594" y="74" width="20" height="58" opacity="0.75"/><rect x="616" y="70" width="20" height="62" opacity="0.35"/>
+        </g>
+        <!-- the gap that carries the meaning -->
+        <g fill="none" stroke="currentColor" stroke-width="1" opacity="0.6">
+          <path d="M430 100h22M434 96l-4 4 4 4M448 96l4 4-4 4"/>
+        </g>
+        <g font-family="monospace" font-size="9" fill="currentColor" opacity="0.6">
+          <text x="388" y="152">pairs set tight &mdash; the distance between them</text>
+          <text x="388" y="165"><tspan opacity="0.9">is</tspan> the comparison the advisor came for</text>
+        </g>
+      </svg>
+      <figcaption>The customisation the library made expensive &mdash; and the reason it was worth paying for</figcaption>
+    </figure>
+
     <h3 class="cs-h3">Accessibility as a design constraint, not a QA pass</h3>
     <p class="cs-body">Financial charts carry an accessibility problem most screens don't: allocation, gain/loss, and risk banding are all conventionally encoded in colour alone. Working with the firm's accessibility team, I designed every chart to carry a second, non-colour channel &mdash; texture and pattern fills on comparative bars, direct labelling in place of legend-only keys, and a tabular equivalent for every visualisation. Contrast targets were treated as a design input from the first exploration rather than something remediated after handoff, which meant compliance review found issues to confirm rather than issues to fix.</p>
 
