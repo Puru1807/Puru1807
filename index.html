@@ -13,7 +13,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>P</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --text: #040202;
@@ -27,8 +27,9 @@
       --footer-bg: #040202;
       --gutter: 40px;
       --margin: 40px;
-      --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
-      --display: 'Space Mono', monospace;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+      --ui: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     *, *::before, *::after {
@@ -138,7 +139,7 @@
     }
 
     .nav-link {
-      font-family: var(--display);
+      font-family: var(--ui);
       font-size: 12px;
       font-weight: 400;
       letter-spacing: 0.04em;
@@ -258,7 +259,7 @@
     }
 
     .hero-eyebrow {
-      font-family: var(--display);
+      font-family: var(--ui);
       font-size: 11px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -305,7 +306,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: var(--display);
+      font-family: var(--ui);
       font-size: 10px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -353,7 +354,7 @@
     }
 
     .pill {
-      font-family: var(--display);
+      font-family: var(--ui);
       font-size: 11px;
       font-weight: 400;
       letter-spacing: 0.06em;
@@ -393,7 +394,7 @@
     }
     .section-header.no-border { border-top: none; padding-top: 40px; }
     .section-eyebrow {
-      font-family: var(--display);
+      font-family: var(--ui);
       font-size: 10px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -403,8 +404,8 @@
     .section-title {
       font-family: var(--display);
       font-size: clamp(36px, 5vw, 56px);
-      font-weight: 700;
-      letter-spacing: -0.03em;
+      font-weight: 400;
+      letter-spacing: -0.02em;
       line-height: 1.0;
       color: var(--text);
     }
@@ -436,7 +437,7 @@
     }
 
     .project-num {
-      font-family: var(--display);
+      font-family: var(--ui);
       font-size: 10px;
       color: var(--secondary);
       opacity: 0.4;
@@ -495,7 +496,7 @@
     }
 
     .project-tag {
-      font-family: var(--display);
+      font-family: var(--ui);
       font-size: 10px;
       color: var(--secondary);
       text-transform: uppercase;
@@ -597,7 +598,7 @@
     .preview-title {
       font-family: var(--display);
       font-size: 18px;
-      font-weight: 700;
+      font-weight: 400;
       color: #fff;
       position: relative;
       z-index: 1;
@@ -606,7 +607,7 @@
     }
 
     .preview-metric {
-      font-family: var(--display);
+      font-family: var(--ui);
       font-size: 10px;
       color: rgba(255, 255, 255, 0.65);
       text-transform: uppercase;
@@ -649,7 +650,7 @@
     .footer-quote {
       font-family: var(--display);
       font-size: clamp(20px, 2.5vw, 28px);
-      font-weight: 700;
+      font-weight: 400;
       line-height: 1.4;
       margin-bottom: 12px;
       letter-spacing: -0.02em;
@@ -664,7 +665,7 @@
     }
 
     .footer-heading {
-      font-family: var(--display);
+      font-family: var(--ui);
       font-size: 10px;
       font-weight: 400;
       text-transform: uppercase;
@@ -715,14 +716,14 @@
     }
 
     .copyright {
-      font-family: var(--display);
+      font-family: var(--ui);
       font-size: 11px;
       color: rgba(255, 255, 255, 0.2);
       letter-spacing: 0.05em;
     }
 
     .footer-credits {
-      font-family: var(--display);
+      font-family: var(--ui);
       font-size: 11px;
       color: rgba(255, 255, 255, 0.2);
       letter-spacing: 0.03em;
@@ -817,7 +818,7 @@
     }
 
     .recognition-label {
-      font-family: var(--display);
+      font-family: var(--ui);
       font-size: 10px;
       font-weight: 400;
       text-transform: uppercase;
@@ -843,9 +844,9 @@
     }
 
     .recognition-title {
-      font-family: var(--display);
+      font-family: var(--ui);
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 600;
       color: var(--text);
       letter-spacing: -0.01em;
     }
@@ -857,7 +858,7 @@
     }
 
     .recognition-year {
-      font-family: var(--display);
+      font-family: var(--ui);
       font-size: 10px;
       color: var(--secondary);
       opacity: 0.6;

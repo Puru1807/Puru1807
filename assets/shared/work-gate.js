@@ -54,7 +54,7 @@
       "align-items:center",
       "justify-content:center",
       "padding:24px",
-      "font-family:'Plus Jakarta Sans',-apple-system,sans-serif",
+      "font-family:'Inter',-apple-system,sans-serif",
       "opacity:0",
       "visibility:visible",
       "transition:opacity .35s ease"
@@ -62,16 +62,16 @@
 
     overlay.innerHTML = ''
       + '<div style="width:100%;max-width:440px;text-align:center;">'
-      +   '<div style="font-family:\'Space Mono\',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:' + secondary + ';margin-bottom:24px;">Puru Bhardwaj &middot; Work &middot; ' + projectName + '</div>'
-      +   '<h1 style="font-family:\'Space Mono\',monospace;font-size:clamp(28px,5vw,42px);font-weight:700;letter-spacing:-0.02em;line-height:1.1;margin:0 0 16px;">This project is under NDA.</h1>'
+      +   '<div style="font-family:\'Inter\',sans-serif;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:' + secondary + ';margin-bottom:24px;">Puru Bhardwaj &middot; Work &middot; ' + projectName + '</div>'
+      +   '<h1 style="font-family:\'Inter\',sans-serif;font-size:clamp(28px,5vw,42px);font-weight:700;letter-spacing:-0.02em;line-height:1.1;margin:0 0 16px;">This project is under NDA.</h1>'
       +   '<p style="font-size:15px;line-height:1.6;color:' + secondary + ';margin:0 0 36px;">Professional work for Morgan Stanley, Ameriprise, and Maxtra Technologies is password-protected. If you don\'t have the password, reach out at <a href="mailto:purubhardwaj99@gmail.com" style="color:' + text + ';text-decoration:underline;text-underline-offset:3px;">purubhardwaj99@gmail.com</a>.</p>'
       +   '<form id="workGateForm" autocomplete="off" novalidate>'
       +     '<input id="workGatePass" type="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Password" '
-      +       'style="width:100%;padding:16px 18px;font-family:\'Space Mono\',monospace;font-size:15px;letter-spacing:0.08em;background:' + inputBg + ';color:' + text + ';border:1.5px solid ' + border + ';border-radius:10px;outline:none;text-align:center;transition:border-color .2s;">'
-      +     '<div id="workGateErr" style="min-height:20px;margin-top:14px;font-family:\'Space Mono\',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#E0533C;opacity:0;transition:opacity .2s;">Incorrect password</div>'
-      +     '<button type="submit" style="margin-top:18px;width:100%;padding:14px 20px;font-family:\'Space Mono\',monospace;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;background:' + text + ';color:' + bg + ';border:none;border-radius:10px;cursor:pointer;transition:transform .15s ease, opacity .15s ease;">Unlock work &rarr;</button>'
+      +       'style="width:100%;padding:16px 18px;font-family:\'Inter\',sans-serif;font-size:15px;letter-spacing:0.08em;background:' + inputBg + ';color:' + text + ';border:1.5px solid ' + border + ';border-radius:10px;outline:none;text-align:center;transition:border-color .2s;">'
+      +     '<div id="workGateErr" style="min-height:20px;margin-top:14px;font-family:\'Inter\',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#E0533C;opacity:0;transition:opacity .2s;">Incorrect password</div>'
+      +     '<button type="submit" style="margin-top:18px;width:100%;padding:14px 20px;font-family:\'Inter\',sans-serif;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;background:' + text + ';color:' + bg + ';border:none;border-radius:10px;cursor:pointer;transition:transform .15s ease, opacity .15s ease;">Unlock work &rarr;</button>'
       +   '</form>'
-      +   '<a href="index.html#case-studies" style="display:inline-block;margin-top:24px;font-family:\'Space Mono\',monospace;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:' + secondary + ';text-decoration:none;">&larr; Browse case studies instead</a>'
+      +   '<a href="index.html#case-studies" style="display:inline-block;margin-top:24px;font-family:\'Inter\',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:' + secondary + ';text-decoration:none;">&larr; Browse case studies instead</a>'
       + '</div>';
 
     document.body.appendChild(overlay);

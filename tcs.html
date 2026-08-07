@@ -9,15 +9,16 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>P</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --text: #040202; --secondary: #AAAAAA; --bg: #ffffff;
       --bg-alt: #F0EFED; --accent: #6F767E; --accent-dim: rgba(111,118,126,0.14);
       --border: #e0deda; --footer-bg: #040202;
       --margin: 40px;
-      --font: 'Plus Jakarta Sans', -apple-system, sans-serif;
-      --display: 'Space Mono', monospace;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+      --ui: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; font-size: 16px; }
@@ -35,7 +36,7 @@
     .nav-brand { font-family: var(--display); font-size: 13px; font-weight: 400; letter-spacing: -0.01em; color: var(--text); text-decoration: none; flex-shrink: 0; transition: opacity 0.2s ease; }
     .nav-brand:hover { opacity: 0.6; }
     .nav-links { display: flex; align-items: center; gap: 4px; margin-left: auto; margin-right: 12px; }
-    .nav-link { font-family: var(--display); font-size: 12px; letter-spacing: 0.04em; color: var(--text); text-decoration: none; padding: 7px 18px; border-radius: 20px; position: relative; z-index: 1; transition: color 0.25s; }
+    .nav-link { font-family: var(--ui); font-size: 12px; letter-spacing: 0.04em; color: var(--text); text-decoration: none; padding: 7px 18px; border-radius: 20px; position: relative; z-index: 1; transition: color 0.25s; }
     .nav-link::before { content: ''; position: absolute; inset: 0; background: var(--text); border-radius: 20px; transform: scale(0); transition: transform 0.25s cubic-bezier(0.4,0,0.2,1); z-index: -1; }
     .nav-link:hover, .nav-link.active { color: var(--bg); }
     .nav-link:hover::before, .nav-link.active::before { transform: scale(1); }
@@ -54,7 +55,7 @@
     .cs-sidenav { position: fixed; left: 24px; top: 50%; transform: translateY(-50%); z-index: 800; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
     .cs-sidenav.is-visible { opacity: 1; pointer-events: auto; }
     .cs-sidenav ul { list-style: none; display: flex; flex-direction: column; gap: 2px; }
-    .csn-link { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); text-decoration: none; transition: color 0.25s ease, font-size 0.3s cubic-bezier(0.4,0,0.2,1), font-weight 0.25s ease, letter-spacing 0.3s ease; padding: 5px 0; white-space: nowrap; }
+    .csn-link { display: flex; align-items: center; gap: 10px; font-family: var(--ui); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); text-decoration: none; transition: color 0.25s ease, font-size 0.3s cubic-bezier(0.4,0,0.2,1), font-weight 0.25s ease, letter-spacing 0.3s ease; padding: 5px 0; white-space: nowrap; }
     .csn-dot { width: 5px; height: 5px; border-radius: 50%; border: 1.5px solid currentColor; flex-shrink: 0; transition: background 0.2s, border-color 0.2s, transform 0.25s; }
     .csn-link:hover { color: var(--text); }
     .csn-link:hover .csn-dot { background: var(--text); border-color: var(--text); }
@@ -63,42 +64,42 @@
     @media (max-width: 1340px) { .cs-sidenav { display: none; } }
 
     .cs-hero { padding: 130px var(--margin) 72px; max-width: 1200px; margin: 0 auto; }
-    .cs-back { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--secondary); text-decoration: none; margin-bottom: 48px; transition: color 0.2s; }
+    .cs-back { display: inline-flex; align-items: center; gap: 8px; font-family: var(--ui); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--secondary); text-decoration: none; margin-bottom: 48px; transition: color 0.2s; }
     .cs-back:hover { color: var(--accent); }
     .cs-back svg { width: 14px; height: 14px; }
     .cs-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
-    .cs-tag { font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); border: 1px solid var(--border); border-radius: 2px; padding: 5px 12px; }
-    .cs-title { font-family: var(--display); font-size: clamp(36px,6vw,72px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 28px; }
+    .cs-tag { font-family: var(--ui); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); border: 1px solid var(--border); border-radius: 2px; padding: 5px 12px; }
+    .cs-title { font-family: var(--display); font-size: clamp(36px,6vw,72px); font-weight: 400; letter-spacing: -0.02em; line-height: 1.08; margin-bottom: 28px; }
     .cs-subtitle { font-family: var(--font); font-size: 17px; color: var(--secondary); max-width: 720px; line-height: 1.7; margin-bottom: 48px; }
     .cs-meta-row { display: flex; gap: 48px; flex-wrap: wrap; padding-top: 40px; border-top: 1px solid var(--border); }
     .cs-meta-item { display: flex; flex-direction: column; gap: 6px; }
-    .cs-meta-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
+    .cs-meta-label { font-family: var(--ui); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
     .cs-meta-value { font-family: var(--font); font-size: 14px; font-weight: 500; }
 
     .cs-stakes-strip { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-alt); }
     .cs-stakes-inner { max-width: 1200px; margin: 0 auto; padding: 56px var(--margin); }
-    .cs-stakes-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #E0533C; margin-bottom: 12px; }
-    .cs-stakes-headline { font-family: var(--display); font-size: clamp(20px,2.4vw,30px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; max-width: 900px; }
+    .cs-stakes-label { font-family: var(--ui); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #E0533C; margin-bottom: 12px; }
+    .cs-stakes-headline { font-family: var(--display); font-size: clamp(20px,2.4vw,30px); font-weight: 400; letter-spacing: -0.02em; line-height: 1.3; max-width: 900px; }
 
     .cs-results { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-alt); }
     .cs-results-inner { max-width: 1200px; margin: 0 auto; padding: 64px var(--margin); }
-    .cs-results-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
-    .cs-results-title { font-family: var(--display); font-size: clamp(17px,2vw,26px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 48px; }
+    .cs-results-label { font-family: var(--ui); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .cs-results-title { font-family: var(--display); font-size: clamp(17px,2vw,26px); font-weight: 400; letter-spacing: -0.02em; margin-bottom: 48px; }
     .cs-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; border-top: 1px solid var(--border); }
     .cs-stat { display: flex; flex-direction: column; gap: 10px; padding: 40px 32px 40px 0; border-right: 1px solid var(--border); }
     .cs-stat:last-child { border-right: none; }
     .cs-stat:not(:first-child) { padding-left: 32px; }
-    .cs-stat-number { font-family: var(--display); font-size: clamp(36px,5.5vw,68px); font-weight: 700; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
+    .cs-stat-number { font-family: var(--display); font-size: clamp(36px,5.5vw,68px); font-weight: 400; color: var(--accent); letter-spacing: -0.02em; line-height: 1; }
     .cs-stat-desc { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.6; max-width: 180px; }
 
     .cs-row { display: grid; grid-template-columns: 180px 1fr; gap: 64px; max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); border-bottom: 1px solid var(--border); }
     .cs-row-label { padding-top: 4px; position: sticky; top: 80px; align-self: start; }
-    .cs-row-num { font-family: var(--display); font-size: 10px; color: var(--secondary); opacity: 0.35; letter-spacing: 0.06em; margin-bottom: 8px; }
-    .cs-row-tag { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); line-height: 2; }
+    .cs-row-num { font-family: var(--ui); font-size: 10px; color: var(--secondary); opacity: 0.35; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .cs-row-tag { font-family: var(--ui); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); line-height: 2; }
     .cs-row-divider { width: 20px; height: 1px; background: var(--border); margin-top: 14px; }
 
-    .cs-h2 { font-family: var(--display); font-size: clamp(22px,3vw,38px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 24px; }
-    .cs-h3 { font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; margin-top: 48px; }
+    .cs-h2 { font-family: var(--display); font-size: clamp(22px,3vw,38px); font-weight: 400; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 24px; }
+    .cs-h3 { font-family: var(--ui); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; margin-top: 48px; }
     .cs-h3:first-child { margin-top: 0; }
     .cs-body { font-family: var(--font); font-size: 16px; line-height: 1.85; color: var(--text); max-width: 720px; }
     .cs-body + .cs-body { margin-top: 16px; }
@@ -108,34 +109,34 @@
     .cs-info-item { padding: 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
     .cs-info-item:nth-child(3n) { border-right: none; }
     .cs-info-item:nth-last-child(-n+3) { border-bottom: none; }
-    .cs-info-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); margin-bottom: 8px; }
+    .cs-info-label { font-family: var(--ui); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); margin-bottom: 8px; }
     .cs-info-value { font-family: var(--font); font-size: 14px; font-weight: 500; line-height: 1.6; }
 
     .cs-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 40px; background: var(--border); border: 1px solid var(--border); }
     .cs-card { padding: 32px 24px; background: var(--bg); }
-    .cs-card-num { font-family: var(--display); font-size: 28px; font-weight: 700; color: var(--accent); opacity: 0.4; letter-spacing: -0.04em; margin-bottom: 16px; line-height: 1; }
-    .cs-card-title { font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+    .cs-card-num { font-family: var(--display); font-size: 28px; font-weight: 400; color: var(--accent); opacity: 0.4; letter-spacing: -0.02em; margin-bottom: 16px; line-height: 1; }
+    .cs-card-title { font-family: var(--ui); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
     .cs-card-text { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.65; }
 
     .cs-quote { position: relative; padding: 32px 40px; background: var(--bg-alt); border-left: 4px solid var(--accent); margin: 48px 0; max-width: 720px; }
     .cs-quote::before { content: '\201C'; font-family: var(--display); font-size: 80px; color: var(--accent); opacity: 0.15; position: absolute; top: -8px; left: 32px; line-height: 1; }
     .cs-quote p { font-family: var(--display); font-size: 15px; font-style: italic; line-height: 1.7; position: relative; z-index: 1; }
-    .cs-quote cite { display: block; margin-top: 16px; font-family: var(--display); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); font-style: normal; }
+    .cs-quote cite { display: block; margin-top: 16px; font-family: var(--ui); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); font-style: normal; }
 
     .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; margin-top: 40px; }
     .cs-list { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
     .cs-list li { display: flex; gap: 16px; font-family: var(--font); font-size: 14px; line-height: 1.7; }
-    .cs-list li::before { content: '\2192'; font-family: var(--display); color: var(--accent); flex-shrink: 0; font-size: 12px; margin-top: 2px; }
+    .cs-list li::before { content: '\2192'; font-family: var(--ui); color: var(--accent); flex-shrink: 0; font-size: 12px; margin-top: 2px; }
     .cs-note { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 4px; padding: 24px 28px; margin-top: 32px; font-family: var(--font); font-size: 15px; line-height: 1.8; color: var(--secondary); }
     .cs-note strong { color: var(--text); }
 
     .cs-formula { background: var(--bg-alt); border-left: 3px solid #E0533C; padding: 28px 32px; margin-top: 32px; max-width: 760px; font-family: var(--font); font-size: 16px; line-height: 1.85; }
     .cs-formula strong { color: #E0533C; font-weight: 600; }
-    .cs-formula-label { font-family: var(--display); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: #E0533C; display: block; margin-bottom: 14px; }
+    .cs-formula-label { font-family: var(--ui); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: #E0533C; display: block; margin-bottom: 14px; }
 
     .cs-tradeoff { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 32px; background: var(--border); border: 1px solid var(--border); }
     .cs-tradeoff-cell { padding: 24px; background: var(--bg); }
-    .cs-tradeoff-label { font-family: var(--display); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 14px; }
+    .cs-tradeoff-label { font-family: var(--ui); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 14px; }
     .cs-tradeoff-cell.gained .cs-tradeoff-label { color: #3CB371; }
     .cs-tradeoff-cell.lost .cs-tradeoff-label { color: #E0533C; }
     .cs-tradeoff-cell.why .cs-tradeoff-label { color: var(--accent); }
@@ -143,36 +144,36 @@
 
     .cs-options { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
     .cs-option { padding: 24px 28px; border: 1px solid var(--border); border-radius: 4px; }
-    .cs-option-tag { font-family: var(--display); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 10px; }
+    .cs-option-tag { font-family: var(--ui); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 10px; }
     .cs-option.rejected .cs-option-tag { color: #E0533C; }
     .cs-option.chosen .cs-option-tag { color: #3CB371; }
-    .cs-option-title { font-family: var(--display); font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+    .cs-option-title { font-family: var(--ui); font-size: 13px; font-weight: 600; margin-bottom: 10px; }
     .cs-option-text { font-family: var(--font); font-size: 14px; color: var(--secondary); line-height: 1.7; }
     .cs-option.chosen { background: rgba(60,179,113,0.04); border-color: rgba(60,179,113,0.25); }
 
     .cs-conclusion { max-width: 1200px; margin: 0 auto; padding: 100px var(--margin); text-align: center; border-bottom: 1px solid var(--border); }
-    .cs-conclusion-eyebrow { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 24px; }
-    .cs-conclusion-text { font-family: var(--display); font-size: clamp(20px,3vw,36px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; max-width: 760px; margin: 0 auto; }
+    .cs-conclusion-eyebrow { font-family: var(--ui); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 24px; }
+    .cs-conclusion-text { font-family: var(--display); font-size: clamp(20px,3vw,36px); font-weight: 400; letter-spacing: -0.02em; line-height: 1.3; max-width: 760px; margin: 0 auto; }
 
     .cs-next { max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
-    .cs-next-label { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 10px; }
-    .cs-next-link { font-family: var(--display); font-size: clamp(20px,2.8vw,32px); font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em; transition: color 0.2s; display: flex; align-items: center; gap: 16px; }
+    .cs-next-label { font-family: var(--ui); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 10px; }
+    .cs-next-link { font-family: var(--display); font-size: clamp(20px,2.8vw,32px); font-weight: 400; color: var(--text); text-decoration: none; letter-spacing: -0.02em; transition: color 0.2s; display: flex; align-items: center; gap: 16px; }
     .cs-next-link:hover { color: var(--accent); }
     .cs-next-link svg { width: 28px; height: 28px; transition: transform 0.2s; }
     .cs-next-link:hover svg { transform: translateX(8px); }
 
     footer.footer { background: var(--footer-bg); color: #fff; padding: 64px var(--margin) 40px; }
     .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 64px; padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .footer-tagline { font-family: var(--display); font-size: clamp(16px,2vw,22px); font-weight: 700; line-height: 1.45; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .footer-tagline { font-family: var(--display); font-size: clamp(16px,2vw,22px); font-weight: 400; line-height: 1.45; margin-bottom: 12px; letter-spacing: -0.02em; }
     .footer-sub { font-family: var(--font); font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.6; }
-    .footer-heading { font-family: var(--display); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 20px; }
+    .footer-heading { font-family: var(--ui); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 20px; }
     .footer-links { display: flex; flex-direction: column; gap: 12px; }
     .footer-links a { font-family: var(--font); font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; position: relative; width: fit-content; }
     .footer-links a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0%; height: 1px; background: var(--accent); transition: width 0.25s; }
     .footer-links a:hover { color: #fff; }
     .footer-links a:hover::after { width: 100%; }
     .footer-bottom { max-width: 1200px; margin: 32px auto 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
-    .footer-copy { font-family: var(--display); font-size: 11px; letter-spacing: 0.05em; color: rgba(255,255,255,0.2); }
+    .footer-copy { font-family: var(--ui); font-size: 11px; letter-spacing: 0.05em; color: rgba(255,255,255,0.2); }
 
     [data-reveal] { opacity: 0; transform: translateY(20px); transition: opacity 0.65s ease, transform 0.65s ease; }
     [data-reveal].revealed { opacity: 1; transform: none; }
@@ -622,7 +623,7 @@
   <p class="cs-conclusion-eyebrow">Conclusion</p>
   <p class="cs-conclusion-text">When information architecture matches how advisors actually work, the time savings aren't 10% &mdash; they're 44%, and they compound across every advisor, every portfolio, every month.</p>
   <p style="font-family:var(--font);font-size:16px;color:var(--secondary);margin-top:24px;line-height:1.8;max-width:680px;margin-left:auto;margin-right:auto;">The unified portfolio canvas, reusable component patterns, and A/B-validated decision framework remain in production use across Ameriprise's wealth management platform.</p>
-  <p style="font-family:var(--display);font-size:13px;color:var(--secondary);margin-top:48px;letter-spacing:0.04em;">Glad we could cross paths.<br>Out of anywhere you could be, you're here.</p>
+  <p style="font-family:var(--ui);font-size:13px;color:var(--secondary);margin-top:48px;letter-spacing:0.04em;">Glad we could cross paths.<br>Out of anywhere you could be, you're here.</p>
 </div>
 
 <!-- ── Next project ── -->
