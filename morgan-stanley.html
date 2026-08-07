@@ -93,6 +93,7 @@
 
     .cs-row { display: grid; grid-template-columns: 180px 1fr; gap: 64px; max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); border-bottom: 1px solid var(--border); }
     .cs-row-label { padding-top: 4px; position: sticky; top: 80px; align-self: start; }
+    .cs-row-content { min-width: 0; }
     .cs-row-num { font-family: var(--display); font-size: 10px; color: var(--secondary); opacity: 0.35; letter-spacing: 0.06em; margin-bottom: 8px; }
     .cs-row-tag { font-family: var(--display); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); line-height: 2; }
     .cs-row-divider { width: 20px; height: 1px; background: var(--border); margin-top: 14px; }
@@ -116,6 +117,15 @@
     .cs-card-num { font-family: var(--display); font-size: 28px; font-weight: 700; color: var(--accent); opacity: 0.4; letter-spacing: -0.04em; margin-bottom: 16px; line-height: 1; }
     .cs-card-title { font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
     .cs-card-text { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.65; }
+
+    /* ——— Wireframe figures ——— */
+    .cs-wire { margin: 44px 0 0; min-width: 0; }
+    .cs-wire-frame { border: 1px solid var(--border); background: var(--bg-alt); padding: 20px; overflow-x: auto; min-width: 0; max-width: 100%; }
+    .cs-wire-frame svg { display: block; width: 100%; height: auto; min-width: 620px; color: var(--text); }
+    .cs-wire-cap { font-family: var(--display); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); margin-top: 14px; }
+    .cs-wire-note { font-family: var(--font); font-size: 14px; line-height: 1.75; color: var(--secondary); margin-top: 8px; max-width: 720px; }
+    .cs-wire-note strong { color: var(--text); font-weight: 500; }
+    .cs-wire-disclaimer { font-family: var(--display); font-size: 11px; line-height: 1.7; letter-spacing: 0.02em; color: var(--secondary); border: 1px dashed var(--border); padding: 18px 22px; margin-top: 8px; max-width: 720px; }
 
     .cs-quote { position: relative; padding: 32px 40px; background: var(--bg-alt); border-left: 4px solid var(--accent); margin: 48px 0; max-width: 720px; }
     .cs-quote::before { content: '\201C'; font-family: var(--display); font-size: 80px; color: var(--accent); opacity: 0.15; position: absolute; top: -8px; left: 32px; line-height: 1; }
@@ -218,6 +228,7 @@
     <li><a href="#s-research"    class="csn-link" data-s="s-research"><span class="csn-dot"></span>Research</a></li>
     <li><a href="#s-options"     class="csn-link" data-s="s-options"><span class="csn-dot"></span>Options</a></li>
     <li><a href="#s-decision"    class="csn-link" data-s="s-decision"><span class="csn-dot"></span>Decision</a></li>
+    <li><a href="#s-wireframes"  class="csn-link" data-s="s-wireframes"><span class="csn-dot"></span>Wireframes</a></li>
     <li><a href="#s-design"      class="csn-link" data-s="s-design"><span class="csn-dot"></span>Design</a></li>
     <li><a href="#s-outcome"     class="csn-link" data-s="s-outcome"><span class="csn-dot"></span>Outcome</a></li>
     <li><a href="#s-next"        class="csn-link" data-s="s-next"><span class="csn-dot"></span>What's Next</a></li>
@@ -524,11 +535,330 @@
 </section>
 
 <!-- ════════════════════════════════════════
-     06 · DESIGN
+     06 · WIREFRAMES
+════════════════════════════════════════ -->
+<section class="cs-row" id="s-wireframes" data-reveal>
+  <div class="cs-row-label">
+    <div class="cs-row-num">06</div>
+    <div class="cs-row-tag">Wireframes</div>
+    <div class="cs-row-divider"></div>
+  </div>
+  <div class="cs-row-content">
+    <h2 class="cs-h2">Concept sketches &mdash; the structure, not the screens</h2>
+
+    <p class="cs-wire-disclaimer">The shipped interface is covered by NDA. These are redrawn concept wireframes made to communicate the design reasoning &mdash; deliberately low-fidelity, with placeholder content and no real client data, amounts, or production visual design. They show the structural decisions, not the product.</p>
+
+    <!-- ── WIRE 1: split views → unified workbench ── -->
+    <div class="cs-wire">
+      <div class="cs-wire-frame">
+        <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wireframe comparing the previous split-view structure with the unified workbench and context panel">
+          <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.55">
+            <!-- BEFORE: two disconnected views -->
+            <rect x="8" y="34" width="180" height="104" rx="2"/>
+            <rect x="8" y="162" width="180" height="104" rx="2"/>
+            <!-- AFTER: unified -->
+            <rect x="352" y="34" width="352" height="232" rx="2"/>
+            <rect x="704" y="34" width="168" height="232" rx="2"/>
+            <line x1="352" y1="66" x2="704" y2="66"/>
+            <line x1="352" y1="92" x2="704" y2="92"/>
+            <line x1="704" y1="72" x2="872" y2="72"/>
+          </g>
+          <!-- labels -->
+          <g font-family="monospace" font-size="10" letter-spacing="1.2" fill="currentColor" opacity="0.75">
+            <text x="8" y="22">BEFORE</text>
+            <text x="352" y="22">AFTER</text>
+          </g>
+          <g font-family="monospace" font-size="9" fill="currentColor" opacity="0.6">
+            <text x="20" y="54">ALERT LIST</text>
+            <text x="20" y="182">DETAIL / HOLDINGS</text>
+            <text x="364" y="55">UNIFIED QUEUE</text>
+            <text x="716" y="55">CONTEXT PANEL</text>
+          </g>
+          <!-- placeholder rows, before -->
+          <g fill="currentColor" opacity="0.16">
+            <rect x="20" y="64" width="120" height="6" rx="3"/>
+            <rect x="20" y="78" width="150" height="6" rx="3"/>
+            <rect x="20" y="92" width="104" height="6" rx="3"/>
+            <rect x="20" y="106" width="138" height="6" rx="3"/>
+            <rect x="20" y="192" width="150" height="6" rx="3"/>
+            <rect x="20" y="206" width="126" height="6" rx="3"/>
+            <rect x="20" y="220" width="144" height="6" rx="3"/>
+            <rect x="20" y="234" width="98" height="6" rx="3"/>
+          </g>
+          <!-- placeholder rows, after -->
+          <g fill="currentColor" opacity="0.16">
+            <rect x="364" y="76" width="60" height="5" rx="2.5"/>
+            <rect x="440" y="76" width="60" height="5" rx="2.5"/>
+            <rect x="516" y="76" width="60" height="5" rx="2.5"/>
+            <rect x="592" y="76" width="60" height="5" rx="2.5"/>
+          </g>
+          <g fill="currentColor" opacity="0.12">
+            <rect x="364" y="104" width="326" height="18" rx="2"/>
+            <rect x="364" y="128" width="326" height="18" rx="2"/>
+            <rect x="364" y="176" width="326" height="18" rx="2"/>
+            <rect x="364" y="200" width="326" height="18" rx="2"/>
+            <rect x="364" y="224" width="326" height="18" rx="2"/>
+          </g>
+          <!-- selected row -->
+          <rect x="360" y="148" width="334" height="22" rx="2" fill="currentColor" opacity="0.34"/>
+          <!-- context panel content -->
+          <g fill="currentColor" opacity="0.16">
+            <rect x="716" y="88" width="140" height="30" rx="2"/>
+            <rect x="716" y="126" width="140" height="30" rx="2"/>
+            <rect x="716" y="164" width="140" height="30" rx="2"/>
+            <rect x="716" y="222" width="140" height="20" rx="2"/>
+          </g>
+          <!-- broken link, before -->
+          <g stroke="currentColor" stroke-width="1.2" opacity="0.5" stroke-dasharray="4 4">
+            <line x1="98" y1="138" x2="98" y2="162"/>
+          </g>
+          <text x="106" y="156" font-family="monospace" font-size="9" fill="currentColor" opacity="0.65">context lost</text>
+          <!-- queue nav arrows -->
+          <g stroke="currentColor" stroke-width="1.4" fill="none" opacity="0.8">
+            <path d="M842 50 l6 -6 l6 6"/>
+            <path d="M842 60 l6 6 l6 -6"/>
+          </g>
+          <!-- connector -->
+          <g stroke="currentColor" stroke-width="1.2" opacity="0.55">
+            <line x1="694" y1="159" x2="716" y2="159"/>
+            <circle cx="700" cy="159" r="2.5" fill="currentColor" stroke="none"/>
+          </g>
+          <text x="236" y="154" font-family="monospace" font-size="16" fill="currentColor" opacity="0.5">&#8594;</text>
+          <text x="352" y="288" font-family="monospace" font-size="9" fill="currentColor" opacity="0.6">filters persist across selection &#183; the queue never reloads</text>
+        </svg>
+      </div>
+      <p class="cs-wire-cap">01 &mdash; Structure: split views &rarr; queue + context panel</p>
+      <p class="cs-wire-note">The central move. Previously the list and the detail were separate destinations, so evaluating an item meant leaving the queue and losing both your place and your filter state. The redesign made selection drive a persistent side panel, and put <strong>up/down controls in the panel header</strong> so a reviewer can work through the queue without ever returning to a list view.</p>
+    </div>
+
+    <!-- ── WIRE 2: disposition taxonomy ── -->
+    <div class="cs-wire">
+      <div class="cs-wire-frame">
+        <svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wireframe of the status disposition menu, showing active states separated from dismissal reasons">
+          <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.55">
+            <rect x="8" y="30" width="250" height="196" rx="2"/>
+            <line x1="8" y1="126" x2="258" y2="126" stroke-dasharray="4 4"/>
+          </g>
+          <g font-family="monospace" font-size="10" letter-spacing="1.2" fill="currentColor" opacity="0.75">
+            <text x="8" y="20">DISPOSITION MENU</text>
+            <text x="330" y="20">WHY IT IS SPLIT</text>
+          </g>
+          <!-- active states -->
+          <g font-family="monospace" font-size="10" fill="currentColor" opacity="0.8">
+            <text x="42" y="56">New</text>
+            <text x="42" y="84">In Progress</text>
+            <text x="42" y="112">Client Intends to Proceed</text>
+          </g>
+          <g fill="currentColor">
+            <circle cx="26" cy="52" r="4" opacity="0.75"/>
+            <circle cx="26" cy="80" r="4" opacity="0.5"/>
+            <circle cx="26" cy="108" r="4" opacity="0.32"/>
+          </g>
+          <!-- dismissal reasons -->
+          <g font-family="monospace" font-size="10" fill="currentColor" opacity="0.62">
+            <text x="42" y="152">Dismissed &mdash; client not interested</text>
+            <text x="42" y="180">Dismissed &mdash; advisor not interested</text>
+            <text x="42" y="208">Dismissed &mdash; not an opportunity</text>
+          </g>
+          <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45">
+            <circle cx="26" cy="148" r="4"/>
+            <circle cx="26" cy="176" r="4"/>
+            <circle cx="26" cy="204" r="4"/>
+          </g>
+          <!-- annotation -->
+          <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45">
+            <path d="M266 148 h44"/>
+            <path d="M266 176 h44"/>
+            <path d="M266 204 h44"/>
+            <path d="M310 148 v56"/>
+            <path d="M310 176 h20"/>
+          </g>
+          <g font-family="monospace" font-size="9.5" fill="currentColor" opacity="0.7">
+            <text x="338" y="52">Three active states track work in flight.</text>
+            <text x="338" y="72">One dismissal state would have ended</text>
+            <text x="338" y="88">the thread and told the business nothing.</text>
+            <text x="338" y="124">Splitting dismissal by reason turns every</text>
+            <text x="338" y="140">dead end into a signal:</text>
+            <text x="354" y="166">&#183; client declined &rarr; timing / product fit</text>
+            <text x="354" y="186">&#183; advisor declined &rarr; alert quality</text>
+            <text x="354" y="206">&#183; not an opportunity &rarr; rule is wrong</text>
+          </g>
+        </svg>
+      </div>
+      <p class="cs-wire-cap">02 &mdash; Disposition taxonomy</p>
+      <p class="cs-wire-note">Dismissals were the highest-volume outcome and the least examined. Separating them by reason cost the reviewer nothing &mdash; the same single click &mdash; but meant the difference between a dead record and <strong>a feedback loop into alert quality</strong>. "Not an opportunity" in particular reads directly as a defect report on the rule that generated the alert.</p>
+    </div>
+
+    <!-- ── WIRE 3: context panel anatomy ── -->
+    <div class="cs-wire">
+      <div class="cs-wire-frame">
+        <svg viewBox="0 0 880 290" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wireframe of the context panel anatomy showing the note thread, task chips, and entry field">
+          <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.55">
+            <rect x="8" y="30" width="300" height="248" rx="2"/>
+            <line x1="8" y1="66" x2="308" y2="66"/>
+            <line x1="8" y1="196" x2="308" y2="196"/>
+            <line x1="6" y1="30" x2="6" y2="278" stroke-width="2.5" opacity="0.8"/>
+          </g>
+          <g font-family="monospace" font-size="10" letter-spacing="1.2" fill="currentColor" opacity="0.75">
+            <text x="8" y="20">CONTEXT PANEL</text>
+            <text x="360" y="20">ANATOMY</text>
+          </g>
+          <!-- header -->
+          <g fill="currentColor" opacity="0.22">
+            <rect x="20" y="40" width="150" height="7" rx="3.5"/>
+            <rect x="20" y="52" width="64" height="5" rx="2.5"/>
+          </g>
+          <g stroke="currentColor" stroke-width="1.4" fill="none" opacity="0.8">
+            <path d="M272 46 l6 -6 l6 6"/>
+            <path d="M288 46 l6 -6 l6 6" opacity="0"/>
+            <path d="M272 54 l6 6 l6 -6" opacity="0"/>
+          </g>
+          <g stroke="currentColor" stroke-width="1.4" fill="none" opacity="0.8">
+            <path d="M288 42 l6 6 l6 -6"/>
+          </g>
+          <!-- note cards -->
+          <g fill="none" stroke="currentColor" stroke-width="1" opacity="0.4">
+            <rect x="20" y="78" width="276" height="34" rx="2"/>
+            <rect x="20" y="118" width="276" height="34" rx="2"/>
+            <rect x="20" y="158" width="276" height="30" rx="2"/>
+          </g>
+          <g fill="currentColor" opacity="0.2">
+            <rect x="30" y="86" width="70" height="6" rx="3"/>
+            <rect x="30" y="98" width="200" height="4" rx="2"/>
+            <rect x="30" y="126" width="86" height="6" rx="3"/>
+            <rect x="30" y="138" width="176" height="4" rx="2"/>
+            <rect x="30" y="166" width="76" height="6" rx="3"/>
+            <rect x="30" y="177" width="150" height="4" rx="2"/>
+          </g>
+          <g fill="currentColor" opacity="0.32">
+            <rect x="238" y="86" width="48" height="4" rx="2"/>
+            <rect x="238" y="126" width="48" height="4" rx="2"/>
+            <rect x="238" y="166" width="48" height="4" rx="2"/>
+          </g>
+          <!-- task chips -->
+          <g fill="none" stroke="currentColor" stroke-width="1" opacity="0.5">
+            <rect x="20" y="208" width="9" height="9" rx="1"/>
+            <rect x="164" y="208" width="9" height="9" rx="1"/>
+            <rect x="20" y="228" width="9" height="9" rx="1"/>
+            <rect x="164" y="228" width="9" height="9" rx="1"/>
+            <rect x="20" y="250" width="212" height="20" rx="2"/>
+            <rect x="240" y="250" width="56" height="20" rx="2"/>
+          </g>
+          <g font-family="monospace" font-size="8.5" fill="currentColor" opacity="0.65">
+            <text x="36" y="216">spoke to advisor</text>
+            <text x="180" y="216">spoke to client</text>
+            <text x="36" y="236">follow up: advisor</text>
+            <text x="180" y="236">follow up: client</text>
+            <text x="28" y="263">add a note&#8230;</text>
+            <text x="252" y="263">ADD</text>
+          </g>
+          <!-- annotations -->
+          <g fill="none" stroke="currentColor" stroke-width="1.1" opacity="0.4">
+            <path d="M308 50 h44"/>
+            <path d="M308 132 h44"/>
+            <path d="M308 222 h44"/>
+          </g>
+          <g font-family="monospace" font-size="9.5" fill="currentColor" opacity="0.72">
+            <text x="360" y="46">Queue controls live in the header &mdash;</text>
+            <text x="360" y="61">advance without closing the panel.</text>
+            <text x="360" y="122">Notes are an append-only thread,</text>
+            <text x="360" y="137">each entry attributed and stamped.</text>
+            <text x="360" y="152">Nothing is overwritten, so the</text>
+            <text x="360" y="167">record survives a handover.</text>
+            <text x="360" y="212">Structured task chips before the</text>
+            <text x="360" y="227">free-text field: the common four</text>
+            <text x="360" y="242">actions stay countable instead of</text>
+            <text x="360" y="257">being buried in prose.</text>
+          </g>
+        </svg>
+      </div>
+      <p class="cs-wire-cap">03 &mdash; Context panel anatomy</p>
+      <p class="cs-wire-note">The panel had to serve two readers: the person working the queue now, and whoever inherits the account later. That pushed three decisions &mdash; <strong>append-only notes</strong> with attribution rather than an editable field, <strong>structured task chips</strong> so the four most common actions stay countable, and <strong>queue navigation in the header</strong> so annotating never costs you your position.</p>
+    </div>
+
+    <!-- ── WIRE 4: roll-up module ── -->
+    <div class="cs-wire">
+      <div class="cs-wire-frame">
+        <svg viewBox="0 0 880 252" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wireframe of the dashboard roll-up module summarising queue state">
+          <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.55">
+            <rect x="8" y="30" width="290" height="188" rx="2"/>
+            <line x1="8" y1="60" x2="298" y2="60"/>
+            <line x1="8" y1="122" x2="298" y2="122"/>
+            <line x1="8" y1="152" x2="298" y2="152"/>
+          </g>
+          <g font-family="monospace" font-size="10" letter-spacing="1.2" fill="currentColor" opacity="0.75">
+            <text x="8" y="20">DASHBOARD MODULE</text>
+            <text x="350" y="20">ROLL-UP LOGIC</text>
+          </g>
+          <g font-family="monospace" font-size="10" fill="currentColor" opacity="0.8">
+            <text x="20" y="52">Queue &#8599;</text>
+          </g>
+          <text x="222" y="52" font-family="monospace" font-size="8" fill="currentColor" opacity="0.55">as of &#8212;:&#8212;</text>
+          <!-- split bar -->
+          <g font-family="monospace" font-size="9" fill="currentColor" opacity="0.72">
+            <text x="20" y="80">OPEN</text>
+            <text x="160" y="80">ACTIONED</text>
+          </g>
+          <rect x="20" y="90" width="160" height="10" rx="2" fill="currentColor" opacity="0.42"/>
+          <rect x="180" y="90" width="106" height="10" rx="2" fill="currentColor" opacity="0.16"/>
+          <!-- tabs -->
+          <g font-family="monospace" font-size="9" fill="currentColor" opacity="0.75">
+            <text x="20" y="142">NEW</text>
+            <text x="96" y="142">IN PROGRESS</text>
+            <text x="212" y="142">PROCEED</text>
+          </g>
+          <line x1="20" y1="146" x2="52" y2="146" stroke="currentColor" stroke-width="2" opacity="0.8"/>
+          <!-- grouped rows -->
+          <rect x="8" y="152" width="290" height="14" fill="currentColor" opacity="0.08"/>
+          <text x="20" y="163" font-family="monospace" font-size="8" fill="currentColor" opacity="0.6">DATE GROUP</text>
+          <g fill="currentColor" opacity="0.18">
+            <rect x="32" y="176" width="88" height="5" rx="2.5"/>
+            <rect x="32" y="185" width="60" height="4" rx="2"/>
+            <rect x="150" y="176" width="46" height="6" rx="3"/>
+            <rect x="222" y="176" width="64" height="4" rx="2"/>
+            <rect x="222" y="185" width="44" height="4" rx="2"/>
+            <rect x="32" y="200" width="76" height="5" rx="2.5"/>
+            <rect x="32" y="209" width="60" height="4" rx="2"/>
+            <rect x="150" y="200" width="40" height="6" rx="3"/>
+            <rect x="222" y="200" width="58" height="4" rx="2"/>
+          </g>
+          <g fill="currentColor" opacity="0.5">
+            <path d="M18 173 l0 12 l5 -4 l5 4 l0 -12 z"/>
+          </g>
+          <g fill="none" stroke="currentColor" stroke-width="1.1" opacity="0.45">
+            <path d="M18 197 l0 12 l5 -4 l5 4 l0 -12 z"/>
+          </g>
+          <!-- annotations -->
+          <g fill="none" stroke="currentColor" stroke-width="1.1" opacity="0.4">
+            <path d="M298 92 h40"/>
+            <path d="M298 142 h40"/>
+            <path d="M298 190 h40"/>
+          </g>
+          <g font-family="monospace" font-size="9.5" fill="currentColor" opacity="0.72">
+            <text x="348" y="88">One question answered first:</text>
+            <text x="348" y="103">how much is still open. The split</text>
+            <text x="348" y="118">bar is the whole summary.</text>
+            <text x="348" y="146">Tabs mirror the disposition</text>
+            <text x="348" y="161">states exactly &mdash; the dashboard</text>
+            <text x="348" y="176">teaches the workbench vocabulary.</text>
+            <text x="348" y="204">Rows group by date and carry a</text>
+            <text x="348" y="219">flag, so triage can begin here</text>
+            <text x="348" y="234">and continue in the queue.</text>
+          </g>
+        </svg>
+      </div>
+      <p class="cs-wire-cap">04 &mdash; Dashboard roll-up</p>
+      <p class="cs-wire-note">The module exists to answer one question before anything else: <strong>how much is still open.</strong> Its tabs deliberately reuse the workbench's disposition labels rather than inventing summary language &mdash; so the dashboard teaches the vocabulary a reviewer will use once they land in the queue itself.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     07 · DESIGN
 ════════════════════════════════════════ -->
 <section class="cs-row" id="s-design" data-reveal>
   <div class="cs-row-label">
-    <div class="cs-row-num">06</div>
+    <div class="cs-row-num">07</div>
     <div class="cs-row-tag">Design Decisions</div>
     <div class="cs-row-divider"></div>
   </div>
@@ -566,11 +896,11 @@
 </section>
 
 <!-- ════════════════════════════════════════
-     07 · OUTCOME
+     08 · OUTCOME
 ════════════════════════════════════════ -->
 <section class="cs-row" id="s-outcome" data-reveal>
   <div class="cs-row-label">
-    <div class="cs-row-num">07</div>
+    <div class="cs-row-num">08</div>
     <div class="cs-row-tag">Outcome</div>
     <div class="cs-row-divider"></div>
   </div>
@@ -593,11 +923,11 @@
 </section>
 
 <!-- ════════════════════════════════════════
-     08 · WHAT'S NEXT
+     09 · WHAT'S NEXT
 ════════════════════════════════════════ -->
 <section class="cs-row" id="s-next" data-reveal>
   <div class="cs-row-label">
-    <div class="cs-row-num">08</div>
+    <div class="cs-row-num">09</div>
     <div class="cs-row-tag">What's Next</div>
     <div class="cs-row-divider"></div>
   </div>
@@ -609,11 +939,11 @@
 </section>
 
 <!-- ════════════════════════════════════════
-     09 · CONSTRAINTS
+     10 · CONSTRAINTS
 ════════════════════════════════════════ -->
 <section class="cs-row" id="s-constraints" data-reveal>
   <div class="cs-row-label">
-    <div class="cs-row-num">09</div>
+    <div class="cs-row-num">10</div>
     <div class="cs-row-tag">Constraints</div>
     <div class="cs-row-divider"></div>
   </div>
@@ -649,11 +979,11 @@
 </section>
 
 <!-- ════════════════════════════════════════
-     10 · REFLECTION
+     11 · REFLECTION
 ════════════════════════════════════════ -->
 <section class="cs-row" id="s-reflection" data-reveal>
   <div class="cs-row-label">
-    <div class="cs-row-num">10</div>
+    <div class="cs-row-num">11</div>
     <div class="cs-row-tag">Reflection</div>
     <div class="cs-row-divider"></div>
   </div>
