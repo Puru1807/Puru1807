@@ -250,6 +250,10 @@
       <span class="cs-meta-value">Product Designer</span>
     </div>
     <div class="cs-meta-item">
+      <span class="cs-meta-label">Team</span>
+      <span class="cs-meta-value">2 PMs &middot; 15 Engineers &middot; AI/ML + Accessibility</span>
+    </div>
+    <div class="cs-meta-item">
       <span class="cs-meta-label">Timeline</span>
       <span class="cs-meta-value">Jun 2025 &mdash; Present</span>
     </div>
@@ -313,8 +317,8 @@
   </div>
   <div class="cs-row-content">
     <h2 class="cs-h2">A wealth management platform where advisors were working around the tools, not through them</h2>
-    <p class="cs-body">Morgan Stanley's wealth management platform serves thousands of financial advisors managing complex investment portfolios. The existing workflows were functional but inefficient &mdash; advisors spent too long on portfolio analysis, data visualizations were hard to parse, and the platform's adoption was stalling because the experience didn't match how advisors actually worked.</p>
-    <p class="cs-body">I joined as Product Designer to lead end-to-end redesign of the core advisor experience &mdash; from investment portfolio dashboards and financial data visualizations to advisor workflows and the enterprise design system that ties it all together.</p>
+    <p class="cs-body">Morgan Stanley is a global financial services firm operating in 40+ countries, where 80,000+ employees advise roughly 3.5 million clients. Its wealth management platform serves thousands of financial advisors managing complex investment portfolios. The existing workflows were functional but inefficient &mdash; advisors spent too long on portfolio analysis, data visualizations were hard to parse, and the platform's adoption was stalling because the experience didn't match how advisors actually worked.</p>
+    <p class="cs-body">I joined as Product Designer to lead end-to-end redesign of the core advisor experience &mdash; from investment portfolio dashboards and financial data visualizations to advisor workflows and the enterprise design system that ties it all together. The engagement ran in two phases: a three-month research and definition cycle, then design-and-build across two releases &mdash; working one sprint ahead of engineering in Agile, alongside 2 PMs and a 15-engineer platform team.</p>
     <div class="cs-info-grid">
       <div class="cs-info-item">
         <p class="cs-info-label">Headquarters</p>
@@ -356,6 +360,10 @@
   <div class="cs-row-content">
     <h2 class="cs-h2">Advisors weren't rejecting the platform. They were spending too long fighting it.</h2>
     <p class="cs-body">When I joined the team, portfolio analysis was taking advisors far longer than it should. Investment dashboards were dense and hard to parse, workflows required too many steps, and the overall experience created friction at every turn. In a high-stakes wealth management environment, that friction directly cost advisor productivity and client satisfaction.</p>
+
+    <h3 class="cs-h3">What the existing experience actually did</h3>
+    <p class="cs-body">Three structural problems compounded each other. <strong>Portfolio analysis and the AI recommendation surface lived in separate views</strong>, so an advisor evaluating a suggestion had to leave it to check the holdings it was based on &mdash; and lost their place doing it. <strong>Account and date-range filters didn't persist across those views</strong>, so every context switch meant re-selecting parameters the advisor had already chosen, which quietly produced mismatched comparisons when they didn't notice the reset. And <strong>underlying transactions were only revealed on interaction</strong> &mdash; nothing was scannable, so verifying a recommendation meant a sequence of clicks rather than a glance.</p>
+    <p class="cs-body">The result was a tool advisors opened, worked around, and closed. Session data showed short visits and low return frequency &mdash; the signature of a product being tolerated rather than relied on.</p>
 
     <div class="cs-formula">
       <span class="cs-formula-label">Problem statement</span>
@@ -434,6 +442,49 @@
         <div class="cs-option-text">Surface every AI recommendation with: (1) a numerical confidence score, (2) inline citations to the underlying data sources, and (3) editable fields so advisors could amend before sending to clients. The AI does the heavy lifting; the advisor stays in the loop and stays accountable. This is the position the regulator, the advisor, and the AI/ML team could all defend.</div>
       </div>
     </div>
+
+    <h3 class="cs-h3">Before committing, I put the chosen direction on trial</h3>
+    <p class="cs-body">The PMs were the domain experts and had firm convictions about what the trust layer should look like &mdash; particularly that a single numerical confidence score would settle advisor doubt. I agreed with the direction but not with shipping it unvalidated. I advocated for a round of concept testing against internal advisors and pilot users, and framed it as three explicit assumptions so the team could disagree with the evidence rather than with me.</p>
+
+    <div class="cs-cards">
+      <div class="cs-card">
+        <div class="cs-card-num">01</div>
+        <div class="cs-card-title">Assumption &mdash; Confidence Scores</div>
+        <div class="cs-card-text">Will a numerical confidence score actually move acceptance, or does it just add another number to an already dense screen? The PMs believed strongly in a single score. I wanted to know whether advisors read it as signal or as noise.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <div class="cs-card-title">Assumption &mdash; Citation Format</div>
+        <div class="cs-card-text">Do advisors recognise inline citations as verifiable sources they can audit, or as decorative metadata? The distinction mattered: if citations didn't read as clickable provenance, the entire explainability argument collapsed.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">03</div>
+        <div class="cs-card-title">Assumption &mdash; Edit Affordance</div>
+        <div class="cs-card-text">Compliance required editability. But would advisors actually use it, or would they treat recommendations as binary accept/reject? If nobody edited, we'd be building a compliance checkbox rather than a workflow.</div>
+      </div>
+    </div>
+
+    <h3 class="cs-h3">What testing returned &mdash; including the part that contradicted us</h3>
+
+    <div class="cs-cards">
+      <div class="cs-card">
+        <div class="cs-card-num">01</div>
+        <div class="cs-card-title">Finding &mdash; Confidence Split By Tenure</div>
+        <div class="cs-card-text">The score moved acceptance, but not uniformly. Junior advisors wanted more explanation around the number; senior advisors called a single figure "falsely precise" and asked for a range. The PMs' assumption held for half the user base and failed for the other half &mdash; which is why cohort-specific rendering is now queued for the next release.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <div class="cs-card-title">Finding &mdash; Chips Read As Tags</div>
+        <div class="cs-card-text">The pill-styled citation chips in the first concept failed outright. Advisors read them as category labels, not sources, and rarely clicked. Reverting to inline underlines &mdash; the document convention they'd used for twenty years &mdash; tested roughly 3&times; higher on first-encounter click-through.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">03</div>
+        <div class="cs-card-title">Finding &mdash; Editing Was Underrated</div>
+        <div class="cs-card-text">Editability was the surprise. It went in as a compliance requirement and came out as the feature advisors valued most &mdash; they wanted to adjust tone and framing for specific clients before sending. That reframed it from a legal constraint into a core part of the workflow, and changed how prominently we surfaced it.</div>
+      </div>
+    </div>
+
+    <p class="cs-body">I compiled the findings into a readout for the PMs. Two of the three assumptions survived intact; the confidence-score assumption survived only partially, and that shaped the roadmap rather than the release. Presenting the disagreement as data rather than opinion is what kept the conversation collaborative &mdash; and it made the case for testing the next set of patterns without needing to re-argue the principle.</p>
   </div>
 </section>
 
@@ -501,6 +552,16 @@
 
     <h3 class="cs-h3">Design system contribution</h3>
     <p class="cs-body">I built and maintained the centralised Figma design system that the recommendation card patterns now live in &mdash; with reusable components, governance standards, and explicit documentation on which components are "AI-output" vs "advisor-output" (a critical compliance distinction). Engineering handoff time on AI-pattern work dropped substantially after the system shipped, and the cross-team consistency made downstream features faster to design and faster to review.</p>
+
+    <h3 class="cs-h3">Designing a sprint ahead of a 15-engineer team</h3>
+    <p class="cs-body">The platform team ran two-week Agile sprints, which meant design had to land a full sprint ahead of build &mdash; annotated, spec'd, and edge-cased before engineers picked it up. In practice that meant every recommendation-card state (14 confidence-band variants, empty states, citation-load failures, edit-conflict states) had to be resolved on paper before the sprint opened. Ambiguity that reached a standup became a blocker for fifteen people, so the discipline was front-loading decisions rather than deferring them.</p>
+
+    <h3 class="cs-h3">Where the charting library and the design disagreed</h3>
+    <p class="cs-body">The portfolio dashboards were built on the platform's existing charting library, and its default patterns weren't always the clearest way to communicate the underlying data. The clearest example: to let advisors compare allocation drift against benchmark within a single period, I needed the paired bars set tighter than the library's default spacing allowed &mdash; and the customisation to do it was non-trivial for the team to estimate. Rather than design around the constraint or push an unbounded estimate onto the sprint, I pulled in an engineer from a sibling team who had already solved similar customisations, and we scoped the work together before it entered the backlog.</p>
+    <p class="cs-body">The broader lesson held across the release: the library's defaults optimise for rendering, not for comprehension. Every chart in the dashboard got interrogated against what the advisor was actually comparing &mdash; and where the default fought that, we either customised deliberately or changed the chart type rather than accepting a visualisation that rendered cleanly but read poorly.</p>
+
+    <h3 class="cs-h3">Accessibility as a design constraint, not a QA pass</h3>
+    <p class="cs-body">Financial data visualisation carries an accessibility burden most product surfaces don't: allocation, gain/loss, and risk banding are all conventionally encoded in colour alone. Working with the firm's accessibility team, I designed every chart to carry a second, non-colour channel &mdash; texture and pattern fills on comparative bars, direct labelling in place of legend-only keys, and a tabular equivalent for every visualisation. Contrast targets were treated as a design input from the first exploration rather than something remediated after handoff, which meant compliance review found issues to confirm rather than issues to fix.</p>
   </div>
 </section>
 
@@ -597,7 +658,7 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">Three lessons that will shape how I design AI products from here</h2>
+    <h2 class="cs-h2">What this project taught me &mdash; about the product, and about the team</h2>
     <div class="cs-cards">
       <div class="cs-card">
         <div class="cs-card-num">01</div>
@@ -613,6 +674,21 @@
         <div class="cs-card-num">03</div>
         <div class="cs-card-title">Design The Audit Trail</div>
         <div class="cs-card-text">Every AI surface I design now starts from "how does the human prove they reviewed this?" not "how do we display the model output?" That single reframe changes the entire information architecture &mdash; from confidence visibility to edit history to citation density.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">04</div>
+        <div class="cs-card-title">Make Research A Shared Verdict</div>
+        <div class="cs-card-text">The PMs owned deep domain knowledge and had strong convictions the data hadn't yet tested. Rather than argue the conclusions, I argued for the method &mdash; and brought them into the sessions. When findings contradicted an assumption, it landed as something the team discovered together, not as a designer overruling a stakeholder.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">05</div>
+        <div class="cs-card-title">Engineering Limits Are Design Inputs</div>
+        <div class="cs-card-text">The charting library's defaults were optimised for rendering, not comprehension. Treating that as a design input rather than an obstacle &mdash; scoping customisations with engineers before they hit the backlog &mdash; got better visualisations shipped than either fighting the library or quietly accepting its defaults.</div>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">06</div>
+        <div class="cs-card-title">Working A Sprint Ahead</div>
+        <div class="cs-card-text">Designing for a 15-engineer Agile team meant resolving edge cases before the sprint opened, not during it. Front-loading those decisions &mdash; and coordinating across AI/ML, compliance, and accessibility in parallel &mdash; was the single biggest shift in how I plan design work.</div>
       </div>
     </div>
   </div>
