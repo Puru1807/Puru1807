@@ -67,14 +67,14 @@
     .cs-back { display: inline-flex; align-items: center; gap: 8px; font-family: var(--ui); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--secondary); text-decoration: none; margin-bottom: 48px; transition: color 0.2s; }
     .cs-back:hover { color: var(--accent); }
     .cs-back svg { width: 14px; height: 14px; }
-    .cs-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+    .cs-tags { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
     .cs-tag { font-family: var(--ui); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); border: 1px solid var(--border); border-radius: 2px; padding: 5px 12px; }
     .cs-title { font-family: var(--display); font-size: clamp(44px,7vw,88px); font-weight: 400; letter-spacing: -0.02em; line-height: 1.08; margin-bottom: 28px; }
 
-    /* Sits in the tag row and matches the pills, but reads as interactive. */
-    .cs-info-btn { display: inline-flex; align-items: center; gap: 6px; font-family: var(--ui); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: transparent; border: 1px dashed var(--border); border-radius: 2px; padding: 5px 12px 5px 10px; cursor: pointer; transition: color .2s ease, border-color .2s ease, background .2s ease; }
-    .cs-info-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
-    .cs-info-btn:hover, .cs-info-btn:focus-visible { color: var(--text); border-color: var(--accent); border-style: solid; background: var(--bg-alt); }
+    /* Circular, sized to sit on the tag row's centre line. */
+    .cs-info-btn { flex-shrink: 0; width: 28px; height: 28px; margin-left: 4px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--border); border-radius: 999px; color: var(--secondary); cursor: pointer; transition: color .2s ease, border-color .2s ease, background .2s ease; }
+    .cs-info-btn svg { width: 15px; height: 15px; }
+    .cs-info-btn:hover, .cs-info-btn:focus-visible { color: var(--text); border-color: var(--accent); background: var(--bg-alt); }
     .cs-info-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     @media (hover: hover) and (pointer: fine) { .cs-info-btn { cursor: none; } }
 
@@ -93,15 +93,16 @@
     .cs-modal-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     @media (hover: hover) and (pointer: fine) { .cs-modal-close { cursor: none; } }
     .cs-modal-body { overflow-y: auto; padding: 4px 28px 26px; }
-    .cs-skill-group { padding-top: 22px; }
-    .cs-skill-cat { font-family: var(--ui); font-size: 9.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--secondary); margin-bottom: 11px; }
-    .cs-chips { display: flex; flex-wrap: wrap; gap: 7px; }
-    .cs-chip { font-family: var(--font); font-size: 13px; font-weight: 500; color: var(--text); background: var(--bg-alt); border: 1px solid var(--border); border-radius: 3px; padding: 6px 11px; line-height: 1.3; }
+    .cs-point { padding: 20px 0; border-bottom: 1px solid var(--border); }
+    .cs-point:last-of-type { border-bottom: none; }
+    .cs-point-lead { font-family: var(--font); font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.45; margin-bottom: 5px; }
+    .cs-point-why { font-family: var(--font); font-size: 13.5px; color: var(--secondary); line-height: 1.6; }
+    .cs-point-res { display: inline-block; font-family: var(--ui); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-top: 9px; padding-left: 11px; border-left: 2px solid var(--accent); line-height: 1.45; }
     .cs-modal-foot { font-family: var(--font); font-size: 12.5px; color: var(--secondary); line-height: 1.6; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); }
     @media (max-width: 700px) {
       .cs-modal { padding: 14px; } .cs-modal-panel { max-height: 88vh; }
       .cs-modal-head { padding: 20px 20px 16px; } .cs-modal-body { padding: 4px 20px 22px; }
-      .cs-chip { font-size: 12.5px; padding: 5px 10px; }
+      .cs-point { padding: 17px 0; }
     }
     .cs-subtitle { font-family: var(--font); font-size: 17px; color: var(--secondary); max-width: 720px; line-height: 1.7; margin-bottom: 48px; }
     .cs-meta-row { display: flex; gap: 48px; flex-wrap: wrap; padding-top: 40px; border-top: 1px solid var(--border); }
@@ -343,7 +344,6 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
         <circle cx="12" cy="12" r="10"/><path d="M12 16v-5M12 8.2v.01"/>
       </svg>
-      <span>Skills shown</span>
     </button>
   </div>
   <h1 class="cs-title">Morgan Stanley</h1>
@@ -1445,37 +1445,30 @@
     </div>
 
     <div class="cs-modal-body">
-      <div class="cs-skill-group">
-        <p class="cs-skill-cat">Research &amp; discovery</p>
-        <div class="cs-chips">
-          <span class="cs-chip">Mixed-methods research</span><span class="cs-chip">Contextual inquiry</span>
-          <span class="cs-chip">Diary studies</span><span class="cs-chip">Quantitative analysis</span>
-          <span class="cs-chip">Usability testing</span><span class="cs-chip">Synthesis</span>
-        </div>
+      <div class="cs-point">
+        <p class="cs-point-lead">I can tell the real problem from the stated one</p>
+        <p class="cs-point-why">The brief said there were too many alerts, so the obvious fix was to send fewer. My research showed the real limit was what it cost an advisor to check a single one. I designed against that instead.</p>
+        <p class="cs-point-res">Time per alert down 32%</p>
       </div>
-      <div class="cs-skill-group">
-        <p class="cs-skill-cat">Product &amp; strategy</p>
-        <div class="cs-chips">
-          <span class="cs-chip">0&rarr;1 and end-to-end ownership</span><span class="cs-chip">Problem reframing</span>
-          <span class="cs-chip">Ambiguous problem spaces</span><span class="cs-chip">Trade-off analysis</span>
-          <span class="cs-chip">Data-informed decisions</span><span class="cs-chip">Roadmap sequencing</span>
-        </div>
+      <div class="cs-point">
+        <p class="cs-point-lead">I can run research when the usual methods are off the table</p>
+        <p class="cs-point-why">Client data is confidential, so normal usability testing was not allowed. I used shadowing that recorded behaviour and never content, a two-week diary study, and an audit of closed alerts.</p>
+        <p class="cs-point-res">Found that a whole class of dismissals were bug reports, which changed the brief</p>
       </div>
-      <div class="cs-skill-group">
-        <p class="cs-skill-cat">Craft</p>
-        <div class="cs-chips">
-          <span class="cs-chip">Design systems at scale</span><span class="cs-chip">Interaction design</span>
-          <span class="cs-chip">Data visualization</span><span class="cs-chip">Prototyping</span>
-          <span class="cs-chip">Complex enterprise UX</span><span class="cs-chip">WCAG accessibility</span>
-        </div>
+      <div class="cs-point">
+        <p class="cs-point-lead">I can test my own team's assumptions, including when they are mine</p>
+        <p class="cs-point-why">The product managers were sure advisors would reject a longer list of closing options. Rather than argue, I wrote the assumption down and tested it with advisors.</p>
+        <p class="cs-point-res">The assumption was wrong, so the feedback loop shipped a release early</p>
       </div>
-      <div class="cs-skill-group">
-        <p class="cs-skill-cat">Collaboration &amp; delivery</p>
-        <div class="cs-chips">
-          <span class="cs-chip">Cross-functional leadership</span><span class="cs-chip">Influence without authority</span>
-          <span class="cs-chip">Design&ndash;engineering partnership</span><span class="cs-chip">Agile delivery</span>
-          <span class="cs-chip">Shipped to production</span><span class="cs-chip">Regulated environments</span>
-        </div>
+      <div class="cs-point">
+        <p class="cs-point-lead">I can name what a decision costs and defend it</p>
+        <p class="cs-point-why">The side panel hides about a third of the table's columns. I picked which ones by watching what advisors actually read mid-check, then took that reasoning to engineering rather than hiding the trade.</p>
+        <p class="cs-point-res">Advisors keep their filters and their place on every check</p>
+      </div>
+      <div class="cs-point">
+        <p class="cs-point-lead">I can build systems and ship them with engineers</p>
+        <p class="cs-point-why">I built the shared Figma library the whole tool runs on, and worked a full sprint ahead of 15 engineers so every state was settled before a sprint opened.</p>
+        <p class="cs-point-res">Inconsistencies down 45% &middot; delivery up 35% &middot; rework down 28%</p>
       </div>
       <p class="cs-modal-foot">Screens in this case study are redrawn concept sketches. The shipped product is under NDA.</p>
     </div>
