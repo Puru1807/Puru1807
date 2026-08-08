@@ -123,6 +123,16 @@
     /* ——— Reading progress: orientation cue for a long read ——— */
     .cs-progress { position: fixed; top: 0; left: 0; height: 2px; width: 0; background: var(--accent); z-index: 1200; transition: width 0.1s linear; }
 
+    /* ——— Primer: plain-language on-ramp before any of the argument starts ——— */
+    .cs-primer { max-width: 1200px; margin: 0 auto; padding: 0 var(--margin) 40px; }
+    .cs-primer-inner { border-left: 2px solid var(--accent); padding: 4px 0 4px 24px; max-width: 780px; }
+    .cs-primer-eyebrow { font-family: var(--ui); font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+    .cs-primer-list { display: flex; flex-direction: column; gap: 11px; }
+    .cs-primer-list p { font-family: var(--font); font-size: 15.5px; line-height: 1.6; color: var(--secondary); }
+    .cs-primer-list b { color: var(--text); font-weight: 600; }
+    .cs-primer-stake { font-family: var(--font); font-size: 15.5px; line-height: 1.6; color: var(--text); margin-top: 16px; padding-top: 15px; border-top: 1px solid var(--border); }
+    @media (max-width: 700px) { .cs-primer-inner { padding-left: 18px; } .cs-primer-list p, .cs-primer-stake { font-size: 15px; } }
+
     /* ——— At a glance: the whole case in one screen, for a 40-second read ——— */
     .cs-glance { max-width: 1200px; margin: 0 auto; padding: 0 var(--margin) 72px; }
     .cs-glance-inner { border: 1px solid var(--border); background: var(--bg-alt); }
@@ -324,6 +334,21 @@
 </div>
 
 <!-- ════════════════════════════════════════
+     PRIMER — plain-language on-ramp
+════════════════════════════════════════ -->
+<section class="cs-primer" data-reveal>
+  <div class="cs-primer-inner">
+    <p class="cs-primer-eyebrow">First, the basics</p>
+    <div class="cs-primer-list">
+      <p><b>Wealth management</b> is the part of a bank that looks after money for wealthy clients. Morgan Stanley gives each client a <b>financial advisor</b>, a person who manages their investments and calls them when something needs attention.</p>
+      <p><b>The product</b> is the tool those advisors use. Bank software watches every client account. When something notable happens, like a large transfer out or an unusual payment, it creates an <b>alert</b> and sends it to that client's advisor.</p>
+      <p><b>The list</b> is where those alerts pile up, waiting to be looked at. The advisor opens each one and decides a single thing: is this worth calling the client about?</p>
+    </div>
+    <p class="cs-primer-stake">That decision is where the money is. A large transfer out can mean a client is moving to another bank. Spot it the same week and an advisor can call and keep the business. Spot it a month later and it has gone. <b>Every alert sitting unread is a client conversation that never happened.</b></p>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
      AT A GLANCE — the whole case in one screen
 ════════════════════════════════════════ -->
 <section class="cs-glance" data-reveal>
@@ -339,14 +364,14 @@
           <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
           The problem
         </p>
-        <p class="cs-glance-text">Advisors reviewed only part of their alert queue and let the rest age &mdash; because judging one alert meant leaving the queue and losing their place, and closing it recorded <strong>no reason at all</strong>.</p>
+        <p class="cs-glance-text">Advisors only got through part of their alert list. Checking one alert meant leaving the list and losing their place. And when they closed an alert, the system saved <strong>no reason why</strong>.</p>
       </div>
       <div class="cs-glance-cell">
         <p class="cs-glance-label">
           <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h9"/></svg>
           What I did
         </p>
-        <p class="cs-glance-text">Put the queue and the client's history on one screen so nobody loses their place, and replaced the single close button with <strong>statuses that record why</strong> &mdash; turning routine work into data the business could use.</p>
+        <p class="cs-glance-text">I put the list and the client's history on one screen, so nobody loses their place. Then I replaced the single close button with <strong>options that save the reason</strong>. Everyday work now also tells the bank which alerts are worth sending.</p>
       </div>
       <div class="cs-glance-cell">
         <p class="cs-glance-label">
@@ -374,7 +399,7 @@
             <rect x="67" y="1" width="34" height="60" rx="1"/><rect x="104" y="1" width="15" height="60" rx="1"/>
             <path d="M60 31h5M63 28l3 3-3 3" stroke-linecap="round"/>
           </svg>
-          <span>01 &middot; One queue, not two views</span>
+          <span>01 &middot; One list, not two pages</span>
         </a>
         <a href="#s-wireframes" class="cs-proof-item">
           <svg viewBox="0 0 120 62" fill="none" stroke="currentColor" stroke-width="1.4">
@@ -415,7 +440,7 @@
 <section class="cs-stakes-strip">
   <div class="cs-stakes-inner">
     <p class="cs-stakes-label">The Stakes</p>
-    <h2 class="cs-stakes-headline">Alerts on client account activity were arriving faster than advisors could review them. The queue aged, the reasons for dismissal went unrecorded, and the system had no way to learn which alerts were worth sending.</h2>
+    <h2 class="cs-stakes-headline">Alerts arrived faster than advisors could check them. The oldest ones sat unread, nobody recorded why alerts were closed, and the bank had no way to tell which alerts were worth sending in the first place.</h2>
   </div>
 </section>
 
@@ -429,19 +454,19 @@
     <div class="cs-stats">
       <div class="cs-stat">
         <span class="cs-stat-number">35%</span>
-        <span class="cs-stat-desc">improvement in financial advisor productivity across wealth management workflows</span>
+        <span class="cs-stat-desc">more work done per advisor across their day-to-day tasks</span>
       </div>
       <div class="cs-stat">
         <span class="cs-stat-number">28%</span>
-        <span class="cs-stat-desc">increase in platform adoption as advisors moved from working around the queue to working through it</span>
+        <span class="cs-stat-desc">increase in adoption as advisors moved from working around the list to working through it</span>
       </div>
       <div class="cs-stat">
         <span class="cs-stat-number">40%</span>
-        <span class="cs-stat-desc">faster account and portfolio review via the unified queue and redesigned data visualizations</span>
+        <span class="cs-stat-desc">faster account and portfolio review, from the single list and clearer charts</span>
       </div>
       <div class="cs-stat">
         <span class="cs-stat-number">32%</span>
-        <span class="cs-stat-desc">reduction in task completion time through the side panel and statuses that record a reason</span>
+        <span class="cs-stat-desc">less time spent on each alert, from the side panel and the new closing options</span>
       </div>
     </div>
   </div>
@@ -457,10 +482,10 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">A review queue that advisors worked around instead of through</h2>
-    <p class="cs-body">Morgan Stanley is a global financial services firm operating in 40+ countries, where 80,000+ employees advise roughly 3.5 million clients. Its wealth management platform generates <strong>alerts on client account activity</strong> &mdash; a large outgoing transfer, an unusual movement of funds, a balance crossing a threshold &mdash; and routes them to the advisors who cover those clients. Each alert is a judgment call: is this a client conversation worth having, or is it noise?</p>
-    <p class="cs-body">The alerts were being generated correctly. The workflow for acting on them was the problem. Advisors reviewed the top of the queue and let the rest age, the reasoning behind their decisions was never captured, and the system had no mechanism to learn which alerts were worth sending in the first place.</p>
-    <p class="cs-body">I joined as Product Designer to lead end-to-end redesign of that workflow &mdash; the alerts workbench itself, the dashboard modules that summarise it, the data visualizations advisors read before deciding, and the enterprise design system tying it together. The engagement ran in two phases: a three-month research and definition cycle, then design-and-build across two releases &mdash; working one sprint ahead of engineering in Agile, alongside 2 PMs and a 15-engineer platform team.</p>
+    <h2 class="cs-h2">Advisors had a tool they worked around instead of working with</h2>
+    <p class="cs-body">Morgan Stanley is a bank that operates in more than 40 countries. About 80,000 staff look after money for roughly 3.5 million clients. Its software watches those client accounts. When something notable happens, like a large transfer out or an unusual payment, the software creates an alert and sends it to that client's advisor. The advisor then decides one thing: is this worth calling the client about?</p>
+    <p class="cs-body">The software was creating the right alerts. The problem was what happened next. Advisors got through the newest ones and left the rest sitting. Nobody wrote down the thinking behind their decisions. And the bank had no way to find out which alerts were useful.</p>
+    <p class="cs-body">I joined as Product Designer to redesign that whole flow: the alerts tool itself, the dashboard that summarises it, the charts advisors read before deciding, and the design system that holds it together. The work ran in two parts. First a three-month research and planning phase. Then design and build across two releases, working one sprint ahead of the engineers, with 2 product managers and 15 engineers.</p>
     <figure class="cs-dia">
       <svg viewBox="0 0 700 118" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flow diagram: account activity triggers an alert, the alert is routed to the covering advisor, the advisor judges whether it is worth a client conversation, and the outcome is either an opportunity or a close. The judgment step is marked as the expensive one.">
         <g fill="none" stroke="currentColor" stroke-width="1.2">
@@ -527,17 +552,17 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">Advisors weren't ignoring the queue. They were paying too much to work it.</h2>
-    <p class="cs-body">Reviewing a single alert should be a short task: read what happened, check the client's position, decide whether it's worth a conversation, record the decision. In practice each of those four steps sat in a different place, and the cost of moving between them was high enough that advisors dealt with the obvious items and let the unclear ones age.</p>
+    <h2 class="cs-h2">Checking one alert cost too much, so advisors checked fewer of them</h2>
+    <p class="cs-body">Checking an alert should be quick. Read what happened. Look at what the client holds. Decide if it needs a call. Write down the decision. In the old tool those four steps lived in four different places, and moving between them was slow enough that advisors handled the easy alerts and left the unclear ones.</p>
 
-    <h3 class="cs-h3">What the existing experience actually did</h3>
-    <p class="cs-body">Three structural problems compounded each other. <strong>The alert list and the account detail lived in separate views</strong>, so an advisor evaluating an alert had to leave the queue to check the holdings behind it &mdash; and lost their place doing it. <strong>Account and date-range filters didn't persist across those views</strong>, so every context switch meant re-selecting parameters the advisor had already chosen, which quietly produced mismatched comparisons when they didn't notice the reset. And <strong>the underlying transactions were only revealed on interaction</strong> &mdash; nothing was scannable, so confirming an alert meant a sequence of clicks rather than a glance.</p>
-    <p class="cs-body">Then there was the closing step itself. Closing an alert was one all-purpose action, so the system recorded <em>that</em> an advisor had dismissed something but never <em>why</em>. Notes were a single editable field per alert, overwritten each time someone typed into it &mdash; which meant that when coverage changed hands, the reasoning behind months of decisions was simply gone.</p>
-    <p class="cs-body">The result was a tool advisors opened, worked around, and closed. Session data showed short visits and low return frequency &mdash; the signature of a product being tolerated rather than relied on.</p>
+    <h3 class="cs-h3">What the old tool did</h3>
+    <p class="cs-body">Three problems stacked on top of each other. The alert list and the account details were separate pages, so checking an alert meant leaving the list and losing your place. The account and date filters reset when you moved between pages, so advisors had to pick them again every time, and sometimes ended up comparing the wrong things without noticing. And the transactions only appeared once you clicked into them, so confirming an alert took several clicks instead of one look.</p>
+    <p class="cs-body">Closing an alert had its own problem. There was one close button for every situation. The system saved that someone had closed the alert, but never why. Notes were a single box that got wiped every time someone typed in it. So when an account moved to a new advisor, months of thinking went with the old one.</p>
+    <p class="cs-body">The result was a tool advisors opened, worked around, and shut. Visits were short and people came back rarely. They put up with it rather than relied on it.</p>
 
     <div class="cs-formula">
       <span class="cs-formula-label">Problem statement</span>
-      <strong>Financial advisors</strong> (wealth management, experienced tenure) <strong>reviewed only part of their alert queue and left the remainder to age</strong> because <strong>evaluating an alert required leaving the queue, filters reset on every context switch, and closing an alert captured no reasoning</strong> &mdash; resulting in <strong>unreviewed client activity, no feedback loop into alert quality, and stalling platform adoption</strong>, documented via internal product analytics and advisor research.
+<strong>Financial advisors</strong> only got through <strong>part of their alert list, and left the rest sitting</strong>, because <strong>checking one alert meant leaving the list, the filters reset every time, and closing an alert saved no reason</strong>. So <strong>client activity went unchecked, the bank learned nothing about which alerts were worth sending, and use of the tool stopped growing.</strong> Both the firm's own analytics and my sessions with advisors showed the same thing.
     </div>
 
     <div class="cs-quote">
@@ -557,30 +582,30 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">Three sources of evidence pointed to the same root cause</h2>
-    <p class="cs-body">I treated the aging queue as a research problem before treating it as a design one. The obvious reading was "there are too many alerts" &mdash; which would have pointed at volume reduction. The evidence pointed somewhere else: the cost of reviewing <em>one</em> alert was too high, and nothing in the system was learning from the reviews that did happen.</p>
+    <h2 class="cs-h2">Three kinds of evidence pointed at the same cause</h2>
+    <p class="cs-body">I treated the sitting alerts as a research question before a design one. The easy answer was “there are too many alerts”, which points at sending fewer. The evidence said something else. Checking one alert cost too much, and nothing in the system learned from the checks that did happen.</p>
 
     <div class="cs-cards">
       <div class="cs-card">
         <div class="cs-card-num">01</div>
         <div class="cs-card-title">Queue Analytics</div>
-        <div class="cs-card-text">Alerts weren't being reviewed evenly. Closed alerts clustered heavily in the first part of the queue and thinned sharply further down, and the alerts that aged longest were the ambiguous ones &mdash; not the low-value ones. Advisors were sorting by effort, not by importance, which is what a queue does when evaluation is expensive.</div>
+        <div class="cs-card-text">Advisors weren't working through the list evenly. Most closed alerts came from the newest part of it, and the number dropped off sharply further down. The alerts that sat longest were the unclear ones, not the unimportant ones. Advisors were sorting by effort instead of importance, which is what people do when checking something is expensive.</div>
       </div>
       <div class="cs-card">
         <div class="cs-card-num">02</div>
         <div class="cs-card-title">Advisor Shadowing (n=12)</div>
-        <div class="cs-card-text">I shadowed 12 advisors working live queues. Every one of them left the workbench to evaluate an alert, and most kept a second window open to hold their place. Several maintained personal spreadsheets to track what they had already looked at &mdash; a workaround that told me the product had failed at exactly the thing a queue is for.</div>
+        <div class="cs-card-text">I sat with 12 advisors while they worked. Every one of them left the tool to check an alert, and most kept a second window open to hold their place. Several kept their own spreadsheets to track what they had already seen. A list you need a second list to use is a list that isn't working.</div>
       </div>
       <div class="cs-card">
         <div class="cs-card-num">03</div>
         <div class="cs-card-title">Checking Closed Alerts</div>
-        <div class="cs-card-text">I pulled a sample of closed alerts and tried to reconstruct why each had been closed. For the large majority it was impossible &mdash; the record held a timestamp and an actor and nothing else. The business had been running the alert programme for years without the one input that would tell it which rules were working.</div>
+        <div class="cs-card-text">I took a sample of closed alerts and tried to work out why each one was closed. For most of them I couldn't. The record held a time and a name and nothing else. The bank had run this alert programme for years without the one piece of information that would tell it which alerts were worth sending.</div>
       </div>
     </div>
 
-    <h3 class="cs-h3">What the data didn't say &mdash; and how I filled the gap</h3>
-    <p class="cs-body">Analytics could tell us <em>where</em> alerts stalled but not <em>why</em> a particular one was closed without action. To get to mechanism, I ran a two-week diary study with a small advisor group: for every alert they dismissed, they logged a one-line reason in their own words. The freeform answers collapsed into three recurring shapes &mdash; the client wasn't interested, the advisor judged it not worth raising, or the alert shouldn't have fired at all.</p>
-    <p class="cs-body">That last category was the finding that changed the brief. Those weren't advisor decisions; they were <strong>defect reports on the alert rules</strong>, and the product had no channel to receive them. The redesign stopped being purely a speed problem at that point and became a question of how to make everyday reviewing produce information the business could act on.</p>
+    <h3 class="cs-h3">What the numbers couldn't tell me</h3>
+    <p class="cs-body">The numbers showed where alerts stalled, but not why any single one was closed without action. So I ran a two-week diary study with a small group of advisors. Every time they closed an alert, they wrote one line saying why, in their own words. The answers fell into three groups. The client wasn't interested. The advisor didn't think it was worth raising. Or the alert should never have been sent.</p>
+    <p class="cs-body">That third group changed the brief. Those weren't decisions about clients. They were bug reports about the alerts themselves, and there was nowhere for them to go. From that point the project stopped being only about speed. It became a question of how everyday work could tell the bank something useful.</p>
   </div>
 </section>
 
@@ -594,68 +619,68 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">Three approaches. Two rejected. Here's the reasoning.</h2>
+    <h2 class="cs-h2">Three options. I ruled out two.</h2>
 
     <div class="cs-options">
       <div class="cs-option rejected">
         <div class="cs-option-tag">Option A &mdash; Rejected</div>
-        <div class="cs-option-title">Auto-close low-value alerts &mdash; shrink the queue at the source</div>
-        <div class="cs-option-text">The fastest way to make the pile disappear, and the one the business asked about first. Rejected on two counts. Compliance was unwilling to let the system close client-activity alerts without a person's decision on the record. And more fundamentally, we had no reliable basis for scoring value &mdash; the very data that would train it was the data we weren't capturing. Automating on top of that gap would have hidden misses rather than prevented them.</div>
+        <div class="cs-option-title">Let the software close low-value alerts by itself</div>
+        <div class="cs-option-text">The fastest way to shrink the pile, and the first thing the business asked about. I ruled it out for two reasons. Compliance would not let software close a client alert without a person deciding. And we had no solid way to score what an alert was worth, because the data that would teach it was exactly the data we weren't collecting. Automating on top of that gap hides misses instead of stopping them.</div>
       </div>
       <div class="cs-option rejected">
         <div class="cs-option-tag">Option B &mdash; Rejected</div>
-        <div class="cs-option-title">Better ranking only &mdash; sort the queue smarter and leave the workflow alone</div>
-        <div class="cs-option-text">The cheapest option, and genuinely appealing: reorder so the most important alerts come first. Rejected because the research had already shown advisors were sorting by <em>effort</em>, not position. Reordering an expensive-to-review queue just changes which items get skipped. It also does nothing for the record of what was decided &mdash; the queue would still teach the business nothing about its own rules.</div>
+        <div class="cs-option-title">Just reorder the list and change nothing else</div>
+        <div class="cs-option-text">The cheapest option, and a fair one: put the most important alerts at the top. I ruled it out because the research already showed advisors sorted by effort, not by position. Reordering an expensive list only changes which alerts get skipped. It also does nothing about the missing record, so the bank still learns nothing about its own alerts.</div>
       </div>
       <div class="cs-option chosen">
         <div class="cs-option-tag">Option C &mdash; Chosen</div>
         <div class="cs-option-title">Cut the cost of one review, and make every closed alert carry a reason</div>
-        <div class="cs-option-text">Two moves in one release. First, collapse the list-and-detail split into a single queue with a persistent context panel, so evaluating an alert never costs the advisor their place or their filters. Second, replace the one-size-fits-all close action with a set of statuses that separates alerts still in play from the different reasons an alert ends without action &mdash; same single click, but every outcome now says something. Make routine work cheaper, and make it produce data as a by-product.</div>
+        <div class="cs-option-text">Two changes in one release. First, put the list and the details on one screen, so checking an alert never costs an advisor their place or their filters. Second, replace the single close button with a short list of options that separates alerts still in play from the different reasons an alert ends. Same one click, but now every outcome says something. Make the everyday task cheaper, and have it produce useful data while it runs.</div>
       </div>
     </div>
 
-    <h3 class="cs-h3">Before committing, I put the chosen direction on trial</h3>
-    <p class="cs-body">The PMs were the domain experts and had firm convictions about the direction &mdash; particularly that advisors would resist any status menu with more than a handful of options, because every added choice is a tax on a task they perform dozens of times a day. That's a reasonable assumption, and it directly threatened the part of the design that made the queue produce data. I agreed with the direction but not with shipping it unvalidated, so I framed the open questions as three explicit assumptions and ran concept testing against internal advisors. Stating them up front meant the team could disagree with the evidence rather than with me.</p>
+    <h3 class="cs-h3">I tested the idea before we built it</h3>
+    <p class="cs-body">The product managers knew this business far better than I did, and they had a firm view: advisors would reject any menu with more than a few options, because every extra choice costs time on a task they do dozens of times a day. That is a fair worry, and it threatened the exact part of the design that made the list produce data. I agreed with the direction but not with building it on a hunch. So I wrote down three things we were assuming and tested them with advisors inside the firm. Writing them down first meant the team could argue with the results instead of with me.</p>
 
     <div class="cs-cards">
       <div class="cs-card">
         <div class="cs-card-num">01</div>
         <div class="cs-card-title">Assumption &mdash; Panel Over Page</div>
-        <div class="cs-card-text">Will a persistent context panel actually beat a full detail page? A panel buys continuity but costs width in an already dense table. If advisors couldn't read the queue alongside it, we'd have traded one context switch for a cramped one.</div>
+        <div class="cs-card-text">Does a side panel actually beat a full page? A panel keeps you in place but takes width from a table that already has too little. If advisors couldn't read the list next to it, we would have swapped one problem for another.</div>
       </div>
       <div class="cs-card">
         <div class="cs-card-num">02</div>
         <div class="cs-card-title">Assumption &mdash; More Specific Statuses</div>
-        <div class="cs-card-text">Would advisors accept a status list that separates the reasons for closing, or reject it as needless paperwork? The PMs expected resistance. The entire feedback loop depended on the answer, so it was the assumption most worth testing properly.</div>
+        <div class="cs-card-text">Would advisors accept a list of closing options, or treat it as pointless paperwork? The product managers expected a fight. The whole feedback loop rested on this answer, so it was the one worth testing properly.</div>
       </div>
       <div class="cs-card">
         <div class="cs-card-num">03</div>
         <div class="cs-card-title">Assumption &mdash; Structured Notes</div>
-        <div class="cs-card-text">Would advisors use predefined task tags to classify what they did, or default to free text and ignore the structure? Structured entries are what make a history searchable at handover &mdash; but only if people actually use them under time pressure.</div>
+        <div class="cs-card-text">Would advisors tick the ready-made task labels, or ignore them and just type? Labels are what make an account's history searchable later. But only if people actually use them when they are busy.</div>
       </div>
     </div>
 
-    <h3 class="cs-h3">What testing returned &mdash; including the part that contradicted us</h3>
+    <h3 class="cs-h3">What the testing showed, including where we were wrong</h3>
 
     <div class="cs-cards">
       <div class="cs-card">
         <div class="cs-card-num">01</div>
         <div class="cs-card-title">Finding &mdash; The Panel Won, But Position Didn't</div>
-        <div class="cs-card-text">The panel comfortably beat the full-page detail, and nobody wanted to go back. But advisors repeatedly lost track of where they were in the queue after several reviews. The fix wasn't the panel &mdash; it was explicit position and step controls inside it, so moving to the next alert never required returning to the table to find your place.</div>
+        <div class="cs-card-text">The panel beat the full page easily and nobody wanted to go back. But after a few alerts, advisors lost track of where they were. The panel wasn't the problem. It just needed next and previous buttons inside it, so moving on never meant going back to the list to find your place.</div>
       </div>
       <div class="cs-card">
         <div class="cs-card-num">02</div>
         <div class="cs-card-title">Finding &mdash; The Extra Detail Cost Nothing</div>
-        <div class="cs-card-text">The assumption that advisors would resist did not hold. Selection time was effectively unchanged against the single close action, because the choice was already made in their head &mdash; the old control simply threw it away. What did fail was the wording: our first labels used internal programme language, and advisors picked wrong until we rewrote every option in the words they used with each other.</div>
+        <div class="cs-card-text">Advisors did not resist. Picking an option took about as long as the old single button, because they had already made the decision in their head. The old button just threw it away. What did fail was our wording. The first labels used the firm's internal terms, and advisors picked the wrong one until we rewrote every option in the words they use with each other.</div>
       </div>
       <div class="cs-card">
         <div class="cs-card-num">03</div>
         <div class="cs-card-title">Finding &mdash; Tags Carried, Text Supplemented</div>
-        <div class="cs-card-text">Task tags were used far more readily than expected &mdash; they're faster than typing and they made the entry feel complete. Free text didn't disappear, but it changed role: from the whole record to the exception a tag couldn't capture. That shifted the design toward tag-first, with the text field present but secondary.</div>
+        <div class="cs-card-text">Advisors used the task labels far more than we expected. Ticking is faster than typing, and it made the note feel finished. Typing didn't go away, but its job changed. It went from being the whole note to covering the bits a label couldn't. So we put the labels first and kept the text box underneath.</div>
       </div>
     </div>
 
-    <p class="cs-body">I put the findings together and walked the PMs through them. Two assumptions were confirmed and one &mdash; the one about advisor resistance &mdash; was contradicted outright, which is the useful kind of result: it meant the feedback loop could ship in release one instead of being deferred. Presenting that as data rather than opinion is what kept the conversation collaborative, and it made the case for testing the next set of patterns without needing to re-argue the principle.</p>
+    <p class="cs-body">I pulled the findings together and walked the product managers through them. Two assumptions held. The one about advisors resisting did not, which was the useful result. It meant the feedback loop could ship in the first release instead of waiting. Showing this as evidence rather than opinion kept the conversation friendly, and it made testing the next round an easy sell.</p>
   </div>
 </section>
 
@@ -669,28 +694,28 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">We made the queue narrower so it could stay in view. Here's what we gave up to do that.</h2>
-    <p class="cs-body">The context panel occupies roughly a third of the viewport whenever it's open, and in a table with fourteen columns that width has to come from somewhere. The decision was to let columns drop out of view when the panel opens rather than shrink the panel or compress every column toward illegibility. Engineering pushed back &mdash; hiding data in a data tool is a hard thing to argue for. Here's how we defended it.</p>
+    <h2 class="cs-h2">We gave up some columns to keep the list on screen</h2>
+    <p class="cs-body">The panel takes about a third of the screen when it is open, and the table has fourteen columns. That width has to come from somewhere. We chose to let some columns drop out of sight while the panel is open, rather than squeeze every column until none of them are readable. Engineering pushed back, and fairly: hiding data in a data tool is a hard thing to argue for.</p>
 
     <div class="cs-tradeoff">
       <div class="cs-tradeoff-cell gained">
         <div class="cs-tradeoff-label">+ Gained</div>
-        <div class="cs-tradeoff-text">Evaluation without departure. Advisors keep their filters, their scroll position, and their place in the queue while reviewing an alert. Task completion time fell 32%, and the alerts that used to age longest were the ones this fixed.</div>
+        <div class="cs-tradeoff-text">Advisors check an alert without leaving the list. They keep their filters, their scroll position, and their place. Task time dropped 32%, and the alerts that used to sit longest were the ones this fixed.</div>
       </div>
       <div class="cs-tradeoff-cell lost">
         <div class="cs-tradeoff-label">&minus; Lost</div>
-        <div class="cs-tradeoff-text">Roughly a third of the table's columns are not visible while the panel is open. Advisors who work from a wide column set have to close the panel to see everything at once &mdash; a real regression for a specific way of working.</div>
+        <div class="cs-tradeoff-text">About a third of the columns are hidden while the panel is open. Advisors who work across the full width have to close the panel to see everything. For them, that is a step backwards.</div>
       </div>
       <div class="cs-tradeoff-cell why">
         <div class="cs-tradeoff-label">Why accepted</div>
-        <div class="cs-tradeoff-text">The columns that hide are the ones advisors weren't reading mid-review anyway; we chose which ones by watching what they looked at during shadowing. Losing peripheral columns for the length of a review is cheaper than losing your place in the queue on every single one.</div>
+        <div class="cs-tradeoff-text">The hidden columns are the ones advisors weren't reading mid-check anyway. We picked them by watching what people actually looked at. Losing a few side columns for the length of one check costs less than losing your place on every single one.</div>
       </div>
     </div>
 
-    <h3 class="cs-h3">The three patterns we shipped</h3>
-    <p class="cs-body"><strong>A persistent context panel.</strong> Selecting an alert opens the client's history beside the queue rather than replacing it. The panel carries its own step controls, so an advisor can work through consecutive alerts without returning to the table to find their position &mdash; the fix that came directly out of concept testing.</p>
-    <p class="cs-body"><strong>Statuses that carry a reason.</strong> The single close action was replaced by a set that separates in-flight states from the distinct reasons an alert ends without action. Every option costs the same single click as the old control, but the queue now records <em>why</em> &mdash; and the reasons that indicate a bad rule are separable from the ones that indicate a good rule and an uninterested client.</p>
-    <p class="cs-body"><strong>A note history that only ever grows.</strong> Notes stopped being a single field that got overwritten and became a running record: each entry tagged with what happened, attributed, timestamped, and preserved. When coverage changes hands, the reasoning arrives with the account instead of dying with the previous advisor's memory.</p>
+    <h3 class="cs-h3">The three things we built</h3>
+    <p class="cs-body"><strong>A panel that stays open.</strong> Clicking an alert opens the client's history next to the list instead of replacing it. The panel has its own next and previous buttons, so an advisor can work through several alerts without going back to the table. That fix came straight out of testing.</p>
+    <p class="cs-body"><strong>Closing options that save a reason.</strong> One close button became a short list that separates alerts still in play from the different reasons an alert ends. Every option is still one click. But now the record says why, and a reason that points at a bad alert rule can be told apart from one that points at a fine rule and a client who said no.</p>
+    <p class="cs-body"><strong>A note history that only grows.</strong> Notes used to be one box that got overwritten. Now every note is kept, with a label for what happened, the name of who wrote it, and the time. When an account changes hands, the thinking goes with it instead of disappearing.</p>
   </div>
 </section>
 
@@ -704,7 +729,7 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">Concept sketches &mdash; the structure, not the screens</h2>
+    <h2 class="cs-h2">Concept sketches: the structure, not the real screens</h2>
 
     <p class="cs-wire-disclaimer">The shipped interface is covered by NDA. These are redrawn concept wireframes made to communicate the design reasoning &mdash; deliberately rough, with placeholder content and no real client data, amounts, or production visual design. They show the structural decisions, not the product.</p>
 
@@ -784,11 +809,11 @@
             <circle cx="700" cy="159" r="2.5" fill="currentColor" stroke="none"/>
           </g>
           <text x="236" y="154" font-family="monospace" font-size="16" fill="currentColor" opacity="0.5">&#8594;</text>
-          <text x="352" y="288" font-family="monospace" font-size="9" fill="currentColor" opacity="0.6">filters persist across selection &#183; the queue never reloads</text>
+          <text x="352" y="288" font-family="monospace" font-size="9" fill="currentColor" opacity="0.6">filters stay put &#183; the list never reloads</text>
         </svg>
       </div>
-      <p class="cs-wire-cap">01 &mdash; Structure: split views &rarr; queue + context panel</p>
-      <p class="cs-wire-note">The central move. Previously the list and the detail were separate destinations, so evaluating an item meant leaving the queue and losing both your place and your filter state. The redesign made selection drive a persistent side panel, and put <strong>up/down controls in the panel header</strong> so a reviewer can work through the queue without ever returning to a list view.</p>
+      <p class="cs-wire-cap">01 &mdash; Structure: two pages &rarr; one list + side panel</p>
+      <p class="cs-wire-note"><strong>The main change.</strong> The list and the details used to be separate pages, so checking an alert meant leaving the list and losing both your place and your filters. Now clicking an alert opens a panel beside it, and the panel has up and down buttons so you can work through the list without going back.</p>
     </div>
 
     <!-- ── WIRE 2: the status menu ── -->
@@ -846,7 +871,7 @@
         </svg>
       </div>
       <p class="cs-wire-cap">02 &mdash; The status menu</p>
-      <p class="cs-wire-note">Dismissals were the highest-volume outcome and the least examined. Separating them by reason cost the reviewer nothing &mdash; the same single click &mdash; but meant the difference between a dead record and <strong>a feedback loop into alert quality</strong>. "Not an opportunity" in particular reads directly as a defect report on the rule that generated the alert.</p>
+      <p class="cs-wire-note"><strong>Closing an alert was the most common outcome and the least understood.</strong> Splitting it by reason costs the advisor nothing, still one click, but it turns a dead record into useful information. “Not an opportunity” in particular is a direct report that the alert rule got it wrong.</p>
     </div>
 
     <!-- ── WIRE 3: context panel anatomy ── -->
@@ -932,8 +957,8 @@
           </g>
         </svg>
       </div>
-      <p class="cs-wire-cap">03 &mdash; Context panel anatomy</p>
-      <p class="cs-wire-note">The panel had to serve two readers: the person working the queue now, and whoever inherits the account later. That pushed three decisions &mdash; <strong>notes that are only ever added to</strong>, always showing who wrote them, rather than one field that gets overwritten; <strong>tick-box labels for common tasks</strong> so the four most frequent actions stay countable; and <strong>next and previous controls in the header</strong> so writing a note never costs you your place.</p>
+      <p class="cs-wire-cap">03 &mdash; Inside the side panel</p>
+      <p class="cs-wire-note"><strong>The panel serves two people:</strong> whoever is working the list now, and whoever inherits the account later. That drove three decisions. Notes are only ever added, never overwritten, and always show who wrote them. Tick boxes cover the four most common actions, so they can be counted. And next and previous buttons sit in the header, so writing a note never costs you your place.</p>
     </div>
 
     <!-- ── WIRE 4: summary module ── -->
@@ -1003,12 +1028,12 @@
             <text x="348" y="176">teaches the workbench vocabulary.</text>
             <text x="348" y="204">Rows group by date and carry a</text>
             <text x="348" y="219">flag, so work can begin here</text>
-            <text x="348" y="234">and continue in the queue.</text>
+            <text x="348" y="234">and continue in the list.</text>
           </g>
         </svg>
       </div>
       <p class="cs-wire-cap">04 &mdash; Dashboard summary</p>
-      <p class="cs-wire-note">The module exists to answer one question before anything else: <strong>how much is still open.</strong> Its tabs deliberately reuse the workbench's own status labels rather than inventing new summary wording &mdash; so the dashboard teaches the vocabulary a reviewer will use once they land in the queue itself.</p>
+      <p class="cs-wire-note"><strong>This module answers one question first:</strong> how much is still open. Its tabs reuse the same labels as the main tool instead of inventing new ones, so the dashboard teaches the words an advisor will meet when they open the list.</p>
     </div>
   </div>
 </section>
@@ -1023,22 +1048,22 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">Every UI decision pointed back to one question: can the advisor defend this decision later?</h2>
+    <h2 class="cs-h2">One question sat behind every screen: could an advisor explain this decision a year later?</h2>
 
-    <h3 class="cs-h3">The queue row &mdash; annotated decisions</h3>
+    <h3 class="cs-h3">One row in the list, explained</h3>
     <div class="cs-two-col" style="margin-top:0;">
       <div>
-        <p class="cs-body"><strong>Status carries its owner, inline.</strong></p>
-        <p class="cs-body">In shared-coverage teams the first question about any alert is "who has this?" Attribution sits directly under the status rather than in a separate column, so ownership survives when columns are hidden by the panel &mdash; and an advisor scanning the queue can tell at a glance which items are actually theirs to action.</p>
+        <p class="cs-body"><strong>The owner's name sits with the status.</strong></p>
+        <p class="cs-body">When several advisors share coverage, the first question about any alert is who has it. So the name sits directly under the status instead of in its own column. That way it stays visible when the panel hides columns, and an advisor scanning the list can see which alerts are theirs.</p>
       </div>
       <div>
-        <p class="cs-body"><strong>Dismissal reasons grouped, not listed flat.</strong></p>
-        <p class="cs-body">The first version presented every status as one flat list, and advisors picked the wrong one constantly. Separating the alerts still in play from the reasons for closing &mdash; visually grouped, with the destructive outcomes weighted down rather than up &mdash; cut selection errors sharply without removing any option.</p>
+        <p class="cs-body"><strong>Closing reasons are grouped, not listed flat.</strong></p>
+        <p class="cs-body">The first version put every option in one flat list, and advisors kept picking the wrong one. Splitting the list in two, alerts still in play at the top and reasons for closing below, cut those mistakes sharply. We didn't remove a single option.</p>
       </div>
     </div>
 
     <figure class="cs-dia">
-      <svg viewBox="0 0 700 132" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram of one queue row, showing the status dot, the owner's name directly beneath it, and the note and outcome columns at the end of the row">
+      <svg viewBox="0 0 700 132" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram of one row in the alert list, showing the status dot, the owner's name directly beneath it, and the note and outcome columns at the end of the row">
         <!-- row frame -->
         <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.5">
           <rect x="1" y="26" width="698" height="42" rx="1"/>
@@ -1076,19 +1101,19 @@
       <figcaption>One row, annotated &mdash; what stays visible when the panel takes a third of the width</figcaption>
     </figure>
 
-    <h3 class="cs-h3">Notes &mdash; designing the empty state first</h3>
-    <p class="cs-body">Most alerts have no history, so the empty panel is the state advisors see most often &mdash; and it's the one that decides whether the feature gets used at all. Rather than leave a blank region, the empty state names the next action directly and keeps the entry controls visible below it, with the submit action disabled until there's something to submit. The tags sit above the free-text field, in the order testing said people actually work: classify what happened, then add the exception if there is one.</p>
-    <p class="cs-body">The full state solves the opposite problem. Entries are only ever added, newest first, each one carrying its author and the time it was written, so a long history reads as a record rather than a wall &mdash; and the newest context is where someone picking up the account will look first.</p>
+    <h3 class="cs-h3">Notes: I designed the empty state first</h3>
+    <p class="cs-body">Most alerts have no notes yet, so the empty panel is the screen advisors see most. It is also the one that decides whether anyone uses the feature. Instead of leaving it blank, it says what to do next and keeps the note controls visible underneath, with the save button switched off until there is something to save. The tick-box labels sit above the text box, in the order testing showed people work: say what happened, then type the bit the labels don't cover.</p>
+    <p class="cs-body">The full panel has the opposite problem. Notes are only ever added, newest at the top, each with a name and a time. A long history then reads as a record instead of a wall of text, and the most recent note is where someone new to the account will look first.</p>
 
-    <h3 class="cs-h3">Design system contribution</h3>
-    <p class="cs-body">I built and maintained the centralised Figma design system that the queue, panel, and dashboard patterns now live in &mdash; with reusable components, clear rules for using them, and explicit documentation on which states are system-generated versus advisor-entered (a distinction that matters when the record is auditable). Engineering handoff time dropped substantially after the system shipped, and the cross-team consistency made downstream features faster to design and faster to review.</p>
+    <h3 class="cs-h3">The design system</h3>
+    <p class="cs-body">I built and looked after the shared Figma design system that the list, panel, and dashboard all use. It has reusable parts, clear rules for using them, and notes on which states come from the software and which come from a person. That last distinction matters when the record can be audited. Handover to engineering got noticeably quicker once it was in place, and the shared parts made later features faster to design and faster to review.</p>
 
-    <h3 class="cs-h3">Designing a sprint ahead of a 15-engineer team</h3>
-    <p class="cs-body">The platform team ran two-week Agile sprints, which meant design had to land a full sprint ahead of build &mdash; annotated, specified, and worked through to the awkward cases before engineers picked it up. In practice that meant every combination of states &mdash; every status and owner combination on the queue row, the panel's empty and populated states, load failures, and what happens when two advisors action the same alert &mdash; had to be resolved on paper before the sprint opened. Ambiguity that reached a standup became a blocker for fifteen people, so the discipline was front-loading decisions rather than deferring them.</p>
+    <h3 class="cs-h3">Designing a sprint ahead of 15 engineers</h3>
+    <p class="cs-body">The team worked in two-week sprints, so design had to be finished a full sprint before building started, with every detail written down. In practice that meant working out every combination before the sprint opened: each status and owner on a row, the panel empty and full, what happens when loading fails, and what happens when two advisors act on the same alert at once. Anything unclear at standup blocked fifteen people, so the job was making decisions early rather than late.</p>
 
-    <h3 class="cs-h3">Where the charting library and the design disagreed</h3>
-    <p class="cs-body">The portfolio dashboards were built on the platform's existing charting library, and its default patterns weren't always the clearest way to communicate the underlying data. The clearest example: to let advisors compare allocation drift against benchmark within a single period, I needed the paired bars set tighter than the library's default spacing allowed &mdash; and the customisation to do it was non-trivial for the team to estimate. Rather than design around the constraint or push an unbounded estimate onto the sprint, I pulled in an engineer from a sibling team who had already solved similar customisations, and we sized the work together before it entered the build queue.</p>
-    <p class="cs-body">The broader lesson held across the release: the library's defaults are built for drawing quickly, not for being understood. Every chart in the dashboard got interrogated against what the advisor was actually comparing &mdash; and where the default fought that, we either customised deliberately or changed the chart type rather than accepting a visualisation that rendered cleanly but read poorly.</p>
+    <h3 class="cs-h3">Where the chart tool and the design disagreed</h3>
+    <p class="cs-body">The dashboards use the platform's existing chart tool, and its standard settings weren't always the clearest way to show the numbers. The best example: to let advisors compare a client's mix against a benchmark, I needed the pairs of bars closer together than the tool normally allows, and changing that was not a small job to estimate. Rather than design around it or hand the team an open-ended task, I brought in an engineer from another team who had solved something similar, and we sized the work together before it went into the build plan.</p>
+    <p class="cs-body">The same lesson held across the release. The tool's default settings are built to draw charts quickly, not to make them clear. So we checked every chart against what the advisor was actually comparing. Where the default got in the way, we either changed it on purpose or picked a different chart, instead of shipping something that drew neatly and read badly.</p>
 
     <figure class="cs-dia">
       <svg viewBox="0 0 700 176" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Comparison of bar spacing. On the left, the charting library's default spacing separates each pair so the two values read as unrelated. On the right, the pair is set tight and grouped, so the gap between them reads as the comparison itself.">
@@ -1128,8 +1153,8 @@
       <figcaption>The customisation the library made expensive &mdash; and the reason it was worth paying for</figcaption>
     </figure>
 
-    <h3 class="cs-h3">Accessibility as a design constraint, not a QA pass</h3>
-    <p class="cs-body">Financial charts carry an accessibility problem most screens don't: allocation, gain/loss, and risk banding are all conventionally encoded in colour alone. Working with the firm's accessibility team, I designed every chart to carry a second, non-colour channel &mdash; texture and pattern fills on comparative bars, direct labelling in place of legend-only keys, and a tabular equivalent for every visualisation. Contrast targets were treated as a design input from the first exploration rather than something remediated after handoff, which meant compliance review found issues to confirm rather than issues to fix.</p>
+    <h3 class="cs-h3">Accessibility came first, not at the end</h3>
+    <p class="cs-body">Money charts have an accessibility problem most screens don't. Mix, gain and loss, and risk levels are all normally shown with colour alone. Working with the firm's accessibility team, I gave every chart a second signal besides colour: patterns and textures on the bars, labels written directly on them instead of a key off to the side, and a plain table version of every chart. We set contrast targets at the first sketch rather than fixing them after handover, so the compliance review confirmed things instead of finding problems.</p>
 
     <figure class="cs-dia">
       <svg viewBox="0 0 700 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Comparison showing bars distinguished by colour alone versus the same bars carrying pattern fills and direct labels, so the meaning survives without colour">
@@ -1198,17 +1223,17 @@
   <div class="cs-row-content">
     <h2 class="cs-h2">Advisor productivity +35%. Platform adoption +28%. Account review 40% faster.</h2>
 
-    <h3 class="cs-h3">Measured outcomes</h3>
-    <p class="cs-body"><strong>Advisor productivity improved by 35%.</strong> Measured via internal product analytics post-redesign. The improvement came from removing the context switch at the centre of the review loop &mdash; fewer steps per alert, and no re-establishing filters and position after each one.</p>
-    <p class="cs-body"><strong>Platform adoption increased by 28%.</strong> The clearest sign wasn't a single metric but a change in shape: advisors moved from skimming the top of the queue to working it through. Alerts that used to age longest &mdash; the ambiguous ones that needed context to judge &mdash; were the ones that started getting reviewed.</p>
-    <p class="cs-body"><strong>Account and portfolio review became 40% faster.</strong> The redesigned dashboard modules and data visualizations let advisors read a client's position and recent activity in one pass, instead of assembling it from separate views before deciding anything.</p>
-    <p class="cs-body"><strong>And the queue started producing data.</strong> Because every closed alert now carries a reason, dismissals that indicate a mis-firing rule are separable from dismissals that indicate a sound rule and an uninterested client. That distinction didn't exist before the redesign, and it's the input the alert programme had been missing for years.</p>
+    <h3 class="cs-h3">What changed</h3>
+    <p class="cs-body"><strong>Advisor productivity went up 35%</strong>, measured in the firm's own analytics after launch. It came from removing the context switch in the middle of the job. Fewer steps per alert, and no setting up filters and finding your place again after each one.</p>
+    <p class="cs-body"><strong>Adoption went up 28%.</strong> The clearest sign wasn't one number but a change in shape. Advisors moved from skimming the newest alerts to working through the whole list. The alerts that used to sit longest, the unclear ones that need context to judge, were the ones that started getting looked at.</p>
+    <p class="cs-body"><strong>Account and portfolio review got 40% faster.</strong> The redesigned dashboard and charts let an advisor read a client's position and recent activity in one go, instead of piecing it together from separate pages first.</p>
+    <p class="cs-body"><strong>And the list started producing data.</strong> Every closed alert now carries a reason, so the bank can tell the difference between an alert rule that fired wrongly and a good alert the client simply turned down. That difference didn't exist before, and it is the thing the alert programme had been missing for years.</p>
 
-    <h3 class="cs-h3">Design system &amp; delivery impact</h3>
-    <p class="cs-body">Built and scaled a reusable enterprise design system that <strong>reduced design inconsistencies by 45%</strong> while <strong>accelerating product delivery by 35%</strong>. Detailed Figma prototypes, user flows, and interaction designs streamlined engineering implementation and <strong>reduced design rework by 28%</strong>.</p>
+    <h3 class="cs-h3">Design system and delivery</h3>
+    <p class="cs-body">The shared design system cut inconsistencies by <strong>45%</strong> and sped up delivery by <strong>35%</strong>. Detailed Figma prototypes, flows, and interaction specs made the build smoother and cut design rework by <strong>28%</strong>.</p>
 
     <div class="cs-quote">
-      <p>"The redesign didn't just improve the interface. It changed how advisors work &mdash; they're faster, and for the first time the queue tells us something about our own rules instead of just absorbing them."</p>
+      <p>"Advisors are faster, which we expected. What we didn't expect is that the list now tells us which of our own alerts are worth sending. We have wanted that for years."</p>
       <cite>&mdash; Product lead, internal release retro</cite>
     </div>
   </div>
@@ -1224,13 +1249,13 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">Closing the loop &mdash; turning dismissal reasons into rule changes</h2>
-    <p class="cs-body">The redesign made the queue produce data. It did not yet make anything consume it. Dismissal reasons currently land in reporting, where someone has to go looking for them &mdash; which means the signal exists but the loop is still manual, and a rule that fires badly will keep firing until a person notices the pattern.</p>
-    <p class="cs-body"><strong>Hypothesis:</strong> routing those closing reasons back to the team that owns the alert rules &mdash; surfaced as a ranked list of which rules are generating the most "shouldn't have fired" closures &mdash; will cut low-value alert volume without any advisor having to file a ticket. The measure of success isn't a UI metric; it's whether the queue gets smaller on its own.</p>
-    <p class="cs-body"><strong>The tracking</strong> is already in place from release one, which is the argument for doing it next: the data is accumulating whether or not we act on it, and the longer it accumulates the better the first pass at rule tuning will be. The open design question is where that surface lives &mdash; a report the rules team pulls, or something that reaches them without being asked for.</p>
+    <h2 class="cs-h2">Next: turning those reasons into better alerts</h2>
+    <p class="cs-body">The redesign made the list produce data. Nothing reads that data yet. The closing reasons land in a report that someone has to go and open, so the loop still runs on a person noticing. An alert rule that keeps firing wrongly will keep firing until somebody spots the pattern.</p>
+    <p class="cs-body"><strong>My theory:</strong> send those reasons back to the team that owns the alert rules, as a ranked list of which rules produce the most “should never have fired” closures. That should cut pointless alerts without any advisor filing a ticket. Success here isn't a screen metric. It is whether the list gets shorter on its own.</p>
+    <p class="cs-body"><strong>The tracking</strong> has been in place since the first release, which is the argument for doing this next. The data is piling up whether we use it or not, and the longer it piles up the better the first round of fixes will be. The open question is where it should live: a report the rules team goes and opens, or something that reaches them without being asked.</p>
 
     <figure class="cs-dia">
-      <svg viewBox="0 0 700 156" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Loop diagram: closing reasons feed the rules team, which tunes the alert rules, which produces fewer low-value alerts and a smaller queue. The link from closing reasons back to the rules team is drawn as a dashed line, marked as the piece not yet built.">
+      <svg viewBox="0 0 700 156" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Loop diagram: closing reasons feed the rules team, which tunes the alert rules, which produces fewer low-value alerts and a shorter list. The link from closing reasons back to the rules team is drawn as a dashed line, marked as the piece not yet built.">
         <g fill="none" stroke="currentColor" stroke-width="1.2">
           <rect x="1" y="18" width="150" height="44" rx="1"/>
           <rect x="275" y="18" width="150" height="44" rx="1" stroke-dasharray="4 4" opacity="0.55"/>
@@ -1249,7 +1274,7 @@
         <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45" stroke-linecap="round">
           <path d="M624 70v28H76v-28"/><path d="M71 75l5-5 5 5"/>
         </g>
-        <text x="350" y="115" font-family="monospace" font-size="9.5" fill="currentColor" text-anchor="middle" opacity="0.65">a smaller queue means fewer alerts to close</text>
+        <text x="350" y="115" font-family="monospace" font-size="9.5" fill="currentColor" text-anchor="middle" opacity="0.65">a shorter list means fewer alerts to close</text>
         <text x="350" y="140" font-family="monospace" font-size="9.5" fill="currentColor" text-anchor="middle" opacity="0.85">dashed = the one link not yet built</text>
       </svg>
       <figcaption>The loop the redesign made possible &mdash; and the single connection still missing</figcaption>
@@ -1267,32 +1292,32 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">A regulated industry. A live queue. A two-release window. Pick your battles.</h2>
-    <p class="cs-body">Morgan Stanley's wealth management platform doesn't have the luxury of consumer-app constraints. Every design decision had to clear three filters before it shipped: compliance, auditability, and the fact that advisors were working the queue for real the entire time we were changing it. The constraint wasn't time &mdash; it was how much I could realistically change inside a two-release product cycle.</p>
+    <h2 class="cs-h2">A regulated bank, a live tool, and two releases to work with</h2>
+    <p class="cs-body">This is a bank, so the usual consumer app freedoms don't apply. Every decision had to pass three tests before shipping: compliance, whether the record would stand up to an audit, and the fact that advisors were using the tool for real the whole time we were changing it. Time wasn't the real limit. How much I could change inside two releases was.</p>
 
-    <h3 class="cs-h3">The triangle: I picked Scope + Quality. Time was the dial I managed.</h3>
-    <p class="cs-body">Compliance reviews don't compress, and the list of statuses needed sign-off because it changes what the firm's records say. So the conscious sacrifice was timeline: the redesign shipped across two releases rather than one &mdash; the queue, panel, and statuses first, the dashboard summary second. Cutting scope was unsafe (new statuses without a panel would have added work with no compensating speed-up, which is how a rollout gets rejected). Cutting quality was unthinkable in a regulated environment. Time stretched. That was the right call.</p>
+    <h3 class="cs-h3">I protected scope and quality. Time was what I let move.</h3>
+    <p class="cs-body">Compliance reviews take as long as they take, and the list of closing options needed sign-off because it changes what the firm's records say. So the thing I let slip was the schedule. The work shipped across two releases instead of one: the list, panel, and closing options first, the dashboard second. Cutting scope was risky, because new options without the panel would have added work with no speed gain, and that is how a rollout gets rejected. Cutting quality wasn't an option in a regulated business. So the timeline moved. That was the right call.</p>
 
     <div class="cs-cards" style="margin-top:32px;">
       <div class="cs-card">
         <div class="cs-card-num">01</div>
         <div class="cs-card-title">Researching Without Touching Client Data</div>
-        <div class="cs-card-text">Conventional usability research wasn't available &mdash; the workflow is saturated with confidential client information. So I designed around it: shadowing captured interaction patterns and navigation, never content; concept tests ran on fabricated accounts; the diary study asked advisors to characterise their reasoning rather than report the case. Four limited methods together produced a sharper picture than one unlimited one would have.</div>
+        <div class="cs-card-text">Normal usability testing wasn't possible, because the work is full of confidential client information. So I worked around it. When sitting with advisors I recorded how they moved through the tool, never what was on screen. Concept tests used made-up accounts. The diary study asked advisors to describe their reasoning, not the case. Four limited methods together gave a clearer picture than one open one would have.</div>
       </div>
       <div class="cs-card">
         <div class="cs-card-num">02</div>
         <div class="cs-card-title">What Moved to The Next Cycle</div>
-        <div class="cs-card-text">A way to feed those closing reasons back to the rules team. Setting the status on many related alerts at once. Saved filter sets, which advisors asked for repeatedly and we deliberately deferred rather than half-build. All documented with owners and success criteria, and all already being tracked &mdash; so the next sprint inherits a brief, not a blank page.</div>
+        <div class="cs-card-text">A way to send closing reasons back to the rules team. Setting the status on many related alerts at once. Saved filter sets, which advisors asked for again and again and we chose to leave out rather than build badly. All written up with owners and success measures, and all already being tracked, so the next sprint starts with a brief instead of a blank page.</div>
       </div>
       <div class="cs-card">
         <div class="cs-card-num">03</div>
         <div class="cs-card-title">How AI Tooling Compressed Design Cycles</div>
-        <div class="cs-card-text">Figma Make accelerated component scaffolding across every combination of states &mdash; the queue row alone needed versions for every status, owner, and note condition. Claude Code prototyped the panel's open/step/collapse behaviour so I could pressure-test the position problem before engineering committed to it. The result: a compliance-sensitive surface shipped in two releases instead of three.</div>
+        <div class="cs-card-text">Figma Make sped up building the component variations. The row alone needed a version for every status, owner, and note state. Claude Code let me prototype how the panel opens, steps, and collapses, so I could test the lost-your-place problem before engineering committed to anything. Together that shipped a compliance-heavy tool in two releases instead of three.</div>
       </div>
     </div>
 
     <div class="cs-quote" style="margin-top:40px;">
-      <p>"In regulated tooling, the design constraint isn't time. It's how much you can change before the review cycle resets. Pick your changes carefully &mdash; and make every one count."</p>
+      <p>"In a regulated business, what limits you is how much you can change before the review process starts again. So you pick fewer changes and you make each one count."</p>
     </div>
   </div>
 </section>
@@ -1307,37 +1332,37 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">What this project taught me &mdash; about the product, and about the team</h2>
+    <h2 class="cs-h2">What I took from this project</h2>
     <div class="cs-cards">
       <div class="cs-card">
         <div class="cs-card-num">01</div>
         <div class="cs-card-title">A Queue Can Measure Itself</div>
-        <div class="cs-card-text">The most valuable thing this redesign shipped wasn't speed &mdash; it was making routine work produce information. Every high-volume workflow is a place where thousands of human judgments are being made and thrown away. Capturing them costs almost nothing at the moment of decision and is impossible to reconstruct afterwards.</div>
+        <div class="cs-card-text">The most valuable thing here wasn't speed. It was making everyday work produce information. Any job done thousands of times is a place where thousands of human judgements get made and thrown away. Catching them costs almost nothing while someone is deciding, and can't be recovered afterwards.</div>
       </div>
       <div class="cs-card">
         <div class="cs-card-num">02</div>
         <div class="cs-card-title">Interrogate The Obvious Brief</div>
-        <div class="cs-card-text">The stated problem was queue volume, and the obvious answer was to shrink it. The evidence said the cost of reviewing one item was the real constraint. Volume was a symptom &mdash; and had I designed against the brief as written, the outcome would have been a smaller queue that still taught the business nothing.</div>
+        <div class="cs-card-text">The brief said the problem was too many alerts, and the obvious fix was fewer alerts. The evidence said the real limit was what it cost to check one. Volume was a symptom. If I had built what the brief asked for, we would have ended up with a shorter list that still taught the bank nothing.</div>
       </div>
       <div class="cs-card">
         <div class="cs-card-num">03</div>
         <div class="cs-card-title">Design The Audit Trail</div>
-        <div class="cs-card-text">Every regulated screen I design now starts from "how does someone reconstruct this decision a year from now?" rather than "how do we display the data?" That single reframe changes how the whole thing is organised &mdash; from how precise the statuses are, to the note history, to what gets someone's name on it.</div>
+        <div class="cs-card-text">Every regulated screen I design now starts with a different question. Not “how do we show this data” but “how would someone explain this decision a year from now”. That one change reorganises everything: how specific the options are, how notes are stored, whose name goes on what.</div>
       </div>
       <div class="cs-card">
         <div class="cs-card-num">04</div>
         <div class="cs-card-title">Make Research A Shared Verdict</div>
-        <div class="cs-card-text">The PMs owned deep domain knowledge and had strong convictions the data hadn't yet tested. Rather than argue the conclusions, I argued for the method &mdash; and brought them into the sessions. When findings contradicted an assumption, it landed as something the team discovered together, not as a designer overruling the people who own the product.</div>
+        <div class="cs-card-text">The product managers knew this business deeply and held views the data hadn't tested yet. Instead of arguing about conclusions, I argued for the method, and brought them into the sessions. When a result went against what they expected, it landed as something we found together rather than a designer overruling the people who own the product.</div>
       </div>
       <div class="cs-card">
         <div class="cs-card-num">05</div>
         <div class="cs-card-title">Engineering Limits Are Design Inputs</div>
-        <div class="cs-card-text">The charting library's defaults were built to draw charts quickly, not to make them clear. Treating that as a design input rather than an obstacle &mdash; sizing the changes with engineers before they reached the build queue &mdash; got better visualisations shipped than either fighting the library or quietly accepting its defaults.</div>
+        <div class="cs-card-text">The chart tool's defaults were built to draw charts quickly, not to make them clear. Treating that as something to design with, and sizing the changes with engineers before they reached the build plan, got better charts shipped than either fighting the tool or quietly accepting it.</div>
       </div>
       <div class="cs-card">
         <div class="cs-card-num">06</div>
         <div class="cs-card-title">Working A Sprint Ahead</div>
-        <div class="cs-card-text">Designing for a 15-engineer Agile team meant resolving edge cases before the sprint opened, not during it. Front-loading those decisions &mdash; and coordinating across compliance, accessibility, and the rules team in parallel &mdash; was the single biggest shift in how I plan design work.</div>
+        <div class="cs-card-text">Working a sprint ahead of 15 engineers meant settling the awkward cases before the sprint opened, not during it. Making those decisions early, and lining up compliance, accessibility, and the rules team at the same time, changed how I plan design work more than anything else on this project.</div>
       </div>
     </div>
   </div>
@@ -1346,8 +1371,8 @@
 <!-- ── Conclusion ── -->
 <div class="cs-conclusion" data-reveal>
   <p class="cs-conclusion-eyebrow">Conclusion</p>
-  <p class="cs-conclusion-text">Make the routine decision cheaper, and people make more of them. Make it carry a reason, and the system finally learns something from work it was already doing.</p>
-  <p style="font-family:var(--font);font-size:16px;color:var(--secondary);margin-top:24px;line-height:1.8;max-width:680px;margin-left:auto;margin-right:auto;">The single queue, side panel, statuses that record a reason, and shared design system shipped at Morgan Stanley are now the platform standard &mdash; driving continued improvements in advisor productivity and platform adoption.</p>
+  <p class="cs-conclusion-text">Make the everyday decision cheaper and people make more of them. Have it record a reason, and the business finally learns from work it was already doing.</p>
+  <p style="font-family:var(--font);font-size:16px;color:var(--secondary);margin-top:24px;line-height:1.8;max-width:680px;margin-left:auto;margin-right:auto;">The single list, side panel, closing options that record a reason, and shared design system shipped at Morgan Stanley are now the platform standard &mdash; driving continued improvements in advisor productivity and platform adoption.</p>
   <p style="font-family:var(--ui);font-size:13px;color:var(--secondary);margin-top:48px;letter-spacing:0.04em;">Glad we could cross paths.<br>Out of anywhere you could be, you're here.</p>
 </div>
 
