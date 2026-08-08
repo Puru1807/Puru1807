@@ -193,9 +193,30 @@
     injectShell().then(function () {
       applyBrandHref();
       applyNavState();
+
+  // ── Graffiti sign-off ─────────────────────────────────────────
+  // Fires once, when the reader actually reaches the end of a case study.
+  function initGraffiti() {
+    var el = document.querySelector('.cs-graffiti');
+    if (!el || el.classList.contains('popped')) return;
+
+    if (!('IntersectionObserver' in window)) { el.classList.add('popped'); return; }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        el.classList.add('popped');
+        io.disconnect();
+      });
+    }, { threshold: 0.55 });
+
+    io.observe(el);
+  }
+
       initThemeToggle();
       initFloatingSideNav();
       initScrollProgress();
+      initGraffiti();
     });
   });
 })();
