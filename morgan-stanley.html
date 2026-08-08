@@ -71,12 +71,27 @@
     .cs-tag { font-family: var(--ui); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); border: 1px solid var(--border); border-radius: 2px; padding: 5px 12px; }
     .cs-title { font-family: var(--display); font-size: clamp(44px,7vw,88px); font-weight: 400; letter-spacing: -0.02em; line-height: 1.08; margin-bottom: 28px; }
 
-    /* Circular, sized to sit on the tag row's centre line. */
-    .cs-info-btn { flex-shrink: 0; width: 28px; height: 28px; margin-left: 4px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--border); border-radius: 999px; color: var(--secondary); cursor: pointer; transition: color .2s ease, border-color .2s ease, background .2s ease; }
-    .cs-info-btn svg { width: 15px; height: 15px; }
-    .cs-info-btn:hover, .cs-info-btn:focus-visible { color: var(--text); border-color: var(--accent); background: var(--bg-alt); }
-    .cs-info-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    /* Circular, on the tag row's centre line. Filled rather than outlined so it
+       reads as a control instead of a fifth tag. */
+    .cs-info-btn { position: relative; flex-shrink: 0; width: 30px; height: 30px; margin-left: 6px; display: inline-flex; align-items: center; justify-content: center; background: var(--text); border: none; border-radius: 999px; color: var(--bg); cursor: pointer; transition: background .2s ease, transform .2s ease; }
+    .cs-info-btn svg { width: 16px; height: 16px; stroke-width: 1.9; }
+    .cs-info-btn:hover, .cs-info-btn:focus-visible { background: var(--accent); transform: scale(1.09); }
+    .cs-info-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
     @media (hover: hover) and (pointer: fine) { .cs-info-btn { cursor: none; } }
+
+    /* Attention ring — runs a few times on load, then stops. */
+    .cs-info-btn::after { content: ''; position: absolute; inset: 0; border-radius: 999px; border: 1px solid var(--text); opacity: 0; pointer-events: none; animation: csInfoRing 2.1s ease-out 1.3s 3; }
+    @keyframes csInfoRing { 0% { transform: scale(1); opacity: 0.5; } 70%, 100% { transform: scale(1.85); opacity: 0; } }
+
+    /* Hover label, absolutely positioned so the tag row never reflows. */
+    .cs-info-tip { position: absolute; top: calc(100% + 10px); left: 50%; white-space: nowrap; font-family: var(--ui); font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text); background: var(--bg-alt); border: 1px solid var(--border); padding: 6px 10px; border-radius: 3px; opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(-4px); transition: opacity .2s ease, transform .2s ease; z-index: 5; }
+    .cs-info-btn:hover .cs-info-tip, .cs-info-btn:focus-visible .cs-info-tip { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cs-info-btn, .cs-info-tip { transition: none; }
+      .cs-info-btn::after { animation: none; }
+      .cs-info-btn:hover, .cs-info-btn:focus-visible { transform: none; }
+    }
 
     /* ——— Modal ——— */
     .cs-modal { position: fixed; inset: 0; z-index: 3000; display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; visibility: hidden; transition: opacity .26s ease, visibility .26s; }
@@ -344,6 +359,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
         <circle cx="12" cy="12" r="10"/><path d="M12 16v-5M12 8.2v.01"/>
       </svg>
+      <span class="cs-info-tip" aria-hidden="true">Skills shown here</span>
     </button>
   </div>
   <h1 class="cs-title">Morgan Stanley</h1>
