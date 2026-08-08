@@ -1568,10 +1568,14 @@
     function open(){
       lastFocus = document.activeElement;
       modal.hidden = false;
-      // next frame so the transition runs from the hidden state
-      requestAnimationFrame(function(){ modal.classList.add('open'); });
       document.body.style.overflow = 'hidden';
-      closeBtn.focus();
+      // Next frame, so the transition runs from the hidden state and the panel
+      // is actually rendered before we move focus into it — focus() is a no-op
+      // on an element still display:none from the hidden attribute.
+      requestAnimationFrame(function(){
+        modal.classList.add('open');
+        closeBtn.focus();
+      });
       document.addEventListener('keydown', onKey);
     }
     function close(){
