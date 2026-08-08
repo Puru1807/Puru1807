@@ -69,17 +69,13 @@
     .cs-back svg { width: 14px; height: 14px; }
     .cs-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
     .cs-tag { font-family: var(--ui); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); border: 1px solid var(--border); border-radius: 2px; padding: 5px 12px; }
-    /* Title sits left, info button pins to the right edge of the content column,
-       both centred on the same line. */
-    .cs-title-row { display: flex; align-items: center; justify-content: space-between; gap: 32px; margin-bottom: 28px; }
-    .cs-title { font-family: var(--display); font-size: clamp(44px,7vw,88px); font-weight: 400; letter-spacing: -0.02em; line-height: 1.08; }
+    .cs-title { font-family: var(--display); font-size: clamp(44px,7vw,88px); font-weight: 400; letter-spacing: -0.02em; line-height: 1.08; margin-bottom: 28px; }
 
-    .cs-info-btn { flex-shrink: 0; display: inline-flex; align-items: center; gap: 0; padding: 0; height: 46px; background: transparent; border: 1px solid var(--border); border-radius: 999px; color: var(--secondary); cursor: pointer; overflow: hidden; transition: color .22s ease, border-color .22s ease, background .22s ease; }
-    .cs-info-btn svg { width: 21px; height: 21px; margin: 0 12px; flex-shrink: 0; }
-    .cs-info-btn-tip { font-family: var(--ui); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; max-width: 0; opacity: 0; transition: max-width .32s ease, opacity .22s ease, padding-right .32s ease; padding-right: 0; }
-    .cs-info-btn:hover, .cs-info-btn:focus-visible { color: var(--text); border-color: var(--accent); background: var(--bg-alt); }
-    .cs-info-btn:hover .cs-info-btn-tip, .cs-info-btn:focus-visible .cs-info-btn-tip { max-width: 180px; opacity: 1; padding-right: 18px; }
-    .cs-info-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    /* Sits in the tag row and matches the pills, but reads as interactive. */
+    .cs-info-btn { display: inline-flex; align-items: center; gap: 6px; font-family: var(--ui); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: transparent; border: 1px dashed var(--border); border-radius: 2px; padding: 5px 12px 5px 10px; cursor: pointer; transition: color .2s ease, border-color .2s ease, background .2s ease; }
+    .cs-info-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .cs-info-btn:hover, .cs-info-btn:focus-visible { color: var(--text); border-color: var(--accent); border-style: solid; background: var(--bg-alt); }
+    .cs-info-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     @media (hover: hover) and (pointer: fine) { .cs-info-btn { cursor: none; } }
 
     /* ——— Modal ——— */
@@ -96,13 +92,12 @@
     .cs-modal-close:hover, .cs-modal-close:focus-visible { color: var(--text); border-color: var(--accent); }
     .cs-modal-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
     @media (hover: hover) and (pointer: fine) { .cs-modal-close { cursor: none; } }
-    .cs-modal-body { overflow-y: auto; padding: 6px 28px 28px; }
-    .cs-skill-group { padding-top: 24px; }
-    .cs-skill-cat { font-family: var(--ui); font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--secondary); padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 14px; }
-    .cs-skill { display: block; margin-bottom: 13px; }
-    .cs-skill-name { font-family: var(--font); font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.45; }
-    .cs-skill-ev { font-family: var(--font); font-size: 13.5px; color: var(--secondary); line-height: 1.55; margin-top: 2px; }
-    .cs-modal-foot { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.6; margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--border); }
+    .cs-modal-body { overflow-y: auto; padding: 4px 28px 26px; }
+    .cs-skill-group { padding-top: 22px; }
+    .cs-skill-cat { font-family: var(--ui); font-size: 9.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--secondary); margin-bottom: 11px; }
+    .cs-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .cs-chip { font-family: var(--font); font-size: 13px; font-weight: 500; color: var(--text); background: var(--bg-alt); border: 1px solid var(--border); border-radius: 3px; padding: 6px 11px; line-height: 1.3; }
+    .cs-modal-foot { font-family: var(--font); font-size: 12.5px; color: var(--secondary); line-height: 1.6; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); }
     @media (max-width: 700px) {
       .cs-title-row { gap: 18px; }
       .cs-info-btn { height: 40px; } .cs-info-btn svg { width: 19px; height: 19px; margin: 0 10px; }
@@ -346,16 +341,14 @@
     <span class="cs-tag">Wealth Management</span>
     <span class="cs-tag">Enterprise SaaS</span>
     <span class="cs-tag">Data-Heavy Workflows</span>
-  </div>
-  <div class="cs-title-row">
-    <h1 class="cs-title">Morgan Stanley</h1>
-    <button type="button" class="cs-info-btn" id="csInfoOpen" aria-haspopup="dialog" aria-label="What this project shows about how I work">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+    <button type="button" class="cs-info-btn" id="csInfoOpen" aria-haspopup="dialog" aria-label="Skills shown in this project">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
         <circle cx="12" cy="12" r="10"/><path d="M12 16v-5M12 8.2v.01"/>
       </svg>
-      <span class="cs-info-btn-tip">What this shows</span>
+      <span>Skills shown</span>
     </button>
   </div>
+  <h1 class="cs-title">Morgan Stanley</h1>
   <p class="cs-subtitle">Led end-to-end product design for a wealth management platform, improving financial advisor productivity by 35% while increasing platform adoption by 28%. Rebuilt the alerts workbench where advisors review client account activity &mdash; and the dashboards and data visualizations that feed it.</p>
   <div class="cs-meta-row">
     <div class="cs-meta-item">
@@ -1455,42 +1448,38 @@
 
     <div class="cs-modal-body">
       <div class="cs-skill-group">
-        <p class="cs-skill-cat">Research</p>
-        <div class="cs-skill"><p class="cs-skill-name">Running research when you cannot see the data</p><p class="cs-skill-ev">The work is full of confidential client information, so I recorded how advisors moved through the tool and never what was on screen. Twelve shadowing sessions, a two-week diary study, and an audit of closed alerts.</p></div>
-        <div class="cs-skill"><p class="cs-skill-name">Reading numbers and people together</p><p class="cs-skill-ev">Analytics showed where alerts stalled. The diary study explained why. Neither answered it alone.</p></div>
-        <div class="cs-skill"><p class="cs-skill-name">Spotting the finding that changes the brief</p><p class="cs-skill-ev">One group of answers turned out to be bug reports about the alerts themselves, not decisions about clients. That reframed the whole project.</p></div>
+        <p class="cs-skill-cat">Research &amp; discovery</p>
+        <div class="cs-chips">
+          <span class="cs-chip">Mixed-methods research</span><span class="cs-chip">Contextual inquiry</span>
+          <span class="cs-chip">Diary studies</span><span class="cs-chip">Quantitative analysis</span>
+          <span class="cs-chip">Usability testing</span><span class="cs-chip">Synthesis</span>
+        </div>
       </div>
-
       <div class="cs-skill-group">
-        <p class="cs-skill-cat">Product thinking</p>
-        <div class="cs-skill"><p class="cs-skill-name">Questioning the brief I was given</p><p class="cs-skill-ev">The ask was to send fewer alerts. The evidence said the real cost was checking one. Building what was asked for would have produced a shorter list that still taught the bank nothing.</p></div>
-        <div class="cs-skill"><p class="cs-skill-name">Comparing options and saying why I dropped two</p><p class="cs-skill-ev">Auto-closing alerts failed on compliance and on missing data. Reordering the list failed because advisors sort by effort, not position.</p></div>
-        <div class="cs-skill"><p class="cs-skill-name">Naming what a decision costs</p><p class="cs-skill-ev">The side panel hides about a third of the table's columns. I state that plainly, along with who it hurts and why we accepted it.</p></div>
-        <div class="cs-skill"><p class="cs-skill-name">Sequencing work across releases</p><p class="cs-skill-ev">List, panel, and closing options first. Dashboard second. Scope and quality held, timeline allowed to move.</p></div>
+        <p class="cs-skill-cat">Product &amp; strategy</p>
+        <div class="cs-chips">
+          <span class="cs-chip">0&rarr;1 and end-to-end ownership</span><span class="cs-chip">Problem reframing</span>
+          <span class="cs-chip">Ambiguous problem spaces</span><span class="cs-chip">Trade-off analysis</span>
+          <span class="cs-chip">Data-informed decisions</span><span class="cs-chip">Roadmap sequencing</span>
+        </div>
       </div>
-
-      <div class="cs-skill-group">
-        <p class="cs-skill-cat">Testing and validation</p>
-        <div class="cs-skill"><p class="cs-skill-name">Writing assumptions down before testing them</p><p class="cs-skill-ev">Three assumptions stated up front, so the team could argue with the results instead of with me.</p></div>
-        <div class="cs-skill"><p class="cs-skill-name">Publishing the result that went against us</p><p class="cs-skill-ev">The product managers expected advisors to reject a longer list of closing options. They did not. I reported that, and it moved the feedback loop into the first release.</p></div>
-      </div>
-
       <div class="cs-skill-group">
         <p class="cs-skill-cat">Craft</p>
-        <div class="cs-skill"><p class="cs-skill-name">Design systems</p><p class="cs-skill-ev">A shared Figma library with reusable parts, rules for using them, and documentation of which states come from software and which from a person.</p></div>
-        <div class="cs-skill"><p class="cs-skill-name">Data visualisation</p><p class="cs-skill-ev">Charts chosen and adjusted around what the advisor is actually comparing, not around what the chart tool draws quickly.</p></div>
-        <div class="cs-skill"><p class="cs-skill-name">Accessibility built in from the sketch</p><p class="cs-skill-ev">Every chart carries a second signal besides colour, with contrast targets set before handover rather than fixed afterwards.</p></div>
-        <div class="cs-skill"><p class="cs-skill-name">Designing the state people see most</p><p class="cs-skill-ev">Most alerts have no notes, so I designed the empty panel first.</p></div>
+        <div class="cs-chips">
+          <span class="cs-chip">Design systems at scale</span><span class="cs-chip">Interaction design</span>
+          <span class="cs-chip">Data visualization</span><span class="cs-chip">Prototyping</span>
+          <span class="cs-chip">Complex enterprise UX</span><span class="cs-chip">WCAG accessibility</span>
+        </div>
       </div>
-
       <div class="cs-skill-group">
-        <p class="cs-skill-cat">Working with others</p>
-        <div class="cs-skill"><p class="cs-skill-name">Persuading experts with method, not opinion</p><p class="cs-skill-ev">The product managers knew the business far better than I did. I argued for how to find out rather than for my own conclusion, and brought them into the sessions.</p></div>
-        <div class="cs-skill"><p class="cs-skill-name">Designing a sprint ahead of 15 engineers</p><p class="cs-skill-ev">Every combination settled on paper before the sprint opened, because anything unclear at standup blocked the whole team.</p></div>
-        <div class="cs-skill"><p class="cs-skill-name">Sizing engineering work with engineers</p><p class="cs-skill-ev">When a chart change looked expensive, I brought in someone who had solved it before and scoped it with them rather than handing over an open-ended task.</p></div>
+        <p class="cs-skill-cat">Collaboration &amp; delivery</p>
+        <div class="cs-chips">
+          <span class="cs-chip">Cross-functional leadership</span><span class="cs-chip">Influence without authority</span>
+          <span class="cs-chip">Design&ndash;engineering partnership</span><span class="cs-chip">Agile delivery</span>
+          <span class="cs-chip">Shipped to production</span><span class="cs-chip">Regulated environments</span>
+        </div>
       </div>
-
-      <p class="cs-modal-foot">The screens in this case study are redrawn concept sketches, not the shipped product. The real interface is covered by an NDA.</p>
+      <p class="cs-modal-foot">Screens in this case study are redrawn concept sketches. The shipped product is under NDA.</p>
     </div>
   </div>
 </div>
