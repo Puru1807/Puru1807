@@ -1574,6 +1574,9 @@
       // on an element still display:none from the hidden attribute.
       requestAnimationFrame(function(){
         modal.classList.add('open');
+        // Force a style flush. An element still computing visibility:hidden
+        // is not focusable, and the class above has not been applied yet.
+        void modal.offsetHeight;
         closeBtn.focus();
       });
       document.addEventListener('keydown', onKey);
