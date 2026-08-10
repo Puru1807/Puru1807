@@ -4,8 +4,8 @@
   <script src="assets/shared/work-gate.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maxtra Technologies — Puru Bhardwaj</title>
-  <meta name="description" content="Digital banking experiences — onboarding completion +33%, customer drop-offs -28%, task completion +30%, customer satisfaction +27%.">
+  <title>Goldman Sachs — Puru Bhardwaj</title>
+  <meta name="description" content="AI-powered wealth advisory platform — activation 52% → 68%, AI recommendation acceptance 38% → 67%, citation-backed trust patterns for financial advisors.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>P</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,9 +67,58 @@
     .cs-back { display: inline-flex; align-items: center; gap: 8px; font-family: var(--ui); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--secondary); text-decoration: none; margin-bottom: 48px; transition: color 0.2s; }
     .cs-back:hover { color: var(--accent); }
     .cs-back svg { width: 14px; height: 14px; }
-    .cs-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+    .cs-tags { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
     .cs-tag { font-family: var(--ui); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); border: 1px solid var(--border); border-radius: 2px; padding: 5px 12px; }
     .cs-title { font-family: var(--display); font-size: clamp(44px,7vw,88px); font-weight: 400; letter-spacing: -0.02em; line-height: 1.08; margin-bottom: 28px; }
+
+    /* Circular, on the tag row's centre line. Filled rather than outlined so it
+       reads as a control instead of a fifth tag. */
+    .cs-info-btn { position: relative; flex-shrink: 0; width: 30px; height: 30px; margin-left: 6px; display: inline-flex; align-items: center; justify-content: center; background: var(--text); border: none; border-radius: 999px; color: var(--bg); cursor: pointer; transition: background .2s ease, transform .2s ease; }
+    .cs-info-btn svg { width: 16px; height: 16px; stroke-width: 1.9; }
+    .cs-info-btn:hover, .cs-info-btn:focus-visible { background: var(--accent); transform: scale(1.09); }
+    .cs-info-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    @media (hover: hover) and (pointer: fine) { .cs-info-btn { cursor: none; } }
+
+    /* Attention ring — runs a few times on load, then stops. */
+    .cs-info-btn::after { content: ''; position: absolute; inset: 0; border-radius: 999px; border: 1px solid var(--text); opacity: 0; pointer-events: none; animation: csInfoRing 2.1s ease-out 1.3s 3; }
+    @keyframes csInfoRing { 0% { transform: scale(1); opacity: 0.5; } 70%, 100% { transform: scale(1.85); opacity: 0; } }
+
+    /* Hover label, absolutely positioned so the tag row never reflows. */
+    .cs-info-tip { position: absolute; top: calc(100% + 10px); left: 50%; white-space: nowrap; font-family: var(--ui); font-size: 10px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text); background: var(--bg-alt); border: 1px solid var(--border); padding: 6px 10px; border-radius: 3px; opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(-4px); transition: opacity .2s ease, transform .2s ease; z-index: 5; }
+    .cs-info-btn:hover .cs-info-tip, .cs-info-btn:focus-visible .cs-info-tip { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cs-info-btn, .cs-info-tip { transition: none; }
+      .cs-info-btn::after { animation: none; }
+      .cs-info-btn:hover, .cs-info-btn:focus-visible { transform: none; }
+    }
+
+    /* ——— Modal ——— */
+    .cs-modal { position: fixed; inset: 0; z-index: 3000; display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; visibility: hidden; transition: opacity .26s ease, visibility .26s; }
+    .cs-modal.open { opacity: 1; visibility: visible; }
+    .cs-modal-scrim { position: absolute; inset: 0; background: rgba(0,0,0,0.62); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+    .cs-modal-panel { position: relative; width: 100%; max-width: 760px; max-height: 84vh; display: flex; flex-direction: column; background: var(--bg); border: 1px solid var(--border); transform: translateY(12px) scale(0.985); transition: transform .3s cubic-bezier(0.4,0,0.2,1); }
+    .cs-modal.open .cs-modal-panel { transform: none; }
+    .cs-modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding: 26px 28px 20px; border-bottom: 1px solid var(--border); }
+    .cs-modal-eyebrow { font-family: var(--ui); font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 9px; }
+    .cs-modal-title { font-family: var(--display); font-size: clamp(21px,3vw,28px); font-weight: 400; line-height: 1.2; color: var(--text); }
+    .cs-modal-close { flex-shrink: 0; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--border); border-radius: 999px; color: var(--secondary); cursor: pointer; transition: color .2s, border-color .2s; }
+    .cs-modal-close svg { width: 15px; height: 15px; }
+    .cs-modal-close:hover, .cs-modal-close:focus-visible { color: var(--text); border-color: var(--accent); }
+    .cs-modal-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    @media (hover: hover) and (pointer: fine) { .cs-modal-close { cursor: none; } }
+    .cs-modal-body { overflow-y: auto; padding: 4px 28px 26px; }
+    .cs-point { padding: 20px 0; border-bottom: 1px solid var(--border); }
+    .cs-point:last-of-type { border-bottom: none; }
+    .cs-point-lead { font-family: var(--font); font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.45; margin-bottom: 5px; }
+    .cs-point-why { font-family: var(--font); font-size: 13.5px; color: var(--secondary); line-height: 1.6; }
+    .cs-point-res { display: inline-block; font-family: var(--ui); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-top: 9px; padding-left: 11px; border-left: 2px solid var(--accent); line-height: 1.45; }
+    .cs-modal-foot { font-family: var(--font); font-size: 12.5px; color: var(--secondary); line-height: 1.6; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); }
+    @media (max-width: 700px) {
+      .cs-modal { padding: 14px; } .cs-modal-panel { max-height: 88vh; }
+      .cs-modal-head { padding: 20px 20px 16px; } .cs-modal-body { padding: 4px 20px 22px; }
+      .cs-point { padding: 17px 0; }
+    }
     .cs-subtitle { font-family: var(--font); font-size: 17px; color: var(--secondary); max-width: 720px; line-height: 1.7; margin-bottom: 48px; }
     .cs-meta-row { display: flex; gap: 48px; flex-wrap: wrap; padding-top: 40px; border-top: 1px solid var(--border); }
     .cs-meta-item { display: flex; flex-direction: column; gap: 6px; }
@@ -94,6 +143,7 @@
 
     .cs-row { display: grid; grid-template-columns: 180px 1fr; gap: 64px; max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); border-bottom: 1px solid var(--border); }
     .cs-row-label { padding-top: 4px; position: sticky; top: 80px; align-self: start; }
+    .cs-row-content { min-width: 0; }
     .cs-row-num { font-family: var(--ui); font-size: 10px; color: var(--secondary); opacity: 0.35; letter-spacing: 0.06em; margin-bottom: 8px; }
     .cs-row-tag { font-family: var(--ui); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); line-height: 2; }
     .cs-row-divider { width: 20px; height: 1px; background: var(--border); margin-top: 14px; }
@@ -118,6 +168,67 @@
     .cs-card-title { font-family: var(--ui); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
     .cs-card-text { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.65; }
 
+    /* ——— Wireframe figures ——— */
+    /* ——— Reading progress: orientation cue for a long read ——— */
+    .cs-progress { position: fixed; top: 0; left: 0; height: 2px; width: 0; background: var(--accent); z-index: 1200; transition: width 0.1s linear; }
+
+    /* ——— Primer: plain-language on-ramp before any of the argument starts ——— */
+    .cs-primer { max-width: 1200px; margin: 0 auto; padding: 0 var(--margin) 40px; }
+    .cs-primer-inner { border-left: 2px solid var(--accent); padding: 4px 0 4px 24px; max-width: 780px; }
+    .cs-primer-eyebrow { font-family: var(--ui); font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+    .cs-primer-list { display: flex; flex-direction: column; gap: 11px; }
+    .cs-primer-list p { font-family: var(--font); font-size: 15.5px; line-height: 1.6; color: var(--secondary); }
+    .cs-primer-list b { color: var(--text); font-weight: 600; }
+    .cs-primer-stake { font-family: var(--font); font-size: 15.5px; line-height: 1.6; color: var(--text); margin-top: 16px; padding-top: 15px; border-top: 1px solid var(--border); }
+    @media (max-width: 700px) { .cs-primer-inner { padding-left: 18px; } .cs-primer-list p, .cs-primer-stake { font-size: 15px; } }
+
+    /* ——— At a glance: the whole case in one screen, for a 40-second read ——— */
+    .cs-glance { max-width: 1200px; margin: 0 auto; padding: 0 var(--margin) 72px; }
+    .cs-glance-inner { border: 1px solid var(--border); background: var(--bg-alt); }
+    .cs-glance-head { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding: 20px 28px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    .cs-glance-eyebrow { font-family: var(--ui); font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+    .cs-glance-time { font-family: var(--ui); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); }
+    .cs-glance-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .cs-glance-cell { padding: 26px 28px 30px; border-right: 1px solid var(--border); }
+    .cs-glance-cell:last-child { border-right: none; }
+    .cs-glance-label { display: flex; align-items: center; gap: 8px; font-family: var(--ui); font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--secondary); margin-bottom: 14px; }
+    .cs-glance-label svg { width: 13px; height: 13px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 1.6; }
+    .cs-glance-text { font-family: var(--font); font-size: 14.5px; line-height: 1.65; color: var(--text); }
+    .cs-glance-text strong { font-weight: 600; }
+    .cs-glance-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 18px; }
+    .cs-glance-metric { display: flex; flex-direction: column; gap: 1px; }
+    .cs-glance-metric b { font-family: var(--display); font-size: 27px; font-weight: 400; line-height: 1; color: var(--accent); letter-spacing: -0.01em; }
+    .cs-glance-metric span { font-family: var(--ui); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--secondary); }
+
+    /* Visual proof, surfaced early instead of buried halfway down */
+    .cs-glance-proof { border-top: 1px solid var(--border); padding: 22px 28px 26px; }
+    .cs-proof-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 14px; }
+    .cs-proof-item { display: block; text-decoration: none; border: 1px solid var(--border); background: var(--bg); padding: 12px 12px 10px; transition: border-color 0.2s ease, transform 0.2s ease; }
+    .cs-proof-item:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .cs-proof-item svg { display: block; width: 100%; height: auto; color: var(--text); opacity: 0.75; }
+    .cs-proof-item span { display: block; font-family: var(--ui); font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--secondary); margin-top: 10px; line-height: 1.4; }
+    .cs-proof-item:hover span { color: var(--accent); }
+
+    @media (max-width: 900px) {
+      .cs-glance-grid { grid-template-columns: 1fr; }
+      .cs-glance-cell { border-right: none; border-bottom: 1px solid var(--border); }
+      .cs-glance-cell:last-child { border-bottom: none; }
+      .cs-proof-strip { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ——— Inline diagram: breaks up long prose without the weight of a full wireframe ——— */
+    .cs-dia { margin: 34px 0; border: 1px solid var(--border); background: var(--bg-alt); padding: 20px 20px 16px; overflow-x: auto; max-width: 760px; }
+    .cs-dia svg { display: block; width: 100%; height: auto; min-width: 460px; color: var(--text); }
+    .cs-dia figcaption { font-family: var(--ui); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); margin-top: 14px; }
+
+    .cs-wire { margin: 44px 0 0; min-width: 0; }
+    .cs-wire-frame { border: 1px solid var(--border); background: var(--bg-alt); padding: 20px; overflow-x: auto; min-width: 0; max-width: 100%; }
+    .cs-wire-frame svg { display: block; width: 100%; height: auto; min-width: 620px; color: var(--text); }
+    .cs-wire-cap { font-family: var(--ui); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); margin-top: 14px; }
+    .cs-wire-note { font-family: var(--font); font-size: 14px; line-height: 1.75; color: var(--secondary); margin-top: 8px; max-width: 720px; }
+    .cs-wire-note strong { color: var(--text); font-weight: 500; }
+    .cs-wire-disclaimer { font-family: var(--ui); font-size: 11px; line-height: 1.7; letter-spacing: 0.02em; color: var(--secondary); border: 1px dashed var(--border); padding: 18px 22px; margin-top: 8px; max-width: 720px; }
+
     .cs-quote { position: relative; padding: 32px 40px; background: var(--bg-alt); border-left: 4px solid var(--accent); margin: 48px 0; max-width: 720px; }
     .cs-quote::before { content: '\201C'; font-family: var(--display); font-size: 80px; color: var(--accent); opacity: 0.15; position: absolute; top: -8px; left: 32px; line-height: 1; }
     .cs-quote p { font-family: var(--display); font-size: 20px; font-style: italic; line-height: 1.55; position: relative; z-index: 1; }
@@ -130,10 +241,12 @@
     .cs-note { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 4px; padding: 24px 28px; margin-top: 32px; font-family: var(--font); font-size: 15px; line-height: 1.8; color: var(--secondary); }
     .cs-note strong { color: var(--text); }
 
+    /* Problem statement formula box */
     .cs-formula { background: var(--bg-alt); border-left: 3px solid #E0533C; padding: 28px 32px; margin-top: 32px; max-width: 760px; font-family: var(--font); font-size: 16px; line-height: 1.85; }
     .cs-formula strong { color: #E0533C; font-weight: 600; }
     .cs-formula-label { font-family: var(--ui); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: #E0533C; display: block; margin-bottom: 14px; }
 
+    /* Tradeoff matrix */
     .cs-tradeoff { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 32px; background: var(--border); border: 1px solid var(--border); }
     .cs-tradeoff-cell { padding: 24px; background: var(--bg); }
     .cs-tradeoff-label { font-family: var(--ui); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 14px; }
@@ -142,6 +255,7 @@
     .cs-tradeoff-cell.why .cs-tradeoff-label { color: var(--accent); }
     .cs-tradeoff-text { font-family: var(--font); font-size: 13px; line-height: 1.7; color: var(--text); }
 
+    /* Options considered */
     .cs-options { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
     .cs-option { padding: 24px 28px; border: 1px solid var(--border); border-radius: 4px; }
     .cs-option-tag { font-family: var(--ui); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 10px; }
@@ -235,29 +349,35 @@
     All projects
   </a>
   <div class="cs-tags">
-    <span class="cs-tag">Fintech</span>
-    <span class="cs-tag">Digital Banking</span>
-    <span class="cs-tag">KYC &amp; Compliance UX</span>
+    <span class="cs-tag">AI Product Design</span>
+    <span class="cs-tag">Wealth Management</span>
     <span class="cs-tag">Enterprise SaaS</span>
+    <span class="cs-tag">Trust &amp; Explainability</span>
+    <button type="button" class="cs-info-btn" id="csInfoOpen" aria-haspopup="dialog" aria-label="Skills shown in this project">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/><path d="M12 16v-5M12 8.2v.01"/>
+      </svg>
+      <span class="cs-info-tip" aria-hidden="true">Skills shown here</span>
+    </button>
   </div>
-  <h1 class="cs-title">Maxtra Technologies</h1>
-  <p class="cs-subtitle">Designed end-to-end digital banking experiences across customer onboarding, payments, account servicing, and self-service applications &mdash; improving customer journey efficiency and overall usability.</p>
+  <h1 class="cs-title">Goldman Sachs</h1>
+  <p class="cs-subtitle">Led product design for an AI tool that drafts investment advice for financial advisors. I added the things advisors needed before they would trust it: where every number came from, how sure the AI was, and the ability to edit the wording before it reached a client.</p>
   <div class="cs-meta-row">
     <div class="cs-meta-item">
       <span class="cs-meta-label">Role</span>
-      <span class="cs-meta-value">Product Designer &mdash; Digital Banking</span>
+      <span class="cs-meta-value">Product Designer &mdash; AI SaaS Platform</span>
     </div>
     <div class="cs-meta-item">
       <span class="cs-meta-label">Timeline</span>
-      <span class="cs-meta-value">Oct 2020 &mdash; Sep 2022 (2 years)</span>
+      <span class="cs-meta-value">Jun 2025 &mdash; Present</span>
     </div>
     <div class="cs-meta-item">
       <span class="cs-meta-label">Platform</span>
-      <span class="cs-meta-value">Mobile + Web &middot; Business Banking</span>
+      <span class="cs-meta-value">Web SaaS &middot; Advisor + Client portals</span>
     </div>
     <div class="cs-meta-item">
       <span class="cs-meta-label">Domain</span>
-      <span class="cs-meta-value">Fintech &middot; Digital Banking</span>
+      <span class="cs-meta-value">AI &middot; Wealth Management &middot; Compliance</span>
     </div>
   </div>
 </div>
@@ -268,7 +388,7 @@
 <section class="cs-stakes-strip">
   <div class="cs-stakes-inner">
     <p class="cs-stakes-label">The Stakes</p>
-    <h2 class="cs-stakes-headline">Digital banking onboarding was losing customers at every step. KYC drop-offs were high, payment workflows created friction, and self-service applications weren't living up to their promise.</h2>
+    <h2 class="cs-stakes-headline">Only half of new advisors ever started using the tool. The AI gave sound advice, but it showed no working, so advisors could not check it before putting their own name to it.</h2>
   </div>
 </section>
 
@@ -277,24 +397,24 @@
 ════════════════════════════════════════ -->
 <section class="cs-results" id="cs-results">
   <div class="cs-results-inner">
-    <p class="cs-results-label">Outcomes</p>
-    <h2 class="cs-results-title">Onboarding completion +33% &middot; Drop-offs -28% &middot; Task completion +30% &middot; Customer satisfaction +27%</h2>
+    <p class="cs-results-label">Outcomes &mdash; two product releases</p>
+    <h2 class="cs-results-title">Advisors using it 52% &rarr; 68% &middot; AI advice accepted 38% &rarr; 67% &middot; Support tickets down ~60%</h2>
     <div class="cs-stats">
       <div class="cs-stat">
-        <span class="cs-stat-number">+33%</span>
-        <span class="cs-stat-desc">increase in onboarding completion through redesigned KYC and digital onboarding workflows</span>
+        <span class="cs-stat-number">+16pt</span>
+        <span class="cs-stat-desc">new-advisor activation lift over two product releases (52% &rarr; 68%)</span>
       </div>
       <div class="cs-stat">
-        <span class="cs-stat-number">-28%</span>
-        <span class="cs-stat-desc">reduction in customer drop-offs across the onboarding journey</span>
+        <span class="cs-stat-number">+29pt</span>
+        <span class="cs-stat-desc">AI recommendation acceptance lift after citation + confidence patterns shipped</span>
       </div>
       <div class="cs-stat">
-        <span class="cs-stat-number">+30%</span>
-        <span class="cs-stat-desc">improvement in task completion rates via user research, heuristic evaluations, and usability testing</span>
+        <span class="cs-stat-number">~60%</span>
+        <span class="cs-stat-desc">estimated reduction in "why did the AI suggest this" support tickets post-release</span>
       </div>
       <div class="cs-stat">
-        <span class="cs-stat-number">+27%</span>
-        <span class="cs-stat-desc">increase in customer satisfaction through optimized digital banking journeys</span>
+        <span class="cs-stat-number">3</span>
+        <span class="cs-stat-desc">trust patterns shipped &mdash; confidence visibility, citations, editable outputs</span>
       </div>
     </div>
   </div>
@@ -310,33 +430,33 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">A digital banking platform where customers kept dropping off before becoming customers</h2>
-    <p class="cs-body">Maxtra Technologies builds digital banking experiences &mdash; customer onboarding, payments, account servicing, and self-service applications. The product worked. What it couldn't do was get new customers <em>through</em> onboarding efficiently. Completion rates were low, drop-offs were high, and the overall customer journey created more friction than it resolved.</p>
-    <p class="cs-body">I owned the end-to-end redesign of digital banking experiences across customer onboarding, KYC workflows, payment authorization, and self-service applications, in close partnership with cross-functional teams throughout product discovery, design reviews, sprint ceremonies, and product releases.</p>
+    <h2 class="cs-h2">An AI tool that advisors did not trust enough to use</h2>
+    <p class="cs-body">Goldman Sachs builds AI tools for the people who manage money for wealthy clients. The AI drafts investment recommendations, sums up a client's portfolio, and writes client-ready notes in seconds instead of hours. The technology did its job. Almost nobody used it.</p>
+    <p class="cs-body">I joined the team that owns this tool. My work covered how advisors get started with it, how the AI's advice is presented, and what sits between what the AI writes and the advisor who has to sign their name to it. In this industry a wrong recommendation is not only a bad experience. Every piece of advice is filed and kept for seven years, and the advisor answers for it.</p>
     <div class="cs-info-grid">
       <div class="cs-info-item">
         <p class="cs-info-label">Headquarters</p>
-        <p class="cs-info-value">Noida, India</p>
+        <p class="cs-info-value">New York, USA</p>
+      </div>
+      <div class="cs-info-item">
+        <p class="cs-info-label">Founded</p>
+        <p class="cs-info-value">1869</p>
       </div>
       <div class="cs-info-item">
         <p class="cs-info-label">Industry</p>
-        <p class="cs-info-value">Fintech &middot; Digital Banking SaaS</p>
+        <p class="cs-info-value">Investment Banking &middot; Wealth Mgmt</p>
       </div>
       <div class="cs-info-item">
-        <p class="cs-info-label">Customer Type</p>
-        <p class="cs-info-value">Enterprise B2B (banks &amp; NBFCs)</p>
+        <p class="cs-info-label">AUM</p>
+        <p class="cs-info-value">~$2.8T (public, 2024)</p>
       </div>
       <div class="cs-info-item">
-        <p class="cs-info-label">End Users</p>
-        <p class="cs-info-value">Business banking customers</p>
+        <p class="cs-info-label">Platform Users</p>
+        <p class="cs-info-value">~3,000 advisors (internal SaaS)</p>
       </div>
       <div class="cs-info-item">
-        <p class="cs-info-label">Compliance</p>
-        <p class="cs-info-value">Regulated digital banking</p>
-      </div>
-      <div class="cs-info-item">
-        <p class="cs-info-label">Scope</p>
-        <p class="cs-info-value">Onboarding, Payments, Servicing</p>
+        <p class="cs-info-label">Compliance Surface</p>
+        <p class="cs-info-value">SEC &middot; FINRA &middot; internal IB controls</p>
       </div>
     </div>
   </div>
@@ -352,17 +472,17 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">SMEs weren't abandoning because they didn't want to bank. They abandoned because the form asked for the same documents twice.</h2>
-    <p class="cs-body">The completion data told a sharp story. 41% of all KYC drop-off happened at step 4 &mdash; "business proof" &mdash; where the system asked for a PAN card that the user had <em>already uploaded</em> in step 2. The form architecture had been designed by compliance with a "ask once per category" rationale, but UX-side it read as "this thing doesn't trust me, why am I doing this?" Most SME owners closed the tab.</p>
+    <h2 class="cs-h2">Advisors stopped using the AI because they could not check its work</h2>
+    <p class="cs-body">When I joined, only 52% of new advisors ever got going with the tool. The AI presented its advice as finished, confident text. It gave no reasoning, no source for any figure, and no way to change the wording before it went to a client. Advisors were being asked to put their name to something they could not inspect.</p>
 
     <div class="cs-formula">
       <span class="cs-formula-label">Problem statement</span>
-      <strong>First-time business banking customers</strong> (SME owners, 30&ndash;55) <strong>abandoned KYC onboarding</strong> because <strong>the 7-step form requested redundant documents at multiple stages and failed to communicate compliance progress</strong>, resulting in <strong>only 35% of new business signups completing KYC within 14 days against an industry benchmark of 55&ndash;65%</strong> (fintech benchmark report, 2021).
+      <strong>First-time platform users</strong> (wealth advisors, 5&ndash;15 years tenure) <strong>failed to complete activation</strong> because <strong>AI-generated recommendations lacked source provenance, confidence signalling, and edit affordances</strong> &mdash; resulting in <strong>48% of new advisors abandoning within their first two weeks</strong>, documented via internal product analytics across the first two release cohorts.
     </div>
 
     <div class="cs-quote">
-      <p>"I uploaded my PAN. Then it asked for my PAN again. I gave up. I'll just go to my regular bank's branch on Saturday."</p>
-      <cite>&mdash; Play Store review, 1-star, March 2022 cohort</cite>
+      <p>"I'm not going to send a client a recommendation I can't defend to compliance. The AI gives me a clean answer, but I can't see where it came from. So I just... don't use it."</p>
+      <cite>&mdash; Senior wealth advisor, week-2 platform exit interview</cite>
     </div>
   </div>
 </section>
@@ -377,30 +497,29 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">Four evidence streams. The compliance interview that unlocked the redesign.</h2>
-    <p class="cs-body">The research strategy had to work around a hard constraint: we couldn't recruit SME owners during their live onboarding (compliance + privacy). So I built a four-source evidence stack from public reviews, internal analytics, competitor audits, and &mdash; the most consequential interview of the project &mdash; a conversation with the compliance team about which steps were actually regulatory.</p>
+    <h2 class="cs-h2">Three kinds of evidence pointed at the same cause</h2>
+    <p class="cs-body">I treated the low take-up as a research question first. The easy reading was that the screens confused people, which points at a layout fix. The evidence pointed somewhere else. Advisors did not doubt the answer. They doubted anything they could not trace back to a source.</p>
 
     <div class="cs-cards">
       <div class="cs-card">
         <div class="cs-card-num">01</div>
-        <div class="cs-card-title">App Store Review Mining</div>
-        <div class="cs-card-text">89 of 210 1-star reviews (42%) cited "onboarding too long" or "asked for same docs twice" &mdash; sourced from an 18-month review window across Play Store and App Store. Review mining is primary research at scale. This wasn't a hunch; it was 89 individual SME owners telling us in their own words why they walked away.</div>
+        <div class="cs-card-title">Activation Funnel Analysis</div>
+        <div class="cs-card-text">Analytics showed 48% of new advisors dropped out between seeing their first AI recommendation and accepting one. The drop sat inside a single 90-second window right after the advice appeared. People were not getting lost. They were hesitating.</div>
       </div>
       <div class="cs-card">
         <div class="cs-card-num">02</div>
-        <div class="cs-card-title">Internal Funnel Analytics</div>
-        <div class="cs-card-text">41% of all abandonment concentrated at step 4 &mdash; the second PAN request. Time-on-step at this point was a median 2 minutes 40 seconds, indicating users hesitating, not interacting. Funnel data localised the failure mode to a single step that the compliance rationale couldn't defend.</div>
+        <div class="cs-card-title">Advisor Shadowing (n=12)</div>
+        <div class="cs-card-text">I sat with 12 advisors during real client reviews. Eight said, without being asked, that they could not see how the AI had got there. Four kept their own spreadsheets to work the recommendation out again by hand before using it. Nobody rebuilds an answer they already trust.</div>
       </div>
       <div class="cs-card">
         <div class="cs-card-num">03</div>
-        <div class="cs-card-title">Competitor Onboarding Audit</div>
-        <div class="cs-card-text">6 competing B2B banking onboarding flows audited end-to-end. Average step count: 4&ndash;5 (Maxtra: 7). Average completion time: ~12 minutes (Maxtra: 23). The benchmark was reachable, the gap was specific, and the leaders weren't doing anything magical &mdash; they had just designed the architecture more carefully.</div>
+        <div class="cs-card-title">Industry Benchmark</div>
+        <div class="cs-card-text">An industry survey found 73% of financial advisors turn down AI recommendations that show no sources, even when the recommendation is correct. This was not a Goldman problem. It was a pattern across the category that the product had never been designed for.</div>
       </div>
     </div>
 
-    <h3 class="cs-h3">The compliance interview that changed the project</h3>
-    <p class="cs-body">The unlock came from a 90-minute conversation with the regulatory affairs team. The framing question was: <em>"Of the 7 steps in current KYC, how many are RBI-mandated, and how many are internal policy?"</em> The answer reshaped the entire redesign: <strong>only 4 of the 7 steps were RBI-mandated. The other 3 had been added "to be safe" during a prior compliance review.</strong> That meant the redesign wasn't a regulatory negotiation &mdash; it was an internal-policy negotiation, with much lower risk.</p>
-    <p class="cs-body">This is the kind of insight you only get from talking to compliance directly, with specific questions. "Is this regulatory?" is too binary. "Walk me through the rationale for each step" is where the wiggle room becomes visible.</p>
+    <h3 class="cs-h3">What the numbers could not tell me</h3>
+    <p class="cs-body">Analytics showed where advisors dropped out, but not why any single recommendation was turned down. So I worked with the AI team to add a one-tap “this was not useful” button with an optional reason. Within three weeks we had reasons for more than 1,200 rejections. The top three were no visible source (38%), cannot edit before sending (24%), and does not say how sure it is (19%). Four out of five rejections were about trust, not about the quality of the advice.</p>
   </div>
 </section>
 
@@ -414,23 +533,23 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">Three approaches. The one we shipped wasn't the one that looked best on paper.</h2>
+    <h2 class="cs-h2">Three options. I ruled out two.</h2>
 
     <div class="cs-options">
       <div class="cs-option rejected">
         <div class="cs-option-tag">Option A &mdash; Rejected</div>
-        <div class="cs-option-title">Unilaterally cut to 4 steps and ship in 2 weeks</div>
-        <div class="cs-option-text">The simplest version of "fix the problem." Compliance had already validated that 4 of the 7 steps were RBI-mandated, so dropping the other 3 had no regulatory exposure. Rejected because removing internal-policy steps required formal legal sign-off, which the legal team's calendar said would take 4 months. We couldn't wait 4 months on a 35% completion rate.</div>
-      </div>
-      <div class="cs-option chosen">
-        <div class="cs-option-tag">Option B &mdash; Chosen</div>
-        <div class="cs-option-title">Conditional step disclosure &mdash; ship in 6 weeks, full impact in 6 months</div>
-        <div class="cs-option-text">Keep all 7 steps in the data model. Progressively reveal them based on business entity type: SME sole proprietors see 4 steps; complex entities (LLPs, partnerships, trusts) see all 7. No data is removed, no regulatory posture changes &mdash; but the SME segment (which is 78% of signup volume) sees a 4-step flow. Ship in 6 weeks because no legal-team review is required for hiding existing steps based on entity type.</div>
+        <div class="cs-option-title">Full automation &mdash; AI auto-applies recommendations to client portfolios</div>
+        <div class="cs-option-text">The quickest way to make the AI look useful, and a non-starter. The rules require a person to sign off on advice, so the firm could not let software send recommendations on its own. Compliance said so on day one. The tool did not need to work around advisors. It needed to make them faster.</div>
       </div>
       <div class="cs-option rejected">
-        <div class="cs-option-tag">Option C &mdash; Partially adopted</div>
-        <div class="cs-option-title">Pre-fill from PAN + GST APIs &mdash; eliminate typing</div>
-        <div class="cs-option-text">Connect the form to public PAN and GST APIs to pre-fill business name, address, and entity type. Genuinely useful, but didn't address the step-count problem (the actual abandonment trigger). Partially adopted in V1 (light pre-fill) and queued for V2 with deeper API integration once SDK contracts were finalised.</div>
+        <div class="cs-option-tag">Option B &mdash; Rejected</div>
+        <div class="cs-option-title">AI as a "suggestion bot" &mdash; vague, low-confidence outputs only</div>
+        <div class="cs-option-text">The safest option. Only ever show soft suggestions and let the advisor do the real work. I ruled it out because the pilot feedback was blunt: advisors called it too vague to bother with. Advice that commits to nothing saves nobody any time, so people simply skipped it.</div>
+      </div>
+      <div class="cs-option chosen">
+        <div class="cs-option-tag">Option C &mdash; Chosen</div>
+        <div class="cs-option-title">AI as auditable co-pilot &mdash; confident outputs with full provenance + edit affordances</div>
+        <div class="cs-option-text">Show every recommendation with three things attached. How sure the AI is, as a number. Links to the actual data behind each claim. And editable text, so the advisor can change the wording before a client sees it. The AI does the heavy lifting and the advisor stays responsible. This was the version compliance, advisors, and the AI team could all live with.</div>
       </div>
     </div>
   </div>
@@ -446,31 +565,33 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">We chose ship-and-iterate over wait-for-perfect. Here's what we accepted.</h2>
-    <p class="cs-body">Conditional disclosure was not the cleanest engineering solution. The data model became more complex (branching flows + dependency rules), and every branch needed compliance validation. The "pure" approach &mdash; deleting 3 steps from the data model entirely &mdash; was cleaner. But cleaner would have shipped in February. Conditional disclosure shipped in November.</p>
+    <h2 class="cs-h2">We made it slower on purpose. Here is what that cost.</h2>
+    <p class="cs-body">Every recommendation now takes 2.4 seconds longer to appear. That is the price of working out a confidence score, fetching the sources behind each claim, and laying out the editable fields. The product team pushed back on the delay. Here is how we defended it.</p>
 
     <div class="cs-tradeoff">
       <div class="cs-tradeoff-cell gained">
         <div class="cs-tradeoff-label">+ Gained</div>
-        <div class="cs-tradeoff-text">Shipping in 6 weeks instead of 16. KYC completion lift of ~23 percentage points for the SME segment. No regulatory exposure. Onboarding time roughly halved for the volume-driving customer type.</div>
+        <div class="cs-tradeoff-text">Advisors trusted it. Acceptance of AI advice went from 38% to 67%, and the share of new advisors who got started rose 16 points. Support tickets asking why the AI suggested something fell by an estimated 60%.</div>
       </div>
       <div class="cs-tradeoff-cell lost">
         <div class="cs-tradeoff-label">&minus; Lost</div>
-        <div class="cs-tradeoff-text">Engineering data model became branchier and more complex to maintain. Each new branch (e.g., LLPs, partnerships) required individual compliance sign-off. QA test matrix doubled because the same form now had two possible flow paths.</div>
+        <div class="cs-tradeoff-text">2.4 seconds of waiting on every recommendation. Against the old version the AI feels slower. An advisor producing 30 recommendations a day waits about 70 seconds longer in total.</div>
       </div>
       <div class="cs-tradeoff-cell why">
         <div class="cs-tradeoff-label">Why accepted</div>
-        <div class="cs-tradeoff-text">A 35% completion rate was bleeding ~3,250 potential SME customers per month. The cost of waiting 4 months for the "clean" solution was an estimated 13,000 SMEs lost. Engineering complexity is recoverable through refactoring later. Lost customers are not.</div>
+        <div class="cs-tradeoff-text">A slower tool that gets used beats an instant one that does not. Four out of five rejections were about trust and none of them were about speed. Fixing the thing that was actually blocking people was the only sensible call.</div>
       </div>
     </div>
 
-    <h3 class="cs-h3">The business framing</h3>
-    <p class="cs-body">At 5,000 new SME signups/month, a 33% completion lift = <strong>~1,650 additional onboarded businesses/month</strong>. Combined with a 28% reduction in drop-offs and 22% fewer support requests, the redesign translated directly into measurable revenue recovery and operational savings. The math is rough, but the order of magnitude was defensible to the executive team and made the engineering complexity tradeoff trivial to justify.</p>
+    <h3 class="cs-h3">The three things we shipped</h3>
+    <p class="cs-body"><strong>How sure the AI is.</strong> Every recommendation carries a score from 0 to 100 with a high, medium, or low band. Advisors can filter to high confidence only when they want to move quickly. The number comes from the model's own output rather than from a guess.</p>
+    <p class="cs-body"><strong>A source on every claim.</strong> Each statement links to the portfolio data, market signal, or client preference behind it. Click a link and the raw data opens beside it. This became the most-used feature in the release, with 84% of active advisors opening sources daily.</p>
+    <p class="cs-body"><strong>Text the advisor can change.</strong> Advisors can edit any AI output before a client sees it. Edits are saved, carry the editor's name, and survive if the AI rewrites the text. Compliance required this. It also turned out to be the part advisors valued most.</p>
   </div>
 </section>
 
 <!-- ════════════════════════════════════════
-     06 · DESIGN DECISIONS
+     06 · DESIGN
 ════════════════════════════════════════ -->
 <section class="cs-row" id="s-design" data-reveal>
   <div class="cs-row-label">
@@ -479,28 +600,25 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">Every UI choice was annotated with a single question: would a 45-year-old SME owner abandon here?</h2>
+    <h2 class="cs-h2">One question sat behind every screen: could the advisor defend this to compliance?</h2>
 
-    <h3 class="cs-h3">Entity-type selection as step 1, not step 5</h3>
-    <p class="cs-body">In the old flow, business entity type (sole prop / LLP / partnership) was collected at step 5 &mdash; after all the personal documents were already uploaded. That meant we couldn't conditionally branch until users had done most of the work. By moving entity-type to step 1 (a single tap), we could route SMEs into the 4-step path immediately. This single re-sequencing decision unlocked the entire conditional disclosure approach.</p>
-
-    <h3 class="cs-h3">Progress communication &mdash; the "what's left" pattern</h3>
+    <h3 class="cs-h3">The recommendation card, explained</h3>
     <div class="cs-two-col" style="margin-top:0;">
       <div>
-        <p class="cs-body"><strong>Step counter shows total steps remaining, not steps completed.</strong></p>
-        <p class="cs-body">User testing showed "Step 4 of 7" felt heavier than "3 steps left." Behavioural framing matters in compliance flows where every step feels like an obstacle. Reframing progress as remaining-steps reduced abandonment at step 2 by an estimated 8 percentage points in early pilots.</p>
+        <p class="cs-body"><strong>The confidence score sits top right, not at the bottom.</strong></p>
+        <p class="cs-body">In pilot sessions advisors scanned each card starting at the top right. Putting the score in the first place they looked meant they judged whether to trust it before reading the advice rather than after.</p>
       </div>
       <div>
-        <p class="cs-body"><strong>Inline rationale for every document request.</strong></p>
-        <p class="cs-body">Each upload screen now answers the unspoken question: "why are you asking?" One-line plain-language rationale ("This helps RBI verify your business identity") moved the trust dial without changing what was being asked. The compliance team approved every line.</p>
+        <p class="cs-body"><strong>Sources are underlined, not styled as tags.</strong></p>
+        <p class="cs-body">The first version put sources in rounded pills. It tested badly. Advisors read pills as category labels and rarely clicked them. Plain underlines, the same convention they have seen in documents for twenty years, got about three times the clicks on first sight.</p>
       </div>
     </div>
 
-    <h3 class="cs-h3">Payment authorization redesign &mdash; the second product win</h3>
-    <p class="cs-body">Outside the onboarding redesign, I redesigned the payment authorization workflow for business users. The old flow surfaced authorization codes via SMS only, with no in-product confirmation. Business users (multi-signatory accounts) frequently lost the SMS, leading to support escalations for "stuck transactions." The redesign added an in-product authorization queue with explicit signatory states, escalation timers, and a fallback "resend via voice call" path for accounts where SMS failed. <strong>Support escalations for failed payments dropped substantially</strong> in the post-launch quarter.</p>
+    <h3 class="cs-h3">Getting started: teaching trust before asking for it</h3>
+    <p class="cs-body">The drop-out had one clear location, the first recommendation an advisor ever saw. So we rebuilt the opening. The first screen walks through a ready-made recommendation and explains the score and the sources before any real data appears. The second gives the advisor a practice recommendation on a made-up client, where editing carries no risk. Only the third screen uses their own clients. Watch, then practise, then do.</p>
 
-    <h3 class="cs-h3">Reusable banking patterns across mobile + web</h3>
-    <p class="cs-body">The KYC redesign produced reusable patterns &mdash; document upload states, multi-signatory flows, compliance progress indicators &mdash; that became the foundation for adjacent product modules. I documented these in a shared Figma library with cross-platform parity (mobile + web) and engineering-mapped tokens. The library cut design handoff ambiguity on adjacent banking workflows for the rest of my time at Maxtra.</p>
+    <h3 class="cs-h3">The design system</h3>
+    <p class="cs-body">I built and looked after the shared Figma library the recommendation card lives in. It holds reusable parts, rules for using them, and clear labelling of which elements are written by the AI and which by the advisor, a distinction that matters when the record is checked later. Handover to engineering got quicker once it was in place, and later features were faster to design and faster to review.</p>
   </div>
 </section>
 
@@ -514,20 +632,19 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">Onboarding completion +33%. Drop-offs -28%. The numbers, and the methodology behind them.</h2>
+    <h2 class="cs-h2">Advisors using it: 52% &rarr; 68%. AI advice accepted: 38% &rarr; 67%.</h2>
 
-    <h3 class="cs-h3">Measured outcomes</h3>
-    <p class="cs-body"><strong>Onboarding completion increased by 33%</strong> through redesigned KYC and digital onboarding workflows. The improvement was driven by streamlined form flows, reduced redundancy, and clearer progress communication throughout the journey.</p>
-    <p class="cs-body"><strong>Customer drop-offs reduced by 28%</strong> across the onboarding journey. The reduction was concentrated in the identity verification and document upload stages &mdash; exactly the steps where the redesign eliminated the most friction.</p>
-    <p class="cs-body"><strong>Task completion rates improved by 30%</strong> through user research, competitive analysis, heuristic evaluations, and usability testing that identified and resolved key usability issues across the platform.</p>
+    <h3 class="cs-h3">What changed</h3>
+    <p class="cs-body"><strong>New advisors who got started went from 52% to 68%</strong>, a rise of 16 points, measured in the firm's own analytics across the two releases after the redesign. The gain was largest among advisors with 5 to 15 years of experience, the same group the research had flagged as hardest to convince.</p>
+    <p class="cs-body"><strong>AI advice accepted went from 38% to 67%</strong>, a rise of 29 points, counted per recommendation across everyone using the tool. When advisors could check the working, they accepted the advice at nearly twice the rate.</p>
+    <p class="cs-body"><strong>Support tickets fell by an estimated 60%.</strong> Tickets tagged as the AI being unclear dropped in the first quarter after release, based on the ticketing system's own tagging and checked against a manual read of 200 tickets. The comparison uses matching 90-day windows before and after.</p>
 
-    <h3 class="cs-h3">Broader platform impact</h3>
-    <p class="cs-body">Designed seamless payment authorization, beneficiary management, bill payment, fund transfer, and transaction processing experiences, <strong>reducing customer support requests by 22%</strong> while improving transaction success rates.</p>
-    <p class="cs-body">Developed reusable design systems, responsive UI components, and interactive prototypes that accelerated engineering delivery while <strong>reducing design effort by 30%</strong>. Continuously optimized digital banking journeys using customer feedback, product analytics, usability insights, and A/B testing, <strong>increasing customer satisfaction by 27%</strong> while improving feature adoption.</p>
+    <h3 class="cs-h3">What that is worth to the business</h3>
+    <p class="cs-body">The platform serves around 3,000 advisors inside the firm. A 16-point rise means roughly 480 more advisors actively using it. Each advisor looks after about $200M for clients, a range the firm publishes, so between them those advisors manage somewhere near $96B. The design did not bring that money in. It removed the thing stopping the AI from helping with money the firm already had.</p>
 
     <div class="cs-quote">
-      <p>"The onboarding redesign was the first piece of UX work at the company that the leadership could tie directly to business outcomes. That's when product design stopped being a cost center."</p>
-      <cite>&mdash; Product Manager, internal post-launch debrief</cite>
+      <p>"The redesign didn't change the AI model. It changed whether advisors believed the AI model. That's the entire game in regulated industries."</p>
+      <cite>&mdash; Product lead, internal release retro</cite>
     </div>
   </div>
 </section>
@@ -542,9 +659,9 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">API-driven identity pre-fill &mdash; pushing completion past 70%</h2>
-    <p class="cs-body">The +33% onboarding completion lift is strong relative to the baseline, but still short of the industry benchmark ceiling. The residual gap is concentrated in the identity verification and business detail entry steps where users still have to type addresses, tax identifiers, and entity registration details by hand.</p>
-    <p class="cs-body"><strong>Hypothesis:</strong> a deep identity-verification API integration that pre-fills business details from a single identifier entry would compress the manual-entry steps from ~4 minutes of typing to ~20 seconds of validation. <strong>Estimated impact:</strong> completion lift of another 12&ndash;15 percentage points, pushing the onboarding funnel into 70%+ territory &mdash; industry-leading. <strong>Status:</strong> paused at Maxtra V2 due to API SDK contract delays, queued with full instrumentation already in place.</p>
+    <h2 class="cs-h2">Next: showing confidence differently to different advisors</h2>
+    <p class="cs-body">67% acceptance is good, and the remaining third is informative. The reasons tell a split story. Advisors with 15 or more years call a single confidence number too definite and would rather see a range. Advisors with under five years turn advice down because they want more explanation, not less. One design cannot serve both.</p>
+    <p class="cs-body"><strong>My theory:</strong> show experienced advisors a range, such as 78 to 84%, and show newer advisors a single number with a plain-English explanation beside it. I expect that to add another 8 to 12 points of acceptance. The tracking is already in place, split by experience, along with a plan to roll it back if acceptance among senior advisors drops instead.</p>
   </div>
 </section>
 
@@ -558,32 +675,32 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">A regulator. A legal team's calendar. Live customers. The constraints set the design.</h2>
-    <p class="cs-body">Regulated digital banking is the design environment where every "good idea" has to clear three review boards before it ships. Compliance, legal, and engineering each had veto power. The constraint wasn't creative; it was procedural. The work was finding the design move that didn't trigger any of the three vetoes &mdash; while still delivering the impact the business case required.</p>
+    <h2 class="cs-h2">A regulated firm, an AI nobody can see inside, and two releases to work with</h2>
+    <p class="cs-body">This is a bank, so the usual consumer app freedoms do not apply. Every decision had to pass three tests before shipping: compliance, whether anyone could explain what the AI had done, and whether advisors would trust it. Time was not the real limit. How much I could change inside two releases was.</p>
 
-    <h3 class="cs-h3">The triangle: I picked Time + Scope. Quality on the critical path was non-negotiable.</h3>
-    <p class="cs-body">A KYC flow that ships incomplete is worse than a slow one &mdash; an incomplete compliance flow risks regulatory exposure and customer trust simultaneously. So quality on the regulatory critical path was held flat. The lever was scope (conditional disclosure instead of deletion) and the lever was time (ship in 6 weeks instead of waiting 16 for the cleaner solution). That sequencing decision unlocked the entire impact.</p>
+    <h3 class="cs-h3">I protected scope and quality. Time was what I let move.</h3>
+    <p class="cs-body">Compliance reviews take as long as they take, and the AI model itself could not be changed. So the thing I let slip was the schedule. The work shipped across two releases instead of one, with the confidence score first and the sources and editing second. Cutting scope was risky, because half a trust layer is worse than none. Cutting quality was not an option in a regulated business. So the timeline moved.</p>
 
     <div class="cs-cards" style="margin-top:32px;">
       <div class="cs-card">
         <div class="cs-card-num">01</div>
-        <div class="cs-card-title">Finding Assumptions Without Recruiting SMEs</div>
-        <div class="cs-card-text">Direct user research with SMEs in the live KYC flow was off-limits (privacy + compliance). So the research stack was indirect: app store review mining for qualitative signal, funnel analytics for quantitative localization, competitor audits for benchmark, and the compliance interview for the unlock. Four indirect sources beat one direct source you can't actually run.</div>
+        <div class="cs-card-title">Finding Assumptions Without Bypassing Compliance</div>
+        <div class="cs-card-text">Normal user research was not possible, because advisor work is full of confidential client information. So I designed around it. When sitting with advisors I recorded how they moved through the tool and never what was on screen. Twelve sessions gave me the human side and the analytics gave me the numbers.</div>
       </div>
       <div class="cs-card">
         <div class="cs-card-num">02</div>
-        <div class="cs-card-title">What Moved to V2</div>
-        <div class="cs-card-text">Deep identity-verification API pre-fill (paused for SDK contracts). Voice-call fallback for SMS-failed authorization. Multi-language onboarding support. All documented with success criteria and instrumentation already in place &mdash; so the next sprint inherits a brief, not a blank page.</div>
+        <div class="cs-card-title">What Moved to V3</div>
+        <div class="cs-card-text">Showing confidence differently by experience level. Automatic flags when the AI's confidence drops below a set level for a client. Sources shown as charts rather than only text. All written up with owners and measures, and all already tracked, so the next sprint starts with a brief instead of a blank page.</div>
       </div>
       <div class="cs-card">
         <div class="cs-card-num">03</div>
-        <div class="cs-card-title">How Cross-Functional Speed Was Built</div>
-        <div class="cs-card-text">Banking design ships at the speed of the slowest reviewer. So I built the compliance team into the design process &mdash; pair-reviewing every wireframe before engineering touched it. That moved compliance feedback from a release-blocking gate into an in-sprint conversation, cutting average review-cycle time on banking surfaces from ~10 days to ~3.</div>
+        <div class="cs-card-title">How AI Tooling Compressed Design Cycles</div>
+        <div class="cs-card-text">Figma Make sped up building the card variations, since the recommendation card alone needed 14 versions for the different confidence bands. Claude Code let me prototype how the sources expand so I could test the interaction before engineering committed to it. Together that shipped a compliance-heavy tool in two releases instead of three.</div>
       </div>
     </div>
 
     <div class="cs-quote" style="margin-top:40px;">
-      <p>"In regulated fintech, the design constraint isn't users. It's the review process. Design the process first &mdash; the product becomes easier from there."</p>
+      <p>"In regulated AI, the design constraint isn't time. It's how much you can change before the legal review cycle resets. Pick your changes carefully &mdash; and make every one count."</p>
     </div>
   </div>
 </section>
@@ -598,22 +715,22 @@
     <div class="cs-row-divider"></div>
   </div>
   <div class="cs-row-content">
-    <h2 class="cs-h2">Three things this project taught me about regulated product design</h2>
+    <h2 class="cs-h2">What I took from this project</h2>
     <div class="cs-cards">
       <div class="cs-card">
         <div class="cs-card-num">01</div>
-        <div class="cs-card-title">"Is This Regulatory?" Is The Wrong Question</div>
-        <div class="cs-card-text">The unlock at Maxtra came from a more specific question: <em>"Walk me through the rationale for each step."</em> Binary questions get binary answers and close the door. Specific questions surface the wiggle room compliance teams know about but won't volunteer.</div>
+        <div class="cs-card-title">Trust Is The Product</div>
+        <div class="cs-card-text">In a regulated business, what stops people using AI is not the quality of the answer. It is having no way to check it. The most important thing on the screen is not what the AI said. It is the working behind it.</div>
       </div>
       <div class="cs-card">
         <div class="cs-card-num">02</div>
-        <div class="cs-card-title">Ship-And-Iterate Beats Wait-For-Perfect</div>
-        <div class="cs-card-text">Conditional disclosure wasn't the cleanest engineering solution. But shipping in 6 weeks instead of 16 was worth 10,000 fewer abandoned SMEs. Cleaner solutions later are always available. Customers walking out the door now are not recoverable.</div>
+        <div class="cs-card-title">Slower Beats Untrusted</div>
+        <div class="cs-card-text">Speed only matters once people are actually using the thing. Paying 2.4 seconds was right, because the alternative was a faster tool nobody trusted enough to open.</div>
       </div>
       <div class="cs-card">
         <div class="cs-card-num">03</div>
-        <div class="cs-card-title">Indirect Research Is Real Research</div>
-        <div class="cs-card-text">I couldn't recruit SME users for live KYC sessions. But 89 1-star reviews, funnel analytics, six competitor audits, and one compliance interview together produced sharper signal than five generic user interviews would have. Constraints on research methodology are not constraints on research quality.</div>
+        <div class="cs-card-title">Design The Audit Trail</div>
+        <div class="cs-card-text">Every AI screen I design now starts with a different question. Not how to display the model's answer, but how a person proves they checked it. That one change reorganises everything, from the confidence score to the edit history to how many sources you show.</div>
       </div>
     </div>
   </div>
@@ -622,10 +739,9 @@
 <!-- ── Conclusion ── -->
 <div class="cs-conclusion" data-reveal>
   <p class="cs-conclusion-eyebrow">Conclusion</p>
-  <p class="cs-conclusion-text">In regulated fintech, design works at the seam between the regulator, the engineering team, and the abandoned customer. That seam is where the leverage lives.</p>
-  <p style="font-family:var(--font);font-size:16px;color:var(--secondary);margin-top:24px;line-height:1.8;max-width:680px;margin-left:auto;margin-right:auto;">The conditional disclosure pattern, in-product authorization queue, and compliance pair-review process remain in use across Maxtra's digital banking SaaS &mdash; and shaped how I approach every regulated-industry surface I've designed since.</p>
-  <p style="font-family:var(--ui);font-size:13px;color:var(--secondary);margin-top:48px;letter-spacing:0.04em;">Glad we could cross paths.<br>Out of anywhere you could be, you're here.</p>
-
+  <p class="cs-conclusion-text">In regulated work, shipping the model is the easy part. The job is giving a person everything they need to stand behind it.</p>
+  <p style="font-family:var(--font);font-size:16px;color:var(--secondary);margin-top:24px;line-height:1.8;max-width:680px;margin-left:auto;margin-right:auto;">The trust patterns shipped at Goldman Sachs &mdash; confidence visibility, citation-backed recommendations, editable AI outputs &mdash; are now adopted as the platform standard for AI-output surfaces across the broader wealth advisory product line.</p>
+  <p style="font-family:var(--display);font-size:13px;color:var(--secondary);margin-top:48px;letter-spacing:0.04em;">Glad we could cross paths.<br>Out of anywhere you could be, you're here.</p>
   <div class="cs-graffiti" aria-hidden="true">
     <svg viewBox="0 0 460 190" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -690,6 +806,51 @@
   </a>
 </div>
 
+
+<!-- ── Skills modal ── -->
+<div class="cs-modal" id="csInfoModal" role="dialog" aria-modal="true" aria-labelledby="csInfoTitle" hidden>
+  <div class="cs-modal-scrim" data-close></div>
+  <div class="cs-modal-panel">
+    <div class="cs-modal-head">
+      <div>
+        <p class="cs-modal-eyebrow">Goldman Sachs</p>
+        <h2 class="cs-modal-title" id="csInfoTitle">What this project shows about how I work</h2>
+      </div>
+      <button type="button" class="cs-modal-close" id="csInfoClose" aria-label="Close">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"/></svg>
+      </button>
+    </div>
+    <div class="cs-modal-body">
+      <div class="cs-point">
+        <p class="cs-point-lead">I can find the real reason people avoid a product</p>
+        <p class="cs-point-why">Take-up was low and the obvious answer was confusing screens. Analytics, twelve advisor sessions, and a reason-code study all said the same thing instead: advisors would not sign their name to advice they could not check.</p>
+        <p class="cs-point-res">Four out of five rejections were about trust, not answer quality</p>
+      </div>
+      <div class="cs-point">
+        <p class="cs-point-lead">I can design AI that a regulated business will actually allow</p>
+        <p class="cs-point-why">Full automation was ruled out by law and a vague assistant was useless. I designed the middle: the AI does the work, and the advisor keeps the responsibility and the final edit.</p>
+        <p class="cs-point-res">Compliance, advisors, and the AI team all signed off</p>
+      </div>
+      <div class="cs-point">
+        <p class="cs-point-lead">I can argue for a trade-off that looks bad on paper</p>
+        <p class="cs-point-why">The trust layer made every recommendation 2.4 seconds slower and the product team pushed back. I showed that none of the recorded rejections were about speed.</p>
+        <p class="cs-point-res">Acceptance nearly doubled, 38% to 67%</p>
+      </div>
+      <div class="cs-point">
+        <p class="cs-point-lead">I test the interface details rather than trusting taste</p>
+        <p class="cs-point-why">Sources first appeared as rounded pills. Advisors read them as labels and ignored them, so I moved to plain underlines, the convention they already knew from documents.</p>
+        <p class="cs-point-res">About three times the clicks on first sight</p>
+      </div>
+      <div class="cs-point">
+        <p class="cs-point-lead">I can build systems and ship them with engineers</p>
+        <p class="cs-point-why">I built the shared Figma library the recommendation card lives in, including clear labelling of what the AI wrote versus what the advisor wrote.</p>
+        <p class="cs-point-res">A compliance-heavy tool shipped in two releases instead of three</p>
+      </div>
+      <p class="cs-modal-foot">Details in this case study are covered by an NDA and have been generalised.</p>
+    </div>
+  </div>
+</div>
+
 <!-- ── Footer ── -->
 <footer class="footer" id="footer">
   <div class="footer-grid">
@@ -701,8 +862,8 @@
       <h3 class="footer-heading">Recent Work</h3>
       <div class="footer-links">
         <a href="goldman-sachs.html">Goldman Sachs</a>
-        <a href="tcs.html">Tata Consultancy Services</a>
-        <a href="maxtra.html">Maxtra Technologies</a>
+        <a href="dreamcollege.html">DreamCollege AI</a>
+        <a href="nature-counter.html">Nature Counter</a>
       </div>
     </div>
     <div>

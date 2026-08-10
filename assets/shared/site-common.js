@@ -194,6 +194,47 @@
       applyBrandHref();
       applyNavState();
 
+
+  // ── Skills modal ──────────────────────────────────────────────
+  function initInfoModal() {
+    var modal = document.getElementById('csInfoModal');
+    var openBtn = document.getElementById('csInfoOpen');
+    var closeBtn = document.getElementById('csInfoClose');
+    if (!modal || !openBtn || !closeBtn) return;
+    var lastFocus = null;
+
+    function onKey(e) {
+      if (e.key === 'Escape') { close(); return; }
+      if (e.key !== 'Tab') return;
+      var f = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+    function open() {
+      lastFocus = document.activeElement;
+      modal.hidden = false;
+      requestAnimationFrame(function () { modal.classList.add('open'); });
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+      document.addEventListener('keydown', onKey);
+    }
+    function close() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onKey);
+      setTimeout(function () { modal.hidden = true; }, 260);
+      if (lastFocus) lastFocus.focus();
+    }
+
+    openBtn.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    modal.addEventListener('click', function (e) {
+      if (e.target.hasAttribute('data-close')) close();
+    });
+  }
+
   // ── Graffiti sign-off ─────────────────────────────────────────
   // Fires once, when the reader actually reaches the end of a case study.
   function initGraffiti() {
@@ -217,6 +258,7 @@
       initFloatingSideNav();
       initScrollProgress();
       initGraffiti();
+      initInfoModal();
     });
   });
 })();
