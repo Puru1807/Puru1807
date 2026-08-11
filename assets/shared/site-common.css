@@ -194,26 +194,115 @@ html {
   }
 }
 
-
 /* ═══════════════════════════════════════════════════════
    Context primer — the plain-English setup a reader needs
-   before any of the case study makes sense.
+   before the case study makes sense.
+
+   Every size below is derived from φ = 1.618033988875.
+   Type   base 16px:  16/φ = 9.9  ·  16  ·  16×φ = 25.9
+   Space  base  8px:  8/φ = 4.9 · 8 · 8φ = 12.9 · 8φ² = 20.9
+                      8φ³ = 33.9 · 8φ⁴ = 54.8 · 8φ⁵ = 88.7
+   Leading:  body 1.618 (φ)  ·  lead 1.309 ((1+φ)/2)
+   Columns:  1.618fr : 1fr — the golden section itself
    ═══════════════════════════════════════════════════════ */
-.cs-primer { max-width: 1200px; margin: 0 auto; padding: 0 var(--margin) 64px; }
-.cs-primer-inner { border: 1px solid var(--border); border-left: 3px solid #E0533C; background: var(--bg-alt); padding: 30px 34px 34px; }
-.cs-primer-eyebrow { font-family: var(--ui); font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #E0533C; margin-bottom: 18px; }
-.cs-primer-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 40px; align-items: start; }
-.cs-primer-defs { display: flex; flex-direction: column; gap: 15px; }
-.cs-primer-def { display: grid; grid-template-columns: 132px 1fr; gap: 16px; align-items: baseline; }
-.cs-primer-term { font-family: var(--ui); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); line-height: 1.5; }
-.cs-primer-desc { font-family: var(--font); font-size: 14.5px; line-height: 1.62; color: var(--text); }
+.cs-primer {
+  --s-1:  4.9px;   --s0: 8px;     --s1: 12.9px;  --s2: 20.9px;
+  --s3:   33.9px;  --s4: 54.8px;  --s5: 88.7px;
+  --t-micro: 9.9px; --t-body: 16px; --t-lead: 25.9px;
+
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--margin) var(--s4);
+}
+
+.cs-primer-inner {
+  border: 1px solid var(--border);
+  border-left: 3px solid #E0533C;
+  background: var(--bg-alt);
+}
+
+/* Eyebrow sits in its own band so the rule below it aligns
+   with the top of both columns — nothing floats. */
+.cs-primer-head {
+  padding: var(--s2) var(--s3);
+  border-bottom: 1px solid var(--border);
+}
+.cs-primer-eyebrow {
+  font-family: var(--ui);
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #E0533C;
+  margin: 0;
+}
+
+.cs-primer-grid {
+  display: grid;
+  grid-template-columns: 1.618fr 1fr;   /* the golden section */
+  align-items: start;
+}
+.cs-primer-defs  { padding: var(--s3); border-right: 1px solid var(--border); }
+.cs-primer-fig   { padding: var(--s3); align-self: center; }   /* text column is always taller;
+                                                                 centring makes that deliberate */
+
+/* Definitions stack label over text — no arbitrary label column. */
+.cs-primer-def { padding-bottom: var(--s2); }
+.cs-primer-def + .cs-primer-def {
+  padding-top: var(--s2);
+  border-top: 1px solid var(--border);
+}
+.cs-primer-def:last-child { padding-bottom: 0; }
+
+.cs-primer-term {
+  display: block;
+  font-family: var(--ui);
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  margin-bottom: var(--s-1);
+}
+.cs-primer-term b { color: #E0533C; font-weight: 600; margin-right: var(--s0); }
+.cs-primer-desc {
+  font-family: var(--font);
+  font-size: var(--t-body);
+  line-height: 1.618;
+  color: var(--text);
+  margin: 0;
+}
 .cs-primer-desc strong { font-weight: 600; }
-.cs-primer-stake { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--border); font-family: var(--font); font-size: 15.5px; line-height: 1.6; color: var(--text); }
-.cs-primer-stake strong { font-weight: 600; }
+
 .cs-primer-fig svg { display: block; width: 100%; height: auto; color: var(--text); }
-.cs-primer-cap { font-family: var(--ui); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); margin-top: 12px; text-align: center; }
+.cs-primer-cap {
+  font-family: var(--ui);
+  font-size: var(--t-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  margin: var(--s1) 0 0;
+  text-align: center;
+  line-height: 1.618;
+}
+
+/* The payoff gets its own full-width band and the largest type
+   in the block — 16×φ. It is the reason the primer exists. */
+.cs-primer-stake {
+  padding: var(--s3);
+  border-top: 1px solid var(--border);
+  font-family: var(--font);
+  font-size: var(--t-lead);
+  line-height: 1.309;
+  letter-spacing: -0.011em;
+  color: var(--text);
+  margin: 0;
+}
+.cs-primer-stake b { color: #E0533C; font-weight: 400; }
+
 @media (max-width: 900px) {
-  .cs-primer-grid { grid-template-columns: 1fr; gap: 30px; }
-  .cs-primer-def { grid-template-columns: 108px 1fr; gap: 12px; }
-  .cs-primer-inner { padding: 24px 22px 28px; }
+  .cs-primer-grid { grid-template-columns: 1fr; }
+  .cs-primer-defs { border-right: none; border-bottom: 1px solid var(--border); }
+  .cs-primer-head, .cs-primer-defs, .cs-primer-fig, .cs-primer-stake { padding: var(--s2); }
+  .cs-primer { --t-lead: 20.9px; }
 }

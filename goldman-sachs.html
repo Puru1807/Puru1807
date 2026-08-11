@@ -388,61 +388,72 @@
 ════════════════════════════════════════ -->
 <section class="cs-primer" data-reveal>
   <div class="cs-primer-inner">
-    <p class="cs-primer-eyebrow">Before we start &mdash; what this is</p>
+
+    <div class="cs-primer-head">
+      <p class="cs-primer-eyebrow">Before we start &mdash; what this is</p>
+    </div>
+
     <div class="cs-primer-grid">
-      <div>
-        <div class="cs-primer-defs">
-          <div class="cs-primer-def">
-            <span class="cs-primer-term">Wealth management</span>
-            <p class="cs-primer-desc">The part of a bank that looks after money for rich clients.</p>
-          </div>
-          <div class="cs-primer-def">
-            <span class="cs-primer-term">The advisor</span>
-            <p class="cs-primer-desc">A real person at Goldman Sachs assigned to those clients. Their job is to decide what a client should do with their money, then explain it to them.</p>
-          </div>
-          <div class="cs-primer-def">
-            <span class="cs-primer-term">The tool</span>
-            <p class="cs-primer-desc">An AI that writes the first draft of that advice. It reads the client's holdings and drafts a recommendation in seconds instead of hours.</p>
-          </div>
-          <div class="cs-primer-def">
-            <span class="cs-primer-term">The catch</span>
-            <p class="cs-primer-desc">The advisor's name goes on the advice, not the AI's. Every piece of it is filed and kept for <strong>seven years</strong>, and the advisor answers for it if it is wrong.</p>
-          </div>
+      <div class="cs-primer-defs">
+        <div class="cs-primer-def">
+          <span class="cs-primer-term"><b>01</b> Wealth management</span>
+          <p class="cs-primer-desc">The part of a bank that looks after money for rich clients.</p>
         </div>
-        <p class="cs-primer-stake"><strong>So here is the problem.</strong> The AI showed its answer and nothing else. No sources, no reasoning, no way to check it. Advisors were being asked to stake their career on something they could not inspect &mdash; so half of them simply never used it.</p>
+        <div class="cs-primer-def">
+          <span class="cs-primer-term"><b>02</b> The advisor</span>
+          <p class="cs-primer-desc">A real person at Goldman Sachs assigned to those clients. They decide what a client should do with their money, then explain it to them.</p>
+        </div>
+        <div class="cs-primer-def">
+          <span class="cs-primer-term"><b>03</b> The tool I designed</span>
+          <p class="cs-primer-desc">An AI that writes the first draft of that advice. It reads the client's holdings and drafts a recommendation in seconds instead of hours.</p>
+        </div>
+        <div class="cs-primer-def">
+          <span class="cs-primer-term"><b>04</b> The catch</span>
+          <p class="cs-primer-desc">The advisor's name goes on the advice, not the AI's. Every piece of it is kept on file for <strong>seven years</strong>, and the advisor answers for it if it is wrong.</p>
+        </div>
       </div>
 
       <div class="cs-primer-fig">
-        <svg viewBox="0 0 380 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flow: the client's money, read by the AI, which drafts advice; the advisor must check and sign it before it reaches the client. The checking step is the one that was broken.">
-          <g fill="none" stroke="currentColor" stroke-width="1.2">
-            <rect x="112" y="1" width="156" height="40" rx="1" opacity="0.5"/>
-            <rect x="112" y="70" width="156" height="40" rx="1" opacity="0.5"/>
-            <rect x="112" y="139" width="156" height="46" rx="1"/>
-            <rect x="112" y="212" width="156" height="37" rx="1" opacity="0.5"/>
+        <svg viewBox="0 0 340 272" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A vertical flow: the client's money is read by the AI, which drafts advice; the advisor checks it and signs their name; then it reaches the client. The checking step is marked as the one that was broken.">
+          <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45">
+            <rect x="65" y="0"   width="210" height="46" rx="1"/>
+            <rect x="65" y="74"  width="210" height="46" rx="1"/>
+            <rect x="65" y="222" width="210" height="46" rx="1"/>
           </g>
+          <rect x="65" y="148" width="210" height="46" rx="1" fill="none" stroke="#E0533C" stroke-width="1.5"/>
+
           <g font-family="monospace" font-size="10" fill="currentColor" text-anchor="middle">
-            <text x="190" y="18">client&rsquo;s money</text><text x="190" y="32" opacity="0.6">holdings, goals</text>
-            <text x="190" y="87">the AI</text><text x="190" y="101" opacity="0.6">drafts the advice</text>
-            <text x="190" y="160" font-size="10.5">the advisor checks it</text><text x="190" y="175" opacity="0.6">and signs their name</text>
-            <text x="190" y="229">the client</text><text x="190" y="242" opacity="0.6">acts on it</text>
+            <text x="170" y="20">the client&rsquo;s money</text>
+            <text x="170" y="34" opacity="0.55">holdings, goals</text>
+            <text x="170" y="94">the AI</text>
+            <text x="170" y="108" opacity="0.55">drafts the advice</text>
+            <text x="170" y="242">the client</text>
+            <text x="170" y="256" opacity="0.55">acts on it</text>
           </g>
-          <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.55" stroke-linecap="round">
-            <path d="M190 43v22M185 60l5 5 5-5"/>
-            <path d="M190 112v22M185 129l5 5 5-5"/>
-            <path d="M190 187v20M185 202l5 5 5-5"/>
+          <g font-family="monospace" font-size="10" fill="#E0533C" text-anchor="middle">
+            <text x="170" y="168">the advisor checks it</text>
+            <text x="170" y="182" opacity="0.75">and signs their name</text>
           </g>
-          <g fill="none" stroke="#E0533C" stroke-width="1.4">
-            <rect x="106" y="133" width="168" height="58" rx="2"/>
+
+          <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4" stroke-linecap="round">
+            <path d="M170 46v18M165 59l5 5 5-5"/>
+            <path d="M170 120v18M165 133l5 5 5-5"/>
+            <path d="M170 194v18M165 207l5 5 5-5"/>
           </g>
-          <path d="M96 162h6" stroke="#E0533C" stroke-width="1.4" fill="none"/>
-          <text x="90" y="158" font-family="monospace" font-size="9" fill="#E0533C" text-anchor="end">this</text>
-          <text x="90" y="169" font-family="monospace" font-size="9" fill="#E0533C" text-anchor="end">step</text>
-          <text x="304" y="158" font-family="monospace" font-size="9" fill="#E0533C">was</text>
-          <text x="304" y="169" font-family="monospace" font-size="9" fill="#E0533C">broken</text>
+
+          <g stroke="#E0533C" stroke-width="1.2" fill="none"><path d="M40 171h19"/></g>
+          <text x="34" y="168" font-family="monospace" font-size="9" fill="#E0533C" text-anchor="end">this</text>
+          <text x="34" y="180" font-family="monospace" font-size="9" fill="#E0533C" text-anchor="end">step</text>
+          <g stroke="#E0533C" stroke-width="1.2" fill="none"><path d="M281 171h19"/></g>
+          <text x="306" y="168" font-family="monospace" font-size="9" fill="#E0533C">was</text>
+          <text x="306" y="180" font-family="monospace" font-size="9" fill="#E0533C">broken</text>
         </svg>
-        <p class="cs-primer-cap">Where the advice comes from, and who is answerable for it</p>
+        <p class="cs-primer-cap">Where the advice comes from, and who answers for it</p>
       </div>
     </div>
+
+    <p class="cs-primer-stake">The AI showed its answer and nothing else. No sources, no reasoning, no way to check it. Advisors were being asked to stake their name on something they could not inspect &mdash; <b>so half of them never used it.</b></p>
+
   </div>
 </section>
 
