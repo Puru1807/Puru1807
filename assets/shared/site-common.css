@@ -221,11 +221,25 @@ html {
   background: var(--bg-alt);
 }
 
-/* Eyebrow sits in its own band so the rule below it aligns
-   with the top of both columns — nothing floats. */
+/* Eyebrow band. Split baseline-to-baseline so the label anchors
+   left and the reading time anchors right — same structure as the
+   at-a-glance head below it, and no dead space in between. */
 .cs-primer-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s2);
+  flex-wrap: wrap;
   padding: var(--s2) var(--s3);
   border-bottom: 1px solid var(--border);
+}
+.cs-primer-note {
+  font-family: var(--ui);
+  font-size: var(--t-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  margin: 0;
 }
 .cs-primer-eyebrow {
   font-family: var(--ui);
