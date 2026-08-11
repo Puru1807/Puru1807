@@ -193,3 +193,27 @@ html {
     grid-column: 2 / -1;
   }
 }
+
+
+/* ═══════════════════════════════════════════════════════
+   Context primer — the plain-English setup a reader needs
+   before any of the case study makes sense.
+   ═══════════════════════════════════════════════════════ */
+.cs-primer { max-width: 1200px; margin: 0 auto; padding: 0 var(--margin) 64px; }
+.cs-primer-inner { border: 1px solid var(--border); border-left: 3px solid #E0533C; background: var(--bg-alt); padding: 30px 34px 34px; }
+.cs-primer-eyebrow { font-family: var(--ui); font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #E0533C; margin-bottom: 18px; }
+.cs-primer-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 40px; align-items: start; }
+.cs-primer-defs { display: flex; flex-direction: column; gap: 15px; }
+.cs-primer-def { display: grid; grid-template-columns: 132px 1fr; gap: 16px; align-items: baseline; }
+.cs-primer-term { font-family: var(--ui); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); line-height: 1.5; }
+.cs-primer-desc { font-family: var(--font); font-size: 14.5px; line-height: 1.62; color: var(--text); }
+.cs-primer-desc strong { font-weight: 600; }
+.cs-primer-stake { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--border); font-family: var(--font); font-size: 15.5px; line-height: 1.6; color: var(--text); }
+.cs-primer-stake strong { font-weight: 600; }
+.cs-primer-fig svg { display: block; width: 100%; height: auto; color: var(--text); }
+.cs-primer-cap { font-family: var(--ui); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); margin-top: 12px; text-align: center; }
+@media (max-width: 900px) {
+  .cs-primer-grid { grid-template-columns: 1fr; gap: 30px; }
+  .cs-primer-def { grid-template-columns: 108px 1fr; gap: 12px; }
+  .cs-primer-inner { padding: 24px 22px 28px; }
+}
