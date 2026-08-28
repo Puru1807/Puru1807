@@ -121,6 +121,174 @@
       .cs-point { padding: 17px 0; }
     }
     .cs-subtitle { font-family: var(--font); font-size: 17px; color: var(--secondary); max-width: 720px; line-height: 1.7; margin-bottom: 48px; }
+
+    /* ── Motion mesh hero — animated gradient block that sits between
+          the subtitle and the meta grid. Four independently-animated
+          radial blobs on a dark base, blended with grain, with a big
+          serif project name overlaid. ── */
+    .cs-mesh {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      margin: 8px 0 56px;
+      overflow: hidden;
+      isolation: isolate;
+      background: #14100c;
+      border-radius: 2px;
+    }
+    .cs-mesh__stage {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .cs-mesh__blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.9;
+      will-change: transform;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+    .cs-mesh__blob--a {
+      width: 62%; height: 92%;
+      left: -12%; top: -22%;
+      background: radial-gradient(circle at 30% 30%, #E0533C 0%, transparent 62%);
+      animation: cs-mesh-a 26s ease-in-out infinite alternate;
+    }
+    .cs-mesh__blob--b {
+      width: 58%; height: 84%;
+      right: -16%; top: 8%;
+      background: radial-gradient(circle at 60% 40%, #F4A582 0%, transparent 62%);
+      animation: cs-mesh-b 32s ease-in-out infinite alternate;
+    }
+    .cs-mesh__blob--c {
+      width: 74%; height: 62%;
+      left: 8%; bottom: -28%;
+      background: radial-gradient(circle at 50% 50%, #7C3D24 0%, transparent 58%);
+      animation: cs-mesh-c 38s ease-in-out infinite alternate;
+    }
+    .cs-mesh__blob--d {
+      width: 46%; height: 56%;
+      right: 4%; bottom: 6%;
+      background: radial-gradient(circle at 50% 50%, #FCE0BF 0%, transparent 54%);
+      opacity: 0.55;
+      animation: cs-mesh-d 44s ease-in-out infinite alternate;
+    }
+    .cs-mesh__grain {
+      position: absolute;
+      inset: -6%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 240px 240px;
+      opacity: 0.28;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+      z-index: 1;
+      animation: cs-grain-shift 9s steps(6) infinite;
+    }
+    .cs-mesh__vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 45%, rgba(10,6,3,0.35) 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .cs-mesh__caption {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: clamp(24px, 4vw, 56px);
+      color: #fff;
+      opacity: 0;
+      animation: cs-mesh-fade 1.2s ease 0.35s forwards;
+    }
+    .cs-mesh__eyebrow {
+      font-family: var(--ui);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.82);
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .cs-mesh__eyebrow::before,
+    .cs-mesh__eyebrow::after {
+      content: '';
+      width: 28px;
+      height: 1px;
+      background: rgba(255,255,255,0.4);
+    }
+    .cs-mesh__title {
+      font-family: var(--display);
+      font-size: clamp(52px, 9vw, 128px);
+      font-weight: 400;
+      letter-spacing: -0.035em;
+      line-height: 0.95;
+      color: #fff;
+      text-shadow: 0 2px 40px rgba(0,0,0,0.18);
+    }
+    .cs-mesh__tag {
+      margin-top: 24px;
+      font-family: var(--ui);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+
+    @keyframes cs-mesh-a {
+      0%   { transform: translate3d(0%, 0%, 0) scale(1); }
+      50%  { transform: translate3d(15%, 12%, 0) scale(1.18); }
+      100% { transform: translate3d(-6%, 22%, 0) scale(0.95); }
+    }
+    @keyframes cs-mesh-b {
+      0%   { transform: translate3d(0%, 0%, 0) scale(1); }
+      50%  { transform: translate3d(-22%, 18%, 0) scale(1.22); }
+      100% { transform: translate3d(10%, -12%, 0) scale(0.9); }
+    }
+    @keyframes cs-mesh-c {
+      0%   { transform: translate3d(0%, 0%, 0) scale(1); }
+      50%  { transform: translate3d(22%, -18%, 0) scale(1.12); }
+      100% { transform: translate3d(-12%, 12%, 0) scale(1.28); }
+    }
+    @keyframes cs-mesh-d {
+      0%   { transform: translate3d(0%, 0%, 0) scale(1); }
+      50%  { transform: translate3d(-18%, -24%, 0) scale(1.35); }
+      100% { transform: translate3d(18%, 18%, 0) scale(1); }
+    }
+    @keyframes cs-grain-shift {
+      0%,100% { transform: translate3d(0,0,0); }
+      20%     { transform: translate3d(-3%, 5%, 0); }
+      40%     { transform: translate3d(4%, -2%, 0); }
+      60%     { transform: translate3d(-6%, -3%, 0); }
+      80%     { transform: translate3d(3%, 4%, 0); }
+    }
+    @keyframes cs-mesh-fade {
+      to { opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cs-mesh__blob,
+      .cs-mesh__grain,
+      .cs-mesh__caption { animation: none; }
+      .cs-mesh__caption { opacity: 1; }
+    }
+    @media (max-width: 768px) {
+      .cs-mesh { aspect-ratio: 4 / 3; margin: 4px 0 40px; }
+      .cs-mesh__blob { filter: blur(60px); }
+    }
+    @media (max-width: 480px) {
+      .cs-mesh { aspect-ratio: 1 / 1; }
+    }
+
     .cs-meta-row { display: flex; gap: 48px; flex-wrap: wrap; padding-top: 40px; border-top: 1px solid var(--border); }
     .cs-meta-item { display: flex; flex-direction: column; gap: 6px; }
     .cs-meta-label { font-family: var(--ui); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
@@ -368,6 +536,24 @@
   </div>
   <h1 class="cs-title">Goldman Sachs</h1>
   <p class="cs-subtitle">Led product design for an AI tool that drafts investment advice for financial advisors. I added the things advisors needed before they would trust it: where every number came from, how sure the AI was, and the ability to edit the wording before it reached a client.</p>
+
+  <!-- ── Motion hero: animated mesh gradient with project name overlay ── -->
+  <figure class="cs-mesh" aria-label="Goldman Sachs — AI SaaS platform, 2025">
+    <div class="cs-mesh__stage" aria-hidden="true">
+      <span class="cs-mesh__blob cs-mesh__blob--a"></span>
+      <span class="cs-mesh__blob cs-mesh__blob--b"></span>
+      <span class="cs-mesh__blob cs-mesh__blob--c"></span>
+      <span class="cs-mesh__blob cs-mesh__blob--d"></span>
+      <span class="cs-mesh__grain"></span>
+      <span class="cs-mesh__vignette"></span>
+    </div>
+    <figcaption class="cs-mesh__caption">
+      <span class="cs-mesh__eyebrow">Case Study</span>
+      <span class="cs-mesh__title">Goldman Sachs</span>
+      <span class="cs-mesh__tag">AI SaaS &middot; Jun 2025 &mdash; Present</span>
+    </figcaption>
+  </figure>
+
   <div class="cs-meta-row">
     <div class="cs-meta-item">
       <span class="cs-meta-label">Role</span>
