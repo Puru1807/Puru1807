@@ -239,6 +239,171 @@
       initFloatingSideNav();
       initScrollProgress();
       initInfoModal();
+      initAskLLM();
     });
   });
+
+  // ── Text-selection pill that opens the Chatbase widget with the
+  //    selected text pre-sent. Falls back to clipboard + toast if
+  //    Chatbase's programmatic sendMessage isn't reachable. ──
+  function initAskLLM() {
+    // Bail on touch — mobile has its own selection UI.
+    if (matchMedia('(hover: none) and (pointer: coarse)').matches) return;
+
+    var MIN_LEN = 6;
+
+    var pill = document.createElement('button');
+    pill.type = 'button';
+    pill.className = 'ask-llm-pill';
+    pill.setAttribute('aria-label', "Ask Puru's LLM about the selected text");
+    pill.innerHTML =
+      '<svg class="ask-llm-pill__icon" viewBox="0 0 12 12" aria-hidden="true">' +
+        '<path d="M6 0L7.4 4.6 12 6 7.4 7.4 6 12 4.6 7.4 0 6 4.6 4.6z"/>' +
+      '</svg>' +
+      "<span>Ask Puru's LLM</span>";
+    document.body.appendChild(pill);
+
+    var toast = document.createElement('div');
+    toast.className = 'ask-llm-toast';
+    toast.setAttribute('role', 'status');
+    document.body.appendChild(toast);
+    var toastTimer;
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('is-visible');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () {
+        toast.classList.remove('is-visible');
+      }, 2600);
+    }
+
+    function inEditable(node) {
+      while (node && node !== document.body) {
+        if (node.nodeType === 1) {
+          var tag = node.tagName;
+          if (tag === 'INPUT' || tag === 'TEXTAREA') return true;
+          if (node.isContentEditable) return true;
+          if (node.classList && (node.classList.contains('ask-llm-pill') ||
+                                 node.classList.contains('ask-llm-toast'))) {
+            return true;
+          }
+        }
+        node = node.parentNode;
+      }
+      return false;
+    }
+
+    function hide() { pill.classList.remove('is-visible'); }
+
+    function updateForSelection() {
+      var sel = window.getSelection();
+      if (!sel || sel.isCollapsed) return hide();
+      var text = sel.toString().trim();
+      if (text.length < MIN_LEN) return hide();
+
+      var range = sel.getRangeAt(0);
+      // If the selection lives inside an editable field or inside
+      // the pill itself, don't offer to send it.
+      if (inEditable(range.commonAncestorContainer)) return hide();
+
+      var rect = range.getBoundingClientRect();
+      if (!rect || (!rect.width && !rect.height)) return hide();
+
+      var margin = 12;
+      var cx = rect.left + rect.width / 2 + window.scrollX;
+      var cy = rect.top + window.scrollY - 44;
+      // If there isn't room above, drop the pill below the selection.
+      if (rect.top < 56) cy = rect.bottom + window.scrollY + margin;
+
+      // Clamp horizontally so the pill never runs off-screen.
+      var half = 90;
+      cx = Math.max(half + 8 + window.scrollX,
+             Math.min(cx, window.scrollX + window.innerWidth - half - 8));
+
+      pill.style.left = cx + 'px';
+      pill.style.top  = cy + 'px';
+      pill.classList.add('is-visible');
+    }
+
+    // 'selectionchange' fires more often than we need, so debounce
+    // through requestAnimationFrame.
+    var raf = null;
+    function schedule() {
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        raf = null;
+        updateForSelection();
+      });
+    }
+
+    document.addEventListener('selectionchange', schedule);
+    document.addEventListener('mouseup', schedule);
+    window.addEventListener('scroll', function () {
+      if (pill.classList.contains('is-visible')) updateForSelection();
+    }, { passive: true });
+    window.addEventListener('resize', function () {
+      if (pill.classList.contains('is-visible')) updateForSelection();
+    });
+
+    // Preserve the selection when the pill is pressed — otherwise
+    // mousedown on the button would clear it.
+    pill.addEventListener('mousedown', function (e) { e.preventDefault(); });
+
+    pill.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var text = (window.getSelection() || '').toString().trim();
+      if (!text) return;
+      hide();
+
+      // Try to hand the selection to Chatbase directly. Their embed
+      // exposes a `chatbase` command bus; the payload shape has
+      // moved around between releases, so we try a few known
+      // variants before falling back to clipboard.
+      var handed = false;
+      try {
+        if (typeof window.chatbase === 'function') {
+          window.chatbase('open');
+          // Give the widget a beat to mount, then post the message.
+          setTimeout(function () {
+            try {
+              window.chatbase('sendMessage', text);
+              handed = true;
+            } catch (_) {}
+            try {
+              window.chatbase({ type: 'sendMessage', message: text });
+              handed = true;
+            } catch (_) {}
+            // Also drop it in the Chatbase iframe's input as a
+            // best-effort so the user can just hit Enter.
+            try {
+              var iframe = document.querySelector('iframe[src*="chatbase.co"]');
+              if (iframe && iframe.contentWindow) {
+                iframe.contentWindow.postMessage(
+                  { type: 'setInputValue', value: text }, '*');
+                iframe.contentWindow.postMessage(
+                  { type: 'sendMessage', message: text }, '*');
+                handed = true;
+              }
+            } catch (_) {}
+            if (!handed) copyAndToast(text);
+          }, 380);
+        } else {
+          copyAndToast(text);
+        }
+      } catch (err) {
+        copyAndToast(text);
+      }
+    });
+
+    function copyAndToast(text) {
+      try {
+        navigator.clipboard.writeText(text);
+        showToast('Selection copied — paste it into the chat');
+      } catch (_) {
+        showToast('Chat opening — paste your selection when it appears');
+      }
+    }
+  }
 })();

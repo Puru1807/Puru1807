@@ -27,6 +27,96 @@ html {
   pointer-events: none;
 }
 
+/* ── Text-selection pill: pops up above any highlighted text and
+      opens the site chatbot with the selection sent through. ── */
+.ask-llm-pill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99998;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px 7px 11px;
+  background: #E0533C;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgba(224, 83, 60, 0.32),
+              0 2px 6px rgba(0,0,0,0.10);
+  opacity: 0;
+  transform: translate(-50%, 8px) scale(0.92);
+  transform-origin: 50% 100%;
+  transition: opacity 0.18s ease,
+              transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+              background 0.15s ease;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.ask-llm-pill.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+  pointer-events: auto;
+}
+.ask-llm-pill:hover {
+  background: #C93E28;
+  transform: translate(-50%, -2px) scale(1.02);
+}
+.ask-llm-pill:active {
+  transform: translate(-50%, 0) scale(0.98);
+}
+.ask-llm-pill:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+.ask-llm-pill__icon {
+  width: 12px;
+  height: 12px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+@media (hover: none) and (pointer: coarse) {
+  .ask-llm-pill { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ask-llm-pill { transition: opacity 0.15s ease; }
+  .ask-llm-pill.is-visible { transform: translate(-50%, 0); }
+  .ask-llm-pill:hover { transform: translate(-50%, 0); }
+}
+
+/* Toast that confirms 'copied to clipboard' when we fall back
+   because Chatbase's programmatic sendMessage isn't reachable. */
+.ask-llm-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  z-index: 99997;
+  padding: 10px 16px;
+  background: rgba(4, 2, 2, 0.92);
+  color: #fff;
+  border-radius: 999px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.28);
+  opacity: 0;
+  transform: translate(-50%, 10px);
+  transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.ask-llm-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
 .nav-link:focus-visible,
 .theme-toggle:focus-visible,
 .csn-link:focus-visible {
