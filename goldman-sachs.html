@@ -378,6 +378,52 @@
     .cs-dia svg { display: block; width: 100%; height: auto; min-width: 460px; color: var(--text); }
     .cs-dia figcaption { font-family: var(--ui); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); margin-top: 14px; }
 
+    /* ── Editorial process figures. Soft plate, muted grey lines,
+          orange for the loaded element — the visual grammar the
+          user pinned as reference. ── */
+    .cs-fig {
+      margin: 32px 0 40px;
+      max-width: 900px;
+      background: #F0F3F5;
+      border: 1px solid rgba(55, 74, 95, 0.08);
+      border-radius: 2px;
+      padding: 28px 32px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    [data-theme="dark"] .cs-fig {
+      background: #1A1918;
+      border-color: rgba(255,255,255,0.06);
+    }
+    .cs-fig__label {
+      display: block;
+      font-family: var(--ui);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #98A3AE;
+      margin-bottom: 22px;
+    }
+    [data-theme="dark"] .cs-fig__label { color: #777370; }
+    .cs-fig__svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      color: #374A5F;
+    }
+    [data-theme="dark"] .cs-fig__svg { color: #C3CAD1; }
+    .cs-fig__cap {
+      margin-top: 20px;
+      font-family: var(--ui);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      line-height: 1.55;
+      max-width: 620px;
+    }
+
     .cs-wire { margin: 44px 0 0; min-width: 0; }
     .cs-wire-frame { border: 1px solid var(--border); background: var(--bg-alt); padding: 20px; overflow-x: auto; min-width: 0; max-width: 100%; }
     .cs-wire-frame svg { display: block; width: 100%; height: auto; min-width: 620px; color: var(--text); }
@@ -878,6 +924,53 @@
   <div class="cs-row-content">
     <h2 class="cs-h2">Three options. I ruled out two.</h2>
 
+    <figure class="cs-fig" role="img" aria-label="Three paths were evaluated. Full automation was blocked by compliance. The suggestion bot was skipped by pilot advisors. The auditable co-pilot shipped.">
+      <span class="cs-fig__label">Three paths &middot; two dead ends</span>
+      <svg class="cs-fig__svg" viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- origin -->
+        <circle cx="46" cy="125" r="6" fill="currentColor" opacity="0.55"/>
+        <text x="26" y="152" font-family="ui-monospace, monospace" font-size="9.5" fill="currentColor" opacity="0.55" letter-spacing="1">THE BRIEF</text>
+
+        <!-- stems from origin to lane splits -->
+        <path d="M52 125 C 90 125, 100 55, 140 55" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
+        <path d="M52 125 L 140 125" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
+        <path d="M52 125 C 90 125, 100 195, 140 195" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
+
+        <!-- Path A — full automation (rejected) -->
+        <g opacity="0.55">
+          <text x="140" y="34" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" letter-spacing="1.6">PATH A · FULL AUTOMATION</text>
+          <path d="M140 55 L 780 55" stroke="currentColor" stroke-width="1.1" stroke-dasharray="3 4" fill="none"/>
+          <g transform="translate(790 55)" stroke="#98A3AE" stroke-width="1.8" fill="none">
+            <line x1="-8" y1="-8" x2="8" y2="8"/><line x1="-8" y1="8" x2="8" y2="-8"/>
+          </g>
+          <text x="808" y="59" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" letter-spacing="1">BLOCKED</text>
+          <text x="140" y="76" font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.7">rules require a person to sign off · compliance said no on day one</text>
+        </g>
+
+        <!-- Path B — suggestion bot (rejected) -->
+        <g opacity="0.55">
+          <text x="140" y="104" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" letter-spacing="1.6">PATH B · SUGGESTION BOT</text>
+          <path d="M140 125 L 780 125" stroke="currentColor" stroke-width="1.1" stroke-dasharray="3 4" fill="none"/>
+          <g transform="translate(790 125)" stroke="#98A3AE" stroke-width="1.8" fill="none">
+            <line x1="-8" y1="-8" x2="8" y2="8"/><line x1="-8" y1="8" x2="8" y2="-8"/>
+          </g>
+          <text x="808" y="129" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" letter-spacing="1">SKIPPED</text>
+          <text x="140" y="146" font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.7">too vague to bother with · advice that commits to nothing saves nobody time</text>
+        </g>
+
+        <!-- Path C — auditable co-pilot (chosen, orange) -->
+        <g>
+          <text x="140" y="174" font-family="ui-monospace, monospace" font-size="9" fill="#E0533C" font-weight="600" letter-spacing="1.6">PATH C · AUDITABLE CO-PILOT</text>
+          <path d="M140 195 L 782 195" stroke="#E0533C" stroke-width="1.6" fill="none"/>
+          <path d="M782 195 L 774 189 M782 195 L 774 201" stroke="#E0533C" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <rect x="792" y="184" width="70" height="22" fill="#E0533C"/>
+          <text x="827" y="199" font-family="ui-monospace, monospace" font-size="9" fill="#fff" text-anchor="middle" font-weight="600" letter-spacing="1.4">SHIPPED</text>
+          <text x="140" y="217" font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.7">confidence score · citations · editable text · advisor keeps their name on it</text>
+        </g>
+      </svg>
+      <p class="cs-fig__cap">The chosen path was the only one that let the AI, the advisor, and the compliance officer all defend the same output.</p>
+    </figure>
+
     <div class="cs-options">
       <div class="cs-option rejected">
         <div class="cs-option-tag">Option A &mdash; Rejected</div>
@@ -910,6 +1003,50 @@
   <div class="cs-row-content">
     <h2 class="cs-h2">We made it slower on purpose. Here is what that cost.</h2>
     <p class="cs-body">Every recommendation now takes 2.4 seconds longer to appear. That is the price of working out a confidence score, fetching the sources behind each claim, and laying out the editable fields. The product team pushed back on the delay. Here is how we defended it.</p>
+
+    <figure class="cs-fig" role="img" aria-label="A balance diagram. On the left, a small circle labelled Latency plus 2.4 seconds. On the right, a much larger circle labelled Trust plus 29 percentage points. The bar tips down to the right.">
+      <span class="cs-fig__label">Speed vs trust &middot; where the weight sat</span>
+      <svg class="cs-fig__svg" viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Left (light) — Latency: small pale circle sitting high on the seesaw -->
+        <g>
+          <circle cx="230" cy="132" r="46" fill="#FBE4D8"/>
+          <text x="230" y="130" font-family="'Instrument Serif', serif" font-size="20" fill="#E0533C" text-anchor="middle" font-weight="400">Latency</text>
+          <text x="230" y="152" font-family="ui-monospace, monospace" font-size="10" fill="#E0533C" text-anchor="middle" letter-spacing="1.2">+2.4 s</text>
+        </g>
+
+        <!-- Right (heavy) — Trust: big solid circle sitting low -->
+        <g>
+          <circle cx="700" cy="192" r="92" fill="#E0533C"/>
+          <text x="700" y="188" font-family="'Instrument Serif', serif" font-size="34" fill="#fff" text-anchor="middle" font-weight="400">Trust</text>
+          <text x="700" y="216" font-family="ui-monospace, monospace" font-size="11" fill="#fff" text-anchor="middle" letter-spacing="1.4" opacity="0.9">+29 pt acceptance</text>
+        </g>
+
+        <!-- The bar — tilted downward to the right; anchored at the fulcrum -->
+        <g stroke="#98A3AE" stroke-width="2.2" stroke-linecap="round" fill="none">
+          <line x1="132" y1="182" x2="798" y2="248"/>
+        </g>
+
+        <!-- Fulcrum -->
+        <g fill="#98A3AE">
+          <polygon points="450,258 428,300 472,300"/>
+        </g>
+        <line x1="410" y1="308" x2="490" y2="308" stroke="#98A3AE" stroke-width="1.6" stroke-linecap="round"/>
+
+        <!-- Tick markers along the bar for reading -->
+        <g stroke="#98A3AE" stroke-width="1" opacity="0.45">
+          <line x1="270" y1="196" x2="270" y2="204"/>
+          <line x1="360" y1="205" x2="360" y2="213"/>
+          <line x1="450" y1="214" x2="450" y2="222"/>
+          <line x1="540" y1="223" x2="540" y2="231"/>
+          <line x1="630" y1="232" x2="630" y2="240"/>
+        </g>
+
+        <!-- Side annotations -->
+        <text x="112" y="126" font-family="ui-monospace, monospace" font-size="9" fill="#98A3AE" text-anchor="end" letter-spacing="1.2">WHAT WE GAVE UP</text>
+        <text x="820" y="180" font-family="ui-monospace, monospace" font-size="9" fill="#98A3AE" letter-spacing="1.2">WHAT WE GOT BACK</text>
+      </svg>
+      <p class="cs-fig__cap">81 % of pilot rejections were trust-layer problems, not speed problems. The scale was never even close.</p>
+    </figure>
 
     <div class="cs-tradeoff">
       <div class="cs-tradeoff-cell gained">
