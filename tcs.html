@@ -352,8 +352,22 @@
       <span class="cs-info-tip" aria-hidden="true">Skills shown here</span>
     </button>
   </div>
-  <h1 class="cs-title">Tata Consultancy Services</h1>
+  <h1 class="cs-title">The wealth-analytics dashboard, in one screen.</h1>
   <p class="cs-subtitle">Led product design for the software financial advisors use to check client investments, work out tax, and plan where money should sit. Around 800 advisors used it every day. I cut the time to review one portfolio nearly in half.</p>
+
+  <!-- ── Hana-Naranjitas mesh: shared CSS + JS live in site-common ── -->
+  <figure class="cs-mesh" id="csMesh" aria-label="Tata Consultancy Services — B2B wealth analytics, 2022–2023">
+    <div class="cs-mesh__warm" aria-hidden="true"></div>
+    <div class="cs-mesh__cool" aria-hidden="true"></div>
+    <div class="cs-mesh__grain" aria-hidden="true"></div>
+    <div class="cs-mesh__scrim" aria-hidden="true"></div>
+    <figcaption class="cs-mesh__caption">
+      <span class="cs-mesh__eyebrow">Case Study</span>
+      <span class="cs-mesh__title">Tata Consultancy Services</span>
+      <span class="cs-mesh__tag">B2B Wealth Analytics &middot; Sep 2022 &mdash; Aug 2023</span>
+    </figcaption>
+  </figure>
+
   <div class="cs-meta-row">
     <div class="cs-meta-item">
       <span class="cs-meta-label">Role</span>
@@ -567,6 +581,47 @@
   <div class="cs-row-content">
     <h2 class="cs-h2">Three ways to fix it. I ruled out two.</h2>
 
+    <figure class="cs-fig" role="img" aria-label="Three paths were evaluated. Global search was ruled out because it finds data but doesn't reconcile it. A summary tab was ruled out because advisors don't trust summaries they can't drill into. The unified canvas shipped.">
+      <span class="cs-fig__label">Three paths &middot; two dead ends</span>
+      <svg class="cs-fig__svg" viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="46" cy="125" r="6" fill="currentColor" opacity="0.55"/>
+        <text x="26" y="152" font-family="ui-monospace, monospace" font-size="9.5" fill="currentColor" opacity="0.55" letter-spacing="1">THE BOTTLENECK</text>
+        <path d="M52 125 C 90 125, 100 55, 140 55" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
+        <path d="M52 125 L 140 125" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
+        <path d="M52 125 C 90 125, 100 195, 140 195" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
+
+        <g opacity="0.55">
+          <text x="140" y="34" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" letter-spacing="1.6">PATH A · GLOBAL SEARCH</text>
+          <path d="M140 55 L 780 55" stroke="currentColor" stroke-width="1.1" stroke-dasharray="3 4" fill="none"/>
+          <g transform="translate(790 55)" stroke="#98A3AE" stroke-width="1.8" fill="none">
+            <line x1="-8" y1="-8" x2="8" y2="8"/><line x1="-8" y1="8" x2="8" y2="-8"/>
+          </g>
+          <text x="808" y="59" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" letter-spacing="1">SKIPPED</text>
+          <text x="140" y="76" font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.7">finds data · doesn't reconcile it · advisors were cross-checking, not hunting</text>
+        </g>
+
+        <g opacity="0.55">
+          <text x="140" y="104" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" letter-spacing="1.6">PATH B · SUMMARY TAB</text>
+          <path d="M140 125 L 780 125" stroke="currentColor" stroke-width="1.1" stroke-dasharray="3 4" fill="none"/>
+          <g transform="translate(790 125)" stroke="#98A3AE" stroke-width="1.8" fill="none">
+            <line x1="-8" y1="-8" x2="8" y2="8"/><line x1="-8" y1="8" x2="8" y2="-8"/>
+          </g>
+          <text x="808" y="129" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" letter-spacing="1">SKIPPED</text>
+          <text x="140" y="146" font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.7">advisors don't trust a summary they can't open · a fifth disconnected screen</text>
+        </g>
+
+        <g>
+          <text x="140" y="174" font-family="ui-monospace, monospace" font-size="9" fill="#E0533C" font-weight="600" letter-spacing="1.6">PATH C · UNIFIED PORTFOLIO CANVAS</text>
+          <path d="M140 195 L 782 195" stroke="#E0533C" stroke-width="1.6" fill="none"/>
+          <path d="M782 195 L 774 189 M782 195 L 774 201" stroke="#E0533C" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <rect x="792" y="184" width="70" height="22" fill="#E0533C"/>
+          <text x="827" y="199" font-family="ui-monospace, monospace" font-size="9" fill="#fff" text-anchor="middle" font-weight="600" letter-spacing="1.4">SHIPPED</text>
+          <text x="140" y="217" font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.7">one screen · cross-linked · automatic reconciliation · drill-down replaces hopping</text>
+        </g>
+      </svg>
+      <p class="cs-fig__cap">Advisors were cross-checking numbers, not hunting for them. Only the canvas fixed the cause, not the symptom.</p>
+    </figure>
+
     <div class="cs-options">
       <div class="cs-option rejected">
         <div class="cs-option-tag">Option A &mdash; Rejected</div>
@@ -599,6 +654,39 @@
   <div class="cs-row-content">
     <h2 class="cs-h2">We designed for the slower majority and accepted a fight with the fastest advisors</h2>
     <p class="cs-body">The single screen was the right call and it had a real cost. The top 18% of advisors, who bring in 40% of revenue, had memorised the old layout and moved through it fast. The redesign broke habits they had built over years. For two weeks after launch they were the loudest voice in the building.</p>
+
+    <figure class="cs-fig" role="img" aria-label="A balance diagram. On the left, a small circle labelled Top 18 percent — shortcuts lost, one-time. On the right, a much larger circle labelled Bottom 82 percent — 11 minutes saved per review, every review. The bar tips down to the right.">
+      <span class="cs-fig__label">The 82 vs 18 &middot; where the weight sat</span>
+      <svg class="cs-fig__svg" viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g>
+          <circle cx="230" cy="132" r="46" fill="#FBE4D8"/>
+          <text x="230" y="128" font-family="'Instrument Serif', serif" font-size="18" fill="#E0533C" text-anchor="middle" font-weight="400">Top 18%</text>
+          <text x="230" y="150" font-family="ui-monospace, monospace" font-size="9" fill="#E0533C" text-anchor="middle" letter-spacing="1.2">shortcuts lost · once</text>
+        </g>
+        <g>
+          <circle cx="700" cy="192" r="92" fill="#E0533C"/>
+          <text x="700" y="184" font-family="'Instrument Serif', serif" font-size="30" fill="#fff" text-anchor="middle" font-weight="400">Bottom 82%</text>
+          <text x="700" y="212" font-family="ui-monospace, monospace" font-size="11" fill="#fff" text-anchor="middle" letter-spacing="1.4" opacity="0.9">−11 min · every review</text>
+        </g>
+        <g stroke="#98A3AE" stroke-width="2.2" stroke-linecap="round" fill="none">
+          <line x1="132" y1="182" x2="798" y2="248"/>
+        </g>
+        <g fill="#98A3AE">
+          <polygon points="450,258 428,300 472,300"/>
+        </g>
+        <line x1="410" y1="308" x2="490" y2="308" stroke="#98A3AE" stroke-width="1.6" stroke-linecap="round"/>
+        <g stroke="#98A3AE" stroke-width="1" opacity="0.45">
+          <line x1="270" y1="196" x2="270" y2="204"/>
+          <line x1="360" y1="205" x2="360" y2="213"/>
+          <line x1="450" y1="214" x2="450" y2="222"/>
+          <line x1="540" y1="223" x2="540" y2="231"/>
+          <line x1="630" y1="232" x2="630" y2="240"/>
+        </g>
+        <text x="112" y="126" font-family="ui-monospace, monospace" font-size="9" fill="#98A3AE" text-anchor="end" letter-spacing="1.2">ONE-TIME COST</text>
+        <text x="820" y="180" font-family="ui-monospace, monospace" font-size="9" fill="#98A3AE" letter-spacing="1.2">RECURRING COST</text>
+      </svg>
+      <p class="cs-fig__cap">A two-week learning curve for 18% of advisors vs. 11 minutes saved on every single review by the other 82%. The math wasn't close.</p>
+    </figure>
 
     <div class="cs-tradeoff">
       <div class="cs-tradeoff-cell gained">

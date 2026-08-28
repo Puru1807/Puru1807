@@ -439,3 +439,202 @@ html {
   .cs-primer { padding-bottom: 56px; }
   .cs-primer-stake { font-size: clamp(18px, 2vw, 22px); }
 }
+
+/* ═══════════════════════════════════════════════════════
+   Case-study mesh hero — Hana "Naranjitas 2" gradient
+   Cursor-tracked warm ellipse + opposite-drift cool ellipse
+   over a 119° blue→white base. JS in site-common drives
+   --mx/--my/--mx2/--my2 via rAF lerp.
+   ═══════════════════════════════════════════════════════ */
+.cs-mesh {
+  --mx: 22%;
+  --my: 60%;
+  --mx2: 78%;
+  --my2: 40%;
+  position: relative;
+  width: 100%;
+  height: clamp(220px, 30vw, 340px);
+  margin: 8px 0 48px;
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(119deg, #3f77c1 18%, #ffffff 100%);
+  border-radius: 2px;
+}
+.cs-mesh__warm,
+.cs-mesh__cool {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+.cs-mesh__warm {
+  width: 130%;
+  height: 220%;
+  left: var(--mx);
+  top: var(--my);
+  transform: translate3d(-50%, -50%, 0);
+  background: radial-gradient(circle,
+    rgba(248, 88, 48, 1)     0%,
+    rgba(246, 129, 75, 1)    47.78%,
+    rgba(245, 160, 112, 0.1) 99.04%,
+    transparent 100%);
+  filter: blur(70px);
+  z-index: 1;
+}
+.cs-mesh__cool {
+  width: 145%;
+  height: 240%;
+  left: var(--mx2);
+  top: var(--my2);
+  transform: translate3d(-50%, -50%, 0);
+  background: radial-gradient(circle,
+    rgba(237, 166, 88, 1)     0%,
+    rgba(199, 193, 196, 0.85) 54.55%,
+    rgba(169, 211, 234, 0.1)  100%,
+    transparent 100%);
+  filter: blur(80px);
+  z-index: 2;
+  mix-blend-mode: multiply;
+  opacity: 0.85;
+}
+.cs-mesh__grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 3;
+}
+.cs-mesh__scrim {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 62%;
+  background: linear-gradient(to top,
+    rgba(60, 20, 5, 0.28) 0%,
+    rgba(60, 20, 5, 0.14) 45%,
+    transparent 100%);
+  pointer-events: none;
+  z-index: 4;
+}
+.cs-mesh::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.32),
+              inset 0 -1px 0 rgba(60,20,10,0.16);
+  pointer-events: none;
+  z-index: 5;
+}
+.cs-mesh__caption {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+  padding: clamp(22px, 3.5vw, 40px);
+  color: #fff;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: cs-mesh-in 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+  pointer-events: none;
+}
+.cs-mesh__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--ui, 'Inter', sans-serif);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.92);
+  margin-bottom: 12px;
+}
+.cs-mesh__eyebrow::before {
+  content: '';
+  width: 22px;
+  height: 1px;
+  background: rgba(255,255,255,0.6);
+}
+.cs-mesh__title {
+  font-family: var(--display, 'Instrument Serif', Georgia, serif);
+  font-size: clamp(30px, 4.4vw, 60px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 0 2px 24px rgba(90,30,10,0.28);
+}
+.cs-mesh__tag {
+  margin-top: 14px;
+  font-family: var(--ui, 'Inter', sans-serif);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.8);
+}
+@keyframes cs-mesh-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cs-mesh__caption { animation: none; opacity: 1; transform: none; }
+}
+@media (max-width: 768px) {
+  .cs-mesh { height: clamp(180px, 42vw, 240px); margin: 4px 0 32px; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   Editorial process figures (.cs-fig)
+   Soft grey-blue plate, muted lines, orange accent for
+   the loaded element. Style DNA from the reference set
+   (memory-vs-privacy, systems-thinking, rabbit-hole).
+   ═══════════════════════════════════════════════════════ */
+.cs-fig {
+  margin: 32px 0 40px;
+  max-width: 900px;
+  background: #F0F3F5;
+  border: 1px solid rgba(55, 74, 95, 0.08);
+  border-radius: 2px;
+  padding: 28px 32px 24px;
+  position: relative;
+  overflow: hidden;
+}
+[data-theme="dark"] .cs-fig {
+  background: #1A1918;
+  border-color: rgba(255,255,255,0.06);
+}
+.cs-fig__label {
+  display: block;
+  font-family: var(--ui, 'Inter', sans-serif);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #98A3AE;
+  margin-bottom: 22px;
+}
+[data-theme="dark"] .cs-fig__label { color: #777370; }
+.cs-fig__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: #374A5F;
+}
+[data-theme="dark"] .cs-fig__svg { color: #C3CAD1; }
+.cs-fig__cap {
+  margin-top: 20px;
+  font-family: var(--ui, 'Inter', sans-serif);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--secondary, #98A3AE);
+  line-height: 1.55;
+  max-width: 620px;
+}

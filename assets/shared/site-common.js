@@ -240,8 +240,59 @@
       initScrollProgress();
       initInfoModal();
       initAskLLM();
+      initMeshHero();
     });
   });
+
+  // ── Case-study mesh hero cursor tracking. Two lagging light spots
+  //    follow the cursor via CSS custom properties; when the cursor
+  //    isn't over the mesh, the spot drifts on a slow autonomous
+  //    cos/sin orbit so the surface never sits still. No-op on
+  //    pages that don't include the mesh element. ──
+  function initMeshHero() {
+    var mesh = document.getElementById('csMesh');
+    if (!mesh) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var tx = 30, ty = 32;
+    var x = 30, y = 32;
+    var x2 = 68, y2 = 72;
+    var hovering = false;
+    var idleT = 0;
+
+    function onMove(e) {
+      var r = mesh.getBoundingClientRect();
+      var px = ((e.clientX - r.left) / r.width) * 100;
+      var py = ((e.clientY - r.top)  / r.height) * 100;
+      tx = Math.max(-10, Math.min(110, px));
+      ty = Math.max(-10, Math.min(110, py));
+    }
+
+    mesh.addEventListener('mouseenter', function () { hovering = true; });
+    mesh.addEventListener('mouseleave', function () { hovering = false; });
+    mesh.addEventListener('mousemove', onMove);
+    mesh.addEventListener('touchmove', function (e) {
+      if (e.touches && e.touches[0]) onMove(e.touches[0]);
+    }, { passive: true });
+
+    function tick() {
+      if (!hovering) {
+        idleT += 0.004;
+        tx = 50 + Math.cos(idleT) * 26;
+        ty = 46 + Math.sin(idleT * 1.3) * 20;
+      }
+      x  += (tx - x) * 0.09;
+      y  += (ty - y) * 0.09;
+      x2 += ((100 - tx) - x2) * 0.04;
+      y2 += ((100 - ty) - y2) * 0.04;
+      mesh.style.setProperty('--mx',  x.toFixed(2)  + '%');
+      mesh.style.setProperty('--my',  y.toFixed(2)  + '%');
+      mesh.style.setProperty('--mx2', x2.toFixed(2) + '%');
+      mesh.style.setProperty('--my2', y2.toFixed(2) + '%');
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
 
   // ── Text-selection pill that opens the Chatbase widget with the
   //    selected text pre-sent. Falls back to clipboard + toast if
