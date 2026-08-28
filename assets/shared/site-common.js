@@ -275,7 +275,7 @@
       clearTimeout(toastTimer);
       toastTimer = setTimeout(function () {
         toast.classList.remove('is-visible');
-      }, 2600);
+      }, 4200);
     }
 
     function inEditable(node) {
@@ -357,53 +357,72 @@
       if (!text) return;
       hide();
 
-      // Try to hand the selection to Chatbase directly. Their embed
-      // exposes a `chatbase` command bus; the payload shape has
-      // moved around between releases, so we try a few known
-      // variants before falling back to clipboard.
-      var handed = false;
-      try {
-        if (typeof window.chatbase === 'function') {
-          window.chatbase('open');
-          // Give the widget a beat to mount, then post the message.
-          setTimeout(function () {
-            try {
-              window.chatbase('sendMessage', text);
-              handed = true;
-            } catch (_) {}
-            try {
-              window.chatbase({ type: 'sendMessage', message: text });
-              handed = true;
-            } catch (_) {}
-            // Also drop it in the Chatbase iframe's input as a
-            // best-effort so the user can just hit Enter.
-            try {
-              var iframe = document.querySelector('iframe[src*="chatbase.co"]');
-              if (iframe && iframe.contentWindow) {
-                iframe.contentWindow.postMessage(
-                  { type: 'setInputValue', value: text }, '*');
-                iframe.contentWindow.postMessage(
-                  { type: 'sendMessage', message: text }, '*');
-                handed = true;
-              }
-            } catch (_) {}
-            if (!handed) copyAndToast(text);
-          }, 380);
-        } else {
-          copyAndToast(text);
-        }
-      } catch (err) {
-        copyAndToast(text);
-      }
+      // Reliable path: copy first (guaranteed), then open the chat.
+      // Every Chatbase release accepts a pasted message, and only
+      // some accept a programmatic send — so we lean on paste as
+      // the primary UX and treat send as a nice-to-have.
+      copyToClipboard(text);
+
+      // Open the widget.
+      try { if (typeof window.chatbase === 'function') window.chatbase('open'); } catch (_) {}
+
+      // Nice-to-have: try every known Chatbase send payload shape
+      // in parallel. Any that lands will win; failures are silent.
+      setTimeout(function () { attemptDirectSend(text); }, 320);
+      setTimeout(function () { attemptDirectSend(text); }, 900);
+
+      // Toast the user with the reliable instruction — cmd on
+      // Mac-shaped user agents, ctrl elsewhere.
+      var mod = /Mac|iPhone|iPad|iPod/.test(navigator.platform) ? '⌘' : 'Ctrl';
+      showToast('Copied — press ' + mod + ' V in the chat, then Enter');
     });
 
-    function copyAndToast(text) {
+    function attemptDirectSend(text) {
+      // Try every Chatbase command-bus shape shipped across releases.
+      try { window.chatbase('sendMessage', text); } catch (_) {}
+      try { window.chatbase({ type: 'sendMessage', message: text }); } catch (_) {}
+      try { window.chatbase('setPrefilledMessage', text); } catch (_) {}
+      try { window.chatbase.sendMessage && window.chatbase.sendMessage(text); } catch (_) {}
+
+      // Also try postMessage into the Chatbase iframe directly
+      // using the message shapes their widget code has accepted.
       try {
-        navigator.clipboard.writeText(text);
-        showToast('Selection copied — paste it into the chat');
-      } catch (_) {
-        showToast('Chat opening — paste your selection when it appears');
-      }
+        var frames = document.querySelectorAll('iframe[src*="chatbase.co"], iframe[src*="chatbase.com"]');
+        for (var i = 0; i < frames.length; i++) {
+          var w = frames[i].contentWindow;
+          if (!w) continue;
+          [
+            { action: 'chatbase-send-message', message: text },
+            { type:   'chatbase.sendMessage', message: text },
+            { type:   'sendMessage',          message: text },
+            { type:   'setInputValue',        value:   text },
+            { type:   'prefilledMessage',     value:   text }
+          ].forEach(function (payload) {
+            try { w.postMessage(payload, '*'); } catch (_) {}
+          });
+        }
+      } catch (_) {}
+    }
+
+    function copyToClipboard(text) {
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text);
+          return true;
+        }
+      } catch (_) {}
+      // Legacy fallback for Safari/older browsers.
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.cssText = 'position:absolute;left:-9999px;top:0;';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        return true;
+      } catch (_) { return false; }
     }
   }
 })();
