@@ -140,6 +140,10 @@
     .cs-stat:not(:first-child) { padding-left: 32px; }
     .cs-stat-number { font-family: var(--display); font-size: clamp(42px,6vw,76px); font-weight: 400; color: var(--accent); letter-spacing: -0.02em; line-height: 1; }
     .cs-stat-desc { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.6; max-width: 180px; }
+    .cs-stat-icon { font-size: 15px; color: var(--secondary); opacity: 0.85; margin-bottom: 14px; }
+    .cs-stakes-label i { margin-right: 8px; }
+    .cs-card-icon { font-size: 15px; color: #E0533C; opacity: 0.85; margin-bottom: 14px; display: block; }
+    .footer-links a i { margin-right: 8px; width: 14px; text-align: center; opacity: 0.75; }
 
     .cs-row { display: grid; grid-template-columns: 180px 1fr; gap: 64px; max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); border-bottom: 1px solid var(--border); }
     .cs-row-label { padding-top: 4px; position: sticky; top: 80px; align-self: start; }
@@ -434,7 +438,7 @@
 ════════════════════════════════════════ -->
 <section class="cs-stakes-strip">
   <div class="cs-stakes-inner">
-    <p class="cs-stakes-label">The Stakes</p>
+    <p class="cs-stakes-label"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>The Stakes</p>
     <h2 class="cs-stakes-headline">Advisors were taking 25 minutes to review a portfolio when the target was 12. With about 800 advisors and 50,000 portfolios a month, every extra minute cost the bank roughly &#8377;1.25 lakh in advisor time.</h2>
   </div>
 </section>
@@ -448,18 +452,22 @@
     <h2 class="cs-results-title">25 min &rarr; 14 min per review &middot; ~9,167 advisor hours saved a month &middot; ~&#8377;1.37 Cr recovered</h2>
     <div class="cs-stats">
       <div class="cs-stat">
+        <i class="fa-solid fa-clock cs-stat-icon" aria-hidden="true"></i>
         <span class="cs-stat-number">-44%</span>
         <span class="cs-stat-desc">portfolio review time, from 25 min to 14 min per portfolio</span>
       </div>
       <div class="cs-stat">
+        <i class="fa-solid fa-hourglass-half cs-stat-icon" aria-hidden="true"></i>
         <span class="cs-stat-number">9,167</span>
         <span class="cs-stat-desc">advisor hours per month reclaimed at scale across ~800 RMs</span>
       </div>
       <div class="cs-stat">
+        <i class="fa-solid fa-arrow-trend-up cs-stat-icon" aria-hidden="true"></i>
         <span class="cs-stat-number">+31%</span>
         <span class="cs-stat-desc">core dashboard engagement post-redesign, measured via A/B testing</span>
       </div>
       <div class="cs-stat">
+        <i class="fa-solid fa-code-branch cs-stat-icon" aria-hidden="true"></i>
         <span class="cs-stat-number">8 &rarr; 3</span>
         <span class="cs-stat-desc">engineering clarification cycles per sprint after component patterns shipped</span>
       </div>
@@ -807,16 +815,19 @@
 
     <div class="cs-cards" style="margin-top:32px;">
       <div class="cs-card">
+        <i class="fa-solid fa-magnifying-glass-chart cs-card-icon" aria-hidden="true"></i>
         <div class="cs-card-num">01</div>
         <div class="cs-card-title">Finding Assumptions Inside Client Constraints</div>
         <div class="cs-card-text">The client's data rules meant I could not recruit bank customers, so the research had to come from the advisor side. Eighteen interviews, 24 timed observation sessions, and a read of the support tickets gave me three independent sources without ever touching customer data. That was enough, because the delay was on the advisor side.</div>
       </div>
       <div class="cs-card">
+        <i class="fa-solid fa-forward cs-card-icon" aria-hidden="true"></i>
         <div class="cs-card-num">02</div>
         <div class="cs-card-title">What Moved to V3</div>
         <div class="cs-card-text">AI-drafted client notes, with limits for regulated advice. Nudges to rebalance based on the new disagreement flags. Reviewing several portfolios at once. All written up with tracking already in place, so the team taking over inherits a brief rather than a blank page.</div>
       </div>
       <div class="cs-card">
+        <i class="fa-solid fa-book cs-card-icon" aria-hidden="true"></i>
         <div class="cs-card-num">03</div>
         <div class="cs-card-title">How Documentation Compressed Sprint Cycles</div>
         <div class="cs-card-text">The reusable parts did more than keep screens consistent. Writing down what each one does, how it behaves, and what happens in the awkward cases stopped engineers having to ask every sprint. That alone gave back roughly half a day per engineer per sprint.</div>
@@ -946,9 +957,9 @@
     <div>
       <h3 class="footer-heading">Say Hi!</h3>
       <div class="footer-links">
-        <a href="https://linkedin.com/in/purubhardwaj9/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="mailto:purubhardwaj99@gmail.com">Email</a>
-        <a href="https://purubhardwajdesign.com" target="_blank" rel="noopener">Portfolio</a>
+        <a href="https://linkedin.com/in/purubhardwaj9/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>LinkedIn</a>
+        <a href="mailto:purubhardwaj99@gmail.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i>Email</a>
+        <a href="https://purubhardwajdesign.com" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>Portfolio</a>
       </div>
     </div>
   </div>

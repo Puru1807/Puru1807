@@ -301,8 +301,12 @@
     /* — Results stats: read as a magazine deck, not a KPI dashboard — */
     .cs-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 48px 40px; padding-top: 44px; border-top: 1px solid var(--text); }
     .cs-stat { display: flex; flex-direction: column; gap: 0; }
+    .cs-stat-icon { font-size: 15px; color: var(--secondary); opacity: 0.85; margin-bottom: 14px; }
     .cs-stat-number { font-family: var(--display); font-size: clamp(52px,6.8vw,96px); font-weight: 400; font-style: italic; color: var(--text); letter-spacing: -0.03em; line-height: 0.92; }
     .cs-stat-desc { font-family: var(--font); font-size: 13.5px; color: var(--secondary); line-height: 1.6; max-width: 220px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .cs-stakes-label i { margin-right: 8px; }
+    .cs-card-icon { font-size: 15px; color: #E0533C; opacity: 0.85; margin-bottom: 14px; display: block; }
+    .footer-links a i { margin-right: 8px; width: 14px; text-align: center; opacity: 0.75; }
 
     .cs-row { display: grid; grid-template-columns: 180px 1fr; gap: 64px; max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); border-bottom: 1px solid var(--border); }
     .cs-row-label { padding-top: 4px; position: sticky; top: 80px; align-self: start; }
@@ -777,7 +781,7 @@
 ════════════════════════════════════════ -->
 <section class="cs-stakes-strip">
   <div class="cs-stakes-inner">
-    <p class="cs-stakes-label">The Stakes</p>
+    <p class="cs-stakes-label"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>The Stakes</p>
     <h2 class="cs-stakes-headline">Only half of new advisors ever started using the tool. The AI gave sound advice, but it showed no working, so advisors could not check it before putting their own name to it.</h2>
   </div>
 </section>
@@ -791,18 +795,22 @@
     <h2 class="cs-results-title">Advisors using it 52% &rarr; 68% &middot; AI advice accepted 38% &rarr; 67% &middot; Support tickets down ~60%</h2>
     <div class="cs-stats">
       <div class="cs-stat">
+        <i class="fa-solid fa-user-plus cs-stat-icon" aria-hidden="true"></i>
         <span class="cs-stat-number">+16pt</span>
         <span class="cs-stat-desc">new-advisor activation lift over two product releases (52% &rarr; 68%)</span>
       </div>
       <div class="cs-stat">
+        <i class="fa-solid fa-check-double cs-stat-icon" aria-hidden="true"></i>
         <span class="cs-stat-number">+29pt</span>
         <span class="cs-stat-desc">AI recommendation acceptance lift after citation + confidence patterns shipped</span>
       </div>
       <div class="cs-stat">
+        <i class="fa-solid fa-life-ring cs-stat-icon" aria-hidden="true"></i>
         <span class="cs-stat-number">~60%</span>
         <span class="cs-stat-desc">estimated reduction in "why did the AI suggest this" support tickets post-release</span>
       </div>
       <div class="cs-stat">
+        <i class="fa-solid fa-shield-halved cs-stat-icon" aria-hidden="true"></i>
         <span class="cs-stat-number">3</span>
         <span class="cs-stat-desc">trust patterns shipped &mdash; confidence visibility, citations, editable outputs</span>
       </div>
@@ -1396,16 +1404,19 @@
 
     <div class="cs-cards" style="margin-top:32px;">
       <div class="cs-card">
+        <i class="fa-solid fa-magnifying-glass-chart cs-card-icon" aria-hidden="true"></i>
         <div class="cs-card-num">01</div>
         <div class="cs-card-title">Finding Assumptions Without Bypassing Compliance</div>
         <div class="cs-card-text">Normal user research was not possible, because advisor work is full of confidential client information. So I designed around it. When sitting with advisors I recorded how they moved through the tool and never what was on screen. Twelve sessions gave me the human side and the analytics gave me the numbers.</div>
       </div>
       <div class="cs-card">
+        <i class="fa-solid fa-forward cs-card-icon" aria-hidden="true"></i>
         <div class="cs-card-num">02</div>
         <div class="cs-card-title">What Moved to V3</div>
         <div class="cs-card-text">Showing confidence differently by experience level. Automatic flags when the AI's confidence drops below a set level for a client. Sources shown as charts rather than only text. All written up with owners and measures, and all already tracked, so the next sprint starts with a brief instead of a blank page.</div>
       </div>
       <div class="cs-card">
+        <i class="fa-solid fa-wand-magic-sparkles cs-card-icon" aria-hidden="true"></i>
         <div class="cs-card-num">03</div>
         <div class="cs-card-title">How AI Tooling Compressed Design Cycles</div>
         <div class="cs-card-text">Figma Make sped up building the card variations, since the recommendation card alone needed 14 versions for the different confidence bands. Claude Code let me prototype how the sources expand so I could test the interaction before engineering committed to it. Together that shipped a compliance-heavy tool in two releases instead of three.</div>
@@ -1535,9 +1546,9 @@
     <div>
       <h3 class="footer-heading">Say Hi!</h3>
       <div class="footer-links">
-        <a href="https://linkedin.com/in/purubhardwaj9/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="mailto:purubhardwaj99@gmail.com">Email</a>
-        <a href="https://purubhardwajdesign.com" target="_blank" rel="noopener">Portfolio</a>
+        <a href="https://linkedin.com/in/purubhardwaj9/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>LinkedIn</a>
+        <a href="mailto:purubhardwaj99@gmail.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i>Email</a>
+        <a href="https://purubhardwajdesign.com" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>Portfolio</a>
       </div>
     </div>
   </div>

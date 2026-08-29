@@ -91,6 +91,10 @@
     .cs-stat:not(:first-child) { padding-left: 32px; }
     .cs-stat-number { font-family: var(--display); font-size: clamp(42px,6vw,76px); font-weight: 400; color: var(--accent); letter-spacing: -0.02em; line-height: 1; }
     .cs-stat-desc { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.6; max-width: 180px; }
+    .cs-stat-icon { font-size: 15px; color: var(--secondary); opacity: 0.85; margin-bottom: 14px; }
+    .cs-stakes-label i { margin-right: 8px; }
+    .cs-card-icon { font-size: 15px; color: #E0533C; opacity: 0.85; margin-bottom: 14px; display: block; }
+    .footer-links a i { margin-right: 8px; width: 14px; text-align: center; opacity: 0.75; }
 
     .cs-row { display: grid; grid-template-columns: 180px 1fr; gap: 64px; max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); border-bottom: 1px solid var(--border); }
     .cs-row-label { padding-top: 4px; position: sticky; top: 80px; align-self: start; }
@@ -282,7 +286,7 @@
 ════════════════════════════════════════ -->
 <section class="cs-stakes-strip">
   <div class="cs-stakes-inner">
-    <p class="cs-stakes-label">The Stakes</p>
+    <p class="cs-stakes-label"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>The Stakes</p>
     <h2 class="cs-stakes-headline">Digital banking onboarding was losing customers at every step. KYC drop-offs were high, payment workflows created friction, and self-service applications weren't living up to their promise.</h2>
   </div>
 </section>
@@ -296,18 +300,22 @@
     <h2 class="cs-results-title">Onboarding completion +33% &middot; Drop-offs -28% &middot; Task completion +30% &middot; Customer satisfaction +27%</h2>
     <div class="cs-stats">
       <div class="cs-stat">
+        <i class="fa-solid fa-user-check cs-stat-icon" aria-hidden="true"></i>
         <span class="cs-stat-number">+33%</span>
         <span class="cs-stat-desc">increase in onboarding completion through redesigned KYC and digital onboarding workflows</span>
       </div>
       <div class="cs-stat">
+        <i class="fa-solid fa-arrow-trend-down cs-stat-icon" aria-hidden="true"></i>
         <span class="cs-stat-number">-28%</span>
         <span class="cs-stat-desc">reduction in customer drop-offs across the onboarding journey</span>
       </div>
       <div class="cs-stat">
+        <i class="fa-solid fa-list-check cs-stat-icon" aria-hidden="true"></i>
         <span class="cs-stat-number">+30%</span>
         <span class="cs-stat-desc">improvement in task completion rates via user research, heuristic evaluations, and usability testing</span>
       </div>
       <div class="cs-stat">
+        <i class="fa-solid fa-face-smile cs-stat-icon" aria-hidden="true"></i>
         <span class="cs-stat-number">+27%</span>
         <span class="cs-stat-desc">increase in customer satisfaction through optimized digital banking journeys</span>
       </div>
@@ -657,16 +665,19 @@
 
     <div class="cs-cards" style="margin-top:32px;">
       <div class="cs-card">
+        <i class="fa-solid fa-magnifying-glass-chart cs-card-icon" aria-hidden="true"></i>
         <div class="cs-card-num">01</div>
         <div class="cs-card-title">Finding Assumptions Without Recruiting SMEs</div>
         <div class="cs-card-text">Direct user research with SMEs in the live KYC flow was off-limits (privacy + compliance). So the research stack was indirect: app store review mining for qualitative signal, funnel analytics for quantitative localization, competitor audits for benchmark, and the compliance interview for the unlock. Four indirect sources beat one direct source you can't actually run.</div>
       </div>
       <div class="cs-card">
+        <i class="fa-solid fa-forward cs-card-icon" aria-hidden="true"></i>
         <div class="cs-card-num">02</div>
         <div class="cs-card-title">What Moved to V2</div>
         <div class="cs-card-text">Deep identity-verification API pre-fill (paused for SDK contracts). Voice-call fallback for SMS-failed authorization. Multi-language onboarding support. All documented with success criteria and instrumentation already in place &mdash; so the next sprint inherits a brief, not a blank page.</div>
       </div>
       <div class="cs-card">
+        <i class="fa-solid fa-handshake cs-card-icon" aria-hidden="true"></i>
         <div class="cs-card-num">03</div>
         <div class="cs-card-title">How Cross-Functional Speed Was Built</div>
         <div class="cs-card-text">Banking design ships at the speed of the slowest reviewer. So I built the compliance team into the design process &mdash; pair-reviewing every wireframe before engineering touched it. That moved compliance feedback from a release-blocking gate into an in-sprint conversation, cutting average review-cycle time on banking surfaces from ~10 days to ~3.</div>
@@ -751,9 +762,9 @@
     <div>
       <h3 class="footer-heading">Say Hi!</h3>
       <div class="footer-links">
-        <a href="https://linkedin.com/in/purubhardwaj9/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="mailto:purubhardwaj99@gmail.com">Email</a>
-        <a href="https://purubhardwajdesign.com" target="_blank" rel="noopener">Portfolio</a>
+        <a href="https://linkedin.com/in/purubhardwaj9/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>LinkedIn</a>
+        <a href="mailto:purubhardwaj99@gmail.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i>Email</a>
+        <a href="https://purubhardwajdesign.com" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>Portfolio</a>
       </div>
     </div>
   </div>
