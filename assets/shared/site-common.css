@@ -638,3 +638,47 @@ html {
   line-height: 1.55;
   max-width: 620px;
 }
+
+/* ═══════════════════════════════════════════════════════
+   Info-icon shake — FA-buzz equivalent, native CSS.
+   Applied to the SVG inside .cs-info-btn so it doesn't
+   fight the button's hover scale transform.
+
+   • On page load: three quick buzzes after a 1.4s delay
+     (staggered with the .cs-info-btn::after attention ring
+     so the two effects reinforce, not overlap).
+   • On hover: one fresh buzz — a 'yes, click me' hint.
+   • Reduced motion: no animation.
+   ═══════════════════════════════════════════════════════ */
+.cs-info-btn svg {
+  transform-origin: center center;
+  animation: cs-info-buzz 0.65s cubic-bezier(.36, .07, .19, .97);
+  animation-iteration-count: 3;
+  animation-delay: 1.4s;
+  animation-fill-mode: both;
+}
+.cs-info-btn:hover svg,
+.cs-info-btn:focus-visible svg {
+  animation: cs-info-buzz 0.5s cubic-bezier(.36, .07, .19, .97);
+  animation-iteration-count: 1;
+  animation-delay: 0s;
+}
+.cs-info-btn.is-noticed svg {
+  animation: none;
+}
+@keyframes cs-info-buzz {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  10%  { transform: translate(-1px, 1px)  rotate(-8deg); }
+  20%  { transform: translate(1px, -1px)  rotate(8deg); }
+  30%  { transform: translate(-1px, -1px) rotate(-6deg); }
+  40%  { transform: translate(1px, 1px)   rotate(6deg); }
+  50%  { transform: translate(-1px, 1px)  rotate(-4deg); }
+  60%  { transform: translate(1px, 0)     rotate(4deg); }
+  70%  { transform: translate(-1px, 0)    rotate(-2deg); }
+  80%  { transform: translate(1px, 0)     rotate(2deg); }
+  90%  { transform: translate(0, 0)       rotate(0deg); }
+  100% { transform: translate(0, 0)       rotate(0deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cs-info-btn svg { animation: none !important; }
+}
