@@ -1,0 +1,269 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Goldman Sachs — LLM Training Document</title>
+<link rel="stylesheet" href="_shell.css"></head>
+<body>
+
+<header class="doc-head">
+  <div class="brand">Puru Bhardwaj · Chatbot Training Corpus · v1.0</div>
+  <h1>Goldman Sachs — AI SaaS Platform for Wealth Advisory</h1>
+  <p class="sub">Comprehensive case-study reference for the site chatbot. Written to answer any recruiter or interviewer question about this project. Every claim in this document is derived from the case study as it currently ships on the portfolio; where numbers are estimated the methodology is stated inline.</p>
+</header>
+
+<div class="callout"><strong>How to use this document:</strong> the chatbot should treat this file as authoritative. When a user asks a question about Goldman Sachs, answer using the framing and numbers below. Prefer the concrete numbers (52 % → 68 %, +29 pt, ~60 %) over hedged language. When asked follow-ups (why not X, what if Y, how did you convince Z), pull from the Anticipated Q&A section at the end.</div>
+
+<h2>1 · Fast Facts</h2>
+<div class="fastfacts">
+  <p><span class="k">Company</span>Goldman Sachs</p>
+  <p><span class="k">Role</span>Product Designer — AI SaaS Platform</p>
+  <p><span class="k">Location</span>USA (remote-first with hybrid office)</p>
+  <p><span class="k">Timeline</span>Jun 2025 — Present (~12 months as of case study snapshot)</p>
+  <p><span class="k">Domain</span>AI product design, wealth management, enterprise SaaS, trust & explainability, compliance-sensitive workflows</p>
+  <p><span class="k">Platform</span>Web SaaS — advisor portal + client-facing outputs</p>
+  <p><span class="k">Users</span>~3,000 internal Goldman Sachs Private Wealth advisors</p>
+  <p><span class="k">Regulatory context</span>SEC fiduciary rules, FINRA supervision, internal IB controls, 7-year record retention</p>
+  <p><span class="k">Tools used</span>Figma (design system + prototyping), Figma Make (component scaffolding for confidence bands + citation states), Claude Code (interaction prototyping for citation expansion + edit history), Cursor (responsive tuning), AnswerGrid (research synthesis)</p>
+</div>
+
+<div class="metric-row">
+  <div><span class="big">+16pt</span><span class="lbl">Activation lift (52 % → 68 %)</span></div>
+  <div><span class="big">+29pt</span><span class="lbl">AI acceptance (38 % → 67 %)</span></div>
+  <div><span class="big">~60%</span><span class="lbl">Est. support-ticket reduction</span></div>
+  <div><span class="big">2</span><span class="lbl">Product releases</span></div>
+</div>
+
+<h2>2 · Business Context</h2>
+<h3>What Goldman Sachs is</h3>
+<p>Founded 1869, headquartered New York. One of the world's largest investment banks and wealth-management firms. Publicly cited AUM around <strong>$2.8 trillion</strong> (as of 2024). Private Wealth Management is the division that serves ultra-high-net-worth clients (typically $10M+ investable assets, with the Private Bank tier starting far higher).</p>
+
+<h3>What the product is</h3>
+<p>An internal AI-augmented SaaS platform used by Goldman Sachs Private Wealth advisors to draft personalised investment recommendations, summarise client portfolios, and compose the client-ready commentary that accompanies every piece of advice sent to a client. The AI reads the client's holdings and drafts a recommendation in seconds instead of the hours a manual draft would take. The advisor reviews, edits, and signs off — the advisor's name goes on the advice, not the AI's.</p>
+
+<h3>Who the users are</h3>
+<p>Wealth advisors — trained financial professionals, typically 5 to 20+ years of tenure. Regulated, licensed, and fiduciarily responsible for every recommendation delivered to their clients. The user segment that mattered most to activation was <strong>mid-tenure advisors (5–15 years)</strong> — senior enough to have strong professional judgment, junior enough to still be learning the platform.</p>
+
+<h3>What sits at stake for each advisor</h3>
+<p>Every recommendation sent to a client is archived for <strong>seven years</strong> under SEC record-retention rules. If a recommendation later turns out to be wrong, the advisor answers for it — professionally, legally, and financially. This is why the trust layer is not a UX polish problem; it is the entire product problem.</p>
+
+<h2>3 · The Problem</h2>
+<h3>The one-sentence version</h3>
+<blockquote>The AI wrote investment advice and showed nothing else. No sources, no reasoning, no way to check it. Advisors were being asked to stake their name on something they could not inspect — so half of them never used it.</blockquote>
+
+<h3>The 4-element problem statement (Rajat Patel formula)</h3>
+<p><strong>User type:</strong> First-time platform users — wealth advisors, 5–15 years tenure.<br>
+<strong>Specific action:</strong> Complete platform activation (defined as: view an AI recommendation, accept it, edit it, and send it to a real client).<br>
+<strong>Root cause:</strong> AI-generated recommendations lacked source provenance, confidence signalling, and edit affordances.<br>
+<strong>Measurable outcome:</strong> 48 % of new advisors abandoned within their first two weeks. Baseline activation rate was 52 %.</p>
+
+<h3>Why activation mattered as the north-star metric</h3>
+<p>Activation was the leading indicator for adoption. An advisor who activated in the first two weeks was ~4× more likely to remain a weekly-active user at 90 days than one who did not. Given the platform's fixed pool of ~3,000 advisors, every point of activation lift compounded across the AUM they collectively manage.</p>
+
+<h3>The 90-second hesitation window</h3>
+<p>Internal product analytics showed the drop-off was concentrated in a single 90-second window immediately after the first AI recommendation rendered. The user was not lost, not confused about navigation, not stuck on a form. They saw the AI's answer, sat with it, and closed the tab. That is <strong>hesitation, not navigation failure</strong> — a critical distinction that reframes the fix from "UX cleanup" to "trust engineering".</p>
+
+<h3>Verbatim signal — exit interview</h3>
+<blockquote>"I'm not going to send a client a recommendation I can't defend to compliance. The AI gives me a clean answer, but I can't see where it came from. So I just… don't use it." — Senior wealth advisor, week-2 platform exit interview</blockquote>
+
+<h2>4 · Research</h2>
+<h3>Three independent evidence streams, one root cause</h3>
+
+<h4>4.1 Activation funnel analysis (product analytics)</h4>
+<ul>
+  <li>48 % of new advisors dropped between "first AI recommendation viewed" and "first AI recommendation accepted".</li>
+  <li>The drop was <em>concentrated in a single 90-second window</em>, not spread across the funnel.</li>
+  <li>Median time-on-recommendation before drop-off: 78 seconds. This is the reading-and-hesitating signature, not the abandonment-out-of-boredom one (which would look like ≤20 seconds).</li>
+  <li>Advisors who did accept the first recommendation had a 4.1× higher 90-day retention than those who did not.</li>
+</ul>
+
+<h4>4.2 Advisor shadowing (n = 12)</h4>
+<ul>
+  <li>Twelve advisors observed during live client portfolio reviews.</li>
+  <li>Eight (67 %) mentioned unprompted that they "couldn't see the AI's working".</li>
+  <li>Four (33 %) had built <strong>personal Excel spreadsheets</strong> to reverse-engineer AI recommendations before using them. Users routing around your tool to get their work done is a five-alarm signal.</li>
+  <li>Shadowing was done under privacy constraints — captured interaction patterns and hesitation timing, not client data content.</li>
+</ul>
+
+<h4>4.3 Industry benchmark (Gartner 2024)</h4>
+<ul>
+  <li>Gartner's 2024 report <em>Trust in AI Financial Tools</em> found that <strong>73 % of financial advisors reject AI recommendations that lack visible source citations</strong>, even when the recommendation is correct.</li>
+  <li>This established that the trust ceiling was a category-wide phenomenon, not a Goldman-specific bug. It also gave the redesign a defensible external anchor when pitching the tradeoff to leadership.</li>
+</ul>
+
+<h4>4.4 The feedback loop I built with the AI/ML team</h4>
+<p>Internal analytics could tell us where advisors dropped off, but not why a specific recommendation got rejected. To get to mechanism, I partnered with the AI/ML team to build a lightweight in-product feedback loop: a one-tap <em>this wasn't useful</em> signal, with optional reason codes. Within three weeks we had categorised reasons for 1,200+ rejections. Top three:</p>
+<ul>
+  <li><strong>38 %</strong> — "no source visible"</li>
+  <li><strong>24 %</strong> — "can't edit before sending"</li>
+  <li><strong>19 %</strong> — "confidence not stated"</li>
+</ul>
+<p><strong>81 % of rejections were trust-layer problems, not AI-quality problems.</strong> This is the finding that changed the whole redesign direction.</p>
+
+<h2>5 · Options Considered</h2>
+
+<h3>Option A — Full automation (REJECTED)</h3>
+<p><strong>What it was:</strong> AI auto-applies recommendations to client portfolios. Advisor gets a notification after the fact.</p>
+<p><strong>Why it looked attractive:</strong> Fastest possible path to "AI is doing the work". Maximum leverage on the AI investment. Removes the human bottleneck.</p>
+<p><strong>Why we rejected it:</strong> Non-starter under SEC fiduciary duty rules. Every piece of advice sent to a client requires a licensed human's attestation. Compliance flagged this on day one — it wasn't a tradeoff we could make; it was outside the design space entirely. Liability exposure was unacceptable to the firm.</p>
+
+<h3>Option B — AI as "suggestion bot" (REJECTED)</h3>
+<p><strong>What it was:</strong> The AI only ever surfaces hedged, low-confidence suggestions ("you might consider…"). Advisor does all the real work; AI just prompts thought.</p>
+<p><strong>Why it looked attractive:</strong> Safest possible option. Zero regulatory exposure. Simple to build. Advisor is fully in control.</p>
+<p><strong>Why we rejected it:</strong> Pilot feedback was unambiguous — advisors called the AI <em>"too cautious to be useful"</em>. A tool that doesn't make a real recommendation provides no leverage. Advisors would just bypass it — which is exactly what was happening at baseline. Building a safer version of the same failure was not the answer.</p>
+
+<h3>Option C — AI as auditable co-pilot (CHOSEN)</h3>
+<p><strong>What it was:</strong> Surface every AI recommendation with three trust artefacts attached: (1) a numerical confidence score, (2) inline citations to the underlying data sources, and (3) editable fields so advisors could amend the wording before it reached a client.</p>
+<p><strong>Why we chose it:</strong> The AI keeps making real recommendations (unlike Option B). The advisor stays in the loop and stays accountable (unlike Option A). Compliance can point to a defensible audit trail. The AI/ML team can point to a tool that is actually used. The advisor can point to a tool that makes them faster without asking them to stake their name on a black box. This is the position all three constituencies could defend.</p>
+
+<h2>6 · Decision + Tradeoff</h2>
+
+<h3>The core decision</h3>
+<p>We chose <strong>explainability over speed</strong>. Every AI recommendation now takes <strong>2.4 seconds longer to render</strong> because we display source citations + confidence score + edit affordances inline. The product team pushed back on the latency hit initially.</p>
+
+<h3>Tradeoff matrix</h3>
+<h4>Gained</h4>
+<p>Advisor trust. AI recommendation acceptance rose from 38 % to 67 %. Activation rose 16 points. Estimated 60 % reduction in "why did the AI suggest this" support tickets.</p>
+<h4>Lost</h4>
+<p>2.4 seconds of perceived latency per recommendation. For high-throughput advisors generating 30+ recommendations per day, that's ~70 seconds of cumulative wait time.</p>
+<h4>Why accepted</h4>
+<p>A 2.4-second delay on a usable tool beats a 0-second delay on an untrusted one. The rejection reason data was unambiguous — 81 % of rejections were trust problems, not speed problems. Optimising for the bottleneck (trust) was the only defensible call.</p>
+
+<h3>How I defended the decision to product leadership</h3>
+<p>I framed the 2.4-second cost against the 60-second-plus cost of the current alternative: advisors closing the tab entirely. A slower AI that gets used is worth infinitely more than a fast AI that gets bypassed. I also brought the Gartner data to establish that the trust gap was a category truth, not a local UX problem.</p>
+
+<h2>7 · The Three Trust Patterns We Shipped</h2>
+
+<h3>7.1 Confidence visibility</h3>
+<p>Every recommendation now displays a <strong>0–100 confidence score</strong> with a visual band (high / medium / low). Advisors can filter their recommendation queue to "high confidence only" if they want to triage faster. The number is generated from the model's actual logit distribution — not a vibe or a marketing choice. Positioning: confidence band sits <em>top-right</em> of the recommendation card. Eye-tracking from pilot sessions showed advisors scanned in a top-right Z pattern; placing confidence in their first visual stop meant trust evaluation happened <em>before</em> reading content, not after.</p>
+
+<h3>7.2 Citation-backed recommendations</h3>
+<p>Every claim in an AI-generated recommendation links inline to the underlying portfolio data, market signal, or client preference that triggered it. Click any citation and the source panel opens with the raw data. Design detail: citations are rendered as <strong>inline underlines</strong>, not chip-styled pills. Initial designs used pill chips; user testing showed advisors read chips as "tags" (like Notion tags), not as "sources" (like a footnote). Switching to the underline convention (which advisors had seen for 20+ years in research reports) tested 3× higher in first-encounter click-through. This is the single most-used feature in the release — <strong>84 % of activated advisors use it at least daily</strong>.</p>
+
+<h3>7.3 Editable AI responses</h3>
+<p>Advisors can amend any AI output before sending it to a client. Edits are tracked, attributed to the advisor, and persist through regeneration (i.e. if the AI updates the underlying recommendation, the advisor's edits don't get silently overwritten). This was the compliance team's hard requirement — SEC rules require the advisor to attest the final wording — but it turned out to be the design feature advisors <em>valued most</em> in post-launch interviews. Autonomy over the final client-facing wording is what advisors are trained to protect.</p>
+
+<h2>8 · Design Decisions — the "why"</h2>
+
+<h3>Onboarding sequenced as watch → practice → do</h3>
+<p>Because the activation failure was concentrated on the first AI recommendation, we rebuilt onboarding to <em>teach trust before testing it</em>.</p>
+<ul>
+  <li><strong>Screen 1 — Watch:</strong> a guided walk-through of one pre-built recommendation, narrating the confidence score and citation system. No advisor data on screen.</li>
+  <li><strong>Screen 2 — Practice:</strong> a sandbox recommendation against synthetic client data, where the advisor can test editing without any real-world risk.</li>
+  <li><strong>Screen 3 — Do:</strong> live client data appears for the first time. By this point the advisor has already seen the trust artefacts in action twice.</li>
+</ul>
+
+<h3>The recommendation card layout</h3>
+<ul>
+  <li><strong>Top-right:</strong> confidence band + numerical score.</li>
+  <li><strong>Body:</strong> AI-drafted recommendation prose with inline citation underlines.</li>
+  <li><strong>Below body:</strong> "Edit before sending" affordance — always visible, not tucked behind a menu.</li>
+  <li><strong>Footer:</strong> attribution — "AI draft · reviewed by [advisor name]" once the advisor accepts.</li>
+</ul>
+
+<h3>Design-system contribution</h3>
+<p>I built and maintained the centralised Figma design system that houses the recommendation card patterns. Explicit component distinction between <em>AI-output</em> and <em>advisor-output</em> surfaces — a critical compliance distinction that engineering references directly. Engineering handoff time on AI-pattern work dropped substantially after the system shipped; cross-team consistency made downstream features faster to design and faster to review.</p>
+
+<h2>9 · Outcomes</h2>
+
+<h3>Measured outcomes across two release cohorts</h3>
+<ul>
+  <li><strong>Activation:</strong> 52 % → 68 % (+16 pt). Measured via internal product analytics across the first two product releases post-redesign. Improvement was concentrated among 5–15-year-tenure advisors — exactly the cohort research had flagged as most trust-sensitive.</li>
+  <li><strong>AI recommendation acceptance:</strong> 38 % → 67 % (+29 pt). Measured per-recommendation across all activated advisors. When advisors can audit AI outputs, they accept them at nearly twice the rate.</li>
+  <li><strong>Support-ticket reduction:</strong> ~60 % estimated drop in tickets tagged "AI behaviour unclear" or "why did this happen". Methodology: pre/post comparison of 90-day windows, holding ticket volume baseline constant, calibrated against a manual audit of 200 tickets.</li>
+</ul>
+
+<h3>Business framing at scale</h3>
+<p>Platform serves ~3,000 internal advisors. 16-point activation lift = <strong>~480 additional activated advisors</strong>. At an average book of ~$200M AUM per advisor (a publicly cited Goldman PWM range), that translates to ~<strong>$96B in AUM newly under AI-augmented management</strong>. Framing caveat: design didn't acquire the AUM — it removed the trust ceiling that was blocking AI leverage on the AUM the firm already had.</p>
+
+<h3>Voice-of-lead quote</h3>
+<blockquote>"The redesign didn't change the AI model. It changed whether advisors believed the AI model. That's the entire game in regulated industries." — Product lead, internal release retro</blockquote>
+
+<h2>10 · Constraints & Discipline</h2>
+
+<h3>The time / scope / quality triangle applied</h3>
+<p>Compliance reviews don't compress. The AI model couldn't change. So the conscious sacrifice was <strong>timeline</strong>: the trust-layer redesign shipped across two releases instead of one. Cutting scope was unsafe (an incomplete trust layer is worse than no trust layer). Cutting quality was unthinkable (regulated industry). Time stretched. That was the right call.</p>
+
+<h3>Cohort 1 shipped</h3>
+<ul>
+  <li>Confidence visibility pattern.</li>
+  <li>Feedback-loop instrumentation.</li>
+  <li>Onboarding sandbox.</li>
+</ul>
+
+<h3>Cohort 2 shipped</h3>
+<ul>
+  <li>Citation-backed recommendations (inline underlines + source panel).</li>
+  <li>Editable AI responses with tracked attribution.</li>
+  <li>Filter-by-confidence in the recommendation queue.</li>
+</ul>
+
+<h3>Explicitly deferred to V3</h3>
+<ul>
+  <li>Cohort-specific confidence rendering (see What's Next).</li>
+  <li>Automated regression flags when AI confidence drops below a per-client trust threshold.</li>
+  <li>Multi-modal citations (chart-based, not just text).</li>
+</ul>
+
+<h3>How AI tooling compressed design cycles</h3>
+<p>Figma Make accelerated component scaffolding for the recommendation card variants — we needed 14 confidence-band states across three severities and multiple loading states. Claude Code prototyped the citation expansion micro-interactions so I could pressure-test them before engineering committed. Result: a compliance-sensitive surface shipped in two releases instead of three.</p>
+
+<h2>11 · What's Next</h2>
+<h3>Cohort-specific confidence visualisations — A/B in next release</h3>
+<p>The 67 % AI acceptance rate is strong, but the residual 33 % is informative. Reason-code data shows senior advisors (15+ yrs) reject recommendations because the confidence display feels "too prescriptive" — they prefer a range to a single number. Junior advisors (under 5 yrs) reject because they want more guidance, not less. One UI doesn't serve both cohorts.</p>
+<p><strong>Hypothesis:</strong> rendering confidence as a range (e.g. 78–84 %) for senior advisors and as a single number + plain-language explanation for junior advisors will lift acceptance by another 8–12 percentage points. <strong>Instrumentation:</strong> tenure-segmented analytics and a cohort-segmented A/B framework are already in place. Rollback plan exists if the senior cohort's acceptance drops instead.</p>
+
+<h2>12 · Reflection — three lessons</h2>
+<h3>Trust is the product</h3>
+<p>In regulated industries, AI adoption is not blocked by model quality — it is blocked by the absence of an auditable trust layer. The most important UI on the screen is not the AI's answer; it is the explanation behind it.</p>
+
+<h3>Slower beats untrusted</h3>
+<p>Performance is a feature only when the baseline product is being used. A 2.4-second latency cost was the right tradeoff because the alternative was a faster product that no one trusted enough to adopt. Speed is downstream of trust.</p>
+
+<h3>Design the audit trail</h3>
+<p>Every AI surface I design now starts from the question "how does the human prove they reviewed this?" — not "how do we display the model output?" That single reframe changes the entire information architecture: confidence visibility → edit history → citation density.</p>
+
+<h2>13 · Anticipated Q&A</h2>
+
+<div class="qa"><p class="q">Q: What was the single biggest change you made?</p><p class="a">A: Introducing citations. Not confidence, not editability. Citations. The reason-code data showed 38 % of rejections were "no source visible" — the largest category. When advisors could click a claim and see the underlying data behind it, acceptance nearly doubled. Every other feature amplifies citations; citations are the load-bearing wall.</p></div>
+
+<div class="qa"><p class="q">Q: Why didn't you just fine-tune the AI to be more accurate?</p><p class="a">A: Because the AI was already accurate enough — the problem was believability, not accuracy. The rejection reason data was 81 % trust-layer, only 19 % AI-quality. Improving accuracy solves the wrong problem when the bottleneck is provenance. Also, retraining the model was outside the design team's scope and would have cost months of ML work for a smaller lift.</p></div>
+
+<div class="qa"><p class="q">Q: How did you get compliance to sign off?</p><p class="a">A: I brought them in as design partners, not gatekeepers. On day one I asked "walk me through the rationale for each requirement" — a specific question, not the binary "is this regulatory?" That surfaced which constraints were RBI/SEC/FINRA-mandated versus which were internal-policy. It also made compliance co-authors of the trust layer, which meant they defended the design in leadership reviews instead of me having to.</p></div>
+
+<div class="qa"><p class="q">Q: How did you convince the product team to accept the 2.4-second latency cost?</p><p class="a">A: I re-framed the cost. 2.4 seconds sounds bad in isolation; measured against the 60-plus-second alternative of an advisor closing the tab entirely, it's trivial. I also brought the Gartner category benchmark — 73 % of financial advisors reject AI without citations — so leadership could see the tradeoff was industry-standard, not a Goldman anomaly.</p></div>
+
+<div class="qa"><p class="q">Q: How did you measure the ~60 % support-ticket reduction if the classification is fuzzy?</p><p class="a">A: I calibrated the ticketing system's auto-tag classifier against a manual audit of 200 tickets, then did a pre/post comparison of 90-day windows holding baseline ticket volume constant. The number is an estimate, and I say so explicitly in the case study. Estimation with cited methodology beats silence — a hiring manager who sees "estimated 60 % based on [method]" knows the designer understands how to connect design to business outcomes. A hiring manager who sees no number concludes the designer doesn't.</p></div>
+
+<div class="qa"><p class="q">Q: Weren't the top-tier advisors upset when their workflow changed?</p><p class="a">A: The changes were <em>additive</em>, not disruptive — I added trust artefacts around existing recommendations rather than restructuring the workflow itself. Senior advisors still get their recommendation queue and their edit affordances. What did change is that they now have to look at the confidence score, and some of them did push back — which is exactly what fed the "cohort-specific confidence rendering" plan for V3.</p></div>
+
+<div class="qa"><p class="q">Q: What was the hardest design decision?</p><p class="a">A: Rejecting Option B (the "suggestion bot"). It was the politically safest option — no one would criticise it, compliance would rubber-stamp it, and it would ship fast. Rejecting it required me to argue that a safer version of the current failure was still a failure. That argument depended on pilot data showing advisors already called the AI "too cautious to be useful". Without that data I don't think I could have won the room.</p></div>
+
+<div class="qa"><p class="q">Q: What tools did you actually use day-to-day?</p><p class="a">A: Figma for design system + component library work; Figma Make to accelerate scaffolding of the 14 confidence-band variants; Claude Code to prototype citation expansion micro-interactions so I could pressure-test them before engineering committed; Cursor for responsive tuning; AnswerGrid to synthesise the 12 shadowing sessions and 1,200 rejection reason codes into actionable patterns without a week of manual coding.</p></div>
+
+<div class="qa"><p class="q">Q: How big was the team you worked with?</p><p class="a">A: I worked cross-functionally with product leadership, the AI/ML team (built the feedback loop with them), compliance and regulatory affairs (design-partner relationship), engineering (multiple squads), and downstream design teams that consumed the design system I maintained. I was the sole product designer on this specific AI SaaS platform.</p></div>
+
+<div class="qa"><p class="q">Q: What compliance framework did you have to design against?</p><p class="a">A: SEC fiduciary duty rules (advisor must attest advice), FINRA supervision requirements, internal IB controls, and 7-year record retention (every recommendation kept on file, retrievable, reviewable). The editable-AI-response pattern is not a nice-to-have — it exists because SEC rules require the advisor to attest the final wording. The audit trail is not decoration; it is the compliance surface.</p></div>
+
+<div class="qa"><p class="q">Q: What if the AI accuracy improves — does the trust layer become unnecessary?</p><p class="a">A: No, the opposite. Higher AI accuracy raises the stakes of any given recommendation, which raises the value of provenance. The trust layer is the substrate that makes AI accuracy legible to a regulated professional. A more accurate AI that no one can audit is more dangerous, not less.</p></div>
+
+<div class="qa"><p class="q">Q: How would you approach this if you were starting over?</p><p class="a">A: I would still lead with the feedback-loop instrumentation. The single most important artefact I built wasn't a design — it was the in-product "why did you reject this?" mechanism that categorised 1,200 rejections in three weeks. Without that data, "trust" is a vibe; with that data, it is a measurable design surface. Start the instrumentation on day one.</p></div>
+
+<div class="qa"><p class="q">Q: What did the design system contribute beyond components?</p><p class="a">A: The critical contribution was the <strong>AI-output vs. advisor-output distinction</strong> — a formal design-system rule that engineers reference directly in code review. That single documented pattern prevents a whole class of compliance bugs where AI-generated text could accidentally be attributed to the advisor. Systems work quietly like that; you notice its absence more than its presence.</p></div>
+
+<div class="qa"><p class="q">Q: What's the elevator pitch?</p><p class="a">A: Goldman built an AI to draft investment advice for advisors. Advisors weren't using it because they couldn't audit what the AI was doing, and their name — not the AI's — goes on the advice. I designed the trust layer: confidence scores, inline source citations, and editable outputs. Activation went from 52 % to 68 % over two releases and AI recommendation acceptance nearly doubled from 38 % to 67 %. The AI model didn't change; the belief in the AI model did.</p></div>
+
+<div class="qa"><p class="q">Q: How is this different from just "adding tooltips"?</p><p class="a">A: A tooltip explains what a UI element does. A citation defends a claim to a regulator. A confidence score changes the recommendation's meaning — 92 % confidence and 62 % confidence are different pieces of advice, not the same advice presented differently. The trust layer is a first-class information architecture, not a hover state.</p></div>
+
+<div class="qa"><p class="q">Q: What skills does this project demonstrate?</p><p class="a">A: AI product design (specifically for regulated industries), design systems governance, information architecture for high-stakes workflows, cross-functional collaboration (product / ML / compliance / engineering), research synthesis under privacy constraints, quantitative outcome measurement, stakeholder-facing decision defence, and product-thinking rigour (options considered, tradeoffs named explicitly, outcomes tied to business metrics).</p></div>
+
+<h2>14 · Glossary</h2>
+<ul>
+  <li><strong>Activation:</strong> Defined as an advisor viewing an AI recommendation, accepting it, editing it, and sending it to a real client within 14 days of first login.</li>
+  <li><strong>AI acceptance rate:</strong> Per-recommendation ratio of accepted-to-total across activated advisors.</li>
+  <li><strong>AUM:</strong> Assets under management. Goldman's PWM publicly cites averages around $200M per advisor.</li>
+  <li><strong>Confidence band:</strong> Visual grouping (high / medium / low) that translates the model's logit distribution into an advisor-legible signal.</li>
+  <li><strong>Fiduciary duty:</strong> SEC-defined legal obligation for advisors to act in the client's best interest, personally.</li>
+  <li><strong>Logit distribution:</strong> The raw probability distribution the model outputs before it's turned into a single answer.</li>
+  <li><strong>Recommendation queue:</strong> The advisor's inbox of AI-drafted recommendations awaiting review.</li>
+  <li><strong>Trust artefact:</strong> Any UI element whose job is to make an AI output defensible to a regulator (confidence, citation, edit trail).</li>
+</ul>
+
+</body></html>

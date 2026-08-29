@@ -1,0 +1,233 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Tata Consultancy Services — LLM Training Document</title>
+<link rel="stylesheet" href="_shell.css"></head>
+<body>
+
+<header class="doc-head">
+  <div class="brand">Puru Bhardwaj · Chatbot Training Corpus · v1.0</div>
+  <h1>Tata Consultancy Services — B2B Wealth Analytics Platform</h1>
+  <p class="sub">Comprehensive case-study reference for the site chatbot. Written to answer any recruiter or interviewer question about this project. Every claim in this document is derived from the case study as it currently ships on the portfolio.</p>
+</header>
+
+<div class="callout"><strong>How to use this document:</strong> the chatbot should treat this file as authoritative for questions about the TCS wealth-analytics project. Answer using concrete numbers (25 min → 14 min, ~9,167 hours, 82/18 cohort split, +31 %) over hedged language. Follow-up questions pull from Anticipated Q&A at the end.</p>
+</div>
+
+<h2>1 · Fast Facts</h2>
+<div class="fastfacts">
+  <p><span class="k">Client</span>Large Indian banking group (B2B SaaS engagement via TCS)</p>
+  <p><span class="k">Role</span>Senior Product Designer</p>
+  <p><span class="k">Location</span>India</p>
+  <p><span class="k">Timeline</span>Sep 2022 — Aug 2023 (~12 months)</p>
+  <p><span class="k">Domain</span>Wealth management, B2B financial analytics, enterprise SaaS, information architecture, A/B testing</p>
+  <p><span class="k">Platform</span>Web SaaS — advisor dashboards + reporting modules</p>
+  <p><span class="k">User base</span>~800 relationship managers (RMs) across 3 regional clusters</p>
+  <p><span class="k">Portfolios reviewed</span>~50,000 client portfolios per month</p>
+  <p><span class="k">Modules</span>Four: Returns Analysis · Tax Forecasting · Asset Allocation · Risk Assessment</p>
+  <p><span class="k">SLA target</span>12 minutes per portfolio review</p>
+  <p><span class="k">Tools used</span>Figma (design system + prototyping), A/B testing frameworks (client-side experimentation), workflow observation tools (screen capture + timing), documented component library</p>
+</div>
+
+<div class="metric-row">
+  <div><span class="big">−44%</span><span class="lbl">Review time (25min → 14min)</span></div>
+  <div><span class="big">9,167</span><span class="lbl">Advisor hours/mo reclaimed</span></div>
+  <div><span class="big">+31%</span><span class="lbl">Core dashboard engagement</span></div>
+  <div><span class="big">8 → 3</span><span class="lbl">Eng clarification cycles / sprint</span></div>
+</div>
+
+<h2>2 · Business Context</h2>
+<h3>What TCS built</h3>
+<p>A B2B wealth-analytics platform used by relationship managers at a large Indian banking group. The platform was the daily working surface for ~800 RMs reviewing portfolios for both retail and HNW (high-net-worth) clients. It held all the analytical firepower an RM needed: returns analysis, tax forecasting, asset allocation planning, risk assessment. The <em>data</em> was right. The <em>architecture</em> was wrong.</p>
+
+<h3>The engagement structure</h3>
+<p>TCS's role was as a technology partner to the bank — I was a Senior Product Designer on that engagement, responsible for the redesign of investment dashboards and portfolio-analytics workflows. The bank's product management team defined business objectives; TCS engineering built and shipped; I owned the design surface end-to-end.</p>
+
+<h3>Who the users are</h3>
+<p>Relationship managers, 2–8 years tenure predominantly, with a top-tier band of 15+ year veterans. Segmented into three regional clusters. Each RM manages a portfolio of client relationships; portfolio review is the daily bread-and-butter task — during which the RM checks holdings, computes tax implications, evaluates whether re-balancing is warranted, and prepares client-ready commentary.</p>
+
+<h3>The daily-life cost of the bottleneck</h3>
+<p>Each RM does 5–8 portfolio reviews on a normal working day. Across the ~800 RMs that adds up to ~50,000 reviews per month. The SLA target was 12 minutes per review. Baseline was 25 minutes — a 108 % overshoot. That gap wasn't an inconvenience; it was the bank's wealth-advisory cost structure baked into a slow product.</p>
+
+<h2>3 · The Problem</h2>
+
+<h3>The one-sentence version</h3>
+<blockquote>Advisors weren't slow at thinking — they were slow at finding. They spent about 9 of every 25 review minutes hopping between four disconnected modules trying to reconcile numbers that should have already agreed.</blockquote>
+
+<h3>The 4-element problem statement</h3>
+<p><strong>User type:</strong> Mid-tier wealth advisors (RMs, 2–8 years tenure).<br>
+<strong>Specific action:</strong> Deliver a portfolio review inside the 12-minute SLA target.<br>
+<strong>Root cause:</strong> Returns analysis, tax forecasting, and asset allocation data were fragmented across 4 disconnected modules requiring manual cross-referencing.<br>
+<strong>Measurable outcome:</strong> Average review time of 25 minutes against a 12-minute SLA — a 108 % overshoot, documented across 18 workflow interviews and 24 timed sessions.</p>
+
+<h3>The fragmentation tax</h3>
+<p>Timed-task observation (n = 24 sessions with screen capture) broke the 25 minutes into three chunks:</p>
+<ul>
+  <li><strong>~15 minutes:</strong> actual analytical work — reading returns, computing tax implications, evaluating allocation. This is the work you're paying an RM for.</li>
+  <li><strong>~9 minutes:</strong> module-switching, copy/paste, manual cross-referencing. This is the <em>architecture tax</em> — 37 % of every review, spent on plumbing that the product itself should have handled.</li>
+  <li><strong>~1 minute:</strong> compose and send commentary.</li>
+</ul>
+
+<h3>Verbatim signal — workflow interview</h3>
+<blockquote>"I open returns, copy the number into a notepad, switch to tax, copy the next number, switch to allocation, copy the third. Then I open a fourth tab to do the math myself because the platform won't tell me if they reconcile." — RM, 4 years tenure, workflow interview</blockquote>
+<p>Five of the 18 interviewed RMs had built <strong>personal Excel templates</strong> to pre-aggregate data <em>before</em> opening the platform. Users routing around your tool to get work done is the strongest possible signal that the tool is failing them.</p>
+
+<h2>4 · Research</h2>
+
+<h4>4.1 Workflow interviews (n = 18)</h4>
+<p>Eighteen RMs and relationship managers across three regional clusters. Every single interview surfaced the same complaint — "I lose time switching between modules". Interview protocol: open-ended, no leading questions, transcribed and coded for themes. Consistency of the fragmentation signal across 18 independent conversations was itself the strongest evidence.</p>
+
+<h4>4.2 Timed task observation (n = 24)</h4>
+<p>I recorded 24 end-to-end portfolio reviews with screen capture and stopwatch — with informed consent, no client PII captured. Broke the 25-minute average into the ~15 / ~9 / ~1 chunks above. This is the quantitative evidence that translated the qualitative complaint into a defensible business case.</p>
+
+<h4>4.3 Support ticket mining</h4>
+<p>312 of 487 quarterly tickets (64 %) were categorised as either "where is X data" or "this report won't reconcile with Y". Both are navigation/architecture problems, not analytical ones. The support team had effectively become a human reconciliation layer for a product whose architecture shouldn't have shipped that way.</p>
+
+<h4>4.4 Competitive benchmarking</h4>
+<p>Audited three comparable B2B wealth analytics tools: Refinitiv Workspace, Morningstar Direct, Bloomberg PORT. Average review time in published case studies and user testimonials: 12–15 minutes. The gap between this platform and the category leaders was 10–13 minutes per review — almost entirely on architecture, not features. Establishing that the benchmark was reachable gave the redesign a defensible target.</p>
+
+<h2>5 · Options Considered</h2>
+
+<h3>Option A — Global search across all modules (REJECTED)</h3>
+<p><strong>What it was:</strong> A natural-language search bar that would index every report and data point across the four modules. "Find anything fast."</p>
+<p><strong>Why it looked attractive:</strong> Solves the "I can't find X" complaint literally. Lower engineering scope than a canvas rebuild. Would ship in ~2 sprints.</p>
+<p><strong>Why we rejected it:</strong> Indexed search surfaces data but doesn't solve the <em>reconciliation</em> step — which is the actual bottleneck. Advisors were not hunting; they were cross-checking. Search would have built the wrong tool, faster. Support-ticket data confirmed the failure mode was "these two numbers don't agree", not "I can't find this number".</p>
+
+<h3>Option B — Aggregated summary tab (REJECTED)</h3>
+<p><strong>What it was:</strong> Keep the existing four modules intact, add a fifth summary tab on top that pulls headline numbers into one view.</p>
+<p><strong>Why it looked attractive:</strong> Lowest engineering risk. Ships in one sprint. Doesn't disturb any existing workflows.</p>
+<p><strong>Why we rejected it:</strong> Advisors in interviews specifically said they didn't trust summaries they couldn't drill into. A summary tab without a unified data layer would have created a fifth disconnected surface, not a unified one. Every summary that doesn't reconcile the underlying data creates a new "which number is right?" ticket. Cheaper to ship, wrong problem to solve.</p>
+
+<h3>Option C — Unified portfolio canvas (CHOSEN)</h3>
+<p><strong>What it was:</strong> Returns, tax, allocation, and risk all surface on <strong>one screen</strong> with cross-module linking, automatic reconciliation flags, and drill-down hierarchy from headline number down to underlying calculation.</p>
+<p><strong>Why we chose it:</strong> Addresses the root cause. Advisors stop switching. The system handles reconciliation. Drill-down replaces hop-around. Largest engineering scope of the three options — and the only one that would close the 10–13 minute gap. The cost was justified by the math: at ~50,000 reviews per month, an 11-minute per-review saving compounds into ~9,167 reclaimed hours per month.</p>
+
+<h2>6 · Decision + Tradeoff</h2>
+
+<h3>The core decision</h3>
+<p>The unified canvas was the right architectural call, and it had a real political cost. Top-tier RMs (the 18 % that generate 40 % of revenue) had memorised the old module structure and moved through it fast. The redesign broke muscle memory they had built over years. For the first two weeks after launch, they were the loudest complaint channel in the building — <strong>47 internal escalation emails</strong>, and three senior RMs explicitly requested a rollback to the old module view.</p>
+
+<h3>Tradeoff matrix</h3>
+<h4>Gained</h4>
+<p>Review time fell from 25 to 14 minutes for the bottom 82 % of RMs — the cohort doing 78 % of total review volume. Core dashboard engagement rose 31 %. Support tickets for "where is X" dropped almost entirely.</p>
+<h4>Lost</h4>
+<p>Top 18 % of RMs (40 % of revenue) lost their memorised shortcuts for the first two weeks. 47 internal escalation emails. Three explicit rollback requests.</p>
+<h4>Why accepted</h4>
+<p>The 25-minute problem was hurting the volume-driving 82 % of RMs, and it happened on <em>every single review</em>. The senior advisors' pain was learning a new layout <em>once</em>. Fixing the recurring cost was right, even though it made for an uncomfortable fortnight.</p>
+
+<h3>The bridge for senior advisors</h3>
+<p>I built a parallel "legacy module view" toggle for the first 60 days post-launch — senior RMs could opt back into the old structure while learning the canvas at their own pace. Usage data after 60 days: <strong>71 % of senior RMs had voluntarily switched to the new canvas</strong>. The legacy view was retired in release 3, with no further escalations. Lesson: when you change a power user's workflow, give them a bridge, not a cliff.</p>
+
+<h2>7 · Design Solution</h2>
+
+<h3>Unified canvas — the hierarchy that replaced four modules</h3>
+<h4>Returns at the top, allocation in the middle, risk at the base</h4>
+<p>From workflow observation: advisors read portfolios top-down. Returns is the <em>what</em>, allocation is the <em>why</em>, risk is the <em>so what</em>. The canvas hierarchy matches that reading order. In 24 timed sessions, no advisor ever read these in a different sequence — the hierarchy is a designed answer to an observed pattern, not a preference.</p>
+
+<h4>Tax forecast as an inline panel, not a separate tab</h4>
+<p>Tax data was the most-cited reconciliation pain point. It needed to be visible <em>next to</em> returns, not behind a tab switch. Inline panel, collapsible by default for advisors who don't want the visual density, expanded for those who do.</p>
+
+<h3>Reconciliation flags — the unsung hero</h3>
+<p>The single most-loved feature in user feedback after launch was the reconciliation flag — an inline warning when a portfolio's reported allocation doesn't match the underlying holdings (typically due to corporate actions the data feed hasn't fully reflected). Before redesign, advisors caught these manually ~60 % of the time. With the flag system: 100 % catch rate, and the advisor doesn't have to think about it. This is design quietly eliminating an entire failure mode the old architecture had been silently passing on.</p>
+
+<h3>Reusable component patterns for financial workflows</h3>
+<p>I architected reusable component patterns for financial workflows: portfolio cards, drill-down hierarchies, reconciliation states, tax-scenario inputs. Documented in a Figma library with code-mapped tokens. The measurable effect: <strong>engineering clarification cycles per sprint dropped from an average of 8 to 3</strong>. Sprint velocity on adjacent features (risk module, client-facing reports) accelerated because designers and engineers were no longer reinventing patterns each sprint. Design QA rejection rate on sprint releases dropped from ~22 % to ~7 %.</p>
+
+<h3>A/B testing the dashboard improvements</h3>
+<p>I owned the experimentation strategy — running staged A/B tests on the new canvas vs. the old modules across the three regional clusters. Engagement on core dashboard features (returns drill-down, allocation rebalance, tax scenario modelling) lifted <strong>+31 %</strong> in the test cohort. The "summary tab" feature that some stakeholders had requested during scoping was killed by the data: in the cohort where we shipped it as a control, usage was <strong>84 % lower</strong> than the canvas itself. Evidence killed the band-aid.</p>
+
+<h2>8 · Outcomes</h2>
+
+<h3>Measured</h3>
+<ul>
+  <li><strong>Per-portfolio review time:</strong> 25 min → 14 min (−44 %). Same timed-task protocol as pre-redesign, n = 30 reviews across the same three regional clusters. Result held steady across all three clusters — structural improvement, not site-specific.</li>
+  <li><strong>Core dashboard engagement:</strong> +31 % via A/B test across the three clusters.</li>
+  <li><strong>Summary-tab control variant:</strong> 84 % lower usage than the canvas — killed a stakeholder-requested feature before it shipped to the wider population.</li>
+  <li><strong>Engineering clarification cycles:</strong> 8 → 3 per sprint on average after the documented component library shipped.</li>
+  <li><strong>Design QA rejection rate:</strong> ~22 % → ~7 % on sprint releases.</li>
+</ul>
+
+<h3>Business framing — leverage at scale</h3>
+<p>The per-portfolio time saving doesn't sound dramatic in isolation: <em>11 minutes per review</em>. Multiply across the user base:</p>
+<div class="callout"><strong>Time saved = (25 − 14) min × 50,000 portfolios/mo = 550,000 min/mo = ~9,167 advisor hours per month reclaimed.</strong></div>
+<p>At a blended Indian RM cost of ~₹1,500 per hour (publicly cited industry benchmark for B2B wealth-advisory talent in 2023), that's ~<strong>₹1.37 crore per month in advisor productivity recovered</strong>. Methodology: 9,167 hours × ₹1,500. The dollar figure isn't precision — it's framing. The redesign translated an architectural fix into a business case the executive team could defend to their P&L.</p>
+
+<h3>Voice-of-lead quote</h3>
+<blockquote>"The redesign didn't make the analytics better. It made the platform finally match the way advisors actually work. That's a far harder problem — and a far bigger payoff." — Product Manager, internal launch retro</blockquote>
+
+<h2>9 · Constraints & Discipline</h2>
+
+<h3>The time / scope / quality triangle</h3>
+<p>TCS engagements run on hard, observable constraints: a client-set release cadence, a live user base that can't tolerate downtime, and a sprint-based delivery model where designs ship within the window or they don't ship at all. Cutting scope was off the table — an incomplete unified canvas would have created a worse architecture, not a better one. Cutting quality risked the bank's confidence in TCS as a delivery partner. <strong>Time was the lever</strong>: shipped the canvas across two sprint cycles with a parallel "legacy module" toggle to absorb the senior-RM transition risk. Quality and scope held. Time stretched. That was the right call.</p>
+
+<h3>How I worked around client-side data restrictions</h3>
+<p>Client-side data restrictions limited recruitment of the bank's own end customers, so research had to rely on the advisor side of the platform. 18 workflow interviews + 24 timed observation sessions + support-ticket mining gave me three independent evidence sources without ever touching customer-side analytics. The advisor data was sufficient because the bottleneck was on the advisor side.</p>
+
+<h3>Explicitly deferred to V3</h3>
+<ul>
+  <li>AI-drafted portfolio commentary (with regulatory guardrails). See What's Next.</li>
+  <li>Predictive rebalancing nudges based on the new reconciliation flag system.</li>
+  <li>Multi-portfolio batch review.</li>
+</ul>
+
+<h3>How documentation compressed sprint cycles</h3>
+<p>Reusable component patterns weren't just a design system — they were the artefact that closed engineering clarification cycles. By documenting state, behaviour, and edge cases inline with each component, the engineering team stopped Slacking "what should this do when X?" every sprint. That alone reclaimed maybe half a day per sprint per engineer.</p>
+
+<h2>10 · What's Next</h2>
+<h3>AI-drafted portfolio commentary — targeting the bottom-quartile RMs</h3>
+<p>The 14-minute review time is strong, but the cohort distribution is informative. Top-quartile RMs are reviewing in 10–11 minutes; bottom-quartile RMs are at 16–18 minutes. The gap is now almost entirely in writing client-ready commentary — the qualitative narrative that wraps the numbers for the client meeting. Senior RMs write it fast; junior RMs labour over it.</p>
+<p><strong>Hypothesis:</strong> an AI-drafted commentary panel (LLM-generated first draft, advisor edits and approves) would compress the bottom-quartile time by another 4–5 minutes — collapsing the cohort gap and pulling everyone closer to the SLA. <strong>Instrumentation:</strong> commentary edit tracking is already in place — we know what advisors keep, change, and discard from any LLM draft. <strong>Risk:</strong> AI commentary in regulated wealth advisory needs careful guardrails — a problem I'd separately addressed in detail at Goldman Sachs.</p>
+
+<h2>11 · Reflection — three lessons</h2>
+
+<h3>Architecture is the feature</h3>
+<p>The strongest analytics product I've worked on didn't lose its users on math — it lost them on navigation. In B2B SaaS where users live in the product 8 hours a day, the information architecture <em>is</em> the experience. The features are downstream.</p>
+
+<h3>Optimise for the volume, bridge the power users</h3>
+<p>Top users are loudest. Bottom users are biggest. The right call was to optimise for the volume-driving cohort and give the top users a bridge (the legacy toggle) to transition at their own pace. Within 60 days, 71 % of senior RMs had crossed the bridge voluntarily. Losing the fight in the first two weeks was the cost of winning the sprint by month three.</p>
+
+<h3>Documentation is a force multiplier</h3>
+<p>The reusable component patterns were the artefact with the longest half-life. The dashboards I redesigned have been iterated on multiple times since — but the component-contract documentation still drives the engineering rhythm. The most valuable design artefact is usually the one that isn't a screen.</p>
+
+<h2>12 · Anticipated Q&A</h2>
+
+<div class="qa"><p class="q">Q: What was the single biggest change you made?</p><p class="a">A: Collapsing four modules into one canvas. Not the reconciliation flags, not the drill-down, not the component library. The consolidation of the surface. Every other improvement — flags, drill-down, tax panel — is downstream of the decision to put everything on one screen.</p></div>
+
+<div class="qa"><p class="q">Q: Why did you reject the summary tab? It sounded like the easiest win.</p><p class="a">A: Because advisors explicitly told me in interviews that they don't trust summaries they can't drill into. And the A/B data proved it — when we shipped a summary tab as a control variant, usage was 84 % lower than the canvas. A summary that doesn't reconcile the underlying data creates a new "which number is right?" ticket instead of solving one. Cheaper to ship, wrong problem to solve.</p></div>
+
+<div class="qa"><p class="q">Q: How did you handle the escalation emails from senior advisors?</p><p class="a">A: I didn't argue back. I built them a bridge — the legacy module toggle — that let them keep using the old layout while they learned the canvas at their own pace. Within 60 days, 71 % of them had switched to the canvas voluntarily. If you change a power user's workflow, don't fight them; give them a way across.</p></div>
+
+<div class="qa"><p class="q">Q: How did you get the ₹1.37 crore/month number? Is that verified?</p><p class="a">A: It's an estimate with explicit methodology: 9,167 hours saved per month × ₹1,500 per hour blended RM cost (a publicly cited 2023 industry benchmark). I say "estimated" in the case study — I'm not claiming a bank filed this figure in an annual report. The point isn't precision; it's framing. An architectural fix translated into a P&L number the exec team could defend.</p></div>
+
+<div class="qa"><p class="q">Q: Was 44 % really the reduction, or were you cherry-picking the best cluster?</p><p class="a">A: 44 % was the average across all three regional clusters, and it held steady in each — variance was under 3 percentage points cluster-to-cluster. That consistency is itself the finding: the improvement was structural, not site-specific. If one cluster had lifted 60 % and another 10 %, the fix would have been the local team, not the architecture.</p></div>
+
+<div class="qa"><p class="q">Q: What was the hardest design decision?</p><p class="a">A: Insisting on the canvas over the summary tab against a well-organised stakeholder faction who wanted the cheaper option. The A/B data eventually proved me right, but that data didn't exist when the decision had to be made. I had to lean on user interviews (which they could dismiss as anecdotal) and workflow observation (which they could dismiss as small-n). The moment the summary control variant showed 84 % lower usage, the argument ended — but for four weeks I was defending a scope call with softer evidence.</p></div>
+
+<div class="qa"><p class="q">Q: How did you convince engineering to commit to a canvas rebuild instead of a tab?</p><p class="a">A: I quantified the engineering-side cost of the wrong choice. Every "which number is right?" support ticket cost the engineering team ~2 hours of investigation. 312 of 487 quarterly tickets fell in that bucket = ~624 hours per quarter of eng time spent covering for the architecture. A canvas rebuild is expensive up front but eliminates that ongoing tax. Eng leadership pattern-matched it as "pay the debt now vs pay interest forever" — and they picked now.</p></div>
+
+<div class="qa"><p class="q">Q: What tools did you use day-to-day?</p><p class="a">A: Figma for design system + prototyping; a client-side A/B testing framework (I owned the experimentation strategy end-to-end); screen-capture + stopwatch for the 24 timed observation sessions; a documented component library with usage guidelines that became the artefact engineering referenced in every sprint.</p></div>
+
+<div class="qa"><p class="q">Q: How was your role different from the bank's own PM?</p><p class="a">A: The bank's PM defined business objectives (the SLA target, the release cadence) and owned stakeholder alignment inside the bank. I owned the design surface end-to-end: research, decision defence, component patterns, A/B experimentation strategy, and the working relationship with TCS engineering. We were adjacent, not stacked — I reported into TCS's engagement lead, not into the bank.</p></div>
+
+<div class="qa"><p class="q">Q: What if the SLA target had been 20 minutes instead of 12?</p><p class="a">A: Then the canvas rebuild wouldn't have been justified — the summary tab would have been the right call. The tradeoff was: architecture rebuild is worth doing only when the gap you have to close is bigger than a band-aid can cover. A 13-minute overshoot demanded a rebuild. A 5-minute overshoot would have demanded a summary.</p></div>
+
+<div class="qa"><p class="q">Q: What did the design system contribute beyond components?</p><p class="a">A: The largest half-life contribution was the documented component contracts — state, behaviour, edge cases documented inline with each component. This is what dropped engineering clarification cycles from 8 to 3 per sprint. The visual components are copied. The behavioural documentation is what compounds.</p></div>
+
+<div class="qa"><p class="q">Q: How much did A/B testing shape the final product?</p><p class="a">A: Materially. A/B testing didn't just measure success post-launch — it killed a stakeholder-requested feature (the summary tab) before it shipped, and it validated feature engagement on individual canvas components (drill-down, rebalance, scenario modelling). The +31 % engagement number is the aggregate; underneath it was per-feature data that informed which parts of the canvas to double down on in follow-up sprints.</p></div>
+
+<div class="qa"><p class="q">Q: What would you change with hindsight?</p><p class="a">A: Instrument commentary edit tracking earlier. The cohort gap between top-quartile and bottom-quartile RMs (10–11 min vs 16–18 min) turned out to be almost entirely about commentary writing, not analytical work. If I'd known that at week 4 instead of week 40, we'd have moved the AI-commentary experiment into V2 instead of V3.</p></div>
+
+<div class="qa"><p class="q">Q: What's the elevator pitch?</p><p class="a">A: The bank's wealth-analytics platform was averaging 25 minutes per portfolio review against a 12-minute SLA. Advisors weren't slow at thinking; they were slow at finding — 37 % of every review went to switching between four disconnected modules and reconciling numbers by hand. I consolidated them into one unified canvas with automatic reconciliation. Review time dropped to 14 minutes, which multiplied across ~50,000 monthly reviews reclaimed ~9,167 advisor hours per month.</p></div>
+
+<div class="qa"><p class="q">Q: What skills does this project demonstrate?</p><p class="a">A: Information architecture for high-frequency B2B workflows, quantitative research (workflow interviews + timed observation + support-ticket mining), design-system architecture with documented component contracts, A/B experimentation strategy ownership, stakeholder management under political heat (the 47 escalation emails), decision defence with rigorous tradeoff framing, cross-functional collaboration with client-side PM + TCS engineering + bank compliance.</p></div>
+
+<h2>13 · Glossary</h2>
+<ul>
+  <li><strong>RM:</strong> Relationship Manager. The user of this platform. Each RM manages a portfolio of client relationships.</li>
+  <li><strong>SLA:</strong> Service-Level Agreement — here, the internal target for how long a portfolio review should take.</li>
+  <li><strong>Portfolio review:</strong> An RM's end-to-end evaluation of a client's holdings: returns, tax implications, allocation, risk, and client-ready commentary.</li>
+  <li><strong>Reconciliation flag:</strong> An inline warning when a portfolio's reported allocation doesn't match the underlying holdings.</li>
+  <li><strong>Cluster:</strong> One of three regional groupings of RMs — used for A/B test cohort assignment.</li>
+  <li><strong>Legacy toggle:</strong> The 60-day parallel view that let senior RMs opt back into the old module structure while learning the canvas.</li>
+  <li><strong>Design-system component contract:</strong> The documented rules governing when and how a component is used — state, behaviour, edge cases.</li>
+</ul>
+
+</body></html>
