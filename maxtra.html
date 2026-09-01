@@ -439,47 +439,104 @@
   <div class="cs-row-content">
     <h2 class="cs-h2">Three approaches. The one we shipped wasn't the one that looked best on paper.</h2>
 
-    <figure class="cs-fig" role="img" aria-label="Three paths were evaluated. Deleting three steps required four months of legal review — blocked. Conditional disclosure shipped in six weeks. API pre-fill was partially adopted and queued for V2.">
-      <span class="cs-fig__label">Three paths &middot; one shipped in six weeks</span>
-      <svg class="cs-fig__svg" viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <circle cx="46" cy="125" r="6" fill="currentColor" opacity="0.55"/>
-        <text x="26" y="152" font-family="ui-monospace, monospace" font-size="9.5" fill="currentColor" opacity="0.55" letter-spacing="1">35% COMPLETION</text>
-        <path d="M52 125 C 90 125, 100 55, 140 55" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
-        <path d="M52 125 L 140 125" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
-        <path d="M52 125 C 90 125, 100 195, 140 195" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
-
-        <!-- Path A — blocked -->
-        <g opacity="0.55">
-          <text x="140" y="34" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" letter-spacing="1.6">PATH A · DELETE 3 STEPS</text>
-          <path d="M140 55 L 780 55" stroke="currentColor" stroke-width="1.1" stroke-dasharray="3 4" fill="none"/>
-          <g transform="translate(790 55)" stroke="#98A3AE" stroke-width="1.8" fill="none">
-            <line x1="-8" y1="-8" x2="8" y2="8"/><line x1="-8" y1="8" x2="8" y2="-8"/>
+    <figure class="cs-fig" role="img" aria-label="Diagram of the seven-step KYC form shown three ways. Option A shows three steps struck through but the whole flow blocked by a four-month legal wait. Option B keeps all seven steps in the data model but the SME only sees four active ones; the three complex-entity steps are hidden. Option C keeps all seven steps but shortens each step via API pre-fill.">
+      <span class="cs-fig__label">Seven steps &middot; three ways to fix what the SME actually sees</span>
+      <svg class="cs-fig__svg" viewBox="0 0 900 310" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Header row: the 7-step form as it exists in the data model -->
+        <text x="20" y="30" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" opacity="0.55" letter-spacing="1.4">THE FORM &middot; 7 STEPS</text>
+        <g>
+          <g fill="none" stroke="currentColor" stroke-width="1.1" opacity="0.55">
+            <rect x="20"  y="42" width="80" height="30" rx="1"/>
+            <rect x="112" y="42" width="80" height="30" rx="1"/>
+            <rect x="204" y="42" width="80" height="30" rx="1"/>
+            <rect x="296" y="42" width="80" height="30" rx="1"/>
+            <rect x="388" y="42" width="80" height="30" rx="1"/>
+            <rect x="480" y="42" width="80" height="30" rx="1"/>
+            <rect x="572" y="42" width="80" height="30" rx="1"/>
           </g>
-          <text x="808" y="59" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" letter-spacing="1">4-MO WAIT</text>
-          <text x="140" y="76" font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.7">clean data model · but 4 months of legal review · 13,000 SMEs lost meanwhile</text>
+          <g font-family="ui-monospace, monospace" font-size="10" fill="currentColor" opacity="0.7" text-anchor="middle">
+            <text x="60"  y="62">1</text>
+            <text x="152" y="62">2</text>
+            <text x="244" y="62">3</text>
+            <text x="336" y="62">4</text>
+            <text x="428" y="62">5</text>
+            <text x="520" y="62">6</text>
+            <text x="612" y="62">7</text>
+          </g>
+          <text x="668" y="62" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" opacity="0.55" letter-spacing="1">← current</text>
         </g>
 
-        <!-- Path B — shipped -->
-        <g>
-          <text x="140" y="104" font-family="ui-monospace, monospace" font-size="9" fill="#E0533C" font-weight="600" letter-spacing="1.6">PATH B · CONDITIONAL DISCLOSURE</text>
-          <path d="M140 125 L 782 125" stroke="#E0533C" stroke-width="1.6" fill="none"/>
-          <path d="M782 125 L 774 119 M782 125 L 774 131" stroke="#E0533C" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-          <rect x="792" y="114" width="70" height="22" fill="#E0533C"/>
-          <text x="827" y="129" font-family="ui-monospace, monospace" font-size="9" fill="#fff" text-anchor="middle" font-weight="600" letter-spacing="1.4">SHIPPED</text>
-          <text x="140" y="146" font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.7">SMEs see 4 steps · complex entities see 7 · no schema change · 6-week build</text>
+        <!-- Row A: Delete 3 steps, blocked -->
+        <g opacity="0.6">
+          <text x="20" y="112" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" letter-spacing="1.4">A &middot; DELETE 3 STEPS</text>
+          <g stroke="currentColor" stroke-width="1" opacity="0.85">
+            <rect x="20"  y="122" width="80" height="30" rx="1" fill="none"/>
+            <rect x="112" y="122" width="80" height="30" rx="1" fill="none"/>
+            <rect x="204" y="122" width="80" height="30" rx="1" fill="none"/>
+            <rect x="296" y="122" width="80" height="30" rx="1" fill="none"/>
+            <!-- Struck-out steps 5-7 -->
+            <g opacity="0.35" stroke-dasharray="3 3">
+              <rect x="388" y="122" width="80" height="30" rx="1" fill="none"/>
+              <rect x="480" y="122" width="80" height="30" rx="1" fill="none"/>
+              <rect x="572" y="122" width="80" height="30" rx="1" fill="none"/>
+            </g>
+            <g stroke="#98A3AE" stroke-width="1.4">
+              <line x1="392" y1="126" x2="464" y2="148"/><line x1="484" y1="126" x2="556" y2="148"/><line x1="576" y1="126" x2="648" y2="148"/>
+              <line x1="464" y1="126" x2="392" y2="148"/><line x1="556" y1="126" x2="484" y2="148"/><line x1="648" y1="126" x2="576" y2="148"/>
+            </g>
+          </g>
+          <!-- Verdict tag -->
+          <g stroke="currentColor" stroke-width="1" fill="none" opacity="0.6">
+            <rect x="700" y="122" width="180" height="30" rx="1"/>
+          </g>
+          <text x="790" y="141" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" text-anchor="middle" opacity="0.75" letter-spacing="1.2">4-MO LEGAL WAIT · BLOCKED</text>
         </g>
 
-        <!-- Path C — partial -->
+        <!-- Row B: Conditional disclosure — the winner -->
         <g>
-          <text x="140" y="174" font-family="ui-monospace, monospace" font-size="9" fill="#E0533C" opacity="0.75" font-weight="600" letter-spacing="1.6">PATH C · PAN + GST API PRE-FILL</text>
-          <path d="M140 195 L 782 195" stroke="#E0533C" stroke-width="1.4" stroke-dasharray="6 4" fill="none" opacity="0.7"/>
-          <path d="M782 195 L 774 189 M782 195 L 774 201" stroke="#E0533C" stroke-width="1.4" fill="none" stroke-linecap="round" opacity="0.7"/>
-          <rect x="792" y="184" width="70" height="22" fill="none" stroke="#E0533C" stroke-width="1.4" opacity="0.7"/>
-          <text x="827" y="199" font-family="ui-monospace, monospace" font-size="9" fill="#E0533C" text-anchor="middle" font-weight="600" letter-spacing="1.4" opacity="0.85">V2 QUEUE</text>
-          <text x="140" y="217" font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.7">useful but doesn't touch step-count · light pre-fill in V1 · deep API in V2</text>
+          <text x="20" y="192" font-family="ui-monospace, monospace" font-size="9" fill="#E0533C" font-weight="600" letter-spacing="1.4">B &middot; CONDITIONAL DISCLOSURE &nbsp;·&nbsp; SMEs see 4 &middot; complex entities see 7</text>
+          <g>
+            <!-- SME-visible steps: filled solid orange -->
+            <rect x="20"  y="202" width="80" height="30" rx="1" fill="#E0533C"/>
+            <rect x="112" y="202" width="80" height="30" rx="1" fill="#E0533C"/>
+            <rect x="204" y="202" width="80" height="30" rx="1" fill="#E0533C"/>
+            <rect x="296" y="202" width="80" height="30" rx="1" fill="#E0533C"/>
+            <!-- Complex-only steps: dashed outline in orange -->
+            <g fill="none" stroke="#E0533C" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.75">
+              <rect x="388" y="202" width="80" height="30" rx="1"/>
+              <rect x="480" y="202" width="80" height="30" rx="1"/>
+              <rect x="572" y="202" width="80" height="30" rx="1"/>
+            </g>
+          </g>
+          <!-- Segment labels below -->
+          <g font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.7" letter-spacing="1">
+            <text x="188" y="248" text-anchor="middle">SME (78% of signups)</text>
+            <text x="520" y="248" text-anchor="middle" opacity="0.7">LLPs · partnerships · trusts</text>
+          </g>
+          <!-- Verdict tag: filled orange -->
+          <rect x="700" y="202" width="180" height="30" fill="#E0533C"/>
+          <text x="790" y="221" font-family="ui-monospace, monospace" font-size="9" fill="#fff" text-anchor="middle" font-weight="600" letter-spacing="1.2">6-WEEK BUILD · SHIPPED</text>
+        </g>
+
+        <!-- Row C: API pre-fill — partial adoption -->
+        <g>
+          <text x="20" y="278" font-family="ui-monospace, monospace" font-size="9" fill="#E0533C" opacity="0.75" font-weight="600" letter-spacing="1.4">C &middot; PAN + GST PRE-FILL &nbsp;·&nbsp; still 7 steps, each shorter</text>
+          <g fill="none" stroke="#E0533C" stroke-width="1.2" opacity="0.75">
+            <rect x="20"  y="286" width="80" height="18" rx="1"/>
+            <rect x="112" y="286" width="80" height="18" rx="1"/>
+            <rect x="204" y="286" width="80" height="18" rx="1"/>
+            <rect x="296" y="286" width="80" height="18" rx="1"/>
+            <rect x="388" y="286" width="80" height="18" rx="1"/>
+            <rect x="480" y="286" width="80" height="18" rx="1"/>
+            <rect x="572" y="286" width="80" height="18" rx="1"/>
+          </g>
+          <g stroke="currentColor" stroke-width="1.2" fill="none" stroke-dasharray="4 4" opacity="0.55">
+            <rect x="700" y="282" width="180" height="26" rx="1"/>
+          </g>
+          <text x="790" y="299" font-family="ui-monospace, monospace" font-size="9" fill="#E0533C" text-anchor="middle" font-weight="600" letter-spacing="1.2" opacity="0.8">PARTIAL · V2 QUEUE</text>
         </g>
       </svg>
-      <p class="cs-fig__cap">The cleanest solution would have shipped in February. Conditional disclosure shipped in November. Ten weeks of shipped product beat sixteen weeks of engineering purity.</p>
+      <p class="cs-fig__cap">Only Option B changes what the SME segment actually sees &mdash; without touching the data model or the RBI-mandated fields. Same seven steps in the database, four steps on screen for the 78% who abandon most.</p>
     </figure>
 
     <div class="cs-options">
@@ -515,37 +572,84 @@
     <h2 class="cs-h2">We chose ship-and-iterate over wait-for-perfect. Here's what we accepted.</h2>
     <p class="cs-body">Conditional disclosure was not the cleanest engineering solution. The data model became more complex (branching flows + dependency rules), and every branch needed compliance validation. The "pure" approach &mdash; deleting 3 steps from the data model entirely &mdash; was cleaner. But cleaner would have shipped in February. Conditional disclosure shipped in November.</p>
 
-    <figure class="cs-fig" role="img" aria-label="A balance diagram. On the left, a small circle labelled Purity — clean model, 16 weeks. On the right, a much larger circle labelled Shipped — conditional flow, 6 weeks, 13,000 SMEs saved. The bar tips down to the right.">
-      <span class="cs-fig__label">Ship-and-iterate vs wait-for-perfect &middot; where the weight sat</span>
+    <figure class="cs-fig" role="img" aria-label="A cumulative line chart showing SME customers lost each week. The wait-for-perfect line climbs steadily to about 13,000 lost SMEs by week 16. The ship-in-6-weeks line climbs to about 4,900 by week 6 and then flattens because the fix is deployed. The shaded gap between the two lines represents roughly 10,000 SMEs saved.">
+      <span class="cs-fig__label">Cumulative SMEs lost &middot; the cost of waiting for 'clean'</span>
       <svg class="cs-fig__svg" viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Chart area: X 90→860, Y 40→260. Right side reserved for legend. -->
+        <!-- Grid -->
+        <g stroke="currentColor" opacity="0.14" stroke-width="1">
+          <line x1="90" y1="60"  x2="720" y2="60"/>
+          <line x1="90" y1="110" x2="720" y2="110"/>
+          <line x1="90" y1="160" x2="720" y2="160"/>
+          <line x1="90" y1="210" x2="720" y2="210"/>
+          <line x1="90" y1="260" x2="720" y2="260"/>
+        </g>
+        <line x1="90" y1="40"  x2="90"  y2="260" stroke="currentColor" opacity="0.5" stroke-width="1"/>
+        <line x1="90" y1="260" x2="720" y2="260" stroke="currentColor" opacity="0.5" stroke-width="1"/>
+
+        <!-- Y-axis labels -->
+        <g font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.55" text-anchor="end" letter-spacing="1">
+          <text x="82" y="63">15k SMEs</text>
+          <text x="82" y="113">10k</text>
+          <text x="82" y="163">5k</text>
+          <text x="82" y="213">2k</text>
+          <text x="82" y="263">0</text>
+        </g>
+        <text x="30" y="150" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" opacity="0.55" letter-spacing="1.4" transform="rotate(-90 30 150)">SMES ABANDONED</text>
+
+        <!-- X-axis labels (weeks) -->
+        <g font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.55" text-anchor="middle" letter-spacing="1">
+          <text x="90"  y="278">W0</text>
+          <text x="248" y="278">W4</text>
+          <text x="327" y="278" fill="#E0533C" opacity="0.85" font-weight="600">W6</text>
+          <text x="405" y="278">W8</text>
+          <text x="563" y="278">W12</text>
+          <text x="720" y="278" opacity="0.85">W16</text>
+        </g>
+        <text x="405" y="298" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" opacity="0.55" text-anchor="middle" letter-spacing="1.4">TIME</text>
+
+        <!-- WAIT scenario: linear climb 0 → 13,000 across 16 weeks
+             Y-scale: 15k = y60, 0 = y260. So Δy=200 for Δ15k. 13k = y60 + (2/15)*200 = y87 -->
+        <line x1="90" y1="260" x2="720" y2="87" stroke="currentColor" stroke-width="2" opacity="0.55"/>
+        <circle cx="720" cy="87" r="4.5" fill="currentColor" opacity="0.7"/>
+
+        <!-- SHIP scenario: climb to ~4,900 SMEs by W6 then flatten
+             4.9k = y60 + (10.1/15)*200 = y194. W6 at x = 90 + (6/16)*630 = 326.25 -->
+        <path d="M 90 260 L 326 194 L 720 194" fill="none" stroke="#E0533C" stroke-width="2.6"/>
+        <!-- Fix-shipped marker -->
+        <circle cx="326" cy="194" r="5" fill="#E0533C"/>
+        <line x1="326" y1="194" x2="326" y2="60" stroke="#E0533C" stroke-width="1" stroke-dasharray="3 4" opacity="0.55"/>
+        <text x="332" y="70" font-family="ui-monospace, monospace" font-size="9" fill="#E0533C" letter-spacing="1.2">fix shipped &middot; abandonment stops</text>
+
+        <!-- Shaded gap area = SMEs saved -->
+        <path d="M 326 194 L 720 87 L 720 194 Z" fill="#E0533C" opacity="0.10"/>
+
+        <!-- Endpoint annotation for wait scenario -->
+        <line x1="720" y1="82" x2="720" y2="40" stroke="currentColor" opacity="0.35" stroke-dasharray="2 3"/>
+        <text x="712" y="52" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" opacity="0.7" text-anchor="end" letter-spacing="1">wait: ~13k lost</text>
+
+        <!-- Endpoint annotation for ship scenario -->
+        <text x="712" y="188" font-family="ui-monospace, monospace" font-size="9" fill="#E0533C" text-anchor="end" font-weight="600" letter-spacing="1">ship: ~4.9k lost</text>
+
+        <!-- Legend column on the right (x 750→885) -->
         <g>
-          <circle cx="230" cy="132" r="46" fill="#FBE4D8"/>
-          <text x="230" y="128" font-family="'Instrument Serif', serif" font-size="20" fill="#E0533C" text-anchor="middle" font-weight="400">Purity</text>
-          <text x="230" y="150" font-family="ui-monospace, monospace" font-size="9" fill="#E0533C" text-anchor="middle" letter-spacing="1.2">clean model · 16 wks</text>
+          <text x="750" y="65" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" opacity="0.55" letter-spacing="1.4">THE GAP</text>
+          <text x="750" y="88" font-family="'Instrument Serif', Georgia, serif" font-size="34" fill="#E0533C" font-weight="400">~10k</text>
+          <text x="750" y="108" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" opacity="0.7" letter-spacing="1">SMEs saved by</text>
+          <text x="750" y="122" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" opacity="0.7" letter-spacing="1">shipping 10 weeks</text>
+          <text x="750" y="136" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" opacity="0.7" letter-spacing="1">earlier</text>
+
+          <line x1="750" y1="168" x2="878" y2="168" stroke="currentColor" opacity="0.2"/>
+
+          <!-- Legend swatches -->
+          <line x1="750" y1="192" x2="774" y2="192" stroke="currentColor" stroke-width="2" opacity="0.55"/>
+          <text x="782" y="196" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" opacity="0.7" letter-spacing="1">wait 16 wks</text>
+
+          <line x1="750" y1="216" x2="774" y2="216" stroke="#E0533C" stroke-width="2.6"/>
+          <text x="782" y="220" font-family="ui-monospace, monospace" font-size="9" fill="#E0533C" letter-spacing="1">ship at wk 6</text>
         </g>
-        <g>
-          <circle cx="700" cy="192" r="92" fill="#E0533C"/>
-          <text x="700" y="184" font-family="'Instrument Serif', serif" font-size="32" fill="#fff" text-anchor="middle" font-weight="400">Shipped</text>
-          <text x="700" y="212" font-family="ui-monospace, monospace" font-size="11" fill="#fff" text-anchor="middle" letter-spacing="1.4" opacity="0.9">6 wks · 13,000 SMEs kept</text>
-        </g>
-        <g stroke="#98A3AE" stroke-width="2.2" stroke-linecap="round" fill="none">
-          <line x1="132" y1="182" x2="798" y2="248"/>
-        </g>
-        <g fill="#98A3AE">
-          <polygon points="450,258 428,300 472,300"/>
-        </g>
-        <line x1="410" y1="308" x2="490" y2="308" stroke="#98A3AE" stroke-width="1.6" stroke-linecap="round"/>
-        <g stroke="#98A3AE" stroke-width="1" opacity="0.45">
-          <line x1="270" y1="196" x2="270" y2="204"/>
-          <line x1="360" y1="205" x2="360" y2="213"/>
-          <line x1="450" y1="214" x2="450" y2="222"/>
-          <line x1="540" y1="223" x2="540" y2="231"/>
-          <line x1="630" y1="232" x2="630" y2="240"/>
-        </g>
-        <text x="112" y="126" font-family="ui-monospace, monospace" font-size="9" fill="#98A3AE" text-anchor="end" letter-spacing="1.2">ENGINEERING DEBT</text>
-        <text x="820" y="180" font-family="ui-monospace, monospace" font-size="9" fill="#98A3AE" letter-spacing="1.2">CUSTOMERS RETAINED</text>
       </svg>
-      <p class="cs-fig__cap">Engineering complexity is recoverable through refactoring later. Customers walking out the door for four months are not.</p>
+      <p class="cs-fig__cap">Every week of waiting is another cohort of SMEs walking away. Shipping the imperfect fix at week 6 stops the bleed; the perfect fix at week 16 keeps it going for another ten weeks. The gap is ~10,000 businesses.</p>
     </figure>
 
     <div class="cs-tradeoff">

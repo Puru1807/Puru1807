@@ -591,45 +591,86 @@
   <div class="cs-row-content">
     <h2 class="cs-h2">Three ways to fix it. I ruled out two.</h2>
 
-    <figure class="cs-fig" role="img" aria-label="Three paths were evaluated. Global search was ruled out because it finds data but doesn't reconcile it. A summary tab was ruled out because advisors don't trust summaries they can't drill into. The unified canvas shipped.">
-      <span class="cs-fig__label">Three paths &middot; two dead ends</span>
-      <svg class="cs-fig__svg" viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <circle cx="46" cy="125" r="6" fill="currentColor" opacity="0.55"/>
-        <text x="26" y="152" font-family="ui-monospace, monospace" font-size="9.5" fill="currentColor" opacity="0.55" letter-spacing="1">THE BOTTLENECK</text>
-        <path d="M52 125 C 90 125, 100 55, 140 55" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
-        <path d="M52 125 L 140 125" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
-        <path d="M52 125 C 90 125, 100 195, 140 195" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
-
-        <g opacity="0.55">
-          <text x="140" y="34" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" letter-spacing="1.6">PATH A · GLOBAL SEARCH</text>
-          <path d="M140 55 L 780 55" stroke="currentColor" stroke-width="1.1" stroke-dasharray="3 4" fill="none"/>
-          <g transform="translate(790 55)" stroke="#98A3AE" stroke-width="1.8" fill="none">
-            <line x1="-8" y1="-8" x2="8" y2="8"/><line x1="-8" y1="8" x2="8" y2="-8"/>
-          </g>
-          <text x="808" y="59" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" letter-spacing="1">SKIPPED</text>
-          <text x="140" y="76" font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.7">finds data · doesn't reconcile it · advisors were cross-checking, not hunting</text>
+    <figure class="cs-fig" role="img" aria-label="A matrix showing how each option affects the four modules — Returns, Tax, Allocation, and Risk. Global search touches all four but leaves them isolated. A summary tab surfaces headline numbers but blocks drill-down. The unified canvas links all four with reconciliation flags between them.">
+      <span class="cs-fig__label">What each option touches &middot; four modules, three architectures</span>
+      <svg class="cs-fig__svg" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Column headers — the 4 platform modules -->
+        <g font-family="ui-monospace, monospace" font-size="9" fill="currentColor" opacity="0.65" letter-spacing="1.2" text-anchor="middle">
+          <text x="345" y="28">RETURNS</text>
+          <text x="475" y="28">TAX</text>
+          <text x="605" y="28">ALLOCATION</text>
+          <text x="735" y="28">RISK</text>
         </g>
+        <line x1="280" y1="42" x2="800" y2="42" stroke="currentColor" stroke-width="0.8" opacity="0.25"/>
 
-        <g opacity="0.55">
-          <text x="140" y="104" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" letter-spacing="1.6">PATH B · SUMMARY TAB</text>
-          <path d="M140 125 L 780 125" stroke="currentColor" stroke-width="1.1" stroke-dasharray="3 4" fill="none"/>
-          <g transform="translate(790 125)" stroke="#98A3AE" stroke-width="1.8" fill="none">
-            <line x1="-8" y1="-8" x2="8" y2="8"/><line x1="-8" y1="8" x2="8" y2="-8"/>
-          </g>
-          <text x="808" y="129" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" letter-spacing="1">SKIPPED</text>
-          <text x="140" y="146" font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.7">advisors don't trust a summary they can't open · a fifth disconnected screen</text>
-        </g>
-
+        <!-- Row A: Global search — data indexed but each module isolated -->
         <g>
-          <text x="140" y="174" font-family="ui-monospace, monospace" font-size="9" fill="#E0533C" font-weight="600" letter-spacing="1.6">PATH C · UNIFIED PORTFOLIO CANVAS</text>
-          <path d="M140 195 L 782 195" stroke="#E0533C" stroke-width="1.6" fill="none"/>
-          <path d="M782 195 L 774 189 M782 195 L 774 201" stroke="#E0533C" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-          <rect x="792" y="184" width="70" height="22" fill="#E0533C"/>
-          <text x="827" y="199" font-family="ui-monospace, monospace" font-size="9" fill="#fff" text-anchor="middle" font-weight="600" letter-spacing="1.4">SHIPPED</text>
-          <text x="140" y="217" font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.7">one screen · cross-linked · automatic reconciliation · drill-down replaces hopping</text>
+          <text x="20" y="88" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" opacity="0.55" letter-spacing="1">A</text>
+          <text x="42" y="88" font-family="'Instrument Serif', Georgia, serif" font-size="16" fill="currentColor" opacity="0.7">Global search</text>
+          <text x="42" y="108" font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.55">data indexed, modules stay isolated</text>
+          <g fill="currentColor" opacity="0.55">
+            <circle cx="345" cy="94" r="12"/>
+            <circle cx="475" cy="94" r="12"/>
+            <circle cx="605" cy="94" r="12"/>
+            <circle cx="735" cy="94" r="12"/>
+          </g>
+          <!-- explicit lack of connections between circles: no lines -->
+          <rect x="815" y="82" width="70" height="24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+          <text x="850" y="98" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" opacity="0.55" text-anchor="middle" letter-spacing="1">SKIPPED</text>
+        </g>
+
+        <!-- Row B: Summary tab — one dashed lid summarising, modules still empty -->
+        <g>
+          <text x="20" y="168" font-family="ui-monospace, monospace" font-size="10" fill="currentColor" opacity="0.55" letter-spacing="1">B</text>
+          <text x="42" y="168" font-family="'Instrument Serif', Georgia, serif" font-size="16" fill="currentColor" opacity="0.7">Summary tab</text>
+          <text x="42" y="188" font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.55">headlines surfaced, no drill-down beneath</text>
+          <!-- The dashed summary lid -->
+          <path d="M328 158 L 752 158" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.55" fill="none"/>
+          <g stroke="currentColor" stroke-width="1" opacity="0.55" fill="none">
+            <circle cx="345" cy="188" r="10"/>
+            <circle cx="475" cy="188" r="10"/>
+            <circle cx="605" cy="188" r="10"/>
+            <circle cx="735" cy="188" r="10"/>
+          </g>
+          <!-- Dropped drill-down lines shown as broken -->
+          <g stroke="currentColor" stroke-width="1" opacity="0.35" stroke-dasharray="2 3">
+            <line x1="345" y1="158" x2="345" y2="178"/>
+            <line x1="475" y1="158" x2="475" y2="178"/>
+            <line x1="605" y1="158" x2="605" y2="178"/>
+            <line x1="735" y1="158" x2="735" y2="178"/>
+          </g>
+          <rect x="815" y="176" width="70" height="24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+          <text x="850" y="192" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" opacity="0.55" text-anchor="middle" letter-spacing="1">SKIPPED</text>
+        </g>
+
+        <!-- Row C: Unified canvas — modules linked with reconciliation flags -->
+        <g>
+          <text x="20" y="258" font-family="ui-monospace, monospace" font-size="10" fill="#E0533C" font-weight="600" letter-spacing="1">C</text>
+          <text x="42" y="258" font-family="'Instrument Serif', Georgia, serif" font-size="16" fill="currentColor">Unified canvas</text>
+          <text x="42" y="278" font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.65">one screen · cross-linked · reconciliation flags between every module</text>
+          <g fill="#E0533C">
+            <circle cx="345" cy="264" r="12"/>
+            <circle cx="475" cy="264" r="12"/>
+            <circle cx="605" cy="264" r="12"/>
+            <circle cx="735" cy="264" r="12"/>
+          </g>
+          <!-- Solid connecting lines between all modules — the point -->
+          <g stroke="#E0533C" stroke-width="1.8" fill="none">
+            <line x1="357" y1="264" x2="463" y2="264"/>
+            <line x1="487" y1="264" x2="593" y2="264"/>
+            <line x1="617" y1="264" x2="723" y2="264"/>
+          </g>
+          <!-- Reconciliation flag glyphs on each link -->
+          <g fill="#fff" stroke="#E0533C" stroke-width="1">
+            <circle cx="410" cy="264" r="4"/>
+            <circle cx="540" cy="264" r="4"/>
+            <circle cx="670" cy="264" r="4"/>
+          </g>
+          <rect x="815" y="252" width="70" height="24" fill="#E0533C"/>
+          <text x="850" y="268" font-family="ui-monospace, monospace" font-size="9" fill="#fff" text-anchor="middle" font-weight="600" letter-spacing="1">SHIPPED</text>
         </g>
       </svg>
-      <p class="cs-fig__cap">Advisors were cross-checking numbers, not hunting for them. Only the canvas fixed the cause, not the symptom.</p>
+      <p class="cs-fig__cap">Only the third row has lines between the modules. The bottleneck was reconciliation, not access &mdash; and only the canvas actually connects things.</p>
     </figure>
 
     <div class="cs-options">
@@ -665,37 +706,72 @@
     <h2 class="cs-h2">We designed for the slower majority and accepted a fight with the fastest advisors</h2>
     <p class="cs-body">The single screen was the right call and it had a real cost. The top 18% of advisors, who bring in 40% of revenue, had memorised the old layout and moved through it fast. The redesign broke habits they had built over years. For two weeks after launch they were the loudest voice in the building.</p>
 
-    <figure class="cs-fig" role="img" aria-label="A balance diagram. On the left, a small circle labelled Top 18 percent — shortcuts lost, one-time. On the right, a much larger circle labelled Bottom 82 percent — 11 minutes saved per review, every review. The bar tips down to the right.">
-      <span class="cs-fig__label">The 82 vs 18 &middot; where the weight sat</span>
+    <figure class="cs-fig" role="img" aria-label="A line chart plotting cumulative advisor hours cost or saved over twelve weeks. The learning curve for the senior 18 percent of advisors rises sharply in the first two weeks and then flattens. The time saved by the other 82 percent starts at zero and climbs steadily, crossing the learning cost around week one and dwarfing it thereafter.">
+      <span class="cs-fig__label">Cumulative hours &middot; learning cost flattens, savings compound</span>
       <svg class="cs-fig__svg" viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <g>
-          <circle cx="230" cy="132" r="46" fill="#FBE4D8"/>
-          <text x="230" y="128" font-family="'Instrument Serif', serif" font-size="18" fill="#E0533C" text-anchor="middle" font-weight="400">Top 18%</text>
-          <text x="230" y="150" font-family="ui-monospace, monospace" font-size="9" fill="#E0533C" text-anchor="middle" letter-spacing="1.2">shortcuts lost · once</text>
+        <!-- Chart plot area coords: X 100→860, Y 40→260 -->
+        <!-- Grid + axes -->
+        <g stroke="currentColor" opacity="0.14" stroke-width="1">
+          <line x1="100" y1="60"  x2="860" y2="60"/>
+          <line x1="100" y1="120" x2="860" y2="120"/>
+          <line x1="100" y1="180" x2="860" y2="180"/>
+          <line x1="100" y1="240" x2="860" y2="240"/>
         </g>
-        <g>
-          <circle cx="700" cy="192" r="92" fill="#E0533C"/>
-          <text x="700" y="184" font-family="'Instrument Serif', serif" font-size="30" fill="#fff" text-anchor="middle" font-weight="400">Bottom 82%</text>
-          <text x="700" y="212" font-family="ui-monospace, monospace" font-size="11" fill="#fff" text-anchor="middle" letter-spacing="1.4" opacity="0.9">−11 min · every review</text>
+        <line x1="100" y1="40"  x2="100" y2="260" stroke="currentColor" opacity="0.5" stroke-width="1"/>
+        <line x1="100" y1="260" x2="860" y2="260" stroke="currentColor" opacity="0.5" stroke-width="1"/>
+
+        <!-- Y-axis labels -->
+        <g font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.55" text-anchor="end" letter-spacing="1">
+          <text x="92" y="63">30k hrs</text>
+          <text x="92" y="123">20k hrs</text>
+          <text x="92" y="183">10k hrs</text>
+          <text x="92" y="263">0</text>
         </g>
-        <g stroke="#98A3AE" stroke-width="2.2" stroke-linecap="round" fill="none">
-          <line x1="132" y1="182" x2="798" y2="248"/>
+
+        <!-- X-axis labels (weeks) -->
+        <g font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.55" text-anchor="middle" letter-spacing="1">
+          <text x="100" y="278">W0</text>
+          <text x="227" y="278">W2</text>
+          <text x="353" y="278">W4</text>
+          <text x="480" y="278">W6</text>
+          <text x="607" y="278">W8</text>
+          <text x="733" y="278">W10</text>
+          <text x="860" y="278">W12</text>
         </g>
-        <g fill="#98A3AE">
-          <polygon points="450,258 428,300 472,300"/>
+
+        <!-- Learning-cost curve (top 18% RMs): rises sharply then flattens -->
+        <!-- Reaches ~2,400 hrs total by week 2, then flat. On scale where 30k=y60: 2400 = y245 -->
+        <path d="M100 260 Q 160 250, 190 246 T 227 245 L 860 245"
+              fill="none" stroke="currentColor" stroke-width="1.6" opacity="0.7"/>
+        <!-- Dot at plateau -->
+        <circle cx="227" cy="245" r="3.5" fill="currentColor" opacity="0.8"/>
+        <text x="240" y="240" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" opacity="0.75" letter-spacing="1">learning cost ends here</text>
+
+        <!-- Savings curve (bottom 82% RMs): steady linear climb -->
+        <!-- 9,167 hrs/month = ~2,292 hrs/week. Over 12 weeks reaches ~27.5k. -->
+        <!-- Y=260 at W0, Y=60 at W12 (top of chart) -->
+        <line x1="100" y1="260" x2="860" y2="65" stroke="#E0533C" stroke-width="2.4"/>
+        <!-- Endpoint marker -->
+        <circle cx="860" cy="65" r="4.5" fill="#E0533C"/>
+
+        <!-- Crossover annotation -->
+        <line x1="163" y1="253" x2="163" y2="260" stroke="#E0533C" stroke-width="1" opacity="0.5"/>
+        <circle cx="163" cy="253" r="3.5" fill="#fff" stroke="#E0533C" stroke-width="1.5"/>
+        <text x="170" y="257" font-family="ui-monospace, monospace" font-size="8.5" fill="#E0533C" opacity="0.85" letter-spacing="1">crossover &middot; week 1</text>
+
+        <!-- Labels for the two lines -->
+        <g font-family="ui-monospace, monospace" font-size="9" letter-spacing="1">
+          <text x="450" y="238" fill="currentColor" opacity="0.7">learning cost &mdash; top 18% RMs (one-time)</text>
         </g>
-        <line x1="410" y1="308" x2="490" y2="308" stroke="#98A3AE" stroke-width="1.6" stroke-linecap="round"/>
-        <g stroke="#98A3AE" stroke-width="1" opacity="0.45">
-          <line x1="270" y1="196" x2="270" y2="204"/>
-          <line x1="360" y1="205" x2="360" y2="213"/>
-          <line x1="450" y1="214" x2="450" y2="222"/>
-          <line x1="540" y1="223" x2="540" y2="231"/>
-          <line x1="630" y1="232" x2="630" y2="240"/>
+        <g font-family="'Instrument Serif', Georgia, serif" font-size="16" fill="#E0533C">
+          <text x="500" y="130">savings compound &mdash; bottom 82% RMs</text>
         </g>
-        <text x="112" y="126" font-family="ui-monospace, monospace" font-size="9" fill="#98A3AE" text-anchor="end" letter-spacing="1.2">ONE-TIME COST</text>
-        <text x="820" y="180" font-family="ui-monospace, monospace" font-size="9" fill="#98A3AE" letter-spacing="1.2">RECURRING COST</text>
+        <text x="500" y="148" font-family="ui-monospace, monospace" font-size="9" fill="#E0533C" opacity="0.85" letter-spacing="1">+9,167 hrs / month · every month · forever</text>
+
+        <!-- Y-axis title -->
+        <text x="34" y="150" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" opacity="0.55" letter-spacing="1.4" transform="rotate(-90 34 150)">CUMULATIVE HOURS</text>
       </svg>
-      <p class="cs-fig__cap">A two-week learning curve for 18% of advisors vs. 11 minutes saved on every single review by the other 82%. The math wasn't close.</p>
+      <p class="cs-fig__cap">Learning cost is a one-time hump that flattens in two weeks. Savings from the 82% keep piling on. The lines cross in week 1 &mdash; every week after that widens the gap.</p>
     </figure>
 
     <div class="cs-tradeoff">
