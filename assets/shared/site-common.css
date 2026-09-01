@@ -682,3 +682,101 @@ html {
 @media (prefers-reduced-motion: reduce) {
   .cs-info-btn svg { animation: none !important; }
 }
+
+/* ═══════════════════════════════════════════════════════
+   AT-A-GLANCE — collapsible.
+   Uses native <details>/<summary> so it's keyboard + screen-
+   reader accessible for free. Collapsed by default; user
+   opts in. + / − icons swap based on the [open] attribute.
+   ═══════════════════════════════════════════════════════ */
+details.cs-glance-inner {
+  padding: 0;
+}
+details.cs-glance-inner > summary {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  details.cs-glance-inner > summary { cursor: none; }
+}
+details.cs-glance-inner > summary::-webkit-details-marker,
+details.cs-glance-inner > summary::marker {
+  display: none;
+  content: '';
+}
+
+/* Head layout: eyebrow left, meta next to it, +/− pill far right. */
+details.cs-glance-inner > summary.cs-glance-head {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  transition: background 0.2s ease;
+}
+details.cs-glance-inner > summary.cs-glance-head:hover {
+  background: rgba(224, 83, 60, 0.04);
+}
+
+.cs-glance-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 11px;
+  transition: background 0.2s ease, color 0.2s ease,
+              border-color 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
+  margin-left: auto;
+  background: transparent;
+}
+details.cs-glance-inner > summary:hover .cs-glance-toggle,
+details.cs-glance-inner > summary:focus-visible .cs-glance-toggle {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+  transform: scale(1.08);
+}
+.cs-glance-toggle .fa-plus,
+.cs-glance-toggle .fa-minus {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.cs-glance-toggle .fa-minus { display: none; }
+details.cs-glance-inner[open] .cs-glance-toggle .fa-plus { display: none; }
+details.cs-glance-inner[open] .cs-glance-toggle .fa-minus { display: inline-block; }
+
+/* Body reveal — subtle fade-in when the details opens. */
+details.cs-glance-inner[open] .cs-glance-grid,
+details.cs-glance-inner[open] .cs-glance-proof {
+  animation: cs-glance-reveal 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes cs-glance-reveal {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Optional 'expand this' cue on the closed state — a tiny prompt
+   below the head so the reader knows there's more to read. */
+details.cs-glance-inner:not([open]) > summary.cs-glance-head::after {
+  content: 'Expand for the full setup';
+  order: 3;
+  flex-basis: 100%;
+  margin-top: 2px;
+  font-family: var(--ui, 'Inter', sans-serif);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  details.cs-glance-inner[open] .cs-glance-grid,
+  details.cs-glance-inner[open] .cs-glance-proof { animation: none; }
+  .cs-glance-toggle { transition: none; }
+}
