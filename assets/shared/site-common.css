@@ -741,13 +741,16 @@ details.cs-glance-inner > summary:focus-visible .cs-glance-toggle {
   border-color: var(--text);
   transform: scale(1.08);
 }
-.cs-glance-toggle .fa-plus,
-.cs-glance-toggle .fa-minus {
+.cs-glance-icon {
+  width: 12px;
+  height: 12px;
+  display: block;
+  color: currentColor;
   transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.cs-glance-toggle .fa-minus { display: none; }
-details.cs-glance-inner[open] .cs-glance-toggle .fa-plus { display: none; }
-details.cs-glance-inner[open] .cs-glance-toggle .fa-minus { display: inline-block; }
+.cs-glance-icon--minus { display: none; }
+details.cs-glance-inner[open] .cs-glance-icon--plus  { display: none; }
+details.cs-glance-inner[open] .cs-glance-icon--minus { display: block; }
 
 /* Body reveal — subtle fade-in when the details opens. */
 details.cs-glance-inner[open] .cs-glance-grid,
