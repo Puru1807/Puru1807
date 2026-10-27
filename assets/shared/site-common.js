@@ -239,6 +239,241 @@
       initFloatingSideNav();
       initScrollProgress();
       initInfoModal();
+      initAskLLM();
+      initMeshHero();
     });
   });
+
+  // ── Case-study mesh hero cursor tracking. Two lagging light spots
+  //    follow the cursor via CSS custom properties; when the cursor
+  //    isn't over the mesh, the spot drifts on a slow autonomous
+  //    cos/sin orbit so the surface never sits still. No-op on
+  //    pages that don't include the mesh element. ──
+  function initMeshHero() {
+    var mesh = document.getElementById('csMesh');
+    if (!mesh) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var tx = 30, ty = 32;
+    var x = 30, y = 32;
+    var x2 = 68, y2 = 72;
+    var hovering = false;
+    var idleT = 0;
+
+    function onMove(e) {
+      var r = mesh.getBoundingClientRect();
+      var px = ((e.clientX - r.left) / r.width) * 100;
+      var py = ((e.clientY - r.top)  / r.height) * 100;
+      tx = Math.max(-10, Math.min(110, px));
+      ty = Math.max(-10, Math.min(110, py));
+    }
+
+    mesh.addEventListener('mouseenter', function () { hovering = true; });
+    mesh.addEventListener('mouseleave', function () { hovering = false; });
+    mesh.addEventListener('mousemove', onMove);
+    mesh.addEventListener('touchmove', function (e) {
+      if (e.touches && e.touches[0]) onMove(e.touches[0]);
+    }, { passive: true });
+
+    function tick() {
+      if (!hovering) {
+        idleT += 0.004;
+        tx = 50 + Math.cos(idleT) * 26;
+        ty = 46 + Math.sin(idleT * 1.3) * 20;
+      }
+      x  += (tx - x) * 0.09;
+      y  += (ty - y) * 0.09;
+      x2 += ((100 - tx) - x2) * 0.04;
+      y2 += ((100 - ty) - y2) * 0.04;
+      mesh.style.setProperty('--mx',  x.toFixed(2)  + '%');
+      mesh.style.setProperty('--my',  y.toFixed(2)  + '%');
+      mesh.style.setProperty('--mx2', x2.toFixed(2) + '%');
+      mesh.style.setProperty('--my2', y2.toFixed(2) + '%');
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // ── Text-selection pill that opens the Chatbase widget with the
+  //    selected text pre-sent. Falls back to clipboard + toast if
+  //    Chatbase's programmatic sendMessage isn't reachable. ──
+  function initAskLLM() {
+    // Bail on touch — mobile has its own selection UI.
+    if (matchMedia('(hover: none) and (pointer: coarse)').matches) return;
+
+    var MIN_LEN = 6;
+
+    var pill = document.createElement('button');
+    pill.type = 'button';
+    pill.className = 'ask-llm-pill';
+    pill.setAttribute('aria-label', "Ask Puru's LLM about the selected text");
+    pill.innerHTML =
+      '<svg class="ask-llm-pill__icon" viewBox="0 0 12 12" aria-hidden="true">' +
+        '<path d="M6 0L7.4 4.6 12 6 7.4 7.4 6 12 4.6 7.4 0 6 4.6 4.6z"/>' +
+      '</svg>' +
+      "<span>Ask Puru's LLM</span>";
+    document.body.appendChild(pill);
+
+    var toast = document.createElement('div');
+    toast.className = 'ask-llm-toast';
+    toast.setAttribute('role', 'status');
+    document.body.appendChild(toast);
+    var toastTimer;
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('is-visible');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () {
+        toast.classList.remove('is-visible');
+      }, 4200);
+    }
+
+    function inEditable(node) {
+      while (node && node !== document.body) {
+        if (node.nodeType === 1) {
+          var tag = node.tagName;
+          if (tag === 'INPUT' || tag === 'TEXTAREA') return true;
+          if (node.isContentEditable) return true;
+          if (node.classList && (node.classList.contains('ask-llm-pill') ||
+                                 node.classList.contains('ask-llm-toast'))) {
+            return true;
+          }
+        }
+        node = node.parentNode;
+      }
+      return false;
+    }
+
+    function hide() { pill.classList.remove('is-visible'); }
+
+    function updateForSelection() {
+      var sel = window.getSelection();
+      if (!sel || sel.isCollapsed) return hide();
+      var text = sel.toString().trim();
+      if (text.length < MIN_LEN) return hide();
+
+      var range = sel.getRangeAt(0);
+      // If the selection lives inside an editable field or inside
+      // the pill itself, don't offer to send it.
+      if (inEditable(range.commonAncestorContainer)) return hide();
+
+      var rect = range.getBoundingClientRect();
+      if (!rect || (!rect.width && !rect.height)) return hide();
+
+      var margin = 12;
+      var cx = rect.left + rect.width / 2 + window.scrollX;
+      var cy = rect.top + window.scrollY - 44;
+      // If there isn't room above, drop the pill below the selection.
+      if (rect.top < 56) cy = rect.bottom + window.scrollY + margin;
+
+      // Clamp horizontally so the pill never runs off-screen.
+      var half = 90;
+      cx = Math.max(half + 8 + window.scrollX,
+             Math.min(cx, window.scrollX + window.innerWidth - half - 8));
+
+      pill.style.left = cx + 'px';
+      pill.style.top  = cy + 'px';
+      pill.classList.add('is-visible');
+    }
+
+    // 'selectionchange' fires more often than we need, so debounce
+    // through requestAnimationFrame.
+    var raf = null;
+    function schedule() {
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        raf = null;
+        updateForSelection();
+      });
+    }
+
+    document.addEventListener('selectionchange', schedule);
+    document.addEventListener('mouseup', schedule);
+    window.addEventListener('scroll', function () {
+      if (pill.classList.contains('is-visible')) updateForSelection();
+    }, { passive: true });
+    window.addEventListener('resize', function () {
+      if (pill.classList.contains('is-visible')) updateForSelection();
+    });
+
+    // Preserve the selection when the pill is pressed — otherwise
+    // mousedown on the button would clear it.
+    pill.addEventListener('mousedown', function (e) { e.preventDefault(); });
+
+    pill.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var text = (window.getSelection() || '').toString().trim();
+      if (!text) return;
+      hide();
+
+      // Reliable path: copy first (guaranteed), then open the chat.
+      // Every Chatbase release accepts a pasted message, and only
+      // some accept a programmatic send — so we lean on paste as
+      // the primary UX and treat send as a nice-to-have.
+      copyToClipboard(text);
+
+      // Open the widget.
+      try { if (typeof window.chatbase === 'function') window.chatbase('open'); } catch (_) {}
+
+      // Nice-to-have: try every known Chatbase send payload shape
+      // in parallel. Any that lands will win; failures are silent.
+      setTimeout(function () { attemptDirectSend(text); }, 320);
+      setTimeout(function () { attemptDirectSend(text); }, 900);
+
+      // Toast the user with the reliable instruction — cmd on
+      // Mac-shaped user agents, ctrl elsewhere.
+      var mod = /Mac|iPhone|iPad|iPod/.test(navigator.platform) ? '⌘' : 'Ctrl';
+      showToast('Copied — press ' + mod + ' V in the chat, then Enter');
+    });
+
+    function attemptDirectSend(text) {
+      // Try every Chatbase command-bus shape shipped across releases.
+      try { window.chatbase('sendMessage', text); } catch (_) {}
+      try { window.chatbase({ type: 'sendMessage', message: text }); } catch (_) {}
+      try { window.chatbase('setPrefilledMessage', text); } catch (_) {}
+      try { window.chatbase.sendMessage && window.chatbase.sendMessage(text); } catch (_) {}
+
+      // Also try postMessage into the Chatbase iframe directly
+      // using the message shapes their widget code has accepted.
+      try {
+        var frames = document.querySelectorAll('iframe[src*="chatbase.co"], iframe[src*="chatbase.com"]');
+        for (var i = 0; i < frames.length; i++) {
+          var w = frames[i].contentWindow;
+          if (!w) continue;
+          [
+            { action: 'chatbase-send-message', message: text },
+            { type:   'chatbase.sendMessage', message: text },
+            { type:   'sendMessage',          message: text },
+            { type:   'setInputValue',        value:   text },
+            { type:   'prefilledMessage',     value:   text }
+          ].forEach(function (payload) {
+            try { w.postMessage(payload, '*'); } catch (_) {}
+          });
+        }
+      } catch (_) {}
+    }
+
+    function copyToClipboard(text) {
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text);
+          return true;
+        }
+      } catch (_) {}
+      // Legacy fallback for Safari/older browsers.
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.cssText = 'position:absolute;left:-9999px;top:0;';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        return true;
+      } catch (_) { return false; }
+    }
+  }
 })();

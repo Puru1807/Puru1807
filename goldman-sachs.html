@@ -112,7 +112,8 @@
     .cs-point:last-of-type { border-bottom: none; }
     .cs-point-lead { font-family: var(--font); font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.45; margin-bottom: 5px; }
     .cs-point-why { font-family: var(--font); font-size: 13.5px; color: var(--secondary); line-height: 1.6; }
-    .cs-point-res { display: inline-block; font-family: var(--ui); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-top: 9px; padding-left: 11px; border-left: 2px solid var(--accent); line-height: 1.45; }
+    .cs-point-res { display: inline-flex; align-items: center; gap: 8px; font-family: var(--ui); font-size: 10.5px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text); margin-top: 10px; line-height: 1.45; }
+    .cs-point-res::before { content: ''; display: inline-block; width: 5px; height: 5px; background: var(--text); border-radius: 50%; }
     .cs-modal-foot { font-family: var(--font); font-size: 12.5px; color: var(--secondary); line-height: 1.6; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); }
     @media (max-width: 700px) {
       .cs-modal { padding: 14px; } .cs-modal-panel { max-height: 88vh; }
@@ -120,6 +121,169 @@
       .cs-point { padding: 17px 0; }
     }
     .cs-subtitle { font-family: var(--font); font-size: 17px; color: var(--secondary); max-width: 720px; line-height: 1.7; margin-bottom: 48px; }
+
+    /* ── Hana "Naranjitas 2" mesh, cursor-reactive.
+          Two heavily-blurred radial ellipses drift over a
+          119° blue→white base — the exact palette from the Hana
+          gradient reference. The warm ellipse tracks the cursor;
+          the cool one drifts opposite for depth. ── */
+    .cs-mesh {
+      --mx: 22%;
+      --my: 60%;
+      --mx2: 78%;
+      --my2: 40%;
+      position: relative;
+      width: 100%;
+      height: clamp(220px, 30vw, 340px);
+      margin: 8px 0 48px;
+      overflow: hidden;
+      isolation: isolate;
+      background: linear-gradient(119deg, #3f77c1 18%, #ffffff 100%);
+      border-radius: 2px;
+    }
+
+    /* Warm ellipse — the "naranja" — cursor-tracked. */
+    .cs-mesh__warm,
+    .cs-mesh__cool {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      will-change: transform;
+    }
+    .cs-mesh__warm {
+      width: 130%;
+      height: 220%;
+      left: var(--mx);
+      top: var(--my);
+      transform: translate3d(-50%, -50%, 0);
+      background: radial-gradient(circle,
+        rgba(248, 88, 48, 1)    0%,
+        rgba(246, 129, 75, 1)   47.78%,
+        rgba(245, 160, 112, 0.1) 99.04%,
+        transparent 100%);
+      filter: blur(70px);
+      z-index: 1;
+    }
+    .cs-mesh__cool {
+      width: 145%;
+      height: 240%;
+      left: var(--mx2);
+      top: var(--my2);
+      transform: translate3d(-50%, -50%, 0);
+      background: radial-gradient(circle,
+        rgba(237, 166, 88, 1)    0%,
+        rgba(199, 193, 196, 0.85) 54.55%,
+        rgba(169, 211, 234, 0.1) 100%,
+        transparent 100%);
+      filter: blur(80px);
+      z-index: 2;
+      mix-blend-mode: multiply;
+      opacity: 0.85;
+    }
+
+    /* Optional very fine grain — kills the "digital" plasticky look. */
+    .cs-mesh__grain {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      opacity: 0.09;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    /* Text-legibility gradient — subtle darken at bottom-left where
+       the caption sits, so the white type stays readable even when
+       the warm ellipse drifts away. */
+    .cs-mesh__scrim {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 62%;
+      background: linear-gradient(to top,
+        rgba(60, 20, 5, 0.28) 0%,
+        rgba(60, 20, 5, 0.14) 45%,
+        transparent 100%);
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    /* Soft inner border for finish. */
+    .cs-mesh::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.32),
+                  inset 0 -1px 0 rgba(60,20,10,0.16);
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .cs-mesh__caption {
+      position: absolute;
+      inset: 0;
+      z-index: 6;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      text-align: left;
+      padding: clamp(22px, 3.5vw, 40px);
+      color: #fff;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: cs-mesh-in 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+      pointer-events: none;
+    }
+    .cs-mesh__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--ui);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.92);
+      margin-bottom: 12px;
+    }
+    .cs-mesh__eyebrow::before {
+      content: '';
+      width: 22px;
+      height: 1px;
+      background: rgba(255,255,255,0.6);
+    }
+    .cs-mesh__title {
+      font-family: var(--display);
+      font-size: clamp(30px, 4.4vw, 60px);
+      font-weight: 400;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: #fff;
+      text-shadow: 0 2px 24px rgba(90,30,10,0.28);
+    }
+    .cs-mesh__tag {
+      margin-top: 14px;
+      font-family: var(--ui);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+    }
+
+    @keyframes cs-mesh-in {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cs-mesh__caption { animation: none; opacity: 1; transform: none; }
+    }
+    @media (max-width: 768px) {
+      .cs-mesh { height: clamp(180px, 42vw, 240px); margin: 4px 0 32px; }
+    }
+
     .cs-meta-row { display: flex; gap: 48px; flex-wrap: wrap; padding-top: 40px; border-top: 1px solid var(--border); }
     .cs-meta-item { display: flex; flex-direction: column; gap: 6px; }
     .cs-meta-label { font-family: var(--ui); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
@@ -134,12 +298,15 @@
     .cs-results-inner { max-width: 1200px; margin: 0 auto; padding: 64px var(--margin); }
     .cs-results-label { font-family: var(--ui); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
     .cs-results-title { font-family: var(--display); font-size: clamp(21px,2.3vw,32px); font-weight: 400; letter-spacing: -0.02em; margin-bottom: 48px; }
-    .cs-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; border-top: 1px solid var(--border); }
-    .cs-stat { display: flex; flex-direction: column; gap: 10px; padding: 40px 32px 40px 0; border-right: 1px solid var(--border); }
-    .cs-stat:last-child { border-right: none; }
-    .cs-stat:not(:first-child) { padding-left: 32px; }
-    .cs-stat-number { font-family: var(--display); font-size: clamp(42px,6vw,76px); font-weight: 400; color: var(--accent); letter-spacing: -0.02em; line-height: 1; }
-    .cs-stat-desc { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.6; max-width: 180px; }
+    /* — Results stats: read as a magazine deck, not a KPI dashboard — */
+    .cs-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 48px 40px; padding-top: 44px; border-top: 1px solid var(--text); }
+    .cs-stat { display: flex; flex-direction: column; gap: 0; }
+    .cs-stat-icon { font-size: 15px; color: var(--secondary); opacity: 0.85; margin-bottom: 14px; }
+    .cs-stat-number { font-family: var(--display); font-size: clamp(52px,6.8vw,96px); font-weight: 400; font-style: italic; color: var(--text); letter-spacing: -0.03em; line-height: 0.92; }
+    .cs-stat-desc { font-family: var(--font); font-size: 13.5px; color: var(--secondary); line-height: 1.6; max-width: 220px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .cs-stakes-label i { margin-right: 8px; }
+    .cs-card-icon { font-size: 15px; color: #E0533C; opacity: 0.85; margin-bottom: 14px; display: block; }
+    .footer-links a i { margin-right: 8px; width: 14px; text-align: center; opacity: 0.75; }
 
     .cs-row { display: grid; grid-template-columns: 180px 1fr; gap: 64px; max-width: 1200px; margin: 0 auto; padding: 80px var(--margin); border-bottom: 1px solid var(--border); }
     .cs-row-label { padding-top: 4px; position: sticky; top: 80px; align-self: start; }
@@ -162,25 +329,19 @@
     .cs-info-label { font-family: var(--ui); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); margin-bottom: 8px; }
     .cs-info-value { font-family: var(--font); font-size: 14px; font-weight: 500; line-height: 1.6; }
 
-    .cs-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 40px; background: var(--border); border: 1px solid var(--border); }
-    .cs-card { padding: 32px 24px; background: var(--bg); }
-    .cs-card-num { font-family: var(--display); font-size: 28px; font-weight: 400; color: var(--accent); opacity: 0.4; letter-spacing: -0.02em; margin-bottom: 16px; line-height: 1; }
-    .cs-card-title { font-family: var(--ui); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
-    .cs-card-text { font-family: var(--font); font-size: 13px; color: var(--secondary); line-height: 1.65; }
+    /* — Research cards: editorial columns, no boxes, no fade — */
+    .cs-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 44px; margin-top: 40px; background: transparent; border: none; }
+    .cs-card { padding: 20px 0 0; background: transparent; border-top: 1px solid var(--text); }
+    .cs-card-num { font-family: var(--ui); font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--secondary); opacity: 1; margin-bottom: 22px; line-height: 1; }
+    .cs-card-num::before { content: 'No. '; opacity: 0.55; }
+    .cs-card-title { font-family: var(--display); font-size: clamp(20px,1.9vw,24px); font-weight: 400; letter-spacing: -0.005em; text-transform: none; line-height: 1.25; margin-bottom: 14px; color: var(--text); }
+    .cs-card-text { font-family: var(--font); font-size: 14px; color: var(--secondary); line-height: 1.7; }
 
     /* ——— Wireframe figures ——— */
     /* ——— Reading progress: orientation cue for a long read ——— */
     .cs-progress { position: fixed; top: 0; left: 0; height: 2px; width: 0; background: var(--accent); z-index: 1200; transition: width 0.1s linear; }
 
     /* ——— Primer: plain-language on-ramp before any of the argument starts ——— */
-    .cs-primer { max-width: 1200px; margin: 0 auto; padding: 0 var(--margin) 40px; }
-    .cs-primer-inner { border-left: 2px solid var(--accent); padding: 4px 0 4px 24px; max-width: 780px; }
-    .cs-primer-eyebrow { font-family: var(--ui); font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
-    .cs-primer-list { display: flex; flex-direction: column; gap: 11px; }
-    .cs-primer-list p { font-family: var(--font); font-size: 15.5px; line-height: 1.6; color: var(--secondary); }
-    .cs-primer-list b { color: var(--text); font-weight: 600; }
-    .cs-primer-stake { font-family: var(--font); font-size: 15.5px; line-height: 1.6; color: var(--text); margin-top: 16px; padding-top: 15px; border-top: 1px solid var(--border); }
-    @media (max-width: 700px) { .cs-primer-inner { padding-left: 18px; } .cs-primer-list p, .cs-primer-stake { font-size: 15px; } }
 
     /* ——— At a glance: the whole case in one screen, for a 40-second read ——— */
     .cs-glance { max-width: 1200px; margin: 0 auto; padding: 0 var(--margin) 72px; }
@@ -221,6 +382,52 @@
     .cs-dia svg { display: block; width: 100%; height: auto; min-width: 460px; color: var(--text); }
     .cs-dia figcaption { font-family: var(--ui); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); margin-top: 14px; }
 
+    /* ── Editorial process figures. Soft plate, muted grey lines,
+          orange for the loaded element — the visual grammar the
+          user pinned as reference. ── */
+    .cs-fig {
+      margin: 32px 0 40px;
+      max-width: 900px;
+      background: #F0F3F5;
+      border: 1px solid rgba(55, 74, 95, 0.08);
+      border-radius: 2px;
+      padding: 28px 32px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    [data-theme="dark"] .cs-fig {
+      background: #1A1918;
+      border-color: rgba(255,255,255,0.06);
+    }
+    .cs-fig__label {
+      display: block;
+      font-family: var(--ui);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #98A3AE;
+      margin-bottom: 22px;
+    }
+    [data-theme="dark"] .cs-fig__label { color: #777370; }
+    .cs-fig__svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      color: #374A5F;
+    }
+    [data-theme="dark"] .cs-fig__svg { color: #C3CAD1; }
+    .cs-fig__cap {
+      margin-top: 20px;
+      font-family: var(--ui);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      line-height: 1.55;
+      max-width: 620px;
+    }
+
     .cs-wire { margin: 44px 0 0; min-width: 0; }
     .cs-wire-frame { border: 1px solid var(--border); background: var(--bg-alt); padding: 20px; overflow-x: auto; min-width: 0; max-width: 100%; }
     .cs-wire-frame svg { display: block; width: 100%; height: auto; min-width: 620px; color: var(--text); }
@@ -229,41 +436,52 @@
     .cs-wire-note strong { color: var(--text); font-weight: 500; }
     .cs-wire-disclaimer { font-family: var(--ui); font-size: 11px; line-height: 1.7; letter-spacing: 0.02em; color: var(--secondary); border: 1px dashed var(--border); padding: 18px 22px; margin-top: 8px; max-width: 720px; }
 
-    .cs-quote { position: relative; padding: 32px 40px; background: var(--bg-alt); border-left: 4px solid var(--accent); margin: 48px 0; max-width: 720px; }
-    .cs-quote::before { content: '\201C'; font-family: var(--display); font-size: 80px; color: var(--accent); opacity: 0.15; position: absolute; top: -8px; left: 32px; line-height: 1; }
-    .cs-quote p { font-family: var(--display); font-size: 20px; font-style: italic; line-height: 1.55; position: relative; z-index: 1; }
-    .cs-quote cite { display: block; margin-top: 16px; font-family: var(--ui); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); font-style: normal; }
+    /* — Pull-quote: hanging drop-cap, no colored container — */
+    .cs-quote { position: relative; padding: 12px 0 0 62px; background: transparent; border: none; margin: 56px 0; max-width: 720px; }
+    .cs-quote::before { content: '\201C'; font-family: var(--display); font-size: 132px; font-weight: 400; color: var(--text); opacity: 1; position: absolute; top: -34px; left: -6px; line-height: 1; }
+    .cs-quote p { font-family: var(--display); font-size: clamp(20px,2.1vw,26px); font-style: italic; font-weight: 400; line-height: 1.4; color: var(--text); }
+    .cs-quote cite { display: block; margin-top: 22px; font-family: var(--ui); font-size: 10px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--secondary); font-style: normal; }
 
     .cs-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; margin-top: 40px; }
     .cs-list { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
     .cs-list li { display: flex; gap: 16px; font-family: var(--font); font-size: 14px; line-height: 1.7; }
     .cs-list li::before { content: '\2192'; font-family: var(--ui); color: var(--accent); flex-shrink: 0; font-size: 12px; margin-top: 2px; }
-    .cs-note { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 4px; padding: 24px 28px; margin-top: 32px; font-family: var(--font); font-size: 15px; line-height: 1.8; color: var(--secondary); }
-    .cs-note strong { color: var(--text); }
+    /* — Editorial note: hairlines, no fill, no radius — */
+    .cs-note { background: transparent; border: none; border-top: 1px solid var(--text); border-bottom: 1px solid var(--border); border-radius: 0; padding: 22px 0; margin-top: 32px; font-family: var(--font); font-size: 15px; line-height: 1.75; color: var(--secondary); max-width: 720px; }
+    .cs-note strong { color: var(--text); font-weight: 500; }
 
-    /* Problem statement formula box */
-    .cs-formula { background: var(--bg-alt); border-left: 3px solid #E0533C; padding: 28px 32px; margin-top: 32px; max-width: 760px; font-family: var(--font); font-size: 16px; line-height: 1.85; }
-    .cs-formula strong { color: #E0533C; font-weight: 600; }
-    .cs-formula-label { font-family: var(--ui); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: #E0533C; display: block; margin-bottom: 14px; }
+    /* — Problem statement: italic serif pull-out with highlighter marks — */
+    .cs-formula { background: transparent; border: none; border-top: 1px solid var(--text); padding: 28px 0 0; margin-top: 40px; max-width: 780px; font-family: var(--display); font-size: clamp(20px,2.05vw,26px); font-weight: 400; font-style: italic; line-height: 1.5; color: var(--text); }
+    .cs-formula strong { color: var(--text); font-weight: 400; font-style: normal; font-family: var(--display); background: linear-gradient(transparent 62%, rgba(224,83,60,0.22) 62%, rgba(224,83,60,0.22) 92%, transparent 92%); padding: 0 3px; }
+    .cs-formula-label { font-family: var(--ui); font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--secondary); display: block; margin-bottom: 22px; font-style: normal; }
 
-    /* Tradeoff matrix */
-    .cs-tradeoff { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; margin-top: 32px; background: var(--border); border: 1px solid var(--border); }
-    .cs-tradeoff-cell { padding: 24px; background: var(--bg); }
-    .cs-tradeoff-label { font-family: var(--ui); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 14px; }
-    .cs-tradeoff-cell.gained .cs-tradeoff-label { color: #3CB371; }
-    .cs-tradeoff-cell.lost .cs-tradeoff-label { color: #E0533C; }
-    .cs-tradeoff-cell.why .cs-tradeoff-label { color: var(--accent); }
-    .cs-tradeoff-text { font-family: var(--font); font-size: 13px; line-height: 1.7; color: var(--text); }
+    /* — Tradeoff: definition-list ledger, no boxes — */
+    .cs-tradeoff { display: flex; flex-direction: column; margin-top: 32px; border-top: 1px solid var(--text); background: transparent; border-left: none; border-right: none; border-bottom: none; }
+    .cs-tradeoff-cell { display: grid; grid-template-columns: 160px 1fr; gap: 32px; align-items: baseline; padding: 24px 0; background: transparent; border-bottom: 1px solid var(--border); }
+    .cs-tradeoff-cell:last-child { border-bottom: 1px solid var(--text); }
+    .cs-tradeoff-label { font-family: var(--ui); font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0; display: inline-flex; align-items: baseline; gap: 8px; }
+    .cs-tradeoff-cell.gained .cs-tradeoff-label { color: var(--text); }
+    .cs-tradeoff-cell.gained .cs-tradeoff-label::before { content: '↑'; font-family: var(--display); font-size: 16px; opacity: 0.55; }
+    .cs-tradeoff-cell.lost .cs-tradeoff-label { color: var(--text); }
+    .cs-tradeoff-cell.lost .cs-tradeoff-label::before { content: '↓'; font-family: var(--display); font-size: 16px; opacity: 0.55; }
+    .cs-tradeoff-cell.why .cs-tradeoff-label { color: var(--text); }
+    .cs-tradeoff-cell.why .cs-tradeoff-label::before { content: '→'; font-family: var(--display); font-size: 16px; opacity: 0.55; }
+    .cs-tradeoff-text { font-family: var(--font); font-size: 15px; line-height: 1.7; color: var(--text); }
 
-    /* Options considered */
-    .cs-options { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
-    .cs-option { padding: 24px 28px; border: 1px solid var(--border); border-radius: 4px; }
-    .cs-option-tag { font-family: var(--ui); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 10px; }
-    .cs-option.rejected .cs-option-tag { color: #E0533C; }
-    .cs-option.chosen .cs-option-tag { color: #3CB371; }
-    .cs-option-title { font-family: var(--ui); font-size: 13px; font-weight: 600; margin-bottom: 10px; }
-    .cs-option-text { font-family: var(--font); font-size: 14px; color: var(--secondary); line-height: 1.7; }
-    .cs-option.chosen { background: rgba(60,179,113,0.04); border-color: rgba(60,179,113,0.25); }
+    /* — Options: stacked with hairlines, no tint, no radius, no color-code — */
+    .cs-options { display: flex; flex-direction: column; gap: 0; margin-top: 32px; border-top: 1px solid var(--text); }
+    .cs-option { padding: 28px 0; border: none; border-radius: 0; background: transparent; border-bottom: 1px solid var(--border); }
+    .cs-option:last-child { border-bottom: 1px solid var(--text); }
+    .cs-option.chosen { background: transparent; border-color: var(--border); }
+    .cs-option-tag { font-family: var(--ui); font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 14px; display: inline-flex; align-items: center; gap: 10px; color: var(--secondary); }
+    .cs-option.rejected .cs-option-tag { color: var(--secondary); }
+    .cs-option.rejected .cs-option-tag::after { content: ''; display: inline-block; width: 28px; height: 1px; background: currentColor; opacity: 0.6; }
+    .cs-option.chosen .cs-option-tag { color: var(--text); }
+    .cs-option.chosen .cs-option-tag::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--text); border-radius: 50%; }
+    .cs-option-title { font-family: var(--display); font-size: clamp(22px,2.2vw,28px); font-weight: 400; font-style: normal; letter-spacing: -0.01em; line-height: 1.25; margin-bottom: 12px; color: var(--text); }
+    .cs-option.rejected .cs-option-title { color: var(--secondary); }
+    .cs-option-text { font-family: var(--font); font-size: 15px; color: var(--secondary); line-height: 1.7; max-width: 700px; }
+    .cs-option.chosen .cs-option-text { color: var(--text); }
 
     .cs-conclusion { max-width: 1200px; margin: 0 auto; padding: 100px var(--margin); text-align: center; border-bottom: 1px solid var(--border); }
     .cs-conclusion-eyebrow { font-family: var(--ui); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--secondary); margin-bottom: 24px; }
@@ -301,12 +519,12 @@
       :root { --margin: 20px; }
       nav.nav { padding: 10px var(--margin); gap: 0; }
       .nav-link { font-size: 11px; padding: 6px 12px; }
-      .cs-stats { grid-template-columns: 1fr 1fr; }
-      .cs-stat { padding: 28px 16px 28px 0; }
-      .cs-stat:not(:first-child) { padding-left: 16px; }
+      .cs-stats { grid-template-columns: 1fr 1fr; gap: 36px 24px; }
       .cs-two-col { grid-template-columns: 1fr; gap: 32px; }
-      .cs-cards { grid-template-columns: 1fr; }
-      .cs-tradeoff { grid-template-columns: 1fr; }
+      .cs-cards { grid-template-columns: 1fr; gap: 32px; }
+      .cs-tradeoff-cell { grid-template-columns: 1fr; gap: 10px; }
+      .cs-quote { padding-left: 46px; }
+      .cs-quote::before { font-size: 100px; top: -22px; }
       .cs-info-grid { grid-template-columns: 1fr 1fr; }
       .cs-info-item:nth-child(3n) { border-right: 1px solid var(--border); }
       .cs-info-item:nth-child(2n) { border-right: none; }
@@ -318,6 +536,7 @@
     }
   </style>
   <link rel="stylesheet" href="assets/shared/site-common.css">
+  <script src="https://kit.fontawesome.com/f984bae92d.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -361,8 +580,24 @@
       <span class="cs-info-tip" aria-hidden="true">Skills shown here</span>
     </button>
   </div>
-  <h1 class="cs-title">Goldman Sachs</h1>
+  <h1 class="cs-title">The future of AI &amp; wealth advisory.</h1>
   <p class="cs-subtitle">Led product design for an AI tool that drafts investment advice for financial advisors. I added the things advisors needed before they would trust it: where every number came from, how sure the AI was, and the ability to edit the wording before it reached a client.</p>
+
+  <!-- ── Cursor-reactive Hana-Naranjitas mesh: two heavily-blurred
+       radial ellipses drift over a 119° blue→white base. The warm
+       ellipse tracks the cursor; the cool one drifts opposite. ── -->
+  <figure class="cs-mesh" id="csMesh" aria-label="Goldman Sachs — AI SaaS platform, 2025">
+    <div class="cs-mesh__warm" aria-hidden="true"></div>
+    <div class="cs-mesh__cool" aria-hidden="true"></div>
+    <div class="cs-mesh__grain" aria-hidden="true"></div>
+    <div class="cs-mesh__scrim" aria-hidden="true"></div>
+    <figcaption class="cs-mesh__caption">
+      <span class="cs-mesh__eyebrow">Case Study</span>
+      <span class="cs-mesh__title">Goldman Sachs</span>
+      <span class="cs-mesh__tag">AI SaaS &middot; Jun 2025 &mdash; Present</span>
+    </figcaption>
+  </figure>
+
   <div class="cs-meta-row">
     <div class="cs-meta-item">
       <span class="cs-meta-label">Role</span>
@@ -388,61 +623,73 @@
 ════════════════════════════════════════ -->
 <section class="cs-primer" data-reveal>
   <div class="cs-primer-inner">
-    <p class="cs-primer-eyebrow">Before we start &mdash; what this is</p>
+
+    <div class="cs-primer-head">
+      <p class="cs-primer-eyebrow">Before we start &mdash; what this is</p>
+      <p class="cs-primer-note">30 seconds &middot; no finance background needed</p>
+    </div>
+
     <div class="cs-primer-grid">
-      <div>
-        <div class="cs-primer-defs">
-          <div class="cs-primer-def">
-            <span class="cs-primer-term">Wealth management</span>
-            <p class="cs-primer-desc">The part of a bank that looks after money for rich clients.</p>
-          </div>
-          <div class="cs-primer-def">
-            <span class="cs-primer-term">The advisor</span>
-            <p class="cs-primer-desc">A real person at Goldman Sachs assigned to those clients. Their job is to decide what a client should do with their money, then explain it to them.</p>
-          </div>
-          <div class="cs-primer-def">
-            <span class="cs-primer-term">The tool</span>
-            <p class="cs-primer-desc">An AI that writes the first draft of that advice. It reads the client's holdings and drafts a recommendation in seconds instead of hours.</p>
-          </div>
-          <div class="cs-primer-def">
-            <span class="cs-primer-term">The catch</span>
-            <p class="cs-primer-desc">The advisor's name goes on the advice, not the AI's. Every piece of it is filed and kept for <strong>seven years</strong>, and the advisor answers for it if it is wrong.</p>
-          </div>
+      <div class="cs-primer-defs">
+        <div class="cs-primer-def">
+          <span class="cs-primer-term"><b>01</b> Wealth management</span>
+          <p class="cs-primer-desc">The part of a bank that looks after money for rich clients.</p>
         </div>
-        <p class="cs-primer-stake"><strong>So here is the problem.</strong> The AI showed its answer and nothing else. No sources, no reasoning, no way to check it. Advisors were being asked to stake their career on something they could not inspect &mdash; so half of them simply never used it.</p>
+        <div class="cs-primer-def">
+          <span class="cs-primer-term"><b>02</b> The advisor</span>
+          <p class="cs-primer-desc">A real person at Goldman Sachs assigned to those clients. They decide what a client should do with their money, then explain it to them.</p>
+        </div>
+        <div class="cs-primer-def">
+          <span class="cs-primer-term"><b>03</b> The tool I designed</span>
+          <p class="cs-primer-desc">An AI that writes the first draft of that advice. It reads the client's holdings and drafts a recommendation in seconds instead of hours.</p>
+        </div>
+        <div class="cs-primer-def">
+          <span class="cs-primer-term"><b>04</b> The catch</span>
+          <p class="cs-primer-desc">The advisor's name goes on the advice, not the AI's. Every piece of it is kept on file for <strong>seven years</strong>, and the advisor answers for it if it is wrong.</p>
+        </div>
       </div>
 
       <div class="cs-primer-fig">
-        <svg viewBox="0 0 380 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flow: the client's money, read by the AI, which drafts advice; the advisor must check and sign it before it reaches the client. The checking step is the one that was broken.">
-          <g fill="none" stroke="currentColor" stroke-width="1.2">
-            <rect x="112" y="1" width="156" height="40" rx="1" opacity="0.5"/>
-            <rect x="112" y="70" width="156" height="40" rx="1" opacity="0.5"/>
-            <rect x="112" y="139" width="156" height="46" rx="1"/>
-            <rect x="112" y="212" width="156" height="37" rx="1" opacity="0.5"/>
+        <svg viewBox="0 0 340 272" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A vertical flow: the client's money is read by the AI, which drafts advice; the advisor checks it and signs their name; then it reaches the client. The checking step is marked as the one that was broken.">
+          <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.45">
+            <rect x="65" y="0"   width="210" height="46" rx="1"/>
+            <rect x="65" y="74"  width="210" height="46" rx="1"/>
+            <rect x="65" y="222" width="210" height="46" rx="1"/>
           </g>
+          <rect x="65" y="148" width="210" height="46" rx="1" fill="none" stroke="#E0533C" stroke-width="1.5"/>
+
           <g font-family="monospace" font-size="10" fill="currentColor" text-anchor="middle">
-            <text x="190" y="18">client&rsquo;s money</text><text x="190" y="32" opacity="0.6">holdings, goals</text>
-            <text x="190" y="87">the AI</text><text x="190" y="101" opacity="0.6">drafts the advice</text>
-            <text x="190" y="160" font-size="10.5">the advisor checks it</text><text x="190" y="175" opacity="0.6">and signs their name</text>
-            <text x="190" y="229">the client</text><text x="190" y="242" opacity="0.6">acts on it</text>
+            <text x="170" y="20">the client&rsquo;s money</text>
+            <text x="170" y="34" opacity="0.55">holdings, goals</text>
+            <text x="170" y="94">the AI</text>
+            <text x="170" y="108" opacity="0.55">drafts the advice</text>
+            <text x="170" y="242">the client</text>
+            <text x="170" y="256" opacity="0.55">acts on it</text>
           </g>
-          <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.55" stroke-linecap="round">
-            <path d="M190 43v22M185 60l5 5 5-5"/>
-            <path d="M190 112v22M185 129l5 5 5-5"/>
-            <path d="M190 187v20M185 202l5 5 5-5"/>
+          <g font-family="monospace" font-size="10" fill="#E0533C" text-anchor="middle">
+            <text x="170" y="168">the advisor checks it</text>
+            <text x="170" y="182" opacity="0.75">and signs their name</text>
           </g>
-          <g fill="none" stroke="#E0533C" stroke-width="1.4">
-            <rect x="106" y="133" width="168" height="58" rx="2"/>
+
+          <g fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4" stroke-linecap="round">
+            <path d="M170 46v18M165 59l5 5 5-5"/>
+            <path d="M170 120v18M165 133l5 5 5-5"/>
+            <path d="M170 194v18M165 207l5 5 5-5"/>
           </g>
-          <path d="M96 162h6" stroke="#E0533C" stroke-width="1.4" fill="none"/>
-          <text x="90" y="158" font-family="monospace" font-size="9" fill="#E0533C" text-anchor="end">this</text>
-          <text x="90" y="169" font-family="monospace" font-size="9" fill="#E0533C" text-anchor="end">step</text>
-          <text x="304" y="158" font-family="monospace" font-size="9" fill="#E0533C">was</text>
-          <text x="304" y="169" font-family="monospace" font-size="9" fill="#E0533C">broken</text>
+
+          <g stroke="#E0533C" stroke-width="1.2" fill="none"><path d="M40 171h19"/></g>
+          <text x="34" y="168" font-family="monospace" font-size="9" fill="#E0533C" text-anchor="end">this</text>
+          <text x="34" y="180" font-family="monospace" font-size="9" fill="#E0533C" text-anchor="end">step</text>
+          <g stroke="#E0533C" stroke-width="1.2" fill="none"><path d="M281 171h19"/></g>
+          <text x="306" y="168" font-family="monospace" font-size="9" fill="#E0533C">was</text>
+          <text x="306" y="180" font-family="monospace" font-size="9" fill="#E0533C">broken</text>
         </svg>
-        <p class="cs-primer-cap">Where the advice comes from, and who is answerable for it</p>
+        <p class="cs-primer-cap">Where the advice comes from, and who answers for it</p>
       </div>
     </div>
+
+    <p class="cs-primer-stake">The AI showed its answer and nothing else. No sources, no reasoning, no way to check it. Advisors were being asked to stake their name on something they could not inspect &mdash; <b>so half of them never used it.</b></p>
+
   </div>
 </section>
 
@@ -450,11 +697,12 @@
      AT A GLANCE
 ════════════════════════════════════════ -->
 <section class="cs-glance" data-reveal>
-  <div class="cs-glance-inner">
-    <div class="cs-glance-head">
+  <details class="cs-glance-inner">
+    <summary class="cs-glance-head">
       <span class="cs-glance-eyebrow">At a glance</span>
       <span class="cs-glance-time">Full read &middot; 15 min &nbsp;|&nbsp; This panel &middot; 40 sec</span>
-    </div>
+      <span class="cs-glance-toggle" aria-hidden="true"><svg class="cs-glance-icon cs-glance-icon--plus" viewBox="0 0 14 14" fill="none"><path d="M7 1.5v11M1.5 7h11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><svg class="cs-glance-icon cs-glance-icon--minus" viewBox="0 0 14 14" fill="none"><path d="M1.5 7h11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+    </summary>
     <div class="cs-glance-grid">
       <div class="cs-glance-cell">
         <p class="cs-glance-label">
@@ -526,7 +774,7 @@
         </a>
       </div>
     </div>
-  </div>
+  </details>
 </section>
 
 <!-- ════════════════════════════════════════
@@ -534,7 +782,7 @@
 ════════════════════════════════════════ -->
 <section class="cs-stakes-strip">
   <div class="cs-stakes-inner">
-    <p class="cs-stakes-label">The Stakes</p>
+    <p class="cs-stakes-label"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>The Stakes</p>
     <h2 class="cs-stakes-headline">Only half of new advisors ever started using the tool. The AI gave sound advice, but it showed no working, so advisors could not check it before putting their own name to it.</h2>
   </div>
 </section>
@@ -548,18 +796,22 @@
     <h2 class="cs-results-title">Advisors using it 52% &rarr; 68% &middot; AI advice accepted 38% &rarr; 67% &middot; Support tickets down ~60%</h2>
     <div class="cs-stats">
       <div class="cs-stat">
+        <i class="fa-solid fa-user-plus cs-stat-icon" aria-hidden="true"></i>
         <span class="cs-stat-number">+16pt</span>
         <span class="cs-stat-desc">new-advisor activation lift over two product releases (52% &rarr; 68%)</span>
       </div>
       <div class="cs-stat">
+        <i class="fa-solid fa-check-double cs-stat-icon" aria-hidden="true"></i>
         <span class="cs-stat-number">+29pt</span>
         <span class="cs-stat-desc">AI recommendation acceptance lift after citation + confidence patterns shipped</span>
       </div>
       <div class="cs-stat">
+        <i class="fa-solid fa-life-ring cs-stat-icon" aria-hidden="true"></i>
         <span class="cs-stat-number">~60%</span>
         <span class="cs-stat-desc">estimated reduction in "why did the AI suggest this" support tickets post-release</span>
       </div>
       <div class="cs-stat">
+        <i class="fa-solid fa-shield-halved cs-stat-icon" aria-hidden="true"></i>
         <span class="cs-stat-number">3</span>
         <span class="cs-stat-desc">trust patterns shipped &mdash; confidence visibility, citations, editable outputs</span>
       </div>
@@ -682,6 +934,53 @@
   <div class="cs-row-content">
     <h2 class="cs-h2">Three options. I ruled out two.</h2>
 
+    <figure class="cs-fig" role="img" aria-label="Three paths were evaluated. Full automation was blocked by compliance. The suggestion bot was skipped by pilot advisors. The auditable co-pilot shipped.">
+      <span class="cs-fig__label">Three paths &middot; two dead ends</span>
+      <svg class="cs-fig__svg" viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- origin -->
+        <circle cx="46" cy="125" r="6" fill="currentColor" opacity="0.55"/>
+        <text x="26" y="152" font-family="ui-monospace, monospace" font-size="9.5" fill="currentColor" opacity="0.55" letter-spacing="1">THE BRIEF</text>
+
+        <!-- stems from origin to lane splits -->
+        <path d="M52 125 C 90 125, 100 55, 140 55" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
+        <path d="M52 125 L 140 125" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
+        <path d="M52 125 C 90 125, 100 195, 140 195" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4"/>
+
+        <!-- Path A — full automation (rejected) -->
+        <g opacity="0.55">
+          <text x="140" y="34" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" letter-spacing="1.6">PATH A · FULL AUTOMATION</text>
+          <path d="M140 55 L 780 55" stroke="currentColor" stroke-width="1.1" stroke-dasharray="3 4" fill="none"/>
+          <g transform="translate(790 55)" stroke="#98A3AE" stroke-width="1.8" fill="none">
+            <line x1="-8" y1="-8" x2="8" y2="8"/><line x1="-8" y1="8" x2="8" y2="-8"/>
+          </g>
+          <text x="808" y="59" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" letter-spacing="1">BLOCKED</text>
+          <text x="140" y="76" font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.7">rules require a person to sign off · compliance said no on day one</text>
+        </g>
+
+        <!-- Path B — suggestion bot (rejected) -->
+        <g opacity="0.55">
+          <text x="140" y="104" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" letter-spacing="1.6">PATH B · SUGGESTION BOT</text>
+          <path d="M140 125 L 780 125" stroke="currentColor" stroke-width="1.1" stroke-dasharray="3 4" fill="none"/>
+          <g transform="translate(790 125)" stroke="#98A3AE" stroke-width="1.8" fill="none">
+            <line x1="-8" y1="-8" x2="8" y2="8"/><line x1="-8" y1="8" x2="8" y2="-8"/>
+          </g>
+          <text x="808" y="129" font-family="ui-monospace, monospace" font-size="9" fill="currentColor" letter-spacing="1">SKIPPED</text>
+          <text x="140" y="146" font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.7">too vague to bother with · advice that commits to nothing saves nobody time</text>
+        </g>
+
+        <!-- Path C — auditable co-pilot (chosen, orange) -->
+        <g>
+          <text x="140" y="174" font-family="ui-monospace, monospace" font-size="9" fill="#E0533C" font-weight="600" letter-spacing="1.6">PATH C · AUDITABLE CO-PILOT</text>
+          <path d="M140 195 L 782 195" stroke="#E0533C" stroke-width="1.6" fill="none"/>
+          <path d="M782 195 L 774 189 M782 195 L 774 201" stroke="#E0533C" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <rect x="792" y="184" width="70" height="22" fill="#E0533C"/>
+          <text x="827" y="199" font-family="ui-monospace, monospace" font-size="9" fill="#fff" text-anchor="middle" font-weight="600" letter-spacing="1.4">SHIPPED</text>
+          <text x="140" y="217" font-family="ui-monospace, monospace" font-size="8.5" fill="currentColor" opacity="0.7">confidence score · citations · editable text · advisor keeps their name on it</text>
+        </g>
+      </svg>
+      <p class="cs-fig__cap">The chosen path was the only one that let the AI, the advisor, and the compliance officer all defend the same output.</p>
+    </figure>
+
     <div class="cs-options">
       <div class="cs-option rejected">
         <div class="cs-option-tag">Option A &mdash; Rejected</div>
@@ -714,6 +1013,50 @@
   <div class="cs-row-content">
     <h2 class="cs-h2">We made it slower on purpose. Here is what that cost.</h2>
     <p class="cs-body">Every recommendation now takes 2.4 seconds longer to appear. That is the price of working out a confidence score, fetching the sources behind each claim, and laying out the editable fields. The product team pushed back on the delay. Here is how we defended it.</p>
+
+    <figure class="cs-fig" role="img" aria-label="A balance diagram. On the left, a small circle labelled Latency plus 2.4 seconds. On the right, a much larger circle labelled Trust plus 29 percentage points. The bar tips down to the right.">
+      <span class="cs-fig__label">Speed vs trust &middot; where the weight sat</span>
+      <svg class="cs-fig__svg" viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Left (light) — Latency: small pale circle sitting high on the seesaw -->
+        <g>
+          <circle cx="230" cy="132" r="46" fill="#FBE4D8"/>
+          <text x="230" y="130" font-family="'Instrument Serif', serif" font-size="20" fill="#E0533C" text-anchor="middle" font-weight="400">Latency</text>
+          <text x="230" y="152" font-family="ui-monospace, monospace" font-size="10" fill="#E0533C" text-anchor="middle" letter-spacing="1.2">+2.4 s</text>
+        </g>
+
+        <!-- Right (heavy) — Trust: big solid circle sitting low -->
+        <g>
+          <circle cx="700" cy="192" r="92" fill="#E0533C"/>
+          <text x="700" y="188" font-family="'Instrument Serif', serif" font-size="34" fill="#fff" text-anchor="middle" font-weight="400">Trust</text>
+          <text x="700" y="216" font-family="ui-monospace, monospace" font-size="11" fill="#fff" text-anchor="middle" letter-spacing="1.4" opacity="0.9">+29 pt acceptance</text>
+        </g>
+
+        <!-- The bar — tilted downward to the right; anchored at the fulcrum -->
+        <g stroke="#98A3AE" stroke-width="2.2" stroke-linecap="round" fill="none">
+          <line x1="132" y1="182" x2="798" y2="248"/>
+        </g>
+
+        <!-- Fulcrum -->
+        <g fill="#98A3AE">
+          <polygon points="450,258 428,300 472,300"/>
+        </g>
+        <line x1="410" y1="308" x2="490" y2="308" stroke="#98A3AE" stroke-width="1.6" stroke-linecap="round"/>
+
+        <!-- Tick markers along the bar for reading -->
+        <g stroke="#98A3AE" stroke-width="1" opacity="0.45">
+          <line x1="270" y1="196" x2="270" y2="204"/>
+          <line x1="360" y1="205" x2="360" y2="213"/>
+          <line x1="450" y1="214" x2="450" y2="222"/>
+          <line x1="540" y1="223" x2="540" y2="231"/>
+          <line x1="630" y1="232" x2="630" y2="240"/>
+        </g>
+
+        <!-- Side annotations -->
+        <text x="112" y="126" font-family="ui-monospace, monospace" font-size="9" fill="#98A3AE" text-anchor="end" letter-spacing="1.2">WHAT WE GAVE UP</text>
+        <text x="820" y="180" font-family="ui-monospace, monospace" font-size="9" fill="#98A3AE" letter-spacing="1.2">WHAT WE GOT BACK</text>
+      </svg>
+      <p class="cs-fig__cap">81 % of pilot rejections were trust-layer problems, not speed problems. The scale was never even close.</p>
+    </figure>
 
     <div class="cs-tradeoff">
       <div class="cs-tradeoff-cell gained">
@@ -1062,16 +1405,19 @@
 
     <div class="cs-cards" style="margin-top:32px;">
       <div class="cs-card">
+        <i class="fa-solid fa-magnifying-glass-chart cs-card-icon" aria-hidden="true"></i>
         <div class="cs-card-num">01</div>
         <div class="cs-card-title">Finding Assumptions Without Bypassing Compliance</div>
         <div class="cs-card-text">Normal user research was not possible, because advisor work is full of confidential client information. So I designed around it. When sitting with advisors I recorded how they moved through the tool and never what was on screen. Twelve sessions gave me the human side and the analytics gave me the numbers.</div>
       </div>
       <div class="cs-card">
+        <i class="fa-solid fa-forward cs-card-icon" aria-hidden="true"></i>
         <div class="cs-card-num">02</div>
         <div class="cs-card-title">What Moved to V3</div>
         <div class="cs-card-text">Showing confidence differently by experience level. Automatic flags when the AI's confidence drops below a set level for a client. Sources shown as charts rather than only text. All written up with owners and measures, and all already tracked, so the next sprint starts with a brief instead of a blank page.</div>
       </div>
       <div class="cs-card">
+        <i class="fa-solid fa-wand-magic-sparkles cs-card-icon" aria-hidden="true"></i>
         <div class="cs-card-num">03</div>
         <div class="cs-card-title">How AI Tooling Compressed Design Cycles</div>
         <div class="cs-card-text">Figma Make sped up building the card variations, since the recommendation card alone needed 14 versions for the different confidence bands. Claude Code let me prototype how the sources expand so I could test the interaction before engineering committed to it. Together that shipped a compliance-heavy tool in two releases instead of three.</div>
@@ -1201,9 +1547,9 @@
     <div>
       <h3 class="footer-heading">Say Hi!</h3>
       <div class="footer-links">
-        <a href="https://linkedin.com/in/purubhardwaj9/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="mailto:purubhardwaj99@gmail.com">Email</a>
-        <a href="https://purubhardwajdesign.com" target="_blank" rel="noopener">Portfolio</a>
+        <a href="https://linkedin.com/in/purubhardwaj9/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>LinkedIn</a>
+        <a href="mailto:purubhardwaj99@gmail.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i>Email</a>
+        <a href="https://purubhardwajdesign.com" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>Portfolio</a>
       </div>
     </div>
   </div>
@@ -1243,6 +1589,63 @@
       entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('revealed'); io.unobserve(e.target); } });
     }, { threshold: 0.08 });
     els.forEach(function(el){ io.observe(el); });
+  })();
+
+  // ── Mesh cursor tracking: two lagging light spots follow the cursor
+  //    via CSS custom properties. Uses lerp for silky motion and drops
+  //    to an idle drift when the cursor isn't over the mesh. ──
+  (function(){
+    var mesh = document.getElementById('csMesh');
+    if (!mesh || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var tx = 30, ty = 32;           // target position (0–100 %)
+    var x = 30, y = 32;              // fast follower
+    var x2 = 68, y2 = 72;            // slow follower (drifts second spot)
+    var hovering = false;
+    var idleT = 0;                   // idle animation clock
+
+    function onMove(e){
+      var r = mesh.getBoundingClientRect();
+      var px = ((e.clientX - r.left) / r.width) * 100;
+      var py = ((e.clientY - r.top) / r.height) * 100;
+      tx = Math.max(-10, Math.min(110, px));
+      ty = Math.max(-10, Math.min(110, py));
+    }
+
+    mesh.addEventListener('mouseenter', function(){
+      hovering = true;
+      mesh.style.setProperty('--intensity', '1.15');
+    });
+    mesh.addEventListener('mouseleave', function(){
+      hovering = false;
+      mesh.style.setProperty('--intensity', '1');
+    });
+    mesh.addEventListener('mousemove', onMove);
+    mesh.addEventListener('touchmove', function(e){
+      if (e.touches && e.touches[0]) onMove(e.touches[0]);
+    }, { passive: true });
+
+    function tick(){
+      if (!hovering) {
+        // Slow autonomous orbit when nobody is engaging.
+        idleT += 0.004;
+        tx = 50 + Math.cos(idleT) * 26;
+        ty = 46 + Math.sin(idleT * 1.3) * 20;
+      }
+      x  += (tx - x) * 0.09;
+      y  += (ty - y) * 0.09;
+      x2 += ((100 - tx) - x2) * 0.04;   // opposite drift for depth
+      y2 += ((100 - ty) - y2) * 0.04;
+      mesh.style.setProperty('--mx',  x.toFixed(2) + '%');
+      mesh.style.setProperty('--my',  y.toFixed(2) + '%');
+      mesh.style.setProperty('--mx2', x2.toFixed(2) + '%');
+      mesh.style.setProperty('--my2', y2.toFixed(2) + '%');
+      requestAnimationFrame(tick);
+    }
+    // Kill the CSS transitions once JS takes over — rAF is smoother
+    // and the transitions would fight the per-frame updates.
+    mesh.style.transition = 'none';
+    requestAnimationFrame(tick);
   })();
 </script>
 

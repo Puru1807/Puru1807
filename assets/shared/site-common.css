@@ -27,6 +27,96 @@ html {
   pointer-events: none;
 }
 
+/* ── Text-selection pill: pops up above any highlighted text and
+      opens the site chatbot with the selection sent through. ── */
+.ask-llm-pill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99998;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px 7px 11px;
+  background: #E0533C;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 10px 28px rgba(224, 83, 60, 0.32),
+              0 2px 6px rgba(0,0,0,0.10);
+  opacity: 0;
+  transform: translate(-50%, 8px) scale(0.92);
+  transform-origin: 50% 100%;
+  transition: opacity 0.18s ease,
+              transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+              background 0.15s ease;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.ask-llm-pill.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+  pointer-events: auto;
+}
+.ask-llm-pill:hover {
+  background: #C93E28;
+  transform: translate(-50%, -2px) scale(1.02);
+}
+.ask-llm-pill:active {
+  transform: translate(-50%, 0) scale(0.98);
+}
+.ask-llm-pill:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+.ask-llm-pill__icon {
+  width: 12px;
+  height: 12px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+@media (hover: none) and (pointer: coarse) {
+  .ask-llm-pill { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ask-llm-pill { transition: opacity 0.15s ease; }
+  .ask-llm-pill.is-visible { transform: translate(-50%, 0); }
+  .ask-llm-pill:hover { transform: translate(-50%, 0); }
+}
+
+/* Toast that confirms 'copied to clipboard' when we fall back
+   because Chatbase's programmatic sendMessage isn't reachable. */
+.ask-llm-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  z-index: 99997;
+  padding: 10px 16px;
+  background: rgba(4, 2, 2, 0.92);
+  color: #fff;
+  border-radius: 999px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.28);
+  opacity: 0;
+  transform: translate(-50%, 10px);
+  transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.ask-llm-toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
 .nav-link:focus-visible,
 .theme-toggle:focus-visible,
 .csn-link:focus-visible {
@@ -194,26 +284,502 @@ html {
   }
 }
 
-
 /* ═══════════════════════════════════════════════════════
    Context primer — the plain-English setup a reader needs
-   before any of the case study makes sense.
+   before the case study makes sense.
+
+   Every size below is derived from φ = 1.618033988875.
+   Type   base 16px:  16/φ = 9.9  ·  16  ·  16×φ = 25.9
+   Space  base  8px:  8/φ = 4.9 · 8 · 8φ = 12.9 · 8φ² = 20.9
+                      8φ³ = 33.9 · 8φ⁴ = 54.8 · 8φ⁵ = 88.7
+   Leading:  body 1.618 (φ)  ·  lead 1.309 ((1+φ)/2)
+   Columns:  1.618fr : 1fr — the golden section itself
    ═══════════════════════════════════════════════════════ */
-.cs-primer { max-width: 1200px; margin: 0 auto; padding: 0 var(--margin) 64px; }
-.cs-primer-inner { border: 1px solid var(--border); border-left: 3px solid #E0533C; background: var(--bg-alt); padding: 30px 34px 34px; }
-.cs-primer-eyebrow { font-family: var(--ui); font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #E0533C; margin-bottom: 18px; }
-.cs-primer-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 40px; align-items: start; }
-.cs-primer-defs { display: flex; flex-direction: column; gap: 15px; }
-.cs-primer-def { display: grid; grid-template-columns: 132px 1fr; gap: 16px; align-items: baseline; }
-.cs-primer-term { font-family: var(--ui); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); line-height: 1.5; }
-.cs-primer-desc { font-family: var(--font); font-size: 14.5px; line-height: 1.62; color: var(--text); }
-.cs-primer-desc strong { font-weight: 600; }
-.cs-primer-stake { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--border); font-family: var(--font); font-size: 15.5px; line-height: 1.6; color: var(--text); }
-.cs-primer-stake strong { font-weight: 600; }
-.cs-primer-fig svg { display: block; width: 100%; height: auto; color: var(--text); }
-.cs-primer-cap { font-family: var(--ui); font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--secondary); margin-top: 12px; text-align: center; }
+/* Primer — an editorial "before we start" note, not a boxed component.
+   No container, no orange bar, no bg fill. Section marked by a single
+   top hairline and typographic hierarchy. */
+.cs-primer {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 var(--margin) 88px;
+}
+
+.cs-primer-inner {
+  border: none;
+  background: transparent;
+  padding-top: 28px;
+  border-top: 1px solid var(--text);
+}
+
+.cs-primer-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 0 0 40px;
+  border-bottom: none;
+}
+.cs-primer-eyebrow {
+  font-family: var(--ui);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 0;
+}
+.cs-primer-note {
+  font-family: var(--ui);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  margin: 0;
+}
+
+.cs-primer-grid {
+  display: grid;
+  grid-template-columns: 1.618fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+.cs-primer-defs { padding: 0; border-right: none; }
+.cs-primer-fig  { padding: 0; align-self: start; margin-top: 4px; }
+
+/* Numbered magazine glossary — serif terms, hairlines between. */
+.cs-primer-def {
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+}
+.cs-primer-def:first-child { border-top: none; padding-top: 0; }
+.cs-primer-def:last-child { padding-bottom: 0; }
+
+.cs-primer-term {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  font-family: var(--display);
+  font-size: clamp(19px, 1.8vw, 23px);
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  text-transform: none;
+  color: var(--text);
+  margin-bottom: 8px;
+  line-height: 1.25;
+}
+.cs-primer-term b {
+  color: var(--secondary);
+  font-family: var(--ui);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  margin-right: 0;
+  min-width: 22px;
+  flex-shrink: 0;
+}
+.cs-primer-desc {
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text);
+  margin: 0;
+  padding-left: 36px;
+}
+.cs-primer-desc strong { font-weight: 500; }
+
+.cs-primer-fig svg {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  color: var(--text);
+  margin: 0 auto;
+}
+.cs-primer-cap {
+  font-family: var(--ui);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  margin: 18px 0 0;
+  text-align: center;
+  line-height: 1.55;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* The stake — full-width italic serif pull-quote, hairline top,
+   subtle highlighter mark on the last clause. */
+.cs-primer-stake {
+  padding: 36px 0 0;
+  margin: 44px 0 0;
+  border-top: 1px solid var(--text);
+  font-family: var(--display);
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.cs-primer-stake b {
+  color: var(--text);
+  font-weight: 400;
+  font-style: italic;
+  background: linear-gradient(transparent 62%, rgba(224,83,60,0.22) 62%, rgba(224,83,60,0.22) 92%, transparent 92%);
+  padding: 0 3px;
+}
+
 @media (max-width: 900px) {
-  .cs-primer-grid { grid-template-columns: 1fr; gap: 30px; }
-  .cs-primer-def { grid-template-columns: 108px 1fr; gap: 12px; }
-  .cs-primer-inner { padding: 24px 22px 28px; }
+  .cs-primer-grid { grid-template-columns: 1fr; gap: 40px; }
+  .cs-primer-defs, .cs-primer-fig { padding: 0; }
+  .cs-primer-fig { order: -1; }
+  .cs-primer { padding-bottom: 56px; }
+  .cs-primer-stake { font-size: clamp(18px, 2vw, 22px); }
+}
+
+/* ═══════════════════════════════════════════════════════
+   Case-study mesh hero — Hana "Naranjitas 2" gradient
+   Cursor-tracked warm ellipse + opposite-drift cool ellipse
+   over a 119° blue→white base. JS in site-common drives
+   --mx/--my/--mx2/--my2 via rAF lerp.
+   ═══════════════════════════════════════════════════════ */
+.cs-mesh {
+  --mx: 22%;
+  --my: 60%;
+  --mx2: 78%;
+  --my2: 40%;
+  position: relative;
+  width: 100%;
+  height: clamp(220px, 30vw, 340px);
+  margin: 8px 0 48px;
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(119deg, #3f77c1 18%, #ffffff 100%);
+  border-radius: 2px;
+}
+.cs-mesh__warm,
+.cs-mesh__cool {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+.cs-mesh__warm {
+  width: 130%;
+  height: 220%;
+  left: var(--mx);
+  top: var(--my);
+  transform: translate3d(-50%, -50%, 0);
+  background: radial-gradient(circle,
+    rgba(248, 88, 48, 1)     0%,
+    rgba(246, 129, 75, 1)    47.78%,
+    rgba(245, 160, 112, 0.1) 99.04%,
+    transparent 100%);
+  filter: blur(70px);
+  z-index: 1;
+}
+.cs-mesh__cool {
+  width: 145%;
+  height: 240%;
+  left: var(--mx2);
+  top: var(--my2);
+  transform: translate3d(-50%, -50%, 0);
+  background: radial-gradient(circle,
+    rgba(237, 166, 88, 1)     0%,
+    rgba(199, 193, 196, 0.85) 54.55%,
+    rgba(169, 211, 234, 0.1)  100%,
+    transparent 100%);
+  filter: blur(80px);
+  z-index: 2;
+  mix-blend-mode: multiply;
+  opacity: 0.85;
+}
+.cs-mesh__grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 3;
+}
+.cs-mesh__scrim {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 62%;
+  background: linear-gradient(to top,
+    rgba(60, 20, 5, 0.28) 0%,
+    rgba(60, 20, 5, 0.14) 45%,
+    transparent 100%);
+  pointer-events: none;
+  z-index: 4;
+}
+.cs-mesh::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.32),
+              inset 0 -1px 0 rgba(60,20,10,0.16);
+  pointer-events: none;
+  z-index: 5;
+}
+.cs-mesh__caption {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+  padding: clamp(22px, 3.5vw, 40px);
+  color: #fff;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: cs-mesh-in 1.1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+  pointer-events: none;
+}
+.cs-mesh__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--ui, 'Inter', sans-serif);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.92);
+  margin-bottom: 12px;
+}
+.cs-mesh__eyebrow::before {
+  content: '';
+  width: 22px;
+  height: 1px;
+  background: rgba(255,255,255,0.6);
+}
+.cs-mesh__title {
+  font-family: var(--display, 'Instrument Serif', Georgia, serif);
+  font-size: clamp(30px, 4.4vw, 60px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: #fff;
+  text-shadow: 0 2px 24px rgba(90,30,10,0.28);
+}
+.cs-mesh__tag {
+  margin-top: 14px;
+  font-family: var(--ui, 'Inter', sans-serif);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.8);
+}
+@keyframes cs-mesh-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cs-mesh__caption { animation: none; opacity: 1; transform: none; }
+}
+@media (max-width: 768px) {
+  .cs-mesh { height: clamp(180px, 42vw, 240px); margin: 4px 0 32px; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   Editorial process figures (.cs-fig)
+   Soft grey-blue plate, muted lines, orange accent for
+   the loaded element. Style DNA from the reference set
+   (memory-vs-privacy, systems-thinking, rabbit-hole).
+   ═══════════════════════════════════════════════════════ */
+.cs-fig {
+  margin: 32px 0 40px;
+  max-width: 900px;
+  background: #F0F3F5;
+  border: 1px solid rgba(55, 74, 95, 0.08);
+  border-radius: 2px;
+  padding: 28px 32px 24px;
+  position: relative;
+  overflow: hidden;
+}
+[data-theme="dark"] .cs-fig {
+  background: #1A1918;
+  border-color: rgba(255,255,255,0.06);
+}
+.cs-fig__label {
+  display: block;
+  font-family: var(--ui, 'Inter', sans-serif);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #98A3AE;
+  margin-bottom: 22px;
+}
+[data-theme="dark"] .cs-fig__label { color: #777370; }
+.cs-fig__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: #374A5F;
+}
+[data-theme="dark"] .cs-fig__svg { color: #C3CAD1; }
+.cs-fig__cap {
+  margin-top: 20px;
+  font-family: var(--ui, 'Inter', sans-serif);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--secondary, #98A3AE);
+  line-height: 1.55;
+  max-width: 620px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Info-icon shake — FA-buzz equivalent, native CSS.
+   Applied to the SVG inside .cs-info-btn so it doesn't
+   fight the button's hover scale transform.
+
+   • On page load: three quick buzzes after a 1.4s delay
+     (staggered with the .cs-info-btn::after attention ring
+     so the two effects reinforce, not overlap).
+   • On hover: one fresh buzz — a 'yes, click me' hint.
+   • Reduced motion: no animation.
+   ═══════════════════════════════════════════════════════ */
+.cs-info-btn svg {
+  transform-origin: center center;
+  animation: cs-info-buzz 0.65s cubic-bezier(.36, .07, .19, .97);
+  animation-iteration-count: 3;
+  animation-delay: 1.4s;
+  animation-fill-mode: both;
+}
+.cs-info-btn:hover svg,
+.cs-info-btn:focus-visible svg {
+  animation: cs-info-buzz 0.5s cubic-bezier(.36, .07, .19, .97);
+  animation-iteration-count: 1;
+  animation-delay: 0s;
+}
+.cs-info-btn.is-noticed svg {
+  animation: none;
+}
+@keyframes cs-info-buzz {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  10%  { transform: translate(-1px, 1px)  rotate(-8deg); }
+  20%  { transform: translate(1px, -1px)  rotate(8deg); }
+  30%  { transform: translate(-1px, -1px) rotate(-6deg); }
+  40%  { transform: translate(1px, 1px)   rotate(6deg); }
+  50%  { transform: translate(-1px, 1px)  rotate(-4deg); }
+  60%  { transform: translate(1px, 0)     rotate(4deg); }
+  70%  { transform: translate(-1px, 0)    rotate(-2deg); }
+  80%  { transform: translate(1px, 0)     rotate(2deg); }
+  90%  { transform: translate(0, 0)       rotate(0deg); }
+  100% { transform: translate(0, 0)       rotate(0deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cs-info-btn svg { animation: none !important; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   AT-A-GLANCE — collapsible.
+   Uses native <details>/<summary> so it's keyboard + screen-
+   reader accessible for free. Collapsed by default; user
+   opts in. + / − icons swap based on the [open] attribute.
+   ═══════════════════════════════════════════════════════ */
+details.cs-glance-inner {
+  padding: 0;
+}
+details.cs-glance-inner > summary {
+  list-style: none;
+  cursor: pointer;
+  user-select: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  details.cs-glance-inner > summary { cursor: none; }
+}
+details.cs-glance-inner > summary::-webkit-details-marker,
+details.cs-glance-inner > summary::marker {
+  display: none;
+  content: '';
+}
+
+/* Head layout: eyebrow left, meta next to it, +/− pill far right. */
+details.cs-glance-inner > summary.cs-glance-head {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  transition: background 0.2s ease;
+}
+details.cs-glance-inner > summary.cs-glance-head:hover {
+  background: rgba(224, 83, 60, 0.04);
+}
+
+.cs-glance-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 11px;
+  transition: background 0.2s ease, color 0.2s ease,
+              border-color 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
+  margin-left: auto;
+  background: transparent;
+}
+details.cs-glance-inner > summary:hover .cs-glance-toggle,
+details.cs-glance-inner > summary:focus-visible .cs-glance-toggle {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+  transform: scale(1.08);
+}
+.cs-glance-icon {
+  width: 12px;
+  height: 12px;
+  display: block;
+  color: currentColor;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.cs-glance-icon--minus { display: none; }
+details.cs-glance-inner[open] .cs-glance-icon--plus  { display: none; }
+details.cs-glance-inner[open] .cs-glance-icon--minus { display: block; }
+
+/* Body reveal — subtle fade-in when the details opens. */
+details.cs-glance-inner[open] .cs-glance-grid,
+details.cs-glance-inner[open] .cs-glance-proof {
+  animation: cs-glance-reveal 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes cs-glance-reveal {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Optional 'expand this' cue on the closed state — a tiny prompt
+   below the head so the reader knows there's more to read. */
+details.cs-glance-inner:not([open]) > summary.cs-glance-head::after {
+  content: 'Expand for the full setup';
+  order: 3;
+  flex-basis: 100%;
+  margin-top: 2px;
+  font-family: var(--ui, 'Inter', sans-serif);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  details.cs-glance-inner[open] .cs-glance-grid,
+  details.cs-glance-inner[open] .cs-glance-proof { animation: none; }
+  .cs-glance-toggle { transition: none; }
 }

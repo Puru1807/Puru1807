@@ -1,0 +1,40 @@
+@page { size: A4; margin: 22mm 22mm 22mm 22mm; }
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  color: #16130f;
+  line-height: 1.55;
+  font-size: 11.4pt;
+  margin: 0;
+  padding: 0;
+}
+h1 { font-size: 26pt; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 8pt; line-height: 1.15; }
+h2 { font-size: 15pt; font-weight: 600; margin: 22pt 0 8pt; padding-bottom: 6pt; border-bottom: 1pt solid #cfcbc4; break-after: avoid; }
+h3 { font-size: 12pt; font-weight: 600; margin: 16pt 0 6pt; color: #2d251e; break-after: avoid; }
+h4 { font-size: 10.5pt; font-weight: 600; margin: 12pt 0 4pt; color: #4d3d2e; text-transform: uppercase; letter-spacing: 0.06em; }
+p { margin: 0 0 8pt; }
+ul, ol { margin: 0 0 10pt 20pt; padding: 0; }
+li { margin-bottom: 3pt; }
+strong { color: #7a2c1a; font-weight: 600; }
+em { color: #3c332a; }
+code, .mono { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 9.8pt; background: #f4f0ea; padding: 1pt 4pt; border-radius: 2pt; }
+blockquote { margin: 8pt 0 12pt; padding: 8pt 14pt; border-left: 2pt solid #E0533C; background: #faf3ee; font-style: italic; color: #3c332a; }
+.eyebrow { font-size: 8.5pt; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #E0533C; margin-bottom: 6pt; }
+.fastfacts { border: 1pt solid #cfcbc4; padding: 10pt 14pt; margin: 8pt 0 16pt; background: #faf7f2; }
+.fastfacts p { margin: 3pt 0; font-size: 10.5pt; }
+.fastfacts .k { display: inline-block; width: 100pt; font-weight: 600; color: #4d3d2e; font-size: 9.5pt; text-transform: uppercase; letter-spacing: 0.06em; }
+.qa { margin-bottom: 14pt; page-break-inside: avoid; }
+.qa .q { font-weight: 600; color: #16130f; margin-bottom: 4pt; }
+.qa .a { color: #2d251e; }
+.callout { border: 1pt dashed #b9b0a3; padding: 10pt 14pt; margin: 10pt 0; background: #fdfbf7; font-size: 10.5pt; }
+.metric-row { display: table; width: 100%; margin: 8pt 0 12pt; border-top: 1pt solid #cfcbc4; border-bottom: 1pt solid #cfcbc4; }
+.metric-row > div { display: table-cell; padding: 8pt 8pt; border-right: 1pt solid #e5dfd5; }
+.metric-row > div:last-child { border-right: none; }
+.metric-row .big { font-size: 20pt; font-weight: 600; color: #E0533C; display: block; }
+.metric-row .lbl { font-size: 8pt; letter-spacing: 0.1em; text-transform: uppercase; color: #6b5c4d; margin-top: 3pt; display: block; }
+.toc { columns: 2; column-gap: 24pt; font-size: 10pt; margin-bottom: 20pt; }
+.toc a { color: #16130f; text-decoration: none; }
+header.doc-head { border-bottom: 2pt solid #16130f; padding-bottom: 14pt; margin-bottom: 18pt; }
+header.doc-head .brand { font-size: 9pt; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: #6b5c4d; margin-bottom: 8pt; }
+header.doc-head .sub { color: #6b5c4d; font-size: 10.5pt; }
+.section-cover { page-break-before: always; }

@@ -1,0 +1,242 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Maxtra Technologies — LLM Training Document</title>
+<link rel="stylesheet" href="_shell.css"></head>
+<body>
+
+<header class="doc-head">
+  <div class="brand">Puru Bhardwaj · Chatbot Training Corpus · v1.0</div>
+  <h1>Maxtra Technologies — Digital Banking KYC & Onboarding</h1>
+  <p class="sub">Comprehensive case-study reference for the site chatbot. Written to answer any recruiter or interviewer question about this project. Every claim below is derived from the case study as it currently ships on the portfolio; estimates carry explicit methodology.</p>
+</header>
+
+<div class="callout"><strong>How to use this document:</strong> the chatbot should treat this file as authoritative for questions about Maxtra Technologies and the SME onboarding redesign. Prefer concrete numbers (35 % → ~58 %, 23 min → 11 min, ~₹8.6 Cr, 6 weeks vs 16 weeks) over hedging. Follow-up questions pull from Anticipated Q&A at the end.</div>
+
+<h2>1 · Fast Facts</h2>
+<div class="fastfacts">
+  <p><span class="k">Company</span>Maxtra Technologies</p>
+  <p><span class="k">Role</span>Product Designer — Digital Banking & SaaS Products</p>
+  <p><span class="k">Location</span>Noida, India</p>
+  <p><span class="k">Timeline</span>Oct 2020 — Sep 2022 (~24 months)</p>
+  <p><span class="k">Domain</span>Fintech, digital banking, KYC & compliance UX, enterprise SaaS, RBI-regulated onboarding</p>
+  <p><span class="k">Platform</span>Mobile + Web — business banking flows for SME customers</p>
+  <p><span class="k">Customer type</span>Enterprise B2B — banks and NBFCs using Maxtra's platform to serve their end customers</p>
+  <p><span class="k">End users</span>SME owners, 30–55 years old, running proprietorships / LLPs / partnerships</p>
+  <p><span class="k">Regulator</span>Reserve Bank of India (RBI)</p>
+  <p><span class="k">Signup volume</span>~5,000 new SME accounts per month</p>
+  <p><span class="k">Baseline KYC completion</span>35 % within 14-day window</p>
+  <p><span class="k">Industry benchmark</span>55–65 % (KPMG India fintech benchmark, 2021)</p>
+  <p><span class="k">Tools used</span>Figma, prototype tools for compliance walk-throughs, funnel analytics dashboards, app-store review mining</p>
+</div>
+
+<div class="metric-row">
+  <div><span class="big">+23pt</span><span class="lbl">KYC completion (35 % → ~58 %)</span></div>
+  <div><span class="big">−52%</span><span class="lbl">Time-to-complete (23 → 11 min)</span></div>
+  <div><span class="big">~40%</span><span class="lbl">Est. KYC support drop</span></div>
+  <div><span class="big">1,150</span><span class="lbl">Extra SMEs onboarded / mo</span></div>
+</div>
+
+<h2>2 · Business Context</h2>
+
+<h3>What Maxtra Technologies is</h3>
+<p>An Indian fintech / digital banking SaaS provider based in Noida. Sells the underlying banking platform to Indian banks and NBFCs — Maxtra doesn't hold the customer relationship directly; the licensed bank does. That means Maxtra's design decisions have to satisfy three separate audiences: the SME end user, the bank's product team (Maxtra's paying customer), and the RBI (the regulator whose rules everyone downstream must follow).</p>
+
+<h3>What the product is</h3>
+<p>End-to-end digital banking experiences: business account onboarding, KYC verification, payment authorisation workflows, beneficiary setup, account servicing, and self-service applications. This case study focuses specifically on the KYC & account onboarding surface — the funnel that new SME customers walk through before they can actually use the account.</p>
+
+<h3>Who the users are</h3>
+<p>SME owners, primarily aged 30–55. Owners of proprietorships, LLPs, partnerships, and small trusts. Time-poor. Frequently interrupted (running their business is job #1; opening a bank account is job #47). Not digitally native in the same way a consumer app's user is — they know how to use WhatsApp, less confident with a 7-step form asking for structured document uploads.</p>
+
+<h3>Why KYC mattered as the bottleneck</h3>
+<p>KYC completion was the #1 funnel issue. Every SME that abandoned KYC was a lost customer worth ~₹50K–₹2L in lifetime fee revenue. At 5,000 signups/month × 65 % abandonment, the bank was leaving ~3,250 SMEs on the table every month — equivalent to walking away from tens of crores in annual LTV.</p>
+
+<h2>3 · The Problem</h2>
+
+<h3>The one-sentence version</h3>
+<blockquote>SMEs weren't abandoning because they didn't want to bank. They abandoned because the 7-step KYC form asked for the same documents twice, and 41 % of drop-off happened at the exact step where the PAN card was requested a second time.</blockquote>
+
+<h3>The 4-element problem statement</h3>
+<p><strong>User type:</strong> First-time business banking customers — SME owners, 30–55, primarily proprietors.<br>
+<strong>Specific action:</strong> Complete KYC onboarding within the 14-day activation window.<br>
+<strong>Root cause:</strong> The 7-step form requested redundant documents at multiple stages and failed to communicate compliance progress in a way that felt like forward motion.<br>
+<strong>Measurable outcome:</strong> Only 35 % of new business signups completed KYC within 14 days — against an industry benchmark of 55–65 % (KPMG India fintech benchmark, 2021).</p>
+
+<h3>The step-4 cliff</h3>
+<p>Internal funnel analytics showed a very clean signal: <strong>41 % of all abandonment happened at step 4 — "business proof"</strong>. That step asked for a PAN card that the user had <em>already uploaded</em> in step 2. From the user's point of view: "this thing doesn't trust me — why am I doing this?" — and most closed the tab. From the compliance team's point of view: "we ask twice because we do different things with the document at each step". Both were partly right, but the user's read was the one that killed the funnel.</p>
+
+<h3>Verbatim signal — app store review</h3>
+<blockquote>"I uploaded my PAN. Then it asked for my PAN again. I gave up. I'll just go to my regular bank's branch on Saturday." — Play Store review, 1-star, March 2022 cohort</blockquote>
+
+<h2>4 · Research</h2>
+
+<p>Direct user research with SMEs in the live KYC flow was off-limits (privacy + regulatory constraints). So the research strategy had to work around that with <strong>four independent indirect evidence sources</strong>.</p>
+
+<h4>4.1 App-store review mining</h4>
+<p>89 of 210 1-star reviews (42 %) cited "onboarding too long" or "asked for same docs twice" — sourced from an 18-month review window across Play Store and iOS App Store. Review mining is primary research at scale. Not internal analytics — but 89 individual SME owners telling us in their own words why they walked away. Reviews were coded by hand into 6 categories; the two top categories accounted for 71 % of KYC-related 1-star reviews.</p>
+
+<h4>4.2 Internal funnel analytics</h4>
+<p>41 % of all abandonment concentrated at step 4 — the second PAN request. Median time-on-step at this point was 2 minutes 40 seconds, indicating <strong>users hesitating, not interacting</strong>. Funnel data localised the failure mode to a single step that the compliance rationale couldn't defend once the rationale was inspected.</p>
+
+<h4>4.3 Competitor onboarding audit</h4>
+<p>Six competing B2B banking onboarding flows audited end-to-end. Average step count: 4–5 (Maxtra: 7). Average time-to-complete: ~12 minutes (Maxtra: 23). The benchmark was reachable, the gap was specific, and the leaders weren't doing anything magical — they had just designed the architecture more carefully.</p>
+
+<h4>4.4 The compliance interview that changed the project</h4>
+<p>The unlock came from a 90-minute conversation with the regulatory affairs team. Framing question: <em>"Of the 7 steps in current KYC, how many are RBI-mandated, and how many are internal policy?"</em> The answer reshaped the entire redesign: <strong>only 4 of the 7 steps were RBI-mandated. The other 3 had been added "to be safe" during a prior compliance review.</strong></p>
+<p>That meant the redesign wasn't a regulatory negotiation — it was an <em>internal-policy</em> negotiation, with much lower risk. This is the kind of insight you only get from talking to compliance directly with specific questions. "Is this regulatory?" is too binary and gets defensive-yes answers. "Walk me through the rationale for each step" is where the wiggle room becomes visible.</p>
+
+<h2>5 · Options Considered</h2>
+
+<h3>Option A — Unilaterally cut to 4 steps and ship in 2 weeks (REJECTED)</h3>
+<p><strong>What it was:</strong> Since compliance had already confirmed 4 of the 7 steps were RBI-mandated, just remove the other 3. Ship in two weeks.</p>
+<p><strong>Why it looked attractive:</strong> Simplest possible fix. Zero regulatory exposure (compliance had already validated). Fastest to implement.</p>
+<p><strong>Why we rejected it:</strong> Removing internal-policy steps required formal legal sign-off. Legal team's calendar said this would take <strong>4 months</strong>. We couldn't wait 4 months on a 35 % completion rate — that's ~13,000 SMEs lost during the wait. The clean solution wasn't wrong; it was too slow.</p>
+
+<h3>Option B — Conditional step disclosure (CHOSEN)</h3>
+<p><strong>What it was:</strong> Keep all 7 steps in the data model. Progressively reveal them based on business entity type: SME sole proprietors see 4 steps; complex entities (LLPs, partnerships, trusts) see all 7. No data is removed. No regulatory posture changes. But the SME segment (which is 78 % of signup volume) sees a 4-step flow.</p>
+<p><strong>Why we chose it:</strong> Ships in 6 weeks because no legal-team review is required for <em>hiding</em> existing steps based on entity type — the schema doesn't change. Data model becomes branchier but that's engineering debt, not regulatory risk. Solves the actual problem (7 steps feel like 7 steps) for the segment doing 78 % of signup volume.</p>
+
+<h3>Option C — Pre-fill from PAN + GST APIs (PARTIALLY ADOPTED)</h3>
+<p><strong>What it was:</strong> Connect the form to public PAN and GST APIs to pre-fill business name, address, and entity type.</p>
+<p><strong>Why it looked attractive:</strong> Reduces typing dramatically. High user satisfaction upside.</p>
+<p><strong>Why partial:</strong> Genuinely useful, but doesn't address the <em>step-count</em> problem (which was the actual abandonment trigger). Partially adopted in V1 (light pre-fill for basic fields) and queued for V2 with deeper API integration once SDK contracts with the public APIs were finalised.</p>
+
+<h2>6 · Decision + Tradeoff</h2>
+
+<h3>The core decision</h3>
+<p>We chose <strong>ship-and-iterate over wait-for-perfect</strong>. Conditional disclosure was not the cleanest engineering solution — the data model became more complex (branching flows + dependency rules), and every branch needed compliance validation. The "pure" approach — deleting 3 steps from the data model entirely — was cleaner. But cleaner would have shipped in February. Conditional disclosure shipped in November.</p>
+
+<h3>Tradeoff matrix</h3>
+<h4>Gained</h4>
+<p>Shipping in 6 weeks instead of 16. KYC completion lift of ~23 percentage points for the SME segment. No regulatory exposure. Onboarding time roughly halved for the volume-driving customer type.</p>
+<h4>Lost</h4>
+<p>Engineering data model became branchier and more complex to maintain. Each new entity branch (LLPs, partnerships, trusts) required individual compliance sign-off. QA test matrix doubled because the same form now had two possible flow paths.</p>
+<h4>Why accepted</h4>
+<p>A 35 % completion rate was bleeding ~3,250 potential SME customers per month. The cost of waiting 4 months for the "clean" solution was an estimated 13,000 SMEs lost. Engineering complexity is recoverable through refactoring later. Lost customers are not.</p>
+
+<h3>The business math</h3>
+<div class="callout">
+  <p><strong>Additional onboarded SMEs / month = 5,000 signups × 0.23 lift = ~1,150</strong></p>
+  <p><strong>Newly-activated LTV / month = 1,150 × ~₹75K avg = ~₹8.6 crore</strong></p>
+</div>
+<p>Source for the ~₹75K avg lifetime fee revenue per SME account: cross-referenced from public Indian business-banking benchmarks (KPMG India fintech 2021, EY India digital banking report 2022). The rupee figure isn't precision — it's an order-of-magnitude framing. The point isn't "the redesign generated ₹8.6 Cr"; it's "the redesign converted an abandoned-funnel problem into a P&L-relevant outcome the executive team could defend".</p>
+
+<h2>7 · Design Solution</h2>
+
+<h3>Entity-type selection as step 1, not step 5</h3>
+<p>In the old flow, business entity type (sole prop / LLP / partnership) was collected at step 5 — <em>after</em> all the personal documents were already uploaded. That meant we couldn't conditionally branch until users had done most of the work. By moving entity-type to step 1 (a single tap), we could route SMEs into the 4-step path immediately. This single re-sequencing decision unlocked the entire conditional disclosure approach.</p>
+
+<h3>Progress communication — the "what's left" pattern</h3>
+<h4>Step counter shows remaining, not completed</h4>
+<p>User testing showed "Step 4 of 7" felt heavier than "3 steps left". Behavioural framing matters in compliance flows where every step feels like an obstacle. Reframing progress as remaining-steps reduced abandonment at step 2 by an estimated 8 percentage points in early pilots.</p>
+
+<h4>Inline rationale for every document request</h4>
+<p>Each upload screen now answers the unspoken question: "why are you asking?" A one-line plain-language rationale ("This helps RBI verify your business identity") moved the trust dial without changing what was being asked. Compliance approved every line before it shipped.</p>
+
+<h3>Payment authorization redesign — the second product win</h3>
+<p>Outside the onboarding redesign, I redesigned the payment authorization workflow for business users. The old flow surfaced authorization codes via SMS only, with no in-product confirmation. Business users (multi-signatory accounts) frequently lost the SMS, leading to support escalations for "stuck transactions". The redesign added an in-product authorization queue with explicit signatory states, escalation timers, and a fallback "resend via voice call" path for accounts where SMS failed. <strong>Support escalations for failed payments dropped substantially</strong> in the post-launch quarter.</p>
+
+<h3>Reusable banking patterns across mobile + web</h3>
+<p>The KYC redesign produced reusable patterns — document upload states, multi-signatory flows, compliance progress indicators — that became the foundation for adjacent product modules. Documented in a shared Figma library with cross-platform parity (mobile + web) and engineering-mapped tokens. The library cut design handoff ambiguity on adjacent banking workflows for the rest of my time at Maxtra.</p>
+
+<h2>8 · Outcomes</h2>
+
+<h3>Measured + estimated</h3>
+<ul>
+  <li><strong>KYC completion rate:</strong> 35 % → ~58 % within 6 months of full rollout. Methodology: pre/post comparison of 90-day funnel windows, with a 3-month bridging period to control for seasonality (SME signups spike in Q1 due to fiscal year setup). Lift concentrated in the SME segment (the cohort that saw the 4-step path); complex entities saw a smaller ~4-point lift, primarily from the inline rationale + progress redesign.</li>
+  <li><strong>Onboarding time-to-complete (SME segment):</strong> ~23 min → ~11 min. Measured via session analytics for users who completed end-to-end. Time savings compound with completion lift — faster flows are more likely to be completed in a single session, reducing 14-day-window risk.</li>
+  <li><strong>KYC-related support escalations:</strong> estimated ~40 % drop based on category-tagged ticket analysis across the post-launch quarter. Methodology: ticketing system auto-categorization calibrated against a manual audit of 150 tickets, then pre/post compared.</li>
+</ul>
+
+<h3>Business framing</h3>
+<p>Additional onboarded SMEs per month: ~1,150 (5,000 × 0.23 lift). Newly-activated LTV per month: ~₹8.6 Cr (1,150 × ~₹75K avg lifetime fee revenue per SME account). The dollar figure isn't precision — it's an order-of-magnitude framing that made the engineering complexity tradeoff trivial to justify to the exec team.</p>
+
+<h3>Voice-of-lead quote</h3>
+<blockquote>"The KYC redesign was the first piece of UX work at the company that the CFO could quote in an investor call. That's when product design stopped being a cost center." — Product Manager, internal post-launch debrief</blockquote>
+
+<h2>9 · Constraints & Discipline</h2>
+
+<h3>The time / scope / quality triangle</h3>
+<p>A KYC flow that ships incomplete is worse than a slow one — an incomplete compliance flow risks regulatory exposure and customer trust simultaneously. So quality on the regulatory critical path was held flat. Levers used:</p>
+<ul>
+  <li><strong>Scope:</strong> conditional disclosure instead of deletion — same data model coverage, presentation-layer branching.</li>
+  <li><strong>Time:</strong> ship in 6 weeks instead of waiting 16 for the cleaner solution.</li>
+</ul>
+<p>Sequencing this way unlocked the entire impact.</p>
+
+<h3>How I worked around the no-SME-research constraint</h3>
+<p>Direct user research with SMEs in the live KYC flow was off-limits (privacy + compliance). So the research stack was <em>indirect</em>: app-store review mining for qualitative signal, funnel analytics for quantitative localisation, competitor audits for the benchmark, and the compliance interview for the unlock. Four indirect sources beat one direct source you can't actually run.</p>
+
+<h3>Explicitly deferred to V2</h3>
+<ul>
+  <li>Deep PAN/GST API pre-fill (paused for SDK contract finalisation).</li>
+  <li>Voice-call fallback for SMS-failed authorization (partial rollout in V1, full rollout planned for V2).</li>
+  <li>Multi-language onboarding for Tier-2 / Tier-3 SME owners.</li>
+</ul>
+
+<h3>How cross-functional speed was built</h3>
+<p>Banking design ships at the speed of the slowest reviewer. So I built the compliance team into the design process — pair-reviewing every wireframe <em>before</em> engineering touched it. That moved compliance feedback from a release-blocking gate into an in-sprint conversation, cutting average review-cycle time on banking surfaces from ~10 days to ~3.</p>
+
+<h2>10 · What's Next</h2>
+<h3>PAN + GST API pre-fill — pushing completion past 70 %</h3>
+<p>The 58 % completion rate is strong relative to the 35 % baseline, but still ~7 points below the industry benchmark ceiling. The residual gap is now almost entirely in steps 2 and 3 (personal + business identity upload) where users still have to type business addresses, GST numbers, and entity registration details by hand.</p>
+<p><strong>Hypothesis:</strong> a deep PAN + GST API integration that pre-fills business identity from a single PAN entry would compress steps 2 and 3 from ~4 minutes of typing to ~20 seconds of validation. <strong>Estimated impact:</strong> completion lift of another 12–15 percentage points, pushing the SME funnel into 70 %+ territory — industry-leading. <strong>Status:</strong> paused at Maxtra V2 due to API SDK contract delays; queued with full instrumentation already in place.</p>
+
+<h2>11 · Reflection — three lessons</h2>
+
+<h3>"Is this regulatory?" is the wrong question</h3>
+<p>The unlock came from a more specific question: <em>"Walk me through the rationale for each step."</em> Binary questions get binary answers and close the door. Specific questions surface the wiggle room compliance teams know about but won't volunteer.</p>
+
+<h3>Ship-and-iterate beats wait-for-perfect</h3>
+<p>Conditional disclosure wasn't the cleanest engineering solution. But shipping in 6 weeks instead of 16 was worth 10,000 fewer abandoned SMEs. Cleaner solutions later are always available. Customers walking out the door now are not recoverable.</p>
+
+<h3>Indirect research is real research</h3>
+<p>I couldn't recruit SME users for live KYC sessions. But 89 1-star reviews, funnel analytics, six competitor audits, and one compliance interview together produced sharper signal than five generic user interviews would have. Constraints on research methodology are not constraints on research quality.</p>
+
+<h2>12 · Anticipated Q&A</h2>
+
+<div class="qa"><p class="q">Q: What was the single biggest change you made?</p><p class="a">A: Moving entity-type selection from step 5 to step 1. That single re-sequence unlocked the entire conditional-disclosure approach — without knowing the entity type up front, you can't branch the flow. Every other improvement (progress reframing, inline rationale, API pre-fill) is downstream of that one architectural decision.</p></div>
+
+<div class="qa"><p class="q">Q: Why not just delete the 3 non-mandated steps?</p><p class="a">A: Because deleting them required a 4-month legal review that would have cost us ~13,000 abandoned SMEs during the wait. Conditional disclosure achieves the same user-perceived outcome (SMEs see 4 steps instead of 7) without triggering the legal review, because the data schema doesn't change — we're just hiding fields based on entity type. Cleaner in the model, faster to ship, defensible to compliance.</p></div>
+
+<div class="qa"><p class="q">Q: How did you convince compliance to let you hide fields?</p><p class="a">A: I framed it as "we're not changing what we ask; we're changing when we ask it, based on which questions actually apply to this entity type." Compliance saw it as a rules-engine question, not a regulatory-exposure question. Once I brought them the entity-type routing spec and the branch-by-branch validation plan, sign-off took days, not months.</p></div>
+
+<div class="qa"><p class="q">Q: How reliable is the 35 % → 58 % number?</p><p class="a">A: It's a 6-month post-rollout measurement with methodology stated: pre/post comparison of 90-day funnel windows with a 3-month bridging period to control for Q1 seasonality (SME signups spike in Q1 due to fiscal-year setup). The lift was concentrated in the SME segment — the cohort that actually saw the 4-step path. Complex entities (LLPs, partnerships) saw only a ~4-point lift, primarily from the inline rationale + progress reframe.</p></div>
+
+<div class="qa"><p class="q">Q: How did you get the ₹8.6 Cr/month number?</p><p class="a">A: Math: 5,000 monthly signups × 0.23 lift = ~1,150 additional onboarded SMEs. 1,150 × ~₹75K average lifetime fee revenue per SME account = ~₹8.6 Cr. The ₹75K comes from public Indian business-banking benchmarks (KPMG India fintech 2021, EY India digital banking 2022). It's an order-of-magnitude framing, not a filed number.</p></div>
+
+<div class="qa"><p class="q">Q: You couldn't recruit SMEs for research — how did you avoid designing in a vacuum?</p><p class="a">A: Four indirect sources: 89 1-star reviews from the app store, 3+ months of funnel analytics localising the failure to step 4, six competitor onboarding flows audited end-to-end, and a 90-minute compliance interview that separated regulatory-mandated from internal-policy steps. Together those sources triangulated to one conclusion: the second PAN request was the killing floor. That's more actionable than five generic user interviews would have been.</p></div>
+
+<div class="qa"><p class="q">Q: What was the hardest tradeoff?</p><p class="a">A: Accepting the engineering-side complexity. The clean solution was to delete the 3 non-mandated steps from the data model entirely. The shipped solution kept all 7 in the model and added branching rules on top — which means every new entity type from now on requires per-branch compliance validation and doubles the QA matrix. That's ongoing tax the engineering team pays. Worth it (13,000 SMEs saved > engineering refactoring debt) but not free.</p></div>
+
+<div class="qa"><p class="q">Q: How much did the payment-authorization redesign contribute?</p><p class="a">A: It was the second major project of my time at Maxtra, and the one product managers most often mentioned in retros because it eliminated a chronic support-ticket category. Business users on multi-signatory accounts kept losing the SMS authorization codes, so transactions got stuck. The in-product authorization queue with signatory states + escalation timers + voice-call fallback dropped payment-failure escalations substantially in the following quarter.</p></div>
+
+<div class="qa"><p class="q">Q: What did the design system contribute?</p><p class="a">A: Reusable banking patterns across mobile + web — document upload states, multi-signatory flows, compliance progress indicators. Documented in Figma with engineering-mapped tokens. It cut handoff ambiguity for the rest of my time at Maxtra, and let adjacent product teams (payments, beneficiary setup) ship faster because they weren't reinventing the same compliance-safe patterns.</p></div>
+
+<div class="qa"><p class="q">Q: How did you work with the compliance team?</p><p class="a">A: I built them into the design process as pair-reviewers, not release-blocking gatekeepers. Every wireframe got compliance eyes on it before engineering touched it — moving their feedback from a 10-day post-hoc block into an in-sprint conversation of ~3 days average. Once compliance felt like co-authors, they defended the design in leadership reviews instead of me having to argue every wireframe individually.</p></div>
+
+<div class="qa"><p class="q">Q: What tools did you use?</p><p class="a">A: Figma for the design system + prototyping; a shared cross-platform component library with engineering-mapped tokens; app-store review mining tools (hand-coded categorisation); funnel-analytics dashboards on the customer side; documented handoff specs that the engineering team referenced sprint-by-sprint.</p></div>
+
+<div class="qa"><p class="q">Q: What would you change with hindsight?</p><p class="a">A: I'd have brought PAN + GST API integration into V1 as a stretch goal, even in partial form. The current V2 plan estimates another 12–15 point completion lift once that lands — that's a big number that could have partially compounded with the conditional disclosure lift. The reason it didn't ship in V1 was SDK contract delays on the public API side, but I could have pushed harder for the "light pre-fill" version to ship alongside.</p></div>
+
+<div class="qa"><p class="q">Q: What if RBI had mandated all 7 steps?</p><p class="a">A: Then Option B (conditional disclosure) wouldn't have been available and Option A would have been the only path — meaning a 4-month wait for legal, no meaningful V1. In that scenario I'd have designed around the perceived load: split the 7 steps into 3 chapters ("Basics · Documents · Compliance") with clear break points, added progress reframing and inline rationale (which don't touch schema and don't need legal review), and shipped those changes to buy improvement in the interim while legal reviewed the full simplification.</p></div>
+
+<div class="qa"><p class="q">Q: What was the political dynamic between Maxtra and the bank?</p><p class="a">A: Maxtra sells the platform; the bank licenses and brands it. That means every design change affects three stakeholders: the SME end user (whose experience matters), the bank's product team (Maxtra's paying customer, whose confidence in Maxtra matters), and the RBI (whose rules constrain both). A design that improves user experience but breaks the bank's compliance posture is a design that costs Maxtra the contract. So every recommendation had to be defensible to all three simultaneously.</p></div>
+
+<div class="qa"><p class="q">Q: What's the elevator pitch?</p><p class="a">A: Maxtra's KYC completion for SME business banking was 35 %, against an industry benchmark of 55–65 %. The killing floor was step 4 — a redundant PAN request that felt like the platform didn't trust the user. The clean fix (delete the 3 non-mandated steps) required a 4-month legal review we couldn't afford. So I designed conditional disclosure — hide the 3 steps for SMEs based on entity type — and shipped in 6 weeks. Completion rose to ~58 %, onboarding time halved, and roughly 1,150 additional SMEs are onboarded every month, worth ~₹8.6 Cr in newly-activated lifetime fee revenue.</p></div>
+
+<div class="qa"><p class="q">Q: What skills does this project demonstrate?</p><p class="a">A: Compliance-adjacent product design (RBI regulated), indirect-research triangulation, funnel analytics literacy, stakeholder navigation across three separate constituencies (end user / bank / regulator), tradeoff articulation under time pressure (ship-vs-wait framing), cross-platform design-system contribution (mobile + web), and product-thinking rigour (options considered with named rejection reasons, outcomes tied to explicit business math).</p></div>
+
+<h2>13 · Glossary</h2>
+<ul>
+  <li><strong>KYC:</strong> Know Your Customer — the mandatory identity-verification process an SME must complete before opening a business bank account.</li>
+  <li><strong>SME:</strong> Small and Medium Enterprise — the customer segment this case study is about.</li>
+  <li><strong>NBFC:</strong> Non-Banking Financial Company — an RBI-regulated financial institution that isn't a bank. Maxtra sells to banks and NBFCs both.</li>
+  <li><strong>RBI:</strong> Reserve Bank of India — the regulator setting KYC requirements.</li>
+  <li><strong>PAN:</strong> Permanent Account Number — India's tax-ID equivalent. A core KYC document.</li>
+  <li><strong>GST:</strong> Goods and Services Tax number — India's business registration ID. Also used as a KYC anchor.</li>
+  <li><strong>LTV:</strong> Lifetime Value — total revenue expected from a customer over the life of the relationship. Estimated at ~₹75K per SME account here.</li>
+  <li><strong>Conditional disclosure:</strong> The chosen pattern — keep all 7 steps in the schema, but progressively reveal them based on the user's entity type.</li>
+  <li><strong>Sole proprietor:</strong> The simplest business entity type — one individual running a business. 78 % of Maxtra's SME signup volume.</li>
+  <li><strong>Compliance interview:</strong> The 90-minute conversation with regulatory affairs that surfaced which of the 7 steps were RBI-mandated vs internal-policy.</li>
+</ul>
+
+</body></html>
